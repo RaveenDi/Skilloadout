@@ -1,0 +1,64 @@
+name: Update skills (every 3 days)
+
+on:
+  schedule:
+    # 05:23 UTC on days 1,4,7,...,31 of each month (≈ every 3 days).
+    - cron: "23 5 */3 * *"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Re-download every source even if unchanged"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-skills
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci --ignore-scripts
+
+      - name: Discovery agent — find & review new skill sources
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node scripts/discover.mjs
+
+      - name: Sync all sources
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/sync.mjs ${{ inputs.force && '--force' || '' }}
+
+      - name: Keep ⚡ Superpower picks valid
+        run: node scripts/resolve-picks.mjs
+
+      - name: Validate catalog
+        run: node scripts/validate.mjs
+
+      - name: Commit changes
+        run: |
+          if [ -z "$(git status --porcelain catalog skills)" ]; then
+            echo "No changes."
+            exit 0
+          fi
+          git config user.name "world-skills-bot"
+          git config user.email "world-skills-bot@users.noreply.github.com"
+          git add catalog skills
+          SUMMARY=$(node -e "const c=require('./catalog/changelog.json')[0];console.log('+'+c.added+' ~'+c.updated+' -'+c.removed+' (total '+c.total+')')")
+          git commit -m "chore(skills): scheduled update $SUMMARY"
+          git push

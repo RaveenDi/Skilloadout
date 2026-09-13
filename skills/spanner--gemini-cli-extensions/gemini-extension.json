@@ -1,0 +1,40 @@
+{
+  "name": "spanner",
+  "version": "0.3.5",
+  "description": "Connect and interact with Spanner data using natural language.",
+  "mcpServers": {
+    "spanner": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@toolbox-sdk/server@1.9.0",
+        "--prebuilt",
+        "spanner",
+        "--stdio"
+      ]
+    }
+  },
+  "contextFileName": "SPANNER.md",
+  "settings": [
+    {
+      "name": "Project ID",
+      "description": "ID of the Google Cloud project",
+      "envVar": "SPANNER_PROJECT"
+    },
+    {
+      "name": "Instance",
+      "description": "ID of the Spanner instance",
+      "envVar": "SPANNER_INSTANCE"
+    },
+    {
+      "name": "Database",
+      "description": "ID of the Spanner database",
+      "envVar": "SPANNER_DATABASE"
+    },
+    {
+      "name": "Database Dialect",
+      "description": "(Optional) The SQL dialect of the Spanner Database: 'googlesql' or 'postgresql'. (Default: 'googlesql')",
+      "envVar": "SPANNER_DIALECT"
+    }
+  ]
+}

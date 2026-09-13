@@ -1,0 +1,4 @@
+interface:
+  display_name: "WebGPU"
+  short_description: "Build and debug production WebGPU code"
+  default_prompt: "Use $webgpu to inspect and solve this WebGPU task with current canonical sources."

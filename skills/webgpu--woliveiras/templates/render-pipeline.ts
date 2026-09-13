@@ -1,0 +1,2 @@
+/// <reference types="@webgpu/types" />
+export function createRenderPipeline(device:GPUDevice,layout:GPUPipelineLayout,module:GPUShaderModule,format:GPUTextureFormat):GPURenderPipeline{return device.createRenderPipeline({label:"TODO pipeline label",layout,vertex:{module,entryPoint:"vertex",buffers:[]},fragment:{module,entryPoint:"fragment",targets:[{format}]},primitive:{topology:"triangle-list"},multisample:{count:1}});}// TODO: define vertex, blend, depth/stencil, and sample state.

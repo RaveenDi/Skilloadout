@@ -1,0 +1,2 @@
+/// <reference types="@webgpu/types" />
+export async function checkedShaderModule(device:GPUDevice,code:string,label:string):Promise<GPUShaderModule>{const module=device.createShaderModule({code,label});const info=await module.getCompilationInfo();for(const message of info.messages)console[message.type==="error"?"error":"warn"](`${label}:${message.lineNum}:${message.linePos} ${message.message}`);if(info.messages.some((message)=>message.type==="error"))throw new Error(`${label} failed compilation`);return module;}

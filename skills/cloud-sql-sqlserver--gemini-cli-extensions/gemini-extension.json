@@ -1,0 +1,55 @@
+{
+  "name": "cloud-sql-sqlserver",
+  "version": "0.2.0",
+  "description": "Connect to Cloud SQL for SQL Server",
+  "mcpServers": {
+    "cloud-sql-mssql": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@toolbox-sdk/server@1.9.0",
+        "--prebuilt",
+        "cloud-sql-mssql",
+        "--stdio"
+      ]
+    }
+  },
+  "contextFileName": "CLOUD-SQL-SQLSERVER.md",
+  "settings": [
+    {
+      "name": "Project Name",
+      "description": "Name of the Google Cloud project",
+      "envVar": "CLOUD_SQL_MSSQL_PROJECT"
+    },
+    {
+      "name": "Region",
+      "description": "Region of the Cloud SQL instance",
+      "envVar": "CLOUD_SQL_MSSQL_REGION"
+    },
+    {
+      "name": "Instance ID",
+      "description": "ID of the Cloud SQL instance",
+      "envVar": "CLOUD_SQL_MSSQL_INSTANCE"
+    },
+    {
+      "name": "Database",
+      "description": "Name of the database",
+      "envVar": "CLOUD_SQL_MSSQL_DATABASE"
+    },
+    {
+      "name": "User",
+      "description": "Username of the database user",
+      "envVar": "CLOUD_SQL_MSSQL_USER"
+    },
+    {
+      "name": "Password",
+      "description": "Password of the database user",
+      "envVar": "CLOUD_SQL_MSSQL_PASSWORD"
+    },
+    {
+      "name": "Instance IP assignment",
+      "description": "(Optional) Type of the IP address: PUBLIC, PRIVATE, or PSC (Default: Public)",
+      "envVar": "CLOUD_SQL_MSSQL_IP_TYPE"
+    }
+  ]
+}

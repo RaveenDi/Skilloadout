@@ -1,0 +1,18 @@
+node_modules/
+.next/
+out/
+.cache/
+.env
+.env.local
+*.log
+.DS_Store
+Thumbs.db
+apps/web/.env*.local
+
+# generated build artifacts (rebuilt by scripts/build-artifacts.mjs in CI)
+apps/web/public/downloads/
+apps/web/public/bundles/
+apps/web/public/search-index.json
+apps/web/public/catalog-stats.json
+apps/web/out/
+apps/web/public/ads.txt

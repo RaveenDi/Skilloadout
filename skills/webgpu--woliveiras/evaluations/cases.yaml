@@ -1,0 +1,30 @@
+skill: webgpu
+rubric:
+  correction: "Uses real current WebGPU/WGSL APIs and correct interfaces."
+  architecture: "Inspects and preserves framework ownership."
+  detection: "Checks WebGPU, adapter, features, limits, and fallback."
+  failures: "Surfaces shader, validation, initialization, and loss failures."
+  lifecycle: "Defines ownership, reuse, resize, destruction, and reconstruction."
+  performance: "Measures before optimizing and avoids hot-path readback/churn."
+  testing: "Proposes the closest static, browser, device, and recovery checks."
+cases:
+  - prompt: "Create a minimal WebGPU triangle in strict TypeScript."
+    expect: ["feature and adapter failure", "shader diagnostics", "explicit pass", "cleanup and validation scope"]
+  - prompt: "This bind group is incompatible with my second pipeline. Fix it."
+    expect: ["compare shader and layouts", "identify auto-layout scope", "prefer explicit shared layout"]
+  - prompt: "My vec3 uniform reads garbage after the first field."
+    expect: ["compute WGSL alignment and offsets", "use byte-level packing", "add layout test"]
+  - prompt: "Add two large arrays with a compute shader."
+    expect: ["bounds-check final workgroup", "verified workgroup limits", "asynchronous readback outside hot path"]
+  - prompt: "Diagnose an uncaptured validation error."
+    expect: ["preserve first error", "narrow error scope", "labels and compilation info"]
+  - prompt: "We create every GPUTexture and pipeline inside requestAnimationFrame. Optimize it."
+    expect: ["measure allocation/compile cost", "cache/reuse by descriptor", "resize invalidation"]
+  - prompt: "Recover after the GPU device is lost."
+    expect: ["stop submission", "invalidate all device resources", "rebuild from CPU descriptors or fallback"]
+  - prompt: "Ship WebGPU but retain users without it."
+    expect: ["current support matrix", "capability boundary", "tested fallback"]
+  - prompt: "Add raw WebGPU commands inside a Three.js WebGPURenderer frame."
+    expect: ["reject unverified mixed ownership", "inspect current public extension point", "preserve renderer lifecycle"]
+  - prompt: "Review this per-frame mapAsync readback."
+    expect: ["identify synchronization/stall risk", "seek on-GPU consumer or delayed ring", "benchmark"]

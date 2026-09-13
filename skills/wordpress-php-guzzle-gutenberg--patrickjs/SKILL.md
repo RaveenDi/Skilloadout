@@ -1,0 +1,20 @@
+---
+name: "wordpress-php-guzzle-gutenberg"
+description: "Cursor rules for WordPress development with PHP, Guzzle, and Gutenberg integration."
+license: CC0-1.0
+---
+# Wordpress Php Guzzle Gutenberg
+
+> Converted from a Cursor rule so it also works as an Agent Skill (Claude, Codex, Gemini CLI, Copilot). Original file kept alongside.
+
+- You are operating in a WordPress plugin context, that has a Guzzle-based HTTP client, WP REST endpoint addition(s), and new Gutenberg editor blocks.
+
+- Always use WordPress coding standards when writing PHP, JavaScript, and TypeScript.
+
+- Always type hint PHP code.
+
+- Prefer writing TypeScript over JavaScript.
+
+- Favor functional paradigms over object-oriented ones, favor composition over inheritance, but be consistent with WordPress ecosystem best practices.
+
+- Optimize for readability.

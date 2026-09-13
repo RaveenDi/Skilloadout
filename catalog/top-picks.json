@@ -1,0 +1,374 @@
+{
+  "3d-webgl": [
+    "cinematic-scroll-3d-website",
+    "immersive-concept-director",
+    "camera-flythrough-paths",
+    "webgl-shader-effects",
+    "r3f-scroll-scenes",
+    "room-walkthrough-3d",
+    "3d-product-configurator",
+    "webgpu-tsl-3d",
+    "3d-web-performance",
+    "threejs-aaa-graphics-builder--majidmanzarpour",
+    "react-three-fiber--freshtechbro",
+    "build-threejs-scroll-worlds--mengto",
+    "threejs-fundamentals--cloudai-x"
+  ],
+  "motion-animation": [
+    "scroll-storytelling-director",
+    "gsap-scrolltrigger--greensock",
+    "gsap-core--greensock",
+    "gsap-timeline--greensock",
+    "gsap-react--greensock",
+    "vercel-react-view-transitions--vercel-labs",
+    "scroll-world--oso95",
+    "build-awwwards-quality-sites--mengto",
+    "motion-framer--freshtechbro"
+  ],
+  "frontend-ui": [
+    "frontend-design--anthropics",
+    "frontend-ui-engineering--addyosmani",
+    "vercel-react-best-practices--vercel-labs",
+    "vercel-composition-patterns--vercel-labs",
+    "shadcn--shadcn-ui",
+    "web-artifacts-builder--anthropics",
+    "ui-styling--nextlevelbuilder",
+    "anti-ui-slop--github"
+  ],
+  "design-creative": [
+    "ui-ux-pro-max--nextlevelbuilder",
+    "frontend-design--anthropics",
+    "design-system--nextlevelbuilder",
+    "canvas-design--anthropics",
+    "algorithmic-art--anthropics",
+    "brand-guidelines--anthropics",
+    "audit-ai-design-slop--mengto",
+    "imagegen--openai"
+  ],
+  "backend-api": [
+    "api-and-interface-design--addyosmani",
+    "stripe-best-practices--openai",
+    "better-auth-best-practices--better-auth",
+    "api-design-principles--wshobson",
+    "auth-implementation-patterns--wshobson",
+    "microservices-patterns--wshobson",
+    "error-handling-patterns--wshobson",
+    "build-mcp-server--anthropics"
+  ],
+  "cloud-devops": [
+    "cloudflare--cloudflare",
+    "workers-best-practices--cloudflare",
+    "terraform-style-guide--hashicorp",
+    "terraform-test--hashicorp",
+    "vercel-deploy--openai",
+    "k8s-manifest-generator--wshobson",
+    "observability-and-instrumentation--addyosmani",
+    "incident-runbook-templates--wshobson"
+  ],
+  "data-databases": [
+    "supabase-postgres-best-practices--supabase",
+    "neon-postgres--neondatabase",
+    "prisma-postgres--prisma",
+    "mongodb-schema-design--mongodb",
+    "mongodb-query-optimizer--mongodb",
+    "database-migration--wshobson",
+    "dbt-transformation-patterns--wshobson",
+    "bigquery-basics--google"
+  ],
+  "data-analytics": [
+    "jupyter-notebook--openai",
+    "explore-data--anthropics",
+    "build-dashboard--anthropics",
+    "data-visualization--anthropics",
+    "create-viz--anthropics",
+    "kpi-dashboard-design--wshobson",
+    "ab-testing--coreyhaines31",
+    "data-storytelling--wshobson"
+  ],
+  "ai-ml": [
+    "claude-api--anthropics",
+    "mcp-builder--anthropics",
+    "skill-creator--anthropics",
+    "context-fundamentals--muratcankoylan",
+    "multi-agent-patterns--muratcankoylan",
+    "context-engineering--addyosmani",
+    "huggingface-llm-trainer--huggingface",
+    "llm-evaluation--wshobson",
+    "prompt-optimizer--getsentry",
+    "karpathy-guidelines--multica-ai"
+  ],
+  "testing-qa": [
+    "webapp-testing--anthropics",
+    "test-driven-development--obra",
+    "systematic-debugging--obra",
+    "playwright--openai",
+    "debugging-and-error-recovery--addyosmani",
+    "browser-testing-with-devtools--addyosmani",
+    "dev-browser--sawyerhood",
+    "find-bugs--getsentry",
+    "e2e-testing-patterns--wshobson"
+  ],
+  "security": [
+    "security-review--getsentry",
+    "threat-model-analyst--github",
+    "security-threat-model--openai",
+    "audit-context-building--trailofbits",
+    "differential-review--trailofbits",
+    "semgrep--trailofbits",
+    "codeql--trailofbits",
+    "supply-chain-risk-auditor--trailofbits",
+    "sharp-edges--trailofbits",
+    "security-and-hardening--addyosmani"
+  ],
+  "code-quality": [
+    "code-review-and-quality--addyosmani",
+    "code-simplification--addyosmani",
+    "receiving-code-review--obra",
+    "architecture-patterns--wshobson",
+    "ponytail--dietrichgebert",
+    "understand--egonex-ai",
+    "archify--tt-a1i",
+    "performance-optimization--addyosmani",
+    "cloud-design-patterns--github"
+  ],
+  "mobile": [
+    "expo-ui--expo",
+    "expo-router--expo",
+    "react-native-best-practices--callstackincubator",
+    "vercel-react-native-skills--vercel-labs",
+    "swiftui-ui-patterns--dimillian",
+    "swift-concurrency-expert--dimillian",
+    "swiftui-performance-audit--dimillian",
+    "eas-app-stores--expo",
+    "upgrading-react-native--callstackincubator"
+  ],
+  "game-dev": [
+    "game-engine--github",
+    "threejs-game-director--majidmanzarpour",
+    "threejs-gameplay-systems--majidmanzarpour",
+    "scenes--phaserjs",
+    "cameras--phaserjs",
+    "unity-skills--besty0728",
+    "build-isometric-arpg--mengto"
+  ],
+  "web3-blockchain": [
+    "ethskills--austintgriffith",
+    "security--austintgriffith",
+    "gas--austintgriffith",
+    "solidity-security--wshobson",
+    "web3-testing--wshobson",
+    "defi-protocol-templates--wshobson",
+    "entry-point-analyzer--trailofbits",
+    "solana-vulnerability-scanner--trailofbits"
+  ],
+  "hardware-iot": [
+    "ros2--arpitg1304",
+    "robot-bringup--arpitg1304",
+    "robotics-software-principles--arpitg1304",
+    "robot-perception--arpitg1304",
+    "rerun-data-model--rerun-io",
+    "rerun-urdf--rerun-io",
+    "embedded-systems--jeffallan",
+    "embedded-iot-mentor--alirezarezvani",
+    "m5-onboard--anthropics",
+    "arduino-azure-iot-edge-integration--github",
+    "ros-ros2--patrickjs"
+  ],
+  "engineering-cad": [
+    "cad--earthtojake",
+    "freecad-scripts--github",
+    "parametric-3d-printing--flowful-ai",
+    "blender-director--arjun988",
+    "geometry-nodes--arjun988",
+    "rhino3d-scripts--github"
+  ],
+  "geospatial": [
+    "cesium-core-architecture--impertio-studio",
+    "cesium-syntax-camera--impertio-studio",
+    "cesium-core-performance--impertio-studio",
+    "azure-maps-search-dotnet--microsoft",
+    "geospatial-and-cartographic-visualization--openai"
+  ],
+  "workflow-agents": [
+    "skill-loadout-router",
+    "using-superpowers--obra",
+    "brainstorming--obra",
+    "writing-plans--obra",
+    "spec-driven-development--addyosmani",
+    "planning-and-task-breakdown--addyosmani",
+    "git-workflow-and-versioning--addyosmani",
+    "iterate-pr--getsentry",
+    "mem-search--thedotmack"
+  ],
+  "automation-integrations": [
+    "flowstudio-power-automate-build--github",
+    "ci-cd-and-automation--addyosmani",
+    "billing-automation--wshobson",
+    "crm-maintenance--anthropics",
+    "zoom-general--anthropics",
+    "github-actions--callstackincubator"
+  ],
+  "marketing-seo": [
+    "seo--agricidaniel",
+    "seo-audit--agricidaniel",
+    "geo--zubair-trabzada",
+    "copywriting--coreyhaines31",
+    "cro--coreyhaines31",
+    "marketing-plan--coreyhaines31",
+    "programmatic-seo--coreyhaines31",
+    "content-strategy--coreyhaines31",
+    "landing-page-conversion-audit--github",
+    "product-launch-video--heygen-com"
+  ],
+  "sales-crm": [
+    "cold-email--coreyhaines31",
+    "prospecting--coreyhaines31",
+    "sales-enablement--coreyhaines31",
+    "draft-outreach--anthropics",
+    "call-prep--anthropics",
+    "pipeline-review--anthropics",
+    "forecast--anthropics",
+    "competitive-intelligence--anthropics"
+  ],
+  "finance-accounting": [
+    "company-valuation--himself65",
+    "earnings-preview--himself65",
+    "financial-statements--anthropics",
+    "reconciliation--anthropics",
+    "real-estate-deal-analyst",
+    "backtest-expert--tradermonty",
+    "portfolio-manager--tradermonty",
+    "options-strategy-advisor--tradermonty",
+    "cash-flow-snapshot--anthropics",
+    "variance-analysis--anthropics"
+  ],
+  "legal-compliance": [
+    "contract-review--evolsb",
+    "review-contract--anthropics",
+    "triage-nda--anthropics",
+    "legal-risk-assessment--anthropics",
+    "compliance-check--anthropics",
+    "gdpr-compliant--github",
+    "gdpr-data-handling--wshobson",
+    "employment-contract-templates--wshobson"
+  ],
+  "hr-people": [
+    "job-post-builder--anthropics",
+    "interview-prep--anthropics",
+    "recruiting-pipeline--anthropics",
+    "performance-review--anthropics",
+    "onboarding--anthropics",
+    "comp-analysis--anthropics",
+    "technical-job-search--github",
+    "tailor-resume--proficientlyjobs",
+    "hr-candidate-assessment--tuanductran"
+  ],
+  "product-management": [
+    "write-spec--anthropics",
+    "prd--github",
+    "product-manager-toolkit--alirezarezvani",
+    "roadmap-update--anthropics",
+    "sprint-planning--anthropics",
+    "idea-refine--addyosmani",
+    "metrics-review--anthropics",
+    "synthesize-research--anthropics"
+  ],
+  "customer-support": [
+    "ticket-triage--anthropics",
+    "draft-response--anthropics",
+    "kb-article--anthropics",
+    "customer-escalation--anthropics",
+    "churn-prevention--coreyhaines31",
+    "customer-success-manager--alirezarezvani",
+    "zendesk-triage--composio-community",
+    "intercom-resolve--composio-community"
+  ],
+  "operations-strategy": [
+    "business-pulse--anthropics",
+    "process-optimization--anthropics",
+    "risk-assessment--anthropics",
+    "gtm-positioning-strategy--github",
+    "market-sizing-analysis--wshobson",
+    "startup-analysis--himself65",
+    "company-os--alirezarezvani",
+    "vendor-review--anthropics"
+  ],
+  "ecommerce": [
+    "pricing--coreyhaines31",
+    "seo-ecommerce--agricidaniel",
+    "paywalls--coreyhaines31",
+    "shopify-liquid--openai",
+    "shopify-hydrogen--openai",
+    "shopify-functions--openai",
+    "shopify-review-triage--github"
+  ],
+  "science-research": [
+    "literature-review--affaan-m",
+    "statistical-analysis--anthropics",
+    "scientific-problem-selection--anthropics",
+    "single-cell-rna-qc--anthropics",
+    "nextflow-development--anthropics",
+    "huggingface-papers--huggingface",
+    "ml-paper-writing--orchestra-research",
+    "citation-management--aipoch"
+  ],
+  "healthcare-medical": [
+    "fhir-developer-skill--anthropics",
+    "clinical-note-extract-skill--anthropics",
+    "prior-auth-review-skill--anthropics",
+    "icd10-cm-skill--anthropics",
+    "clinical-trial-protocol-skill--anthropics",
+    "checking-hipaa-compliance--maziyarpanahi",
+    "coding-icd10--maziyarpanahi",
+    "clinical-decision-support--aipoch",
+    "pyhealth--aipoch",
+    "automated-soap-note-generator--aipoch",
+    "mdr-745-specialist--alirezarezvani"
+  ],
+  "education-learning": [
+    "socratic-tutor",
+    "k12-lesson-plan-creation--anthropics",
+    "k12-lesson-differentiation--anthropics",
+    "k12-check-for-understanding--anthropics",
+    "exam-ready--github",
+    "mentoring-juniors--github",
+    "understand-explain--egonex-ai",
+    "syllabus--alirezarezvani"
+  ],
+  "docs-writing": [
+    "documentation-and-adrs--addyosmani",
+    "docs-writer--google-gemini",
+    "avoid-ai-writing--wshobson",
+    "copy-editing--coreyhaines31",
+    "blog-writing-guide--getsentry",
+    "pr-writer--getsentry",
+    "internal-comms--anthropics"
+  ],
+  "productivity-office": [
+    "docx--anthropics",
+    "xlsx--anthropics",
+    "pptx--anthropics",
+    "pdf--openai",
+    "theme-factory--anthropics",
+    "slides--nextlevelbuilder",
+    "presentation-creator--getsentry",
+    "convert-pdf-to-md--github",
+    "notion-knowledge-capture--openai"
+  ],
+  "media-video-audio": [
+    "hyperframes--heygen-com",
+    "general-video--heygen-com",
+    "speech--openai",
+    "transcribe--openai",
+    "imagegen--openai",
+    "slack-gif-creator--anthropics",
+    "suno-engineer--bitwize-music-studio",
+    "mix-engineer--bitwize-music-studio"
+  ],
+  "personal-lifestyle": [
+    "fitness-nutrition-coach",
+    "travel-itinerary-planner",
+    "habit-productivity-coach",
+    "home-cooking-chef"
+  ]
+}

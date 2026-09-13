@@ -1,0 +1,226 @@
+[
+  {
+    "id": "immersive-3d-website",
+    "title": "Never-Seen-Before 3D Website",
+    "emoji": "🧊",
+    "tagline": "Scroll-driven 3D worlds, fly-throughs and cinematic storytelling.",
+    "description": "Everything an agent needs to invent an original concept and ship an award-level immersive site: creative direction, camera rails, scroll storytelling, shaders, GSAP ScrollTrigger, smooth scroll, React Three Fiber, performance budgets and frontend polish.",
+    "skills": [
+      "immersive-concept-director",
+      "cinematic-scroll-3d-website",
+      "camera-flythrough-paths",
+      "scroll-storytelling-director",
+      "webgl-shader-effects",
+      "r3f-scroll-scenes",
+      "3d-web-performance",
+      "gsap-scrolltrigger--greensock",
+      "gsap-core--greensock",
+      "gsap-timeline--greensock",
+      "gsap-react--greensock",
+      "gsap-performance--greensock",
+      "lenis-react--12-studio",
+      "web3d-integration-patterns--freshtechbro",
+      "threejs-animation--iart-ai",
+      "scroll-world--oso95",
+      "frontend-design--anthropics",
+      "vercel-react-view-transitions--vercel-labs"
+    ]
+  },
+  {
+    "id": "room-walkthrough",
+    "title": "Room Walkthrough & Virtual Tour",
+    "emoji": "🏠",
+    "tagline": "Real-estate tours, showrooms and museums in the browser.",
+    "description": "Baked-light interiors, eye-height camera rails or hotspot navigation, HTML annotations, room streaming and mobile-safe performance.",
+    "skills": [
+      "room-walkthrough-3d",
+      "camera-flythrough-paths",
+      "r3f-scroll-scenes",
+      "3d-web-performance",
+      "webgl-shader-effects",
+      "cinematic-scroll-3d-website",
+      "gsap-scrolltrigger--greensock",
+      "frontend-design--anthropics"
+    ]
+  },
+  {
+    "id": "motion-scroll-storytelling",
+    "title": "Scroll Storytelling & Motion",
+    "emoji": "🎞️",
+    "tagline": "Scrollytelling, pinned scenes and premium motion without 3D.",
+    "description": "Story structure and pacing, GSAP timelines and ScrollTrigger, smooth scrolling, view transitions and design systems for editorial pages, launches and case studies.",
+    "skills": [
+      "scroll-storytelling-director",
+      "gsap-scrolltrigger--greensock",
+      "gsap-timeline--greensock",
+      "gsap-plugins--greensock",
+      "gsap-utils--greensock",
+      "gsap-react--greensock",
+      "lenis-react--12-studio",
+      "vercel-react-view-transitions--vercel-labs",
+      "frontend-design--anthropics",
+      "brand-guidelines--anthropics"
+    ]
+  },
+  {
+    "id": "saas-fullstack",
+    "title": "Full-Stack SaaS",
+    "emoji": "🚀",
+    "tagline": "Next.js + auth + payments + Postgres, tested and secure.",
+    "description": "Frontend craft, React/Next.js best practices, authentication, Stripe payments, Postgres, browser testing, debugging discipline, planning and deployment.",
+    "skills": [
+      "frontend-design--anthropics",
+      "vercel-react-best-practices--vercel-labs",
+      "vercel-composition-patterns--vercel-labs",
+      "nextjs-app-router-patterns--wshobson",
+      "better-auth-best-practices--better-auth",
+      "better-auth-security-best-practices--better-auth",
+      "stripe-best-practices--openai",
+      "supabase-postgres-best-practices--supabase",
+      "webapp-testing--anthropics",
+      "playwright--openai",
+      "systematic-debugging--obra",
+      "writing-plans--obra",
+      "secure-workflow-guide--trailofbits",
+      "deploy-to-vercel--vercel-labs"
+    ]
+  },
+  {
+    "id": "security-audit",
+    "title": "Security Audit",
+    "emoji": "🛡️",
+    "tagline": "Trail of Bits–grade code review, static analysis and fuzzing.",
+    "description": "Audit preparation, context building, differential review, Semgrep & CodeQL, variant analysis, supply-chain risk, sharp edges, property-based testing and CI hardening.",
+    "skills": [
+      "audit-context-building--trailofbits",
+      "audit-prep-assistant--trailofbits",
+      "differential-review--trailofbits",
+      "entry-point-analyzer--trailofbits",
+      "semgrep--trailofbits",
+      "codeql--trailofbits",
+      "variant-analysis--trailofbits",
+      "sharp-edges--trailofbits",
+      "supply-chain-risk-auditor--trailofbits",
+      "property-based-testing--trailofbits",
+      "secure-workflow-guide--trailofbits",
+      "gha-security-review--getsentry",
+      "claude-security--anthropics"
+    ]
+  },
+  {
+    "id": "mobile-app-expo",
+    "title": "Mobile App (Expo / React Native)",
+    "emoji": "📱",
+    "tagline": "From native UI to App Store deployment.",
+    "description": "Expo modules, native SwiftUI / Jetpack Compose UI, Tailwind setup, API routes, CI/CD workflows, upgrades and store deployment, plus React Native performance patterns.",
+    "skills": [
+      "vercel-react-native-skills--vercel-labs",
+      "expo-ui-swift-ui--openai",
+      "expo-ui-jetpack-compose--openai",
+      "expo-tailwind-setup--openai",
+      "expo-module--expo",
+      "expo-api-routes--openai",
+      "expo-dev-client--openai",
+      "expo-cicd-workflows--openai",
+      "expo-deployment--openai",
+      "upgrading-expo--openai"
+    ]
+  },
+  {
+    "id": "ai-agents-builder",
+    "title": "AI Agents & LLM Apps",
+    "emoji": "🤖",
+    "tagline": "Build agents, MCP servers, skills and evals.",
+    "description": "Claude API, MCP server building, skill authoring, prompt optimization, RAG/vector stores, multi-agent frameworks, fine-tuning and evaluation.",
+    "skills": [
+      "claude-api--anthropics",
+      "mcp-builder--anthropics",
+      "skill-creator--anthropics",
+      "prompt-optimizer--getsentry",
+      "dspy--orchestra-research",
+      "llamaindex--orchestra-research",
+      "langchain--orchestra-research",
+      "qdrant-vector-search--orchestra-research",
+      "crewai-multi-agent--orchestra-research",
+      "evaluating-llms-harness--orchestra-research",
+      "fine-tuning-with-trl--orchestra-research",
+      "serving-llms-vllm--orchestra-research"
+    ]
+  },
+  {
+    "id": "science-research",
+    "title": "Scientific Research",
+    "emoji": "🔬",
+    "tagline": "Analysis, statistics, literature and paper writing.",
+    "description": "Statistical analysis and power, modeling, literature review, citations, scientific writing, academic plotting and posters.",
+    "skills": [
+      "statistical-analysis--anthropics",
+      "literature-review--affaan-m",
+      "paper-lookup--aipoch",
+      "citation-management--aipoch",
+      "academic-plotting--orchestra-research",
+      "ml-paper-writing--orchestra-research",
+      "pptx-posters--aipoch"
+    ]
+  },
+  {
+    "id": "brand-content-marketing",
+    "title": "Brand, Content & Marketing",
+    "emoji": "📈",
+    "tagline": "Brand voice, landing pages, SEO and copy that converts.",
+    "description": "Brand discovery and guidelines, voice enforcement, landing pages, copywriting, humanized content, SEO audits and presentations.",
+    "skills": [
+      "discover-brand--anthropics",
+      "brand-guidelines--anthropics",
+      "brand-voice-enforcement--anthropics",
+      "brand-review--anthropics",
+      "brand-landingpage--wshobson",
+      "landing-page-generator--alirezarezvani",
+      "copywriting--alirezarezvani",
+      "content-humanizer--alirezarezvani",
+      "seo-audit--anthropics",
+      "presentation-creator--getsentry",
+      "canvas-design--anthropics"
+    ]
+  },
+  {
+    "id": "finance-investing",
+    "title": "Finance, Investing & Deals",
+    "emoji": "💰",
+    "tagline": "Valuation, earnings, trading discipline, real estate and accounting.",
+    "description": "Company valuation and earnings analysis, portfolio and options strategy with risk gates, real-estate deal math, and month-end accounting — each skill shows its assumptions so you can check the numbers.",
+    "skills": [
+      "company-valuation--himself65",
+      "earnings-preview--himself65",
+      "earnings-recap--himself65",
+      "portfolio-manager--tradermonty",
+      "options-strategy-advisor--tradermonty",
+      "backtest-expert--tradermonty",
+      "pre-trade-discipline-gate--tradermonty",
+      "real-estate-deal-analyst",
+      "financial-statements--anthropics",
+      "variance-analysis--anthropics",
+      "cash-flow-snapshot--anthropics"
+    ]
+  },
+  {
+    "id": "healthcare-ai",
+    "title": "Healthcare & Clinical AI",
+    "emoji": "🩺",
+    "tagline": "FHIR, clinical notes, coding, compliance and research.",
+    "description": "Official Anthropic healthcare skills plus open clinical NLP: FHIR development, clinical note extraction, ICD-10 coding, prior-auth review, HIPAA checks and clinical research tooling. For research and workflow support — not medical advice.",
+    "skills": [
+      "fhir-developer-skill--anthropics",
+      "clinical-note-extract-skill--anthropics",
+      "prior-auth-review-skill--anthropics",
+      "icd10-cm-skill--anthropics",
+      "clinical-trial-protocol-skill--anthropics",
+      "checking-hipaa-compliance--maziyarpanahi",
+      "coding-icd10--maziyarpanahi",
+      "assembling-fhir-bundles--maziyarpanahi",
+      "clinical-decision-support--aipoch",
+      "pyhealth--aipoch",
+      "automated-soap-note-generator--aipoch"
+    ]
+  }
+]

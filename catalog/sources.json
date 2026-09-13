@@ -1,0 +1,482 @@
+{
+  "$comment": "Source registry for World Skills. tier: 1 = official vendor, 2 = top community, 3 = niche/long-tail. kind: skills (SKILL.md), rules (Cursor .cursorrules/.mdc), gemini-extension. The discovery agent appends to `discovered`; humans can promote entries into `sources`. Quality gate: bulk/auto-generated collections are excluded so only top skills are listed. redistributor: repo bundles third-party skills; original publishers win duplicates.",
+  "sources": [
+    {
+      "repo": "anthropics/skills",
+      "tier": 1,
+      "origin": "anthropic"
+    },
+    {
+      "repo": "anthropics/claude-plugins-official",
+      "tier": 1,
+      "origin": "anthropic"
+    },
+    {
+      "repo": "anthropics/knowledge-work-plugins",
+      "tier": 1,
+      "origin": "anthropic"
+    },
+    {
+      "repo": "openai/skills",
+      "tier": 1,
+      "origin": "openai"
+    },
+    {
+      "repo": "openai/plugins",
+      "tier": 1,
+      "origin": "openai",
+      "redistributor": true
+    },
+    {
+      "repo": "google-gemini/gemini-cli",
+      "tier": 1,
+      "origin": "google",
+      "include": [
+        ".gemini/skills/",
+        "packages/core/src/skills/builtin/"
+      ]
+    },
+    {
+      "repo": "google/skills",
+      "tier": 1,
+      "origin": "google"
+    },
+    {
+      "repo": "firebase/agent-skills",
+      "tier": 1,
+      "origin": "google"
+    },
+    {
+      "repo": "googleapis/genai-toolbox",
+      "tier": 1,
+      "origin": "google"
+    },
+    {
+      "repo": "github/awesome-copilot",
+      "tier": 1,
+      "origin": "github"
+    },
+    {
+      "repo": "microsoft/skills",
+      "tier": 1,
+      "origin": "microsoft"
+    },
+    {
+      "repo": "vercel-labs/agent-skills",
+      "tier": 1,
+      "origin": "vercel"
+    },
+    {
+      "repo": "greensock/gsap-skills",
+      "tier": 1,
+      "origin": "gsap"
+    },
+    {
+      "repo": "cloudflare/skills",
+      "tier": 1,
+      "origin": "cloudflare"
+    },
+    {
+      "repo": "supabase/agent-skills",
+      "tier": 1,
+      "origin": "supabase"
+    },
+    {
+      "repo": "stripe/agent-toolkit",
+      "tier": 1,
+      "origin": "stripe"
+    },
+    {
+      "repo": "hashicorp/agent-skills",
+      "tier": 1,
+      "origin": "hashicorp"
+    },
+    {
+      "repo": "getsentry/skills",
+      "tier": 1,
+      "origin": "sentry"
+    },
+    {
+      "repo": "expo/skills",
+      "tier": 1,
+      "origin": "expo"
+    },
+    {
+      "repo": "callstackincubator/agent-skills",
+      "tier": 1,
+      "origin": "callstack"
+    },
+    {
+      "repo": "remotion-dev/skills",
+      "tier": 1,
+      "origin": "remotion"
+    },
+    {
+      "repo": "phaserjs/phaser",
+      "tier": 1,
+      "origin": "phaser"
+    },
+    {
+      "repo": "huggingface/skills",
+      "tier": 1,
+      "origin": "huggingface"
+    },
+    {
+      "repo": "neondatabase/agent-skills",
+      "tier": 1,
+      "origin": "neon"
+    },
+    {
+      "repo": "prisma/skills",
+      "tier": 1,
+      "origin": "prisma"
+    },
+    {
+      "repo": "mongodb/agent-skills",
+      "tier": 1,
+      "origin": "mongodb"
+    },
+    {
+      "repo": "posthog/skills",
+      "tier": 1,
+      "origin": "posthog"
+    },
+    {
+      "repo": "shadcn-ui/ui",
+      "tier": 1,
+      "origin": "shadcn"
+    },
+    {
+      "repo": "figma/mcp-server-guide",
+      "tier": 1,
+      "origin": "figma"
+    },
+    {
+      "repo": "JetBrains/skills",
+      "tier": 1,
+      "origin": "jetbrains",
+      "redistributor": true
+    },
+    {
+      "repo": "trailofbits/skills",
+      "tier": 1,
+      "origin": "trailofbits"
+    },
+    {
+      "repo": "pmndrs/koota",
+      "tier": 1,
+      "origin": "pmndrs"
+    },
+    {
+      "repo": "mcp-use/mcp-use",
+      "tier": 1,
+      "origin": "mcp-use"
+    },
+    {
+      "repo": "better-auth/skills",
+      "tier": 1,
+      "origin": "better-auth"
+    },
+    {
+      "repo": "obra/superpowers",
+      "tier": 2
+    },
+    {
+      "repo": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "tier": 2
+    },
+    {
+      "repo": "coreyhaines31/marketingskills",
+      "tier": 2
+    },
+    {
+      "repo": "K-Dense-AI/claude-scientific-skills",
+      "tier": 2
+    },
+    {
+      "repo": "wshobson/agents",
+      "tier": 2
+    },
+    {
+      "repo": "alirezarezvani/claude-skills",
+      "tier": 2
+    },
+    {
+      "repo": "Orchestra-Research/AI-research-SKILLs",
+      "tier": 2
+    },
+    {
+      "repo": "muratcankoylan/Agent-Skills-for-Context-Engineering",
+      "tier": 2
+    },
+    {
+      "repo": "Jeffallan/claude-skills",
+      "tier": 2
+    },
+    {
+      "repo": "Dimillian/Skills",
+      "tier": 2
+    },
+    {
+      "repo": "MengTo/Skills",
+      "tier": 2
+    },
+    {
+      "repo": "wondelai/skills",
+      "tier": 2
+    },
+    {
+      "repo": "CloudAI-X/threejs-skills",
+      "tier": 2
+    },
+    {
+      "repo": "majidmanzarpour/threejs-game-skills",
+      "tier": 2
+    },
+    {
+      "repo": "oso95/scroll-world",
+      "tier": 2
+    },
+    {
+      "repo": "freshtechbro/claudedesignskills",
+      "tier": 2
+    },
+    {
+      "repo": "SawyerHood/dev-browser",
+      "tier": 2
+    },
+    {
+      "repo": "iart-ai/webgl-animation-skills",
+      "tier": 3
+    },
+    {
+      "repo": "woliveiras/web-graphics-skills",
+      "tier": 3
+    },
+    {
+      "repo": "12-Studio/Tackl",
+      "tier": 3
+    },
+    {
+      "repo": "Impertio-Studio/CesiumJS-Claude-Skill-Package",
+      "tier": 3
+    },
+    {
+      "repo": "zubair-trabzada/scroll-cinematic-claude",
+      "tier": 3
+    },
+    {
+      "repo": "oimiragieo/omega-cinematic-3d-website",
+      "tier": 3
+    },
+    {
+      "repo": "Ilm-Alan/frontend-design",
+      "tier": 3
+    },
+    {
+      "repo": "zyliu0/3d-frontend",
+      "tier": 3,
+      "manual": [
+        {
+          "path": "3D-frontend.md",
+          "name": "3d-frontend",
+          "description": "Scroll-driven 3D websites as single-file HTML with Three.js + GSAP ScrollTrigger via CDN: room walk-throughs, tunnels/corridors, landscape flyovers, orbit showcases, vertical descents and spline path follows."
+        }
+      ]
+    },
+    {
+      "repo": "PatrickJS/awesome-cursorrules",
+      "tier": 2,
+      "kind": "rules",
+      "include": [
+        "rules/"
+      ]
+    },
+    {
+      "repo": "anthropics/k12-teacher-skills",
+      "tier": 1,
+      "origin": "anthropic"
+    },
+    {
+      "repo": "Shopify/agent-skills",
+      "tier": 1,
+      "origin": "shopify"
+    },
+    {
+      "repo": "heygen-com/hyperframes",
+      "tier": 1,
+      "origin": "heygen"
+    },
+    {
+      "repo": "addyosmani/agent-skills",
+      "tier": 2
+    },
+    {
+      "repo": "DietrichGebert/ponytail",
+      "tier": 2
+    },
+    {
+      "repo": "nexu-io/open-design",
+      "tier": 2
+    },
+    {
+      "repo": "tt-a1i/archify",
+      "tier": 2
+    },
+    {
+      "repo": "Egonex-AI/Understand-Anything",
+      "tier": 2
+    },
+    {
+      "repo": "thedotmack/claude-mem",
+      "tier": 2
+    },
+    {
+      "repo": "multica-ai/andrej-karpathy-skills",
+      "tier": 2
+    },
+    {
+      "repo": "AgriciDaniel/claude-seo",
+      "tier": 2
+    },
+    {
+      "repo": "zubair-trabzada/geo-seo-claude",
+      "tier": 2
+    },
+    {
+      "repo": "himself65/finance-skills",
+      "tier": 2
+    },
+    {
+      "repo": "tradermonty/claude-trading-skills",
+      "tier": 2
+    },
+    {
+      "repo": "evolsb/claude-legal-skill",
+      "tier": 2
+    },
+    {
+      "repo": "Besty0728/Unity-Skills",
+      "tier": 2
+    },
+    {
+      "repo": "lawve-ai/awesome-legal-skills",
+      "tier": 3
+    },
+    {
+      "repo": "gfodor/legal-skills",
+      "tier": 3
+    },
+    {
+      "repo": "RKiding/Awesome-finance-skills",
+      "tier": 3
+    },
+    {
+      "repo": "JoelLewis/finance_skills",
+      "tier": 3
+    },
+    {
+      "repo": "agiprolabs/claude-trading-skills",
+      "tier": 3
+    },
+    {
+      "repo": "iannuttall/seo",
+      "tier": 3
+    },
+    {
+      "repo": "arjun988/blender-skills",
+      "tier": 3
+    },
+    {
+      "repo": "RobLe3/cc-blender-skill",
+      "tier": 3
+    },
+    {
+      "repo": "flowful-ai/cad-skill",
+      "tier": 3
+    },
+    {
+      "repo": "earthtojake/cad-skill",
+      "tier": 3
+    },
+    {
+      "repo": "bitwize-music-studio/claude-ai-music-skills",
+      "tier": 3
+    },
+    {
+      "repo": "haxqer/godot-skill",
+      "tier": 3
+    },
+    {
+      "repo": "ayghri/i-have-adhd",
+      "tier": 3
+    },
+    {
+      "repo": "rerun-io/rerun",
+      "tier": 1,
+      "origin": "rerun"
+    },
+    {
+      "repo": "affaan-m/ECC",
+      "tier": 2
+    },
+    {
+      "repo": "austintgriffith/ethskills",
+      "tier": 2
+    },
+    {
+      "repo": "arpitg1304/robotics-agent-skills",
+      "tier": 2
+    },
+    {
+      "repo": "tuanductran/hr-skills",
+      "tier": 3
+    },
+    {
+      "repo": "composio-community/support-skills",
+      "tier": 3
+    },
+    {
+      "repo": "anthropics/healthcare",
+      "tier": 1,
+      "origin": "anthropic"
+    },
+    {
+      "repo": "maziyarpanahi/openmed",
+      "tier": 2
+    },
+    {
+      "repo": "aipoch/medical-research-skills",
+      "tier": 3
+    },
+    {
+      "repo": "proficientlyjobs/proficiently-claude-skills",
+      "tier": 3
+    }
+  ],
+  "orgs": [
+    {
+      "org": "gemini-cli-extensions",
+      "tier": 1,
+      "origin": "google",
+      "kind": "gemini-extension",
+      "minStars": 5
+    }
+  ],
+  "exclude": [
+    "sickn33/antigravity-awesome-skills",
+    "majiayu000/claude-skill-registry",
+    "majiayu000/claude-skill-registry-data",
+    "gabrielmoreira/agent-skills-mirror",
+    "ComposioHQ/awesome-claude-skills",
+    "TerminalSkills/skills",
+    "davila7/claude-code-templates",
+    "Mindrally/skills",
+    "sanjeed5/awesome-cursor-rules-mdc",
+    "mohitagw15856/pm-claude-skills",
+    "membranedev/application-skills",
+    "tonone-ai/tonone",
+    "FreedomIntelligence/OpenClaw-Medical-Skills"
+  ],
+  "discovered": []
+}

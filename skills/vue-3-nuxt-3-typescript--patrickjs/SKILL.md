@@ -1,0 +1,17 @@
+---
+name: "vue-3-nuxt-3-typescript"
+description: "Cursor rules for Vue 3 development with TypeScript integration."
+license: CC0-1.0
+---
+# Vue 3 Nuxt 3 Typescript
+
+> Converted from a Cursor rule so it also works as an Agent Skill (Claude, Codex, Gemini CLI, Copilot). Original file kept alongside.
+
+Vue 3 Nuxt 3 TypeScript Guidelines
+
+- Use Vue 3 Composition API patterns with `<script setup>` and clear component boundaries.
+- Prefer TypeScript interfaces for object shapes and keep shared types close to the feature that owns them.
+- Use Nuxt conventions for routing, layouts, composables, plugins, server routes, and runtime config.
+- Keep Tailwind CSS usage responsive, accessible, and consistent with the project design system.
+- Use VueUse utilities where they simplify reactivity without hiding important state transitions.
+- Optimize Vite/Nuxt builds with lazy loading, dynamic imports, image optimization, and bundle review.

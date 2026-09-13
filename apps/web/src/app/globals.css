@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+:root {
+  --background: #07070c;
+  --foreground: #e9e9f1;
+  --muted: #9a9ab0;
+  --card: rgba(255, 255, 255, 0.035);
+  --border: rgba(255, 255, 255, 0.09);
+  --accent: #8b5cf6;
+  --accent-2: #22d3ee;
+  --accent-3: #f59e0b;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-card: var(--card);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-accent-3: var(--accent-3);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+::selection {
+  background: rgba(139, 92, 246, 0.45);
+}
+
+/* Animated aurora behind the hero */
+.aurora {
+  position: absolute;
+  inset: -20% -10% auto -10%;
+  height: 720px;
+  filter: blur(90px) saturate(140%);
+  opacity: 0.55;
+  pointer-events: none;
+  background:
+    radial-gradient(40% 50% at 20% 30%, rgba(139, 92, 246, 0.55), transparent 70%),
+    radial-gradient(35% 45% at 80% 20%, rgba(34, 211, 238, 0.4), transparent 70%),
+    radial-gradient(30% 40% at 55% 70%, rgba(245, 158, 11, 0.28), transparent 70%);
+  animation: aurora 18s ease-in-out infinite alternate;
+}
+@keyframes aurora {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+  50% { transform: translate3d(3%, 4%, 0) rotate(6deg) scale(1.05); }
+  100% { transform: translate3d(-3%, -2%, 0) rotate(-4deg) scale(1.02); }
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at 50% 0%, black 30%, transparent 75%);
+}
+
+.gradient-text {
+  background: linear-gradient(100deg, #fff 10%, #c4b5fd 40%, #67e8f9 70%, #fcd34d 95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glow-ring {
+  box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.35), 0 10px 60px -10px rgba(139, 92, 246, 0.45);
+}
+
+.shimmer {
+  background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.04) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+@keyframes shimmer { to { background-position: -200% 0; } }
+
+/* Markdown rendering for SKILL.md */
+.prose-skill { line-height: 1.7; color: #d7d7e3; font-size: 0.95rem; }
+.prose-skill h1 { font-size: 1.6rem; font-weight: 700; margin: 1.6rem 0 0.8rem; color: #fff; }
+.prose-skill h2 { font-size: 1.25rem; font-weight: 650; margin: 1.6rem 0 0.6rem; color: #fff; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border); }
+.prose-skill h3 { font-size: 1.05rem; font-weight: 600; margin: 1.2rem 0 0.4rem; color: #fff; }
+.prose-skill p { margin: 0.7rem 0; }
+.prose-skill ul, .prose-skill ol { margin: 0.6rem 0 0.6rem 1.4rem; }
+.prose-skill ul { list-style: disc; }
+.prose-skill ol { list-style: decimal; }
+.prose-skill li { margin: 0.25rem 0; }
+.prose-skill a { color: #a5b4fc; text-decoration: underline; text-underline-offset: 3px; }
+.prose-skill code { font-family: var(--font-geist-mono), monospace; font-size: 0.85em; background: rgba(255,255,255,0.07); padding: 0.1rem 0.35rem; border-radius: 5px; }
+.prose-skill pre { background: #0d0d16; border: 1px solid var(--border); border-radius: 12px; padding: 1rem; overflow-x: auto; margin: 1rem 0; }
+.prose-skill pre code { background: none; padding: 0; font-size: 0.82rem; }
+.prose-skill blockquote { border-left: 3px solid var(--accent); padding-left: 1rem; color: var(--muted); margin: 1rem 0; }
+.prose-skill table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; display: block; overflow-x: auto; }
+.prose-skill th, .prose-skill td { border: 1px solid var(--border); padding: 0.45rem 0.6rem; text-align: left; vertical-align: top; }
+.prose-skill th { background: rgba(255,255,255,0.04); color: #fff; }
+.prose-skill hr { border-color: var(--border); margin: 1.5rem 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora, .shimmer { animation: none; }
+}

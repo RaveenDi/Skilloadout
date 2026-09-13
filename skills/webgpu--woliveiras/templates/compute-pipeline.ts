@@ -1,0 +1,2 @@
+/// <reference types="@webgpu/types" />
+export function encodeCompute(device:GPUDevice,pipeline:GPUComputePipeline,group:GPUBindGroup,workgroups:number):GPUCommandBuffer{if(!Number.isInteger(workgroups)||workgroups<1)throw new Error("Invalid workgroup count");const encoder=device.createCommandEncoder();const pass=encoder.beginComputePass();pass.setPipeline(pipeline);pass.setBindGroup(0,group);pass.dispatchWorkgroups(workgroups);pass.end();return encoder.finish();}// TODO: derive count from input length and shader workgroup size.

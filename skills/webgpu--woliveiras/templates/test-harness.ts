@@ -1,0 +1,2 @@
+/// <reference types="@webgpu/types" />
+export async function requireTestDevice():Promise<GPUDevice>{if(!navigator.gpu)throw new Error("SKIP: WebGPU unavailable");const adapter=await navigator.gpu.requestAdapter();if(!adapter)throw new Error("SKIP: adapter unavailable");const device=await adapter.requestDevice();device.addEventListener("uncapturederror",(event)=>{throw event.error;});return device;}// TODO: record browser/OS/GPU and assert pixels or numbers with tolerance.

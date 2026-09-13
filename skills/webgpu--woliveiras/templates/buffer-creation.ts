@@ -1,0 +1,2 @@
+/// <reference types="@webgpu/types" />
+export function createUploadedBuffer(device:GPUDevice,data:ArrayBufferView,usage:GPUBufferUsageFlags):GPUBuffer{const size=Math.ceil(data.byteLength/4)*4;const buffer=device.createBuffer({size,usage:usage|GPUBufferUsage.COPY_DST});device.queue.writeBuffer(buffer,0,data);return buffer;}// TODO: verify WGSL layout, ownership, update frequency, and destroy path.

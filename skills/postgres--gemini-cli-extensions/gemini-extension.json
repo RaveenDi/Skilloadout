@@ -1,0 +1,50 @@
+{
+  "name": "postgres",
+  "version": "0.2.3",
+  "description": "Connect and interact with a PostgreSQL database and data",
+  "mcpServers": {
+    "postgresql": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@toolbox-sdk/server@1.10.0",
+        "--prebuilt",
+        "postgres",
+        "--stdio"
+      ]
+    }
+  },
+  "contextFileName": "POSTGRESQL.md",
+  "settings": [
+    {
+      "name": "Database",
+      "description": "Name of the database",
+      "envVar": "POSTGRES_DATABASE"
+    },
+    {
+      "name": "User",
+      "description": "Username of the database user",
+      "envVar": "POSTGRES_USER"
+    },
+    {
+      "name": "Password",
+      "description": "Password of the database user",
+      "envVar": "POSTGRES_PASSWORD"
+    },
+    {
+      "name": "Host",
+      "description": "Host or IP address of the PostgreSQL server",
+      "envVar": "POSTGRES_HOST"
+    },
+    {
+      "name": "Port",
+      "description": "Port number of the PostgreSQL server",
+      "envVar": "POSTGRES_PORT"
+    },
+    {
+      "name": "Query Params",
+      "description": "(Optional) Connection String Parameters",
+      "envVar": "POSTGRES_QUERY_PARAMS"
+    }
+  ]
+}

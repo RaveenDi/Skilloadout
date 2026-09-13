@@ -1,0 +1,45 @@
+{
+  "name": "oracledb",
+  "version": "0.2.7",
+  "description": "Connect, query, and interact with Oracle Databases and their data.",
+  "mcpServers": {
+    "oracledb": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@toolbox-sdk/server@1.9.0",
+        "--prebuilt",
+        "oracledb",
+        "--stdio"
+      ]
+    }
+  },
+  "contextFileName": "ORACLEDB.md",
+  "settings": [
+    {
+      "name": "Connection String",
+      "description": "Oracle connection string (e.g., host:port/service_name or TNS alias)",
+      "envVar": "ORACLE_CONNECTION_STRING"
+    },
+    {
+      "name": "Username",
+      "description": "Oracle database username",
+      "envVar": "ORACLE_USERNAME"
+    },
+    {
+      "name": "Password",
+      "description": "Oracle database password",
+      "envVar": "ORACLE_PASSWORD"
+    },
+    {
+      "name": "Wallet Path",
+      "description": "(Optional) Path to the Oracle Wallet directory",
+      "envVar": "ORACLE_WALLET"
+    },
+    {
+      "name": "Use OCI",
+      "description": "(Optional) Set to true to use the OCI (thick client) driver (Default: false)",
+      "envVar": "ORACLE_USE_OCI"
+    }
+  ]
+}

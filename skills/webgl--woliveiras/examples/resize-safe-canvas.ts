@@ -1,0 +1,8 @@
+export {};
+
+const canvas=document.body.appendChild(document.createElement("canvas"));canvas.style.cssText="width:100%;height:60vh";const maybeGl=canvas.getContext("webgl2");if(!maybeGl)throw new Error("WebGL 2 unavailable");const gl:WebGL2RenderingContext=maybeGl;
+let color=gl.createTexture();let framebuffer=gl.createFramebuffer();if(!color||!framebuffer)throw new Error("resize resources unavailable");
+function resize():void{const ratio=Math.min(window.devicePixelRatio||1,2),max=gl.getParameter(gl.MAX_RENDERBUFFER_SIZE) as number,width=Math.min(max,Math.max(1,Math.round(canvas.clientWidth*ratio))),height=Math.min(max,Math.max(1,Math.round(canvas.clientHeight*ratio)));if(canvas.width===width&&canvas.height===height)return;canvas.width=width;canvas.height=height;
+  gl.deleteTexture(color);gl.deleteFramebuffer(framebuffer);color=gl.createTexture();framebuffer=gl.createFramebuffer();if(!color||!framebuffer)throw new Error("resize allocation failed");gl.bindTexture(gl.TEXTURE_2D,color);gl.texStorage2D(gl.TEXTURE_2D,1,gl.RGBA8,width,height);gl.bindFramebuffer(gl.FRAMEBUFFER,framebuffer);gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,color,0);const status=gl.checkFramebufferStatus(gl.FRAMEBUFFER);if(status!==gl.FRAMEBUFFER_COMPLETE)throw new Error(`resize FBO incomplete: 0x${status.toString(16)}`);gl.bindFramebuffer(gl.FRAMEBUFFER,null);gl.viewport(0,0,width,height);}
+const observer=new ResizeObserver(()=>{try{resize();}catch(error){console.error(error);}});observer.observe(canvas);resize();
+window.addEventListener("pagehide",()=>{observer.disconnect();gl.deleteTexture(color);gl.deleteFramebuffer(framebuffer);},{once:true});

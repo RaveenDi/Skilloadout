@@ -1,0 +1,2 @@
+/// <reference types="@webgpu/types" />
+export function watchDevice(device:GPUDevice,stop:()=>void,rebuild:()=>Promise<void>):()=>void{let active=true;void device.lost.then(async(info)=>{if(!active)return;active=false;stop();console.error("WebGPU device lost",info.reason,info.message);await rebuild();});return()=>{active=false;device.destroy();};}// TODO: rebuild every resource from CPU descriptors or choose fallback.

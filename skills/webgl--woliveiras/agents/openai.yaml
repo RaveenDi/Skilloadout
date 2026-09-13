@@ -1,0 +1,4 @@
+interface:
+  display_name: "WebGL"
+  short_description: "Build and debug production WebGL code"
+  default_prompt: "Use $webgl to inspect and solve this WebGL task with current canonical sources."

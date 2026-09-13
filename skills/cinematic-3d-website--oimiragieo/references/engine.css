@@ -1,0 +1,496 @@
+/* engine.css: complete styling for the depth-fly cinematic stage.
+   Tokens: define --accent-cyan, --bg-base, --text-main, --text-dim,
+   --text-muted, --border-light, --border-dim, --cinematic-ember (r,g,b)
+   in your design system; everything below derives from them. */
+
+.gc-cine-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--accent-cyan);
+}
+.gc-cine-title {
+  margin: 0;
+  font-size: clamp(30px, 6vw, 68px);
+  line-height: 1.03;
+  font-weight: 700;
+  color: var(--text-main);
+  text-wrap: balance;
+  max-width: 16ch;
+}
+.gc-cine-sub {
+  margin: 0;
+  font-size: clamp(15px, 2.2vw, 20px);
+  color: var(--text-dim);
+  max-width: 46ch;
+}
+
+.gc-cine-cta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+}
+.gc-cine-btn {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  padding: 13px 24px;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.gc-cine-btn-primary {
+  color: #04121a; /* fixed dark ink on the cyan pill — legible on the accent in both themes */
+  background: var(--accent-cyan);
+  box-shadow: 0 0 40px -8px var(--accent-cyan);
+}
+.gc-cine-btn-ghost {
+  color: var(--text-main);
+  border: 1px solid var(--border-light);
+}
+.gc-cine-btn:hover {
+  transform: translateY(-1px);
+}
+.gc-cine-btn:focus-visible {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 3px;
+}
+
+/* Scroll cue at the bottom of the opening frame. */
+.gc-cine-scrollcue {
+  position: absolute;
+  left: 50%;
+  bottom: 26px;
+  transform: translateX(-50%);
+  z-index: 2;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  animation: gc-cine-bob 2s ease-in-out infinite;
+}
+@keyframes gc-cine-bob {
+  /* Only the vertical bob — opacity is driven inline by the scroll handler so
+     the cue actually fades out as you scroll in. A CSS animation on `opacity`
+     would override the inline style and pin the cue visible forever. */
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(5px);
+  }
+}
+
+/* --- Static fallback (phones / reduced-motion / Save-Data) --- */
+.gc-cine-static {
+  position: relative;
+  min-height: 78vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(40px, 9vw, 96px) clamp(20px, 6vw, 64px);
+  overflow: hidden;
+  background: var(--bg-base);
+}
+.gc-cine-static-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  --cinematic-ember: 255, 138, 76;
+  background: radial-gradient(circle at 50% 40%, rgba(var(--cinematic-ember), 0.12), transparent 62%);
+}
+:root[data-theme='light'] .gc-cine-static-glow {
+  opacity: 0.4;
+}
+.gc-cine-static-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  text-align: center;
+  max-width: 720px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gc-cine-scrollcue,
+  .gc-film-beat-first .gc-cine-eyebrow,
+  .gc-film-beat-first .gc-film-title,
+  .gc-film-beat-first .gc-cine-sub {
+    animation: none;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * ServerRoomStage — the supercomputer-orbit journey. Reuses the
+ * gc-cine-* pin/canvas/beat scaffolding; these add the taller scroll
+ * track and the per-monitor "data area" content card.
+ * ------------------------------------------------------------------ */
+.gc-srv-wrap {
+  height: 480vh; /* ~one viewport per monitor + entry/exit runway */
+}
+.gc-srv-panel {
+  /* Card sits in the LEFT column so the orbiting 3D server stays visible on the
+     right (a product-showcase composition). Inherits the beat's absolute-centre
+     + opacity crossfade. */
+  align-items: flex-start;
+  justify-content: center;
+  padding-left: clamp(24px, 7vw, 110px);
+  padding-right: clamp(20px, 6vw, 64px);
+}
+/* Left-biased scrim: darken behind the card, stay clear over the server. */
+.gc-srv-panel::before {
+  background: linear-gradient(100deg, rgba(2, 5, 9, 0.9) 0%, rgba(2, 5, 9, 0.6) 34%, transparent 62%) !important;
+}
+.gc-srv-card {
+  position: relative;
+  z-index: 1;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  text-align: left;
+  padding: clamp(22px, 3vw, 34px);
+  border-radius: 16px;
+  border: 1px solid rgba(51, 210, 255, 0.28);
+  background: linear-gradient(160deg, rgba(8, 16, 26, 0.82), rgba(4, 8, 14, 0.72));
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.55),
+    inset 0 0 42px rgba(51, 210, 255, 0.06);
+  backdrop-filter: blur(3px);
+}
+:root[data-theme='light'] .gc-srv-card {
+  border-color: rgba(51, 130, 200, 0.32);
+  background: linear-gradient(160deg, rgba(240, 246, 252, 0.92), rgba(228, 238, 248, 0.86));
+  box-shadow:
+    0 24px 60px rgba(20, 30, 60, 0.16),
+    inset 0 0 42px rgba(51, 140, 200, 0.06);
+}
+.gc-srv-title {
+  font-size: clamp(1.8rem, 3.4vw, 2.9rem) !important;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+.gc-srv-card .gc-cine-sub {
+  margin: 0;
+  max-width: 46ch;
+}
+.gc-srv-stat {
+  margin-top: 4px;
+  align-self: flex-start;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--accent-cyan);
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(51, 210, 255, 0.35);
+  background: rgba(51, 210, 255, 0.08);
+}
+.gc-srv-card .gc-cine-cta {
+  margin-top: 10px;
+}
+/* Static fallback list (phones / reduced-motion) */
+.gc-srv-list {
+  list-style: none;
+  margin: 8px 0 4px;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+  width: 100%;
+  max-width: 640px;
+  text-align: left;
+}
+.gc-srv-list-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  background: var(--bg-card);
+}
+.gc-srv-list-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+}
+.gc-srv-list-title {
+  font-size: 1.02rem;
+  font-weight: 650;
+  color: var(--text-main);
+}
+.gc-srv-list-body {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+}
+
+/* ------------------------------------------------------------------ *
+ * CinematicFilmStage — photoreal scroll cinematic. Full-bleed
+ * crossfading frames + Ken-Burns + ember overlay + lower-third copy.
+ * ------------------------------------------------------------------ */
+.gc-film-wrap {
+  height: 520vh; /* ~one viewport per frame + runway */
+  position: relative;
+}
+.gc-film-pin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #04070c;
+}
+.gc-film-frame {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  will-change: opacity, transform;
+  transform: scale(1.06);
+  transition: opacity 0.12s linear;
+}
+/* The 3D depth-fly canvas host reuses .gc-film-frame's full-bleed box but the
+   WebGL canvas owns all motion — kill the film-frame's static scale/opacity
+   transition so it doesn't fight the shader dolly, and paint a dark base to
+   avoid a flash before the first render clears. */
+.gc-depth-canvas {
+  background-size: initial;
+  will-change: auto;
+  transform: none;
+  transition: none;
+  overflow: hidden;
+  background-color: #04060b;
+  /* No z-index here: an explicit z-index would trap the preloader veil
+     (z-index 6, rendered inside this host) in a local stacking context below
+     the sibling vignette/beat overlays. DOM order already paints the canvas
+     beneath them. */
+}
+/* Intro materialization — beat 0's copy rises out of blur once on load (the
+   cinematic settle-in that pairs with the camera's intro dolly). Scroll opacity
+   still owns the beat CONTAINER; this animates only the children, once. */
+.gc-film-beat-first .gc-cine-eyebrow,
+.gc-film-beat-first .gc-film-title,
+.gc-film-beat-first .gc-cine-sub {
+  animation: gc-film-rise 0.9s cubic-bezier(0.22, 0.8, 0.24, 1) backwards;
+}
+.gc-film-beat-first .gc-film-title {
+  animation-delay: 0.18s;
+}
+.gc-film-beat-first .gc-cine-sub {
+  animation-delay: 0.36s;
+}
+@keyframes gc-film-rise {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+/* Vignette + bottom scrim so the lower-third copy always reads. */
+.gc-film-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(to top, rgba(2, 4, 8, 0.92) 0%, rgba(2, 4, 8, 0.35) 34%, transparent 60%),
+    radial-gradient(ellipse 120% 80% at 50% 40%, transparent 55%, rgba(2, 4, 8, 0.55) 100%);
+}
+.gc-film-embers {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.gc-film-beat {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: clamp(40px, 8vh, 96px) clamp(24px, 7vw, 120px);
+  pointer-events: none;
+  transition: opacity 0.14s linear;
+}
+.gc-film-card {
+  max-width: 620px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  text-align: left;
+}
+.gc-film-card .gc-cine-cta {
+  justify-content: flex-start;
+  pointer-events: auto;
+}
+.gc-film-title {
+  font-size: clamp(2.2rem, 5.2vw, 4.6rem) !important;
+  line-height: 1.02;
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.6);
+  max-width: 14ch;
+}
+/* Clash Display via --font-cine (set by DepthFlyStage's next/font wrapper).
+   Descendant selector so it outranks .gc-cine-title's base font-family. */
+.gc-film-wrap .gc-film-title {
+  font-family: var(--font-cine, inherit);
+  letter-spacing: -0.015em;
+}
+.gc-film-static .gc-cine-title {
+  font-family: var(--font-cine, inherit);
+  letter-spacing: -0.015em;
+}
+.gc-film-card .gc-cine-sub {
+  max-width: 44ch;
+  text-shadow: 0 1px 18px rgba(0, 0, 0, 0.7);
+}
+/* Narrow desktop windows: keep beat copy clear of the consent bar */
+@media (max-width: 520px) {
+  .gc-film-beat {
+    padding-bottom: clamp(96px, 18vh, 160px);
+  }
+}
+/* Branded preloader veil: covers the canvas until every frame texture has
+   landed, so a slow connection never sees the scene pop in half-loaded.
+   z-index 6 sits above canvas (1), vignette (2), embers (3) and beats (4). */
+.gc-cine-loader {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  background: #04060b;
+  opacity: 1;
+  transition: opacity 0.6s ease 0.15s;
+}
+.gc-cine-loader.is-done {
+  opacity: 0;
+  pointer-events: none;
+}
+.gc-cine-loader-mark {
+  font-family: var(--font-cine, inherit);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.gc-cine-loader-bar {
+  width: min(220px, 40vw);
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+.gc-cine-loader-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--accent-cyan);
+  transition: width 0.3s ease;
+}
+/* Opt-in ambient sound toggle: quiet chip in the lower-right of the
+   pin. Sits above canvas/vignette/handoff, below the preloader veil. */
+.gc-cine-sound {
+  position: absolute;
+  right: clamp(16px, 3vw, 32px);
+  bottom: 24px;
+  z-index: 5;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border-dim);
+  background: rgba(6, 10, 16, 0.55);
+  backdrop-filter: blur(6px);
+  color: var(--text-muted);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+.gc-cine-sound:hover {
+  color: var(--text-main);
+  border-color: var(--border-light);
+}
+.gc-cine-sound.is-on {
+  color: var(--accent-cyan);
+  border-color: rgba(51, 210, 255, 0.45);
+}
+.gc-cine-sound:focus-visible {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 3px;
+}
+/* Exit handoff: a bottom glow that dissolves the cinematic's floor into the
+   page background so the journey's end doesn't hit a hard black edge. Opacity
+   is scroll-driven (0 through the journey, fades in over the final leg) so it
+   never washes over mid-journey beat copy. */
+.gc-cine-handoff {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 34vh;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(to bottom, transparent 0%, rgba(51, 210, 255, 0.05) 35%, var(--bg-base) 100%);
+}
+/* Static fallback (phones / reduced-motion) */
+.gc-film-static {
+  position: relative;
+  min-height: 88vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: clamp(40px, 9vw, 96px) clamp(20px, 6vw, 64px);
+  background: #04070c;
+}
+.gc-film-static-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.5;
+}
+.gc-film-static-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(2, 4, 8, 0.9), rgba(2, 4, 8, 0.55));
+}
+.gc-film-static-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  text-align: center;
+  max-width: 720px;
+}

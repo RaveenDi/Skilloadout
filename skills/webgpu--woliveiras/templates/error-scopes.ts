@@ -1,0 +1,2 @@
+/// <reference types="@webgpu/types" />
+export async function withValidationScope<T>(device:GPUDevice,operation:()=>T):Promise<T>{device.pushErrorScope("validation");let result:T;try{result=operation();}catch(error){await device.popErrorScope();throw error;}const gpuError=await device.popErrorScope();if(gpuError)throw new Error(gpuError.message);return result;}// TODO: keep scope as narrow as the suspect operation.

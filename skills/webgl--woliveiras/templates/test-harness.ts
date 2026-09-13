@@ -1,0 +1,1 @@
+export function requireTestContext():WebGL2RenderingContext{const canvas=document.createElement("canvas");const gl=canvas.getContext("webgl2");if(!gl)throw new Error("SKIP: WebGL 2 unavailable");return gl;}// TODO: record browser/OS/GPU, capture logs, and assert pixels with tolerance.

@@ -1,0 +1,2 @@
+/// <reference types="@webgpu/types" />
+export function configureCanvas(canvas:HTMLCanvasElement,device:GPUDevice):{context:GPUCanvasContext;format:GPUTextureFormat}{const context=canvas.getContext("webgpu");if(!context)throw new Error("GPUCanvasContext unavailable");const format=navigator.gpu.getPreferredCanvasFormat();context.configure({device,format,alphaMode:"premultiplied"});return{context,format};}// TODO: choose alphaMode and recreate size-dependent attachments.

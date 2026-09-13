@@ -1,0 +1,9 @@
+# Attribution
+
+- **Item:** Postdoc Fellowship Matcher (`postdoc-fellowship-matcher`)
+- **Original source:** https://github.com/aipoch/medical-research-skills/tree/main/scientific-skills/Other/postdoc-fellowship-matcher
+- **Repository:** https://github.com/aipoch/medical-research-skills @ `f5ef65b9bea7`
+- **License:** MIT (resolved via frontmatter)
+
+Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.
+

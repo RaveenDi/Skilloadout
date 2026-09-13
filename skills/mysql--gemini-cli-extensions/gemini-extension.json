@@ -1,0 +1,45 @@
+{
+  "name": "mysql",
+  "version": "0.1.6",
+  "description": "Connect and interact with a MySQL database and data",
+  "mcpServers": {
+    "mysql": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@toolbox-sdk/server@1.9.0",
+        "--prebuilt",
+        "mysql",
+        "--stdio"
+      ]
+    }
+  },
+  "contextFileName": "MYSQL.md",
+  "settings": [
+    {
+      "name": "Host",
+      "description": "Host or IP address of the MySQL server",
+      "envVar": "MYSQL_HOST"
+    },
+    {
+      "name": "Port",
+      "description": "Port number of the MySQL server",
+      "envVar": "MYSQL_PORT"
+    },
+    {
+      "name": "Database",
+      "description": "Name of the database",
+      "envVar": "MYSQL_DATABASE"
+    },
+    {
+      "name": "User",
+      "description": "Username of the database user",
+      "envVar": "MYSQL_USER"
+    },
+    {
+      "name": "Password",
+      "description": "Password of the database user",
+      "envVar": "MYSQL_PASSWORD"
+    }
+  ]
+}

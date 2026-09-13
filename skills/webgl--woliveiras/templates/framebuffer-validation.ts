@@ -1,0 +1,1 @@
+export function requireCompleteFramebuffer(gl:WebGLRenderingContext,target:number=gl.FRAMEBUFFER):void{const status=gl.checkFramebufferStatus(target);if(status!==gl.FRAMEBUFFER_COMPLETE)throw new Error(`Framebuffer incomplete: 0x${status.toString(16)}`);}// TODO: log attachment descriptors and extension-dependent status meaning.

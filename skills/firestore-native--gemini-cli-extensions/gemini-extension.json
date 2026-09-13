@@ -1,0 +1,30 @@
+{
+  "name": "firestore-native",
+  "version": "0.3.4",
+  "description": "Connect and interact with Firestore databases, collections, and documents.",
+  "mcpServers": {
+    "firestore": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@toolbox-sdk/server@1.9.0",
+        "--prebuilt",
+        "firestore",
+        "--stdio"
+      ]
+    }
+  },
+  "contextFileName": "FIRESTORE-NATIVE.md",
+  "settings": [
+    {
+      "name": "Project ID",
+      "description": "ID of the Google Cloud project",
+      "envVar": "FIRESTORE_PROJECT"
+    },
+    {
+      "name": "Database ID",
+      "description": "(Optional) ID of the Firestore database (Default: '(default)')",
+      "envVar": "FIRESTORE_DATABASE"
+    }
+  ]
+}

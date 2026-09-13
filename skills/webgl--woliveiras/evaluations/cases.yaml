@@ -1,0 +1,30 @@
+skill: webgl
+rubric:
+  correction: "Uses real WebGL/GLSL ES APIs and valid version-specific behavior."
+  architecture: "Inspects and preserves framework/state ownership."
+  detection: "Checks context version, extensions, limits, and fallback."
+  failures: "Surfaces compile/link, completeness, state, and loss failures."
+  lifecycle: "Defines ownership, deletion, resize, and deterministic restoration."
+  performance: "Measures before optimizing and avoids readback/churn/state thrash."
+  testing: "Separates static, browser, version, device, and recovery evidence."
+cases:
+  - prompt: "Create a minimal WebGL 2 triangle in strict TypeScript."
+    expect: ["context failure", "compile/link logs", "VAO and explicit viewport", "cleanup"]
+  - prompt: "My fragment shader does not compile."
+    expect: ["preserve full source/log", "verify GLSL ES version and precision", "cleanup failed shader"]
+  - prompt: "The texture is black."
+    expect: ["check async/CORS", "unit/sampler and unpack state", "format/filter/wrap/mip completeness"]
+  - prompt: "The canvas is blurry after resize."
+    expect: ["separate CSS and drawing buffer", "cap DPR", "update viewport and attachments"]
+  - prompt: "checkFramebufferStatus is incomplete."
+    expect: ["log status and attachments", "check dimensions/formats/sample counts/extensions", "recheck after resize"]
+  - prompt: "A plugin corrupts rendering after its pass."
+    expect: ["audit complete state boundary", "use framework extension/reset contract", "add state regression"]
+  - prompt: "Render 20,000 repeated sprites."
+    expect: ["measure draw/state/upload bottleneck", "batch or instance", "verify WebGL version/extension"]
+  - prompt: "Recover after webglcontextlost."
+    expect: ["preventDefault and stop loop", "invalidate handles", "re-query and rebuild all resources"]
+  - prompt: "Migrate a WebGL 1 renderer to WebGL 2."
+    expect: ["inventory extensions/shaders/formats", "separate GLSL versions", "golden output and support matrix"]
+  - prompt: "Review a scene that leaks buffers on every route change."
+    expect: ["trace owner and creation/deletion counts", "delete resources", "test lifecycle and context pressure"]

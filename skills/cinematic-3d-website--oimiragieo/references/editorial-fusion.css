@@ -1,0 +1,570 @@
+/* editorial-fusion.css — complete styling for editorial-fusion-template.tsx.
+   Depends on your design tokens: --bg-base, --surface-solid, --text-main,
+   --text-dim, --text-muted, --border-dim, --border-light, --font-mono,
+   --font-cine (from the template's localFont), and an accent triplet
+   (--cinematic-ember: R, G, B). Map these to your token system or define
+   them on :root. The light contrast section deliberately stays fixed in both
+   themes -- the inversion IS the design element. */
+
+/* ══════════════════════════════════════════════════════════════════════════
+   gc-fl — factory-layout cinematic landing 
+   Editorial near-black grid + mono body + eyebrow spine, fused with the
+   depth-fly WebGL hero. Dark-first by design (like the other cinematic
+   stages); --fl-paper/--fl-ink are the deliberate contrast-inversion pair and
+   stay fixed in both themes (the inversion IS the design element).
+   ══════════════════════════════════════════════════════════════════════════ */
+.gc-fl {
+  --fl-ember: rgb(var(--cinematic-ember, 255, 138, 76));
+  --fl-ember-dim: rgba(var(--cinematic-ember, 255, 138, 76), 0.16);
+  --fl-paper: #fafafa;
+  --fl-ink: #17181c;
+  position: relative;
+  background: var(--bg-base);
+  color: var(--text-main);
+  overflow-x: clip;
+}
+.gc-fl-display {
+  font-family: var(--font-cine, inherit);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.04;
+  text-wrap: balance;
+  margin: 0;
+}
+.gc-fl-h1 {
+  font-size: clamp(42px, 6vw, 84px);
+}
+.gc-fl-h2 {
+  font-size: clamp(30px, 3.8vw, 54px);
+  max-width: 18em;
+}
+.gc-fl-mono {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.7;
+}
+.gc-fl-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--text-dim);
+  margin-bottom: 22px;
+}
+.gc-fl-eyebrow-ink {
+  color: rgba(23, 24, 28, 0.62);
+}
+.gc-fl-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--fl-ember);
+  box-shadow: 0 0 10px var(--fl-ember);
+}
+.gc-fl section {
+  position: relative;
+}
+.gc-fl-section {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: clamp(72px, 9vw, 140px) 24px;
+}
+/* Entrance reveal: one cinematic per section, then stillness. */
+.gc-fl [data-flr] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.gc-fl [data-flr].is-in {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .gc-fl [data-flr] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ── Hero ── */
+.gc-fl-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  align-items: center;
+  gap: 40px;
+  max-width: 1440px;
+  margin: 0 auto;
+  min-height: 90vh;
+  padding: 96px 24px 56px 40px;
+}
+.gc-fl-sub {
+  max-width: 520px;
+  color: var(--text-dim);
+  margin: 26px 0 34px;
+}
+.gc-fl-ctas {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.gc-fl-ctas-center {
+  justify-content: center;
+}
+.gc-fl-btn {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  padding: 13px 22px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+.gc-fl-btn:hover {
+  transform: translateY(-1px);
+}
+.gc-fl-btn-primary {
+  background: var(--text-main);
+  color: var(--bg-base);
+}
+.gc-fl-btn-ghost {
+  color: var(--text-main);
+  border: 1px solid var(--border-dim);
+  background: transparent;
+}
+.gc-fl-btn-ghost:hover {
+  border-color: var(--fl-ember);
+}
+.gc-fl-heroviz {
+  min-width: 0;
+}
+.gc-fl-window {
+  border: 1px solid var(--border-dim);
+  border-radius: 12px;
+  background: var(--surface-solid);
+  overflow: hidden;
+}
+.gc-fl-heroviz-window {
+  width: 112%;
+  animation: gc-fl-hero-in 1.1s cubic-bezier(0.16, 1, 0.3, 1) both 0.15s;
+}
+@keyframes gc-fl-hero-in {
+  from {
+    opacity: 0;
+    transform: translateX(48px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gc-fl-heroviz-window {
+    animation: none;
+  }
+}
+.gc-fl-window-bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border-dim);
+}
+.gc-fl-tl {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border-light);
+}
+.gc-fl-window-title {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-left: 8px;
+}
+.gc-fl-heroviz-canvas {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: #04070c;
+}
+.gc-fl-heroviz-canvas > div {
+  position: absolute;
+  inset: 0;
+}
+.gc-fl-heroviz-still {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+.gc-fl-heroviz-chips {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 12px 14px;
+  border-top: 1px solid var(--border-dim);
+}
+.gc-fl-heroviz-chips span {
+  font-size: 12px;
+  color: var(--text-dim);
+  border: 1px solid var(--border-dim);
+  border-radius: 999px;
+  padding: 5px 12px;
+}
+
+/* ── Measured-facts marquee ── */
+.gc-fl-band {
+  border-top: 1px solid var(--border-dim);
+  border-bottom: 1px solid var(--border-dim);
+  padding: 30px 0;
+}
+.gc-fl-band-label {
+  text-align: center;
+  font-size: 11.5px;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+.gc-fl-marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+}
+.gc-fl-marquee-track {
+  display: inline-flex;
+  gap: 56px;
+  white-space: nowrap;
+  width: max-content;
+  padding-right: 56px;
+  animation: gc-fl-marquee 42s linear infinite;
+}
+.gc-fl-marquee-track span {
+  color: var(--text-dim);
+  font-size: 14px;
+}
+@keyframes gc-fl-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gc-fl-marquee-track {
+    animation: none;
+  }
+}
+
+/* ── Concept cards ── */
+.gc-fl-cards3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 44px;
+}
+.gc-fl-card {
+  border: 1px solid var(--border-dim);
+  border-radius: 10px;
+  padding: 26px 24px;
+  background: transparent;
+  transition: border-color 0.25s ease;
+}
+.gc-fl-card:hover {
+  border-color: var(--border-light);
+}
+.gc-fl-card-diagram {
+  font-size: 12.5px;
+  color: var(--fl-ember);
+  opacity: 0.85;
+  margin-bottom: 22px;
+  min-height: 64px;
+}
+.gc-fl-card-title {
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  color: var(--text-main);
+  margin-bottom: 10px;
+}
+.gc-fl-card-body {
+  color: var(--text-dim);
+  margin: 0;
+}
+.gc-fl-card-flat .gc-fl-card-title {
+  margin-top: 2px;
+}
+
+/* ── Cinema break ── */
+.gc-fl-cinema {
+  position: relative;
+  height: 76vh;
+  min-height: 480px;
+  overflow: clip;
+  border-top: 1px solid var(--border-dim);
+  border-bottom: 1px solid var(--border-dim);
+}
+.gc-fl-cinema-img {
+  position: absolute;
+  inset: -12% 0;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.18);
+  will-change: transform;
+}
+.gc-fl-cinema::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(2, 3, 5, 0.92), rgba(2, 3, 5, 0.15) 55%, rgba(2, 3, 5, 0.45));
+}
+.gc-fl-cinema-caption {
+  position: absolute;
+  left: clamp(24px, 5vw, 72px);
+  bottom: clamp(28px, 5vw, 64px);
+  z-index: 1;
+  max-width: 640px;
+}
+
+/* ── Zig-zag rows ── */
+.gc-fl-zig {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(32px, 5vw, 80px);
+  align-items: center;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: clamp(64px, 8vw, 120px) 24px;
+}
+.gc-fl-zig-rev .gc-fl-zig-copy {
+  order: 2;
+}
+.gc-fl-body {
+  color: var(--text-dim);
+  max-width: 480px;
+  margin-top: 20px;
+}
+.gc-fl-zig-panel {
+  min-width: 0;
+}
+.gc-fl-panel-foot {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  padding-top: 14px;
+}
+.gc-fl-ratio {
+  padding: 22px 20px;
+  display: grid;
+  gap: 18px;
+}
+.gc-fl-ratio-row {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr) 110px;
+  gap: 14px;
+  align-items: center;
+}
+.gc-fl-ratio-label {
+  font-size: 12.5px;
+  color: var(--text-dim);
+}
+.gc-fl-ratio-note {
+  font-size: 12.5px;
+  color: var(--fl-ember);
+  text-align: right;
+}
+.gc-fl-ratio-bars {
+  position: relative;
+  height: 14px;
+}
+.gc-fl-ratio-before {
+  position: absolute;
+  inset: 0;
+  border-radius: 3px;
+  background: var(--border-dim);
+}
+.gc-fl-ratio-after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 3px;
+  background: var(--fl-ember);
+  box-shadow: 0 0 14px var(--fl-ember-dim);
+}
+.gc-fl-tree {
+  margin: 0;
+  padding: 22px 20px;
+  font-size: 12.5px;
+  line-height: 1.75;
+  color: var(--text-dim);
+  overflow-x: auto;
+}
+.gc-fl-kb {
+  padding: 14px 20px 20px;
+}
+.gc-fl-kb-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) 70px minmax(0, 1.4fr);
+  gap: 14px;
+  font-size: 12.5px;
+  color: var(--text-dim);
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border-dim);
+}
+.gc-fl-kb-head {
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  font-size: 11px;
+}
+.gc-fl-kb-ok {
+  color: var(--fl-ember);
+}
+.gc-fl-kb-warn {
+  color: var(--text-main);
+}
+
+/* ── Live terminal ── */
+.gc-fl-term {
+  max-width: 1080px;
+  margin-top: 40px;
+}
+.gc-fl-term-body {
+  min-height: 220px;
+  padding: 22px 20px;
+  font-size: 13px;
+  color: var(--text-dim);
+  background: rgba(2, 4, 8, 0.5);
+}
+.gc-fl-term-hint {
+  color: var(--text-muted);
+}
+.gc-fl-term-cursor {
+  display: inline-block;
+  color: var(--fl-ember);
+  animation: gc-fl-blink 0.9s steps(1) infinite;
+}
+@keyframes gc-fl-blink {
+  50% {
+    opacity: 0;
+  }
+}
+.gc-fl-term-foot {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--border-dim);
+}
+.gc-fl-term-run {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.08em;
+  color: var(--bg-base);
+  background: var(--fl-ember);
+  border: none;
+  border-radius: 4px;
+  padding: 9px 18px;
+  cursor: pointer;
+}
+.gc-fl-term-run:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.gc-fl-term-note {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+/* ── Enterprise grid ── */
+.gc-fl-grid6 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 44px;
+}
+
+/* ── Contrast-inverted clients section ── */
+.gc-fl-light {
+  background: var(--fl-paper);
+  color: var(--fl-ink);
+}
+.gc-fl-light-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: clamp(72px, 9vw, 130px) 24px;
+  background-image:
+    linear-gradient(rgba(23, 24, 28, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(23, 24, 28, 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+.gc-fl-clients {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  margin-top: 44px;
+  border-top: 1px solid rgba(23, 24, 28, 0.14);
+  border-left: 1px solid rgba(23, 24, 28, 0.14);
+}
+.gc-fl-client {
+  padding: 26px 24px 30px;
+  border-right: 1px solid rgba(23, 24, 28, 0.14);
+  border-bottom: 1px solid rgba(23, 24, 28, 0.14);
+  background: var(--fl-paper);
+}
+.gc-fl-client-name {
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+.gc-fl-client-how {
+  font-size: 12.5px;
+  color: rgba(23, 24, 28, 0.6);
+}
+
+/* ── Final CTA ── */
+.gc-fl-final {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: clamp(96px, 12vw, 180px) 24px;
+  text-align: center;
+}
+.gc-fl-final .gc-fl-sub {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ── Responsive ── */
+@media (max-width: 980px) {
+  .gc-fl-hero {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    padding: 84px 20px 32px;
+  }
+  .gc-fl-heroviz-window {
+    width: 100%;
+  }
+  .gc-fl-zig {
+    grid-template-columns: 1fr;
+  }
+  .gc-fl-zig-rev .gc-fl-zig-copy {
+    order: 0;
+  }
+  .gc-fl-cards3,
+  .gc-fl-grid6,
+  .gc-fl-clients {
+    grid-template-columns: 1fr;
+  }
+  .gc-fl-ratio-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .gc-fl-ratio-note {
+    text-align: left;
+  }
+}

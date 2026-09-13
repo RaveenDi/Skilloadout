@@ -1,0 +1,1 @@
+export function createContext(canvas:HTMLCanvasElement):WebGL2RenderingContext{const gl=canvas.getContext("webgl2",{alpha:true,premultipliedAlpha:true,antialias:true});if(!gl)throw new Error("TODO: WebGL 2 fallback or unsupported UI");return gl;}// TODO: choose attributes from product requirements.
