@@ -2,7 +2,7 @@
 
 - **Item:** Second Opinion (`second-opinion`)
 - **Original source:** https://github.com/trailofbits/skills/tree/main/plugins/second-opinion/skills/second-opinion
-- **Repository:** https://github.com/trailofbits/skills @ `321ccfe628ec`
+- **Repository:** https://github.com/trailofbits/skills @ `a6d1b234198d`
 - **License:** CC-BY-SA-4.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

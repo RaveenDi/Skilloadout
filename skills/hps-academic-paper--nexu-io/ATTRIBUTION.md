@@ -2,7 +2,7 @@
 
 - **Item:** Hps Academic Paper (`hps-academic-paper`)
 - **Original source:** https://github.com/nexu-io/open-design/tree/main/plugins/_official/examples/hps-academic-paper
-- **Repository:** https://github.com/nexu-io/open-design @ `ad9078b87c2d`
+- **Repository:** https://github.com/nexu-io/open-design @ `eca7c7ab9898`
 - **License:** MIT (resolved via skill)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

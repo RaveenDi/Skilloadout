@@ -478,5 +478,86 @@
     "tonone-ai/tonone",
     "FreedomIntelligence/OpenClaw-Medical-Skills"
   ],
-  "discovered": []
+  "discovered": [
+    {
+      "repo": "langgenius/dify",
+      "tier": 2,
+      "addedAt": "2026-09-16T10:06:25.683Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "Graphify-Labs/graphify",
+      "tier": 2,
+      "addedAt": "2026-09-16T10:06:25.684Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "JuliusBrussee/caveman",
+      "tier": 2,
+      "addedAt": "2026-09-16T10:06:25.684Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "ruvnet/RuView",
+      "tier": 2,
+      "addedAt": "2026-09-16T10:06:25.684Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "Leonxlnx/taste-skill",
+      "tier": 2,
+      "addedAt": "2026-09-16T10:06:25.684Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "lobehub/lobehub",
+      "tier": 2,
+      "addedAt": "2026-09-16T10:06:25.684Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "ruvnet/ruflo",
+      "tier": 2,
+      "addedAt": "2026-09-16T10:06:25.684Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "code-yeongyu/oh-my-openagent",
+      "tier": 2,
+      "addedAt": "2026-09-16T10:06:25.684Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "shanraisshan/claude-code-best-practice",
+      "tier": 2,
+      "addedAt": "2026-09-16T10:06:25.684Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "calesthio/OpenMontage",
+      "tier": 2,
+      "addedAt": "2026-09-16T10:06:25.684Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    }
+  ]
 }

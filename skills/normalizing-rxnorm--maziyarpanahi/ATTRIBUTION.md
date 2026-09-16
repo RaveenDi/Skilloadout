@@ -2,7 +2,7 @@
 
 - **Item:** Normalizing Rxnorm (`normalizing-rxnorm`)
 - **Original source:** https://github.com/maziyarpanahi/openmed/tree/master/skills/normalizing-rxnorm
-- **Repository:** https://github.com/maziyarpanahi/openmed @ `50f04360be40`
+- **Repository:** https://github.com/maziyarpanahi/openmed @ `34ebae253934`
 - **License:** Apache-2.0 (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

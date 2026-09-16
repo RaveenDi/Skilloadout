@@ -1,0 +1,146 @@
+[
+  {
+    "date": "2026-09-16T10:06:25.685Z",
+    "reviewer": "heuristic",
+    "candidates": 33,
+    "accepted": [
+      "langgenius/dify",
+      "Graphify-Labs/graphify",
+      "JuliusBrussee/caveman",
+      "ruvnet/RuView",
+      "Leonxlnx/taste-skill",
+      "lobehub/lobehub",
+      "ruvnet/ruflo",
+      "code-yeongyu/oh-my-openagent",
+      "shanraisshan/claude-code-best-practice",
+      "calesthio/OpenMontage"
+    ],
+    "decisions": [
+      {
+        "repo": "langgenius/dify",
+        "stars": 155921,
+        "skills": 6,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "Graphify-Labs/graphify",
+        "stars": 118169,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "JuliusBrussee/caveman",
+        "stars": 105875,
+        "skills": 24,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "ruvnet/RuView",
+        "stars": 94222,
+        "skills": 53,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "Leonxlnx/taste-skill",
+        "stars": 87544,
+        "skills": 13,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "lobehub/lobehub",
+        "stars": 82521,
+        "skills": 51,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "ruvnet/ruflo",
+        "stars": 72585,
+        "skills": 361,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "code-yeongyu/oh-my-openagent",
+        "stars": 69088,
+        "skills": 62,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "shanraisshan/claude-code-best-practice",
+        "stars": 65952,
+        "skills": 9,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "mvanhorn/last30days-skill",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "calesthio/OpenMontage",
+        "stars": 59438,
+        "skills": 138,
+        "rules": 1,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      }
+    ]
+  }
+]
