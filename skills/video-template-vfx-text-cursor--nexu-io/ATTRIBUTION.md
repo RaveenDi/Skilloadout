@@ -2,7 +2,7 @@
 
 - **Item:** Video Template Vfx Text Cursor (`video-template-vfx-text-cursor`)
 - **Original source:** https://github.com/nexu-io/open-design/tree/main/plugins/_official/video-templates/vfx-text-cursor
-- **Repository:** https://github.com/nexu-io/open-design @ `eca7c7ab9898`
+- **Repository:** https://github.com/nexu-io/open-design @ `053abdc1b750`
 - **License:** Apache-2.0 (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

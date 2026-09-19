@@ -2,7 +2,7 @@
 
 - **Item:** Hf Cloud Serving Image Selection (`hf-cloud-serving-image-selection`)
 - **Original source:** https://github.com/huggingface/skills/tree/main/skills/hf-cloud-serving-image-selection
-- **Repository:** https://github.com/huggingface/skills @ `f3186efbbc32`
+- **Repository:** https://github.com/huggingface/skills @ `abc20ae526d8`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

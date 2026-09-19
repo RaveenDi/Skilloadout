@@ -2,7 +2,7 @@
 
 - **Item:** I Have Adhd (`i-have-adhd`)
 - **Original source:** https://github.com/ayghri/i-have-adhd/tree/main/skills/i-have-adhd
-- **Repository:** https://github.com/ayghri/i-have-adhd @ `0a84de401019`
+- **Repository:** https://github.com/ayghri/i-have-adhd @ `b15d0be58f55`
 - **License:** MIT (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

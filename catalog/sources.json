@@ -558,6 +558,86 @@
       "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
       "reviewer": "heuristic",
       "status": "active"
+    },
+    {
+      "repo": "CherryHQ/cherry-studio",
+      "tier": 2,
+      "addedAt": "2026-09-19T09:38:44.402Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "blader/humanizer",
+      "tier": 2,
+      "addedAt": "2026-09-19T09:38:44.402Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "Imbad0202/academic-research-skills",
+      "tier": 2,
+      "addedAt": "2026-09-19T09:38:44.403Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "kepano/obsidian-skills",
+      "tier": 2,
+      "addedAt": "2026-09-19T09:38:44.403Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "zhayujie/CowAgent",
+      "tier": 2,
+      "addedAt": "2026-09-19T09:38:44.403Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "danny-avila/LibreChat",
+      "tier": 2,
+      "addedAt": "2026-09-19T09:38:44.403Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "reactive-resume/reactive-resume",
+      "tier": 2,
+      "addedAt": "2026-09-19T09:38:44.403Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "Yuan1z0825/nature-skills",
+      "tier": 2,
+      "addedAt": "2026-09-19T09:38:44.403Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "cathrynlavery/diagram-design",
+      "tier": 2,
+      "addedAt": "2026-09-19T09:38:44.403Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "alibaba/open-code-review",
+      "tier": 2,
+      "addedAt": "2026-09-19T09:38:44.403Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
     }
   ]
 }

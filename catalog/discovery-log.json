@@ -1,5 +1,154 @@
 [
   {
+    "date": "2026-09-19T09:38:44.404Z",
+    "reviewer": "heuristic",
+    "candidates": 32,
+    "accepted": [
+      "CherryHQ/cherry-studio",
+      "blader/humanizer",
+      "Imbad0202/academic-research-skills",
+      "kepano/obsidian-skills",
+      "zhayujie/CowAgent",
+      "danny-avila/LibreChat",
+      "reactive-resume/reactive-resume",
+      "Yuan1z0825/nature-skills",
+      "cathrynlavery/diagram-design",
+      "alibaba/open-code-review"
+    ],
+    "decisions": [
+      {
+        "repo": "mvanhorn/last30days-skill",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "CherryHQ/cherry-studio",
+        "stars": 51983,
+        "skills": 34,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "blader/humanizer",
+        "stars": 50052,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "Imbad0202/academic-research-skills",
+        "stars": 48699,
+        "skills": 4,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "kepano/obsidian-skills",
+        "stars": 48589,
+        "skills": 6,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "zhayujie/CowAgent",
+        "stars": 47035,
+        "skills": 3,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "sickn33/agentic-awesome-skills",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 20%, 6709 skills)"
+      },
+      {
+        "repo": "danny-avila/LibreChat",
+        "stars": 44359,
+        "skills": 3,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "reactive-resume/reactive-resume",
+        "stars": 43181,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "Yuan1z0825/nature-skills",
+        "stars": 43174,
+        "skills": 20,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "cathrynlavery/diagram-design",
+        "stars": 41237,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "alibaba/open-code-review",
+        "stars": 37072,
+        "skills": 4,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      }
+    ]
+  },
+  {
     "date": "2026-09-16T10:06:25.685Z",
     "reviewer": "heuristic",
     "candidates": 33,

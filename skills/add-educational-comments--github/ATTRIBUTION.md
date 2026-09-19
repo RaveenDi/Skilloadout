@@ -2,7 +2,7 @@
 
 - **Item:** Add Educational Comments (`add-educational-comments`)
 - **Original source:** https://github.com/github/awesome-copilot/tree/main/skills/add-educational-comments
-- **Repository:** https://github.com/github/awesome-copilot @ `9ce814859eaa`
+- **Repository:** https://github.com/github/awesome-copilot @ `4f4796f0bf30`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.
