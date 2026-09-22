@@ -3,7 +3,7 @@ name: secops-cases
 metadata:
   category: Security
   author: Google LLC
-  version: 1.1.0
+  version: "1.1.0"
   status: published
 description: >-
   Manage Google Security Operations (SecOps) SOAR cases throughout their lifecycle.

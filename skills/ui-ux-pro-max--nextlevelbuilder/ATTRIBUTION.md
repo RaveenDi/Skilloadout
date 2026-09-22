@@ -2,7 +2,7 @@
 
 - **Item:** Ui Ux Pro Max (`ui-ux-pro-max`)
 - **Original source:** https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/main/.claude/skills/ui-ux-pro-max
-- **Repository:** https://github.com/nextlevelbuilder/ui-ux-pro-max-skill @ `de5f12b40077`
+- **Repository:** https://github.com/nextlevelbuilder/ui-ux-pro-max-skill @ `dcc40ff5133e`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

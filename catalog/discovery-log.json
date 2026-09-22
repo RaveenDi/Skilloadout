@@ -1,5 +1,174 @@
 [
   {
+    "date": "2026-09-22T10:08:31.128Z",
+    "reviewer": "heuristic",
+    "candidates": 29,
+    "accepted": [
+      "zhaoxuya520/reverse-skill",
+      "JCodesMore/ai-website-cloner-template",
+      "mukul975/Anthropic-Cybersecurity-Skills",
+      "virgiliojr94/book-to-skill",
+      "googleworkspace/cli",
+      "iOfficeAI/OfficeCLI",
+      "topoteretes/cognee",
+      "nanocoai/nanoclaw",
+      "OthmanAdi/planning-with-files",
+      "op7418/guizang-ppt-skill"
+    ],
+    "decisions": [
+      {
+        "repo": "mvanhorn/last30days-skill",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "sickn33/agentic-awesome-skills",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 16%, 7635 skills)"
+      },
+      {
+        "repo": "zhaoxuya520/reverse-skill",
+        "stars": 36856,
+        "skills": 89,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "JCodesMore/ai-website-cloner-template",
+        "stars": 34767,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "mukul975/Anthropic-Cybersecurity-Skills",
+        "stars": 33155,
+        "skills": 818,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "iOfficeAI/AionUi",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 75%, 4 skills)"
+      },
+      {
+        "repo": "virgiliojr94/book-to-skill",
+        "stars": 31918,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "feder-cr/aihawk_mcp_server",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "googleworkspace/cli",
+        "stars": 31093,
+        "skills": 95,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "iOfficeAI/OfficeCLI",
+        "stars": 31004,
+        "skills": 12,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "topoteretes/cognee",
+        "stars": 30904,
+        "skills": 11,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "nanocoai/nanoclaw",
+        "stars": 30823,
+        "skills": 61,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "zarazhangrui/frontend-slides",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 2 skills)"
+      },
+      {
+        "repo": "Nutlope/hallmark",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "OthmanAdi/planning-with-files",
+        "stars": 27056,
+        "skills": 18,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "op7418/guizang-ppt-skill",
+        "stars": 26774,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      }
+    ]
+  },
+  {
     "date": "2026-09-19T09:38:44.404Z",
     "reviewer": "heuristic",
     "candidates": 32,

@@ -3,7 +3,7 @@ name: secops-detection-engineering
 metadata:
   category: Security
   author: Google LLC
-  version: 1.1.0
+  version: "1.1.0"
   status: published
 description: >-
   Author, validate, test, and deploy YARA-L 2.0 detection rules and evaluate

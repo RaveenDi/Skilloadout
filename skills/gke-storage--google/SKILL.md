@@ -8,6 +8,7 @@ description: >-
   gke-storage-troubleshooting skill instead. Don't use for database
   administration or replication strategies outside volume provisioning context.
 metadata:
+  version: "1.0.0"
   category: Storage
 ---
 

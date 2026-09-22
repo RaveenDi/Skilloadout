@@ -1,6 +1,7 @@
 ---
 name: bigquery-bigframes
 metadata:
+  version: "1.0.0"
   category: BigDataAndAnalytics
 description: >-
   Generates Python code using BigQuery DataFrames (BigFrames), the pandas/scikit-learn-style API over BigQuery. Use when writing BigFrames code or doing pandas-style dataframe/ML work against BigQuery (e.g. in a notebook). Don't use for SQL-first workflows or the google-cloud-bigquery client library — use bigquery-basics.
