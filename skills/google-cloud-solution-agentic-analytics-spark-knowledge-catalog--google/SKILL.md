@@ -312,7 +312,7 @@ using the following resources:
     transformation and analysis.
 *   https://docs.cloud.google.com/dataplex/docs/use-cases.md.txt: Use cases for
     Knowledge Catalog.
-*   https://docs.cloud.google.com/managed-spark/docs/guides/lightning-engine.md.txt:
+*   https://docs.cloud.google.com/managed-spark/docs/guides/lightning-engine-serverless.md.txt:
     Guide to accelerating Apache Spark workloads by using Lightning Engine.
 *   https://docs.cloud.google.com/bigquery/docs/use-knowledge-catalog.md.txt:
     Guide to use Knowledge Catalog as a governance and agentic layer for

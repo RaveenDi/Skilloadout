@@ -18,9 +18,12 @@ The bundled tooling for this lives in `scripts/debug/`:
 
 ## The Loop
 
-1. **Reproduce.** Run the project and capture the debugger output:
+1. **Reproduce.** Boot the scene the bug shows up in and capture the debugger
+   output. Drop the scene argument to boot the project's `run/main_scene`
+   instead, which is what a player's launch does:
    ```bash
-   python3 scripts/debug/run_project.py /abs/path/to/project --quit-after 120 --timeout 60
+   python3 /absolute/path/to/godot/scripts/debug/run_project.py /absolute/path/to/project \
+     scenes/main.tscn --quit-after 120 --timeout 60
    ```
    The runner returns JSON: `ok`, `counts`, and a `diagnostics` array where each
    entry has `severity`, `category`, `message`, `file`, `line`, `function`,
@@ -43,9 +46,9 @@ For a fast whole-project sanity pass that does not depend on running gameplay,
 validate every file first:
 
 ```bash
-godot --headless --debug --ignore-error-breaks --path /abs/project \
-  --script /abs/skill/scripts/core/dispatcher.gd check_project '{}' 2>&1 \
-  | python3 /abs/skill/scripts/debug/godot_log_parser.py -
+godot --headless --debug --ignore-error-breaks --path /absolute/path/to/project \
+  --script /absolute/path/to/godot/scripts/core/dispatcher.gd check_project '{}' 2>&1 \
+  | python3 /absolute/path/to/godot/scripts/debug/godot_log_parser.py -
 ```
 
 `check_project` loads every file in the project, so with the debugger attached
@@ -73,7 +76,7 @@ to catch that case, but the general rule stands: a `failed_count` of 0 with
 error-level diagnostic is present:
 
 ```bash
-python3 scripts/debug/validate_project.py /abs/project --pretty
+python3 /absolute/path/to/godot/scripts/debug/validate_project.py /absolute/path/to/project --pretty
 ```
 
 Its output adds `counts` and `diagnostics` (same shape as `run_project.py`) to
@@ -81,6 +84,64 @@ the file-level `static` summary. Use it when the project contains C#,
 GDExtensions, or editor plugins; add `--warnings-as-errors` to make the pass
 strict. Use a scenario from `references/automation_api.md` when validation
 requires a specific input flow, visual state, log message, or performance bound.
+
+## Smoke-Run Every Scene
+
+Step 5 above — "some errors only fire on code paths a short boot never reaches" —
+is the single biggest blind spot, and running `run_project.py` once per scene by
+hand is how it stays unfixed. `scripts/debug/smoke_scenes.py` boots **every**
+scene of the project, one Godot process per scene, for a bounded amount of *game*
+time, and reports per scene what the debugger printed plus a few runtime findings:
+
+```bash
+python3 /absolute/path/to/godot/scripts/debug/smoke_scenes.py /absolute/path/to/project --seconds 2 --pretty
+```
+
+Run it after every batch of scene or script edits, and always before calling a
+build done. It is fast enough to be a reflex: `--fixed-fps 60` decouples game time
+from wall time, so a 13-scene project at 3 game-seconds per scene finishes in
+about a second with `--jobs 4`. Exit 0 means every scene booted, ran and produced
+no error-level diagnostic.
+
+**Which tool for which question:**
+
+| Question | Tool |
+| --- | --- |
+| Does every file in the project load/compile, and is every node hierarchy valid? | `check_project` / `validate_project.py` — no gameplay runs; fastest, widest file coverage |
+| Does the *game* boot and survive its first seconds? | `run_project.py` — the main scene only, exactly what a player's launch does |
+| Does **every** scene survive being booted, including ones nothing links to yet? | `smoke_scenes.py` — one process per scene, plus leak/hang/crash findings |
+| Does *this* input sequence produce *that* state / layout / screenshot? | `run_scenario.py` — deterministic, assertion-driven, one scene |
+| Does game logic compute the right answer? | `run_tests.py --framework mini` — unit tests, no scene needed |
+
+`check_project` instantiates scenes but never runs `_ready`, `_process` or input
+handlers, so it cannot see a null dereference in `_ready` or a branch guarded by
+`Input.is_action_pressed`. `smoke_scenes.py` runs them. `run_scenario.py` proves
+one exact path works; `smoke_scenes.py --fuzz` looks for the paths you did not
+think to write a scenario for, by replaying the project's own `InputMap` actions
+(and, with `--fuzz-mouse`, clicks on the centres of visible `Button`s) through
+`Input.parse_input_event` under a seed you can replay:
+
+```bash
+python3 /absolute/path/to/godot/scripts/debug/smoke_scenes.py /absolute/path/to/project \
+  --seconds 4 --jobs 4 --fuzz --fuzz-mouse --fuzz-seed 7
+```
+
+Beyond the diagnostics, each scene reports findings that a log never shows:
+`node_growth` (a spawner that never frees — bullets, damage numbers),
+`orphan_nodes` (nodes alive outside the tree after the scene is freed),
+`static_memory_growth`, `timed_out` (an infinite loop; the process group is
+killed and the rest of the scenes still run), `crashed` (with the signal name),
+and the informational `scene_changed` / `quit_called`, which tell you a run ended
+early and therefore covered less than `--seconds` suggests.
+
+Two facts worth knowing before reading the numbers. Booting a scene in isolation
+is not always fair: a pause menu written to read `get_parent().player` will report
+an error the real game never produces, so read the diagnostic before "fixing" it
+(or `--exclude` that scene). And under `--fixed-fps` the engine's own fps/process
+timing monitors only refresh once per real second, so `--profile` reports them as
+`null` on short runs and gives you `perf.frame_ms` instead; add `--real-time` when
+you specifically want engine-paced timings. Full flag and output reference:
+`references/automation_api.md`.
 
 ## Capturing Output Correctly
 
@@ -100,10 +161,17 @@ requires a specific input flow, visual state, log message, or performance bound.
   process `/dev/null` on stdin so any break that does slip through reads EOF and
   quits instead of hanging.
 
+  Warnings visible:
+
   ```bash
-  # warnings visible                     # silent, even though the editor complains
-  godot --headless -d --ignore-error-breaks --path /abs/project --quit-after 120
-  godot --headless --path /abs/project --quit-after 120
+  godot --headless -d --ignore-error-breaks --path /absolute/path/to/project \
+    res://scenes/main.tscn --quit-after 120
+  ```
+
+  Silent, even though the editor complains about the same scripts:
+
+  ```bash
+  godot --headless --path /absolute/path/to/project res://scenes/main.tscn --quit-after 120
   ```
 - **An exit code of 0 is necessary, not sufficient.** A GDScript runtime error
   inside a dispatcher operation aborts that operation only — the dispatcher
@@ -116,13 +184,52 @@ requires a specific input flow, visual state, log message, or performance bound.
   `$?` alone. The complementary guard is on the input side: an unknown
   parameter key is now rejected before the operation runs, which removes the
   most common way an operation used to crash or silently do the wrong thing.
-- **One class of editor warning stays out of reach.** Node *configuration*
-  warnings — the yellow triangles in the scene tree ("This node has no shape so
-  it can't collide…") — come from `Node::get_configuration_warnings()`, which is
-  not bound outside the editor: a `--script` run cannot read them at any flag
-  combination. If the user reports warnings the tooling does not reproduce, ask
-  whether they are scene-tree triangles rather than Output-panel lines, and
-  inspect the scene structure directly (`inspect_scene`) instead.
+- **Node configuration warnings are re-derived, not read.** The yellow triangles
+  in the scene tree ("This node has no shape so it can't collide…") come from
+  `Node::get_configuration_warnings()`, which is still not bound outside the
+  editor in 4.7 (`ClassDB.class_has_method("Node", "get_configuration_warnings",
+  true)` → `false`), so nothing can read them from a `--script` run. Instead
+  `check_project` re-implements the high-signal subset over the *instantiated*
+  tree (`scripts/core/node_config_rules.gd`) and prints one line per finding:
+  `WARNING: [node_config:<rule>] <res://scene.tscn>::<node_path>: <message>`,
+  with an indented `fix:` continuation holding a runnable dispatcher call. The
+  parser files those under category `node_config` with the scene as `file` and
+  the fix as `suggested_fix`; `validate_project.py` also summarises them under
+  `node_config` (warnings fail only with `--warnings-as-errors`; `hint` findings
+  never fail anything). Covered: bodies with no shape, shapes with no resource
+  or the wrong parent, `AnimatedSprite2D` with no frames or a bogus `animation`,
+  particles with no process material, `PathFollow2D`/`ParallaxLayer`/
+  `NavigationAgent`/`VehicleWheel3D` under the wrong parent, empty navigation
+  regions, `ScrollContainer` child count, duplicate `WorldEnvironment`/
+  `CanvasModulate`, scaled physics bodies, unwired joints and multiplayer
+  nodes — plus a project-wide physics layer/mask survey. **Limits:** a shape,
+  texture or mesh a script assigns at runtime is invisible to a static
+  instantiate pass (those rules are `hint`s for that reason), and the editor has
+  warnings this does not reproduce. Opt out with `--no-config-warnings` or
+  `{"config_warnings": false}`. Full rule table: `references/node_config.md`.
+- **Shutdown bookkeeping is `info`, not a failure.** When a run quits while something still holds a
+  reference, Godot prints `ERROR: N resources still in use at exit` and `WARNING: N ObjectDB instances
+  were leaked at exit` (plus `RID ... leaked` lines). In a bounded run the cause is almost always audio
+  still playing when `--quit-after` fires — every game with looping music does it. The parser files
+  these as severity `info`, category `exit_leak`: they appear in `diagnostics` and `counts.info`, never
+  in `counts.errors`/`counts.warnings`, and never flip `ok`. For a real node leak use
+  `smoke_scenes.py`, whose `orphan_nodes` and `node_growth` findings name it precisely.
+- **The host's own missing hardware is `info` too.** On a machine with no GPU or no sound card — a
+  container, a CI runner, a remote box — the engine prints its failed driver probes as errors before
+  it falls back: `ERROR: Required Vulkan instance extension VK_KHR_surface not found` and the
+  `ERROR: Condition "..." is true` assertions raised inside `drivers/vulkan/` and `drivers/alsa/`.
+  Nothing in the project causes them and nothing in the project can fix them, so the parser files them
+  as severity `info`, category `host_capability`, which is what keeps a windowed scenario from failing
+  on every Linux CI run. The two `WARNING: ... switching to OpenGL 3` / `WARNING: All audio drivers
+  failed, falling back to the dummy driver` lines stay **warnings** on purpose: that fallback swaps the
+  renderer under you, and a project that asked for Forward+ is now running Compatibility.
+  `ProjectSettings.get_setting("rendering/renderer/rendering_method")` still answers `forward_plus`
+  there — `RenderingServer.get_current_rendering_method()` is the one that tells the truth, and a
+  shader with a renderer-dependent branch has to read it.
+- **A shader that does not compile fails `check_project` itself.** The engine raises nothing in-process
+  (the material assignment succeeds and the draw falls back to the default material), so the op
+  captures the `SHADER ERROR` through a `Logger` (Godot 4.5+) and reports the file in `failed[]` with
+  its line and message, exiting 1. On older engines only the parsed log carries it.
 - **Bound every run.** Use `--quit-after N` (frames) for a clean exit and a
   wall-clock `--timeout` as the safety net. A run that hits the timeout
   (`"timed_out": true`) is itself a finding: an infinite loop or a blocking call.

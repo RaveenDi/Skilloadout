@@ -22,8 +22,38 @@ Output is the same JSON shape ``godot_log_parser.py`` produces
 suggested_fix}]}``), so ``validate_project.py`` merges the two reports without
 translation. Exit code is 1 when any error-level diagnostic exists.
 
-Categories: ``godot3_api``, ``inference``, ``node_ref``, ``unique_name``,
-``signal_target``, ``missing_resource``.
+Categories: ``godot3_api``, ``godot3_shader``, ``inference``, ``node_ref``,
+``unique_name``, ``signal_target``, ``missing_resource``, ``input_action``,
+``group_ref``, ``res_path``, ``animation_ref``.
+
+The last four are *cross-reference* checks: they take a name out of a script and
+look for whatever is supposed to provide it somewhere else in the project — an
+action in ``project.godot``'s ``[input]``, a ``groups=[…]`` on some node, a file
+on disk, an animation inside a ``SpriteFrames``/``AnimationLibrary``. Each one
+only speaks when the answer is knowable statically; a name built at runtime, an
+action added with ``InputMap.add_action()``, a group added in code, a node whose
+type cannot be resolved — all silent.
+
+Two same-file indirections *are* certain and are followed. A ``const`` holding a
+string literal cannot be reassigned, so ``Input.is_action_pressed(FIRE)`` with
+``const FIRE: StringName = &"fire"`` is exactly as definite as the literal. And
+``@onready var anim: AnimatedSprite2D = $Sprite`` followed by
+``anim.play("walk")`` — what every bundled template does — resolves, provided the
+name is declared once, bound to one node lookup, and never reassigned, shadowed
+or re-declared. A ``static var``, a plain ``var``, a const in another file, an
+enum, and a binding built from an expression are all left alone.
+
+**Suppressing a finding.** ``# lint:ignore <category>[,<category>…]`` on the
+offending line or on the line directly above it drops every diagnostic of those
+categories there; bare ``# lint:ignore`` drops all of them. ``;`` works in
+``.tscn``/``.tres``/``project.godot`` and ``//`` in ``.gdshader``. Use it for the
+rare case the linter cannot know about — a file that must *name* a deprecated
+class to reason about it, a path created by the build. Suppressions that matched
+nothing are listed under ``suppressions.unused`` in the report and never change
+the exit code.
+
+**``.gdignore``.** A directory holding a ``.gdignore`` file is invisible to
+Godot, so the linter skips it too — its files are neither scanned nor indexed.
 
 **Severity means one thing here.** ``error`` = Godot refuses to parse or load the
 file, so the project does not run; ``warning`` = it compiles and runs, but the
@@ -67,6 +97,7 @@ Known limitations (deliberate — a false positive is worse than a miss here):
 from __future__ import annotations
 
 import argparse
+import difflib
 import json
 import os
 import re
@@ -76,11 +107,16 @@ from typing import Iterable, Optional
 
 CATEGORIES = (
     "godot3_api",
+    "godot3_shader",
     "inference",
     "node_ref",
     "unique_name",
     "signal_target",
     "missing_resource",
+    "input_action",
+    "group_ref",
+    "res_path",
+    "animation_ref",
 )
 
 
@@ -94,9 +130,10 @@ CATEGORIES = (
 #                  string contents blanked out
 #   scene_pattern  regex matched against raw .tscn/.tres lines (None = reuse
 #                  `pattern`)
-#   scope          "gd" | "scene" | "both"
+#   scope          "gd" | "scene" | "both" | "shader"
 #   severity       "error"   guaranteed to fail to parse/load/run on 4.x
 #                  "warning" deprecated alias that still works
+#   category       "godot3_api" (default) or "godot3_shader"
 #   fix            the exact 4.7 replacement, spelled out
 
 GROUP_SYNTAX = "Syntax and keywords"
@@ -107,6 +144,7 @@ GROUP_RES = "Resources and types"
 GROUP_MATH = "Math and utility functions"
 GROUP_CONTROL = "Control properties"
 GROUP_OS = "File, OS, and engine"
+GROUP_SHADERS = "Shaders"
 
 GROUP_ORDER = (
     GROUP_SYNTAX,
@@ -117,15 +155,18 @@ GROUP_ORDER = (
     GROUP_MATH,
     GROUP_CONTROL,
     GROUP_OS,
+    GROUP_SHADERS,
 )
 
 
 def _rule(rid: str, token: str, replacement: str, group: str, severity: str,
           pattern: str, message: str, fix: str, scope: str = "gd",
           scene_pattern: Optional[str] = None, identifier: Optional[str] = None,
-          guard: Optional[str] = None, suppress_if_func: Optional[str] = None) -> dict:
+          guard: Optional[str] = None, suppress_if_func: Optional[str] = None,
+          category: str = "godot3_api") -> dict:
     return {
         "id": rid,
+        "category": category,
         "token": token,
         # Name in GUARDS: an extra check run on the matched line (see GUARDS).
         "guard": guard,
@@ -137,6 +178,11 @@ def _rule(rid: str, token: str, replacement: str, group: str, severity: str,
         # define `class_name File` (Godot 4 has no File class), so a rule whose
         # identifier is a project class_name is suppressed.
         "identifier": identifier,
+        # Shader rules only: the identifier the shader may legitimately declare
+        # itself. The engine's own migration advice for SCREEN_TEXTURE is
+        # `uniform sampler2D SCREEN_TEXTURE : hint_screen_texture;`, so a shader
+        # that declares the name is already migrated and must not be reported.
+        "suppress_if_declared": None,
         "replacement": replacement,
         "group": group,
         "severity": severity,
@@ -495,6 +541,195 @@ GODOT3_RULES: list[dict] = [
           "`if Engine.editor_hint:` -> `if Engine.is_editor_hint():`."),
 ]
 
+
+# ---------------------------------------------------------------------------
+# Shader rules (category `godot3_shader`, scope `.gdshader`/`.gdshaderinc` and
+# the `code = "…"` of a Shader sub-resource inside a .tscn/.tres).
+#
+# Every row below was verified by compiling the Godot 3 form AND its
+# replacement on godot 4.7.stable through `check_project` (which hands the code
+# to a ShaderMaterial — load() alone never compiles a shader). The Godot 3 form
+# had to fail and the replacement had to compile; rules whose "before" turned out
+# to still compile on 4.7 were deleted rather than shipped, which is why
+# `hint_normal`, `OUTPUT_IS_SRGB`, `AT_LIGHT_PASS`, `ATTENUATION`,
+# `hint_roughness_gray`, `render_mode specular_toon` and `specular_disabled` are
+# NOT in this table: 4.7 accepts all of them.
+# ---------------------------------------------------------------------------
+
+def _shader_rule(rid: str, token: str, replacement: str, pattern: str,
+                 message: str, fix: str, severity: str = "error",
+                 suppress_if_declared: Optional[str] = None) -> dict:
+    rule = _rule(rid, token, replacement, GROUP_SHADERS, severity, pattern, message, fix,
+                 scope="shader", category="godot3_shader")
+    rule["suppress_if_declared"] = suppress_if_declared
+    return rule
+
+
+_SHADER_REMOVED = (
+    " Verified on godot 4.7: the shader fails to compile, and a shader that does not compile "
+    "renders as the plain default material with no runtime error — nothing in the log says why."
+)
+
+SHADER_RULES: list[dict] = [
+    _shader_rule("shader_hint_color", "hint_color", "source_color",
+                 r"\bhint_color\b",
+                 "`hint_color` was renamed in Godot 4.x (`Expected valid type hint after ':'`)."
+                 + _SHADER_REMOVED,
+                 "`uniform vec4 tint : hint_color;` -> `uniform vec4 tint : source_color;`."),
+    _shader_rule("shader_hint_albedo", "hint_albedo", "source_color",
+                 r"\bhint_albedo\b",
+                 "`hint_albedo` was replaced by `source_color` in Godot 4.x." + _SHADER_REMOVED,
+                 "`uniform vec4 albedo : hint_albedo;` -> `uniform vec4 albedo : source_color;` "
+                 "(same hint for a sampler2D albedo texture)."),
+    _shader_rule("shader_hint_black", "hint_black", "hint_default_black",
+                 r"\bhint_black(?:_albedo)?\b",
+                 "`hint_black` / `hint_black_albedo` were renamed in Godot 4.x." + _SHADER_REMOVED,
+                 "`uniform sampler2D tex : hint_black;` -> `: hint_default_black;`. "
+                 "`hint_black_albedo` -> `hint_default_black, source_color`."),
+    _shader_rule("shader_hint_white", "hint_white", "hint_default_white",
+                 r"\bhint_white\b",
+                 "`hint_white` was renamed in Godot 4.x." + _SHADER_REMOVED,
+                 "`uniform sampler2D tex : hint_white;` -> `: hint_default_white;`. "
+                 "(`hint_default_transparent` is the third one and is spelled the same in 4.x.)"),
+    _shader_rule("shader_hint_aniso", "hint_aniso", "hint_anisotropy",
+                 r"\bhint_aniso\b",
+                 "`hint_aniso` was renamed in Godot 4.x." + _SHADER_REMOVED,
+                 "`uniform sampler2D flow : hint_aniso;` -> `: hint_anisotropy;`."),
+    _shader_rule("shader_screen_texture", "SCREEN_TEXTURE", "hint_screen_texture uniform",
+                 r"\bSCREEN_TEXTURE\b",
+                 "The `SCREEN_TEXTURE` built-in was removed in Godot 4.x; the screen is read "
+                 "through a uniform with a hint." + _SHADER_REMOVED,
+                 "Add `uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, "
+                 "filter_linear_mipmap;` near the top of the shader and leave the "
+                 "`texture(SCREEN_TEXTURE, SCREEN_UV)` calls alone — that is the engine's own "
+                 "minimal-change migration. A fresh shader should name the uniform "
+                 "`screen_tex` instead. The node must be under a BackBufferCopy (2D) for the "
+                 "read to see anything.",
+                 suppress_if_declared="SCREEN_TEXTURE"),
+    _shader_rule("shader_depth_texture", "DEPTH_TEXTURE", "hint_depth_texture uniform",
+                 r"\bDEPTH_TEXTURE\b",
+                 "The `DEPTH_TEXTURE` built-in was removed in Godot 4.x." + _SHADER_REMOVED,
+                 "Add `uniform sampler2D DEPTH_TEXTURE : hint_depth_texture;` (or name it "
+                 "`depth_tex` and update the reads).",
+                 suppress_if_declared="DEPTH_TEXTURE"),
+    _shader_rule("shader_normal_roughness_texture", "NORMAL_ROUGHNESS_TEXTURE",
+                 "hint_normal_roughness_texture uniform",
+                 r"\bNORMAL_ROUGHNESS_TEXTURE\b",
+                 "The `NORMAL_ROUGHNESS_TEXTURE` built-in was removed in Godot 4.x."
+                 + _SHADER_REMOVED,
+                 "Add `uniform sampler2D NORMAL_ROUGHNESS_TEXTURE : "
+                 "hint_normal_roughness_texture;` (Forward+ only).",
+                 suppress_if_declared="NORMAL_ROUGHNESS_TEXTURE"),
+    _shader_rule("shader_world_matrix", "WORLD_MATRIX", "MODEL_MATRIX",
+                 r"\bWORLD_MATRIX\b",
+                 "`WORLD_MATRIX` was renamed in Godot 4.x (`Unknown identifier in expression: "
+                 "'WORLD_MATRIX'`), in both spatial and canvas_item shaders." + _SHADER_REMOVED,
+                 "`WORLD_MATRIX` -> `MODEL_MATRIX`."),
+    _shader_rule("shader_extra_matrix", "EXTRA_MATRIX", "MODEL_MATRIX",
+                 r"\bEXTRA_MATRIX\b",
+                 "`EXTRA_MATRIX` (canvas_item) was removed in Godot 4.x." + _SHADER_REMOVED,
+                 "`EXTRA_MATRIX` -> `MODEL_MATRIX` (the item transform). The canvas transform "
+                 "is `CANVAS_MATRIX` and the view transform `SCREEN_MATRIX`."),
+    _shader_rule("shader_camera_matrix", "CAMERA_MATRIX", "INV_VIEW_MATRIX",
+                 r"\bCAMERA_MATRIX\b",
+                 "`CAMERA_MATRIX` was renamed in Godot 4.x." + _SHADER_REMOVED,
+                 "`CAMERA_MATRIX` -> `INV_VIEW_MATRIX` (camera-to-world). Careful: the "
+                 "*other* one flipped too — Godot 3's `INV_CAMERA_MATRIX` is 4.x's "
+                 "`VIEW_MATRIX`."),
+    _shader_rule("shader_inv_camera_matrix", "INV_CAMERA_MATRIX", "VIEW_MATRIX",
+                 r"\bINV_CAMERA_MATRIX\b",
+                 "`INV_CAMERA_MATRIX` was renamed in Godot 4.x." + _SHADER_REMOVED,
+                 "`INV_CAMERA_MATRIX` -> `VIEW_MATRIX` (world-to-camera). "
+                 "`PROJECTION_MATRIX`, `INV_PROJECTION_MATRIX` and `MODELVIEW_MATRIX` keep "
+                 "their names and are not reported."),
+    _shader_rule("shader_transmission", "TRANSMISSION", "BACKLIGHT",
+                 r"\bTRANSMISSION\b",
+                 "The spatial output `TRANSMISSION` was renamed in Godot 4.x." + _SHADER_REMOVED,
+                 "`TRANSMISSION = vec3(…)` -> `BACKLIGHT = vec3(…)`."),
+    _shader_rule("shader_alpha_scissor", "ALPHA_SCISSOR", "ALPHA_SCISSOR_THRESHOLD",
+                 r"\bALPHA_SCISSOR\b",
+                 "`ALPHA_SCISSOR` was renamed in Godot 4.x." + _SHADER_REMOVED,
+                 "`ALPHA_SCISSOR = 0.5;` -> `ALPHA_SCISSOR_THRESHOLD = 0.5;`."),
+    _shader_rule("shader_normalmap", "NORMALMAP", "NORMAL_MAP",
+                 r"\bNORMALMAP\b",
+                 "`NORMALMAP` was renamed in Godot 4.x, in both spatial and canvas_item "
+                 "shaders." + _SHADER_REMOVED,
+                 "`NORMALMAP` -> `NORMAL_MAP`."),
+    _shader_rule("shader_normalmap_depth", "NORMALMAP_DEPTH", "NORMAL_MAP_DEPTH",
+                 r"\bNORMALMAP_DEPTH\b",
+                 "`NORMALMAP_DEPTH` was renamed in Godot 4.x." + _SHADER_REMOVED,
+                 "`NORMALMAP_DEPTH` -> `NORMAL_MAP_DEPTH`."),
+    _shader_rule("shader_side", "SIDE", "FRONT_FACING",
+                 r"\bSIDE\b",
+                 "The spatial built-in `SIDE` was renamed in Godot 4.x." + _SHADER_REMOVED,
+                 "`SIDE` -> `FRONT_FACING` (still a bool: true on front faces).",
+                 suppress_if_declared="SIDE"),
+    _shader_rule("shader_clearcoat_gloss", "CLEARCOAT_GLOSS", "CLEARCOAT_ROUGHNESS",
+                 r"\bCLEARCOAT_GLOSS\b",
+                 "`CLEARCOAT_GLOSS` was renamed *and inverted* in Godot 4.x." + _SHADER_REMOVED,
+                 "`CLEARCOAT_GLOSS = g;` -> `CLEARCOAT_ROUGHNESS = 1.0 - g;` — it is roughness "
+                 "now, so the value has to be flipped, not just renamed."),
+    _shader_rule("shader_shadow_attenuation", "SHADOW_ATTENUATION", "ATTENUATION",
+                 r"\bSHADOW_ATTENUATION\b",
+                 "`SHADOW_ATTENUATION` was removed from `light()` in Godot 4.x."
+                 + _SHADER_REMOVED,
+                 "`SHADOW_ATTENUATION` -> `ATTENUATION`, which in 4.x already has the shadow "
+                 "factor folded in. (`ATTENUATION` itself is still valid 4.7 and is not "
+                 "reported.)"),
+    _shader_rule("shader_light_height", "LIGHT_HEIGHT", "LIGHT_VERTEX.z",
+                 r"\bLIGHT_HEIGHT\b",
+                 "The canvas_item `LIGHT_HEIGHT` built-in was removed in Godot 4.x."
+                 + _SHADER_REMOVED,
+                 "Set `LIGHT_VERTEX.z` in `fragment()` instead (`LIGHT_VERTEX.z = 8.0;`) — the "
+                 "2D light height is the z of LIGHT_VERTEX now."),
+    _shader_rule("shader_modulate", "MODULATE", "uniform vec4 : source_color",
+                 r"\bMODULATE\b",
+                 "`MODULATE` does not exist in a Godot 4.7 canvas_item shader — verified in "
+                 "`vertex()`, `fragment()` and `light()`, all three report `Unknown identifier "
+                 "in expression: 'MODULATE'`. (It reads like current API because other engines "
+                 "and some 4.x docs mention it; 4.7 does not have it.)" + _SHADER_REMOVED,
+                 "Pass the colour in yourself: `uniform vec4 modulate_color : source_color = "
+                 "vec4(1.0);` plus `COLOR *= modulate_color;`, and set it from GDScript with "
+                 "`material.set_shader_parameter(\"modulate_color\", c)`. The node's own "
+                 "`modulate` is already multiplied into the canvas_item `COLOR` you get in "
+                 "`fragment()`.",
+                 suppress_if_declared="MODULATE"),
+    _shader_rule("shader_depth_draw_alpha_prepass", "render_mode depth_draw_alpha_prepass",
+                 "depth_prepass_alpha",
+                 r"\bdepth_draw_alpha_prepass\b",
+                 "The `depth_draw_alpha_prepass` render mode was renamed in Godot 4.x "
+                 "(`Invalid render mode`)." + _SHADER_REMOVED,
+                 "`render_mode depth_draw_alpha_prepass;` -> `render_mode depth_prepass_alpha;`. "
+                 "`depth_draw_opaque` and `depth_draw_never` keep their names."),
+    _shader_rule("shader_depth_test_disable", "render_mode depth_test_disable",
+                 "depth_test_disabled",
+                 r"\bdepth_test_disable\b(?!d)",
+                 "The `depth_test_disable` render mode gained a `d` in Godot 4.x "
+                 "(`Invalid render mode: 'depth_test_disable'`)." + _SHADER_REMOVED,
+                 "`render_mode depth_test_disable;` -> `render_mode depth_test_disabled;`."),
+    _shader_rule("shader_async_render_mode", "render_mode async_visible", "(delete it)",
+                 r"\basync_(?:visible|hidden)\b",
+                 "The `async_visible` / `async_hidden` render modes were removed in Godot 4.x."
+                 + _SHADER_REMOVED,
+                 "Delete the render mode. Shader compilation is handled by the engine in 4.x "
+                 "(`rendering/shader_compiler/shader_cache`)."),
+]
+
+# Not a text pattern — the file *name*. Godot 4 has no importer for `.shader`, so
+# the file is inert: `load("res://x.shader")` returns null and the material stays
+# empty. Reported from the file walk; listed here so it reaches the rule table.
+SHADER_EXTENSION_RULE = _rule(
+    "shader_file_extension", ".shader (file extension)", ".gdshader", GROUP_SHADERS, "error",
+    r"\.shader$",
+    "`.shader` is the Godot 3 shader file extension. Godot 4 only imports `.gdshader` "
+    "(and `.gdshaderinc`), so this file is never loaded as a shader at all.",
+    "Rename the file to `.gdshader` and update every `res://…` reference to it "
+    "(scripts/project/move_resource.py does both in one step).",
+    scope="filename", category="godot3_shader")
+SHADER_RULES.append(SHADER_EXTENSION_RULE)
+
+GODOT3_RULES += SHADER_RULES
+
 for _rule_entry in GODOT3_RULES:
     _rule_entry["gd_regex"] = (
         re.compile(_rule_entry["pattern"]) if _rule_entry["scope"] in ("gd", "both") else None
@@ -502,6 +737,9 @@ for _rule_entry in GODOT3_RULES:
     _rule_entry["scene_regex"] = (
         re.compile(_rule_entry["scene_pattern"] or _rule_entry["pattern"])
         if _rule_entry["scope"] in ("scene", "both") else None
+    )
+    _rule_entry["shader_regex"] = (
+        re.compile(_rule_entry["pattern"]) if _rule_entry["scope"] == "shader" else None
     )
 
 # Fast reject. Nearly every line matches no rule at all, so before running ~90
@@ -541,6 +779,8 @@ _GD_ANY, _GD_ALWAYS = _prefilter(
     [rule for rule in GODOT3_RULES if rule["gd_regex"] is not None], "pattern")
 _SCENE_ANY, _SCENE_ALWAYS = _prefilter(
     [rule for rule in GODOT3_RULES if rule["scene_regex"] is not None], "scene_pattern")
+_SHADER_RULES_ACTIVE = [rule for rule in GODOT3_RULES if rule["shader_regex"] is not None]
+_SHADER_ANY, _SHADER_ALWAYS = _prefilter(_SHADER_RULES_ACTIVE, "pattern")
 
 # `:=` right-hand sides that Godot cannot statically type. Same table shape.
 # `:=` right-hand sides Godot cannot statically type. Keyed by rule id; the
@@ -576,7 +816,10 @@ INFERENCE_RULES: dict[str, dict] = {
                    "are Variant. " + PARSE_ERROR_TAIL,
         "fix": "Annotate and convert: `var hp: int = int(data[\"hp\"])`. Or give the collection an "
                "element type at its declaration (`var items: Array[Enemy] = []`), after which "
-               "`:=` on a read from it works.",
+               "`:=` on a read from it works. A typed packed array "
+               "(`PackedFloat32Array`/`PackedByteArray`/...), an `Array[T]`, a "
+               "`Dictionary[K, V]` and a `String` all carry an element type already and are not "
+               "reported.",
     },
     "infer_json": {
         "severity": "error",
@@ -670,6 +913,263 @@ def _guard_lowercase_receiver(line: str, match: "re.Match[str]") -> bool:
 
 
 GUARDS = {"lowercase_receiver": _guard_lowercase_receiver}
+
+
+# ---------------------------------------------------------------------------
+# Cross-reference tables (input actions, groups, res:// paths, animations)
+# ---------------------------------------------------------------------------
+
+# The actions a *stock* 4.7 project already has, with no [input] section at all.
+# Not guessed: printed from the engine with
+#   godot --headless --path <empty project> --script print_actions.gd
+# where the script does `for a in InputMap.get_actions(): print(a)`. That run
+# returned 91 names on macOS, 72 of them distinct once the platform-tagged
+# variants (`ui_close_dialog.macos`, `ui_text_caret_word_left.macos`, ...) are
+# folded into their base name. Only the base names are stored: the `.macos`
+# spellings exist only on macOS, while every base exists everywhere, so a lint
+# built on the bases gives the same answer on every host.
+BUILTIN_INPUT_ACTIONS = frozenset("""
+ui_accept ui_accessibility_drag_and_drop ui_cancel ui_close_dialog
+ui_colorpicker_delete_preset ui_copy ui_cut ui_down ui_end ui_filedialog_delete
+ui_filedialog_find ui_filedialog_focus_path ui_filedialog_refresh ui_filedialog_show_hidden
+ui_filedialog_up_one_level ui_focus_mode ui_focus_next ui_focus_prev ui_graph_delete
+ui_graph_duplicate ui_graph_follow_left ui_graph_follow_right ui_home ui_left ui_menu
+ui_page_down ui_page_up ui_paste ui_redo ui_right ui_select ui_swap_input_direction
+ui_text_add_selection_for_next_occurrence ui_text_backspace ui_text_backspace_all_to_left
+ui_text_backspace_word ui_text_caret_add_above ui_text_caret_add_below
+ui_text_caret_document_end ui_text_caret_document_start ui_text_caret_down
+ui_text_caret_left ui_text_caret_line_end ui_text_caret_line_start ui_text_caret_page_down
+ui_text_caret_page_up ui_text_caret_right ui_text_caret_up ui_text_caret_word_left
+ui_text_caret_word_right ui_text_clear_carets_and_selection ui_text_completion_accept
+ui_text_completion_query ui_text_completion_replace ui_text_dedent ui_text_delete
+ui_text_delete_all_to_right ui_text_delete_word ui_text_indent ui_text_newline
+ui_text_newline_above ui_text_newline_blank ui_text_scroll_down ui_text_scroll_up
+ui_text_select_all ui_text_select_word_under_caret
+ui_text_skip_selection_for_next_occurrence ui_text_submit ui_text_toggle_insert_mode ui_undo
+ui_unicode_start ui_up
+""".split())
+
+# method name -> indices of the arguments that are action names. Methods only
+# reachable through the `Input` / `InputMap` singletons are listed separately so
+# a project's own `get_axis(a, b)` helper never trips the check.
+_INPUT_SINGLETON_ACTION_ARGS = {
+    "is_action_pressed": (0,), "is_action_just_pressed": (0,),
+    "is_action_just_released": (0,), "is_action_released": (0,),
+    "get_action_strength": (0,), "get_action_raw_strength": (0,),
+    "action_press": (0,), "action_release": (0,),
+    "get_axis": (0, 1), "get_vector": (0, 1, 2, 3),
+}
+_INPUTMAP_ACTION_ARGS = {
+    "erase_action": (0,), "action_erase_events": (0,),
+    "action_add_event": (0,), "action_erase_event": (0,), "action_has_event": (0,),
+    "action_set_deadzone": (0,), "action_get_deadzone": (0,), "action_get_events": (0,),
+}
+# `InputMap.has_action("look_left")` is a *probe*: the code is written to cope
+# with the action being absent (templates/gdscript/player_third_person_3d.gd
+# gates its whole gamepad-look block on four of them). Once a project probes an
+# action, every use of that action anywhere goes unreported.
+_INPUTMAP_PROBES = ("has_action",)
+# Reachable on any object (`event.is_action_pressed("jump")`). A project that
+# defines a method of the same name owns it and is not checked.
+_ANY_RECEIVER_ACTION_ARGS = {
+    "is_action": (0,), "is_action_pressed": (0,), "is_action_released": (0,),
+    "is_action_just_pressed": (0,), "is_action_just_released": (0,),
+}
+
+# method name -> index of the group-name argument. The `_flags` variants take the
+# flags first, so the name is argument 1, not 0.
+_GROUP_ARG = {
+    "get_nodes_in_group": 0, "get_first_node_in_group": 0, "is_in_group": 0,
+    "call_group": 0, "notify_group": 0, "set_group": 0,
+    "call_group_flags": 1, "notify_group_flags": 1, "set_group_flags": 1,
+}
+_GROUP_PROVIDERS = {"add_to_group": 0}
+
+_METHOD_CALL = re.compile(r"(?:(?P<recv>[A-Za-z_]\w*)\s*\.\s*)?(?P<name>[A-Za-z_]\w*)\s*\(")
+# Same prefilter idea as _GD_ANY: almost no line calls one of these, and testing
+# one literal alternation is far cheaper than scanning every call on every line.
+_CALL_NAMES_ANY = re.compile("|".join(sorted(
+    set(_INPUT_SINGLETON_ACTION_ARGS) | set(_INPUTMAP_ACTION_ARGS)
+    | set(_ANY_RECEIVER_ACTION_ARGS) | set(_GROUP_ARG) | set(_GROUP_PROVIDERS)
+    | {"add_action", "has_action"}, key=len, reverse=True)))
+# And likewise for the probe/write forms `collect_res_literals` looks for on a
+# line that carries no string at all.
+_PATH_CONTEXT_ANY = re.compile(
+    r"exists|resource_path|take_over_path|remove_absolute|ResourceUID|res://")
+# `FileAccess.open(path, FileAccess.WRITE)` and friends create the file, so the
+# path not existing yet is the normal case, never a finding.
+_WRITE_MODE = re.compile(r"\b(?:WRITE|WRITE_READ|READ_WRITE)\b")
+_WRITE_CALL = re.compile(
+    r"(?:ResourceSaver\s*\.\s*save|DirAccess\s*\.\s*(?:make_dir\w*|copy_absolute"
+    r"|rename_absolute)|\.\s*save)\s*\(")
+# Asking whether a path exists is not a claim that it does. Neither is giving an
+# in-memory resource a name (`script.resource_path = "res://__snippet.gd"`).
+_PROBE_CALL = re.compile(
+    r"(?:file_exists|dir_exists\w*|\bResourceLoader\s*\.\s*exists|remove_absolute"
+    r"|\bResourceUID\b)\s*\(|\b(?:resource_path|take_over_path)\b")
+# A res:// literal handed to a String method is text being sliced, not a path
+# being opened: `path.begins_with("res://addons/")`.
+_STRING_METHOD_ARG = re.compile(
+    r"\.\s*(?:begins_with|ends_with|trim_prefix|trim_suffix|contains|containsn|replace|replacen"
+    r"|split|rsplit|count|countn|find|findn|rfind|similarity|match|matchn|is_subsequence_of"
+    r"|is_subsequence_ofn|path_join|erase|lstrip|rstrip|substr|insert|format)\s*\(\s*$")
+# A res:// literal holding a placeholder is a template, not a path.
+_FORMAT_MARKER = re.compile(r"%[sdxfvc0-9]|\{\d*\}|\{[A-Za-z_]|<[A-Za-z_]")
+_NODE_EXPR = r"(?:\$%?[A-Za-z_][\w/]*|%[A-Za-z_]\w*)"
+# `$Sprite.play("walk")` and `anim.play("walk")` — the second only resolves when
+# `anim` is an @onready binding (see ScriptInfo.binding_target).
+_ANIM_SUBJECT = r"(?P<node>" + _NODE_EXPR + r"|(?<![\w.$%])[A-Za-z_]\w*)"
+_ANIM_METHODS = "play|play_backwards|queue"
+_ANIM_PROPERTIES = "animation|autoplay|current_animation"
+_ANIM_PLAY = re.compile(
+    _ANIM_SUBJECT + r"\s*\.\s*(?P<method>" + _ANIM_METHODS + r")\s*\(\s*&?(?P<quote>\")")
+_ANIM_ASSIGN = re.compile(
+    _ANIM_SUBJECT + r"\s*\.\s*(?P<method>" + _ANIM_PROPERTIES + r")\s*=\s*&?(?P<quote>\")")
+_ANIMATED_SPRITE_TYPES = ("AnimatedSprite2D", "AnimatedSprite3D")
+# Same prefilter idea as _GD_ANY. The subject of an animation call can now be a
+# bare identifier, so these two patterns would otherwise be tried at every word
+# of every line; `play|queue|animation|autoplay` rejects nearly all of them
+# first (`play_backwards` contains `play`, `current_animation` contains
+# `animation`).
+_ANIM_ANY = re.compile(r"play|queue|animation|autoplay")
+# A plain `name = value` statement (not `==`, not a declaration, not `a.b = c`).
+_ASSIGNMENT = re.compile(r"^\s*(?P<name>[A-Za-z_]\w*)\s*(?:[-+*/%|&^]|\*\*|<<|>>)?=(?!=)")
+_FOR_VAR = re.compile(r"^\s*for\s+([A-Za-z_]\w*)\b")
+# The right-hand side of an @onready binding: one node lookup and nothing else.
+_BINDING_DOLLAR = re.compile(r"^(?P<path>" + _NODE_EXPR + r")\s*$")
+_BINDING_GET_NODE = re.compile(
+    r"^get_node(?:_or_null)?\s*\(\s*(?:NodePath\s*\(\s*)?(?P<quote>\")")
+
+
+def node_expression(offset: int, rhs: str, strings: dict[int, str]) -> Optional[str]:
+    """`$Path` / `%Name` / `get_node("Path")` as a `$`-style path, else None.
+
+    `offset` is where `rhs` starts inside the scrubbed line, so a `get_node()`
+    literal can be recovered from `strings`. A trailing `as Type` is fine — it
+    narrows the static type and changes nothing about which node this is.
+    """
+    text = rhs.strip()
+    start = offset + (len(rhs) - len(rhs.lstrip()))
+    cast = re.search(r"\s+as\s+[\w.]+\s*$", text)
+    if cast:
+        text = text[:cast.start()]
+    direct = _BINDING_DOLLAR.match(text)
+    if direct:
+        return direct.group("path")
+    call = _BINDING_GET_NODE.match(text)
+    if call and text.rstrip().endswith(")"):
+        literal = strings.get(start + call.start("quote"))
+        if literal and not literal.startswith("/") and not any(
+                token in literal for token in _DYNAMIC):
+            return "$" + literal
+    return None
+
+# `# lint:ignore node_ref,inference` — on the offending line or the line above.
+# `#` is GDScript, `;` is .tscn/.tres/project.godot, `//` is .gdshader.
+_SUPPRESS = re.compile(r"(?:#|;|//)\s*lint:ignore\b(?P<cats>[\w,\s]*)")
+
+# A shader may legitimately declare an identifier a rule is about — the engine's
+# own SCREEN_TEXTURE migration note tells you to write
+# `uniform sampler2D SCREEN_TEXTURE : hint_screen_texture;`.
+_SHADER_DECL = re.compile(
+    r"\b(?:uniform|varying|const|#define)\s+(?:\w+\s+)*?(?P<name>[A-Za-z_]\w*)\s*(?=[:=;,\[])")
+_SHADER_BLOCK_COMMENT = re.compile(r"/\*.*?\*/", re.S)
+
+
+def strip_shader_comments(text: str) -> str:
+    """Blank `//` and `/* */` comments, keeping line count and column offsets."""
+    text = _SHADER_BLOCK_COMMENT.sub(lambda m: re.sub(r"[^\n]", " ", m.group(0)), text)
+    out: list[str] = []
+    for line in text.split("\n"):
+        position = line.find("//")
+        out.append(line[:position] + " " * (len(line) - position) if position >= 0 else line)
+    return "\n".join(out)
+
+
+def split_call_args(text: str, open_paren: int) -> list[tuple[int, str]]:
+    """Top-level arguments of the call whose `(` is at `open_paren`.
+
+    Returns [(index of the argument's first character, argument text)]. An
+    unbalanced line yields [] — the call continues on the next physical line and
+    this analysis is line-based.
+    """
+    args: list[tuple[int, str]] = []
+    depth = 0
+    quote = ""
+    start = open_paren + 1
+    index = open_paren
+    while index < len(text):
+        char = text[index]
+        if quote:
+            if char == "\\":
+                index += 2
+                continue
+            if char == quote:
+                quote = ""
+            index += 1
+            continue
+        if char in "\"'":
+            quote = char
+        elif char in "([{":
+            depth += 1
+        elif char in ")]}":
+            depth -= 1
+            if depth == 0:
+                args.append((start, text[start:index]))
+                return args
+        elif char == "," and depth == 1:
+            args.append((start, text[start:index]))
+            start = index + 1
+        index += 1
+    return []
+
+
+def literal_argument(arg_start: int, arg_text: str, strings: dict[int, str]) -> Optional[str]:
+    """The string literal an argument consists of, or None when it is anything else.
+
+    `&"jump"` (a StringName literal) counts; `name`, `NAMES[0]` and — the one
+    that bites — `"pre" + "fix"` do not. The last is why the length is checked
+    instead of just the first and last characters: that expression also starts
+    and ends with a quote, and reading its first literal would report the action
+    `pre`.
+    """
+    stripped = arg_text.lstrip()
+    offset = arg_start + (len(arg_text) - len(stripped))
+    if stripped.startswith("&"):
+        offset += 1
+        stripped = stripped[1:]
+    stripped = stripped.rstrip()
+    if len(stripped) < 2 or not stripped.startswith('"') or not stripped.endswith('"'):
+        return None
+    content = strings.get(offset)
+    # `scrub_line` blanks the content to spaces of the same length, so a single
+    # literal is exactly quote + content + quote and nothing more.
+    if content is None or len(stripped) != len(content) + 2:
+        return None
+    return content
+
+
+def nearest_names(name: str, candidates: Iterable[str], limit: int = 3) -> list[str]:
+    """The closest known names, for the fix text. Prefix matches count as close."""
+    pool = sorted(set(candidates))
+    close = difflib.get_close_matches(name, pool, n=limit, cutoff=0.6)
+    lowered = name.lower()
+    for candidate in pool:
+        if len(close) >= limit:
+            break
+        if candidate not in close and (candidate.lower().startswith(lowered)
+                                       or lowered.startswith(candidate.lower())):
+            close.append(candidate)
+    return close
+
+
+def listed(names: Iterable[str], limit: int = 20) -> str:
+    items = sorted(set(names))
+    if not items:
+        return "(none)"
+    shown = ", ".join(items[:limit])
+    return shown + (f", ... (+{len(items) - limit} more)" if len(items) > limit else "")
+
 
 _IDENT = re.compile(r"[A-Za-z_]\w*")
 # Binary operators whose result type comes from the operands.
@@ -1082,10 +1582,27 @@ _SECTION = re.compile(r"^\[(?P<kind>[a-z_]+)(?P<attrs>.*)\]\s*$")
 _ATTR = re.compile(r"(\w+)\s*=\s*(?:\"((?:[^\"\\]|\\.)*)\"|(\w+\(\s*\"[^\"]*\"\s*\))|([^\s\]]+))")
 _EXT_REF = re.compile(r"ExtResource\(\s*\"([^\"]*)\"\s*\)")
 _PROPERTY = re.compile(r"^(?P<key>[\w/]+)\s*=\s*(?P<value>.*)$")
+# `groups=["hurt", "player"]` in a [node] header, and the PackedStringArray form.
+_GROUPS_ATTR = re.compile(r"groups\s*=\s*(?:\[|PackedStringArray\()(?P<items>[^\]\)]*)")
+_QUOTED = re.compile(r"&?\"((?:[^\"\\]|\\.)*)\"")
+_SUB_REF = re.compile(r"SubResource\(\s*\"([^\"]*)\"\s*\)")
+# Node properties worth remembering. Everything else is dropped so a 5000-line
+# scene does not turn into a 5000-entry dictionary.
+_KEPT_NODE_PROPS = frozenset({
+    "sprite_frames", "animation", "autoplay", "frames", "libraries",
+    "current_animation", "assigned_animation",
+})
+# Sub-resource / [resource] types whose body the cross-reference checks read.
+_KEPT_RESOURCE_TYPES = frozenset({"SpriteFrames", "AnimationLibrary", "Shader"})
+# `"name": &"idle"` inside a SpriteFrames `animations = [...]` array.
+_SPRITE_FRAME_NAME = re.compile(r"\"name\"\s*:\s*&?\"((?:[^\"\\]|\\.)*)\"")
+# `&"walk": SubResource("Animation_x")` inside an AnimationLibrary `_data = {...}`.
+_LIBRARY_ENTRY = re.compile(r"&?\"((?:[^\"\\]|\\.)*)\"\s*:")
 
 
 class SceneNode:
-    __slots__ = ("name", "type", "parent", "path", "script_id", "instance_id", "unique", "line")
+    __slots__ = ("name", "type", "parent", "path", "script_id", "instance_id", "unique",
+                 "line", "props", "groups")
 
     def __init__(self, name: str, ntype: str, parent: Optional[str], path: str, line: int) -> None:
         self.name = name
@@ -1096,6 +1613,10 @@ class SceneNode:
         self.script_id: Optional[str] = None
         self.instance_id: Optional[str] = None
         self.unique = False
+        # Only the keys in _KEPT_NODE_PROPS (plus `libraries/<name>`), as
+        # {key: (raw value text, line number)}.
+        self.props: dict[str, tuple[str, int]] = {}
+        self.groups: list[str] = []
 
 
 class SceneDoc:
@@ -1107,6 +1628,16 @@ class SceneDoc:
         self.connections: list[dict] = []
         self.unique_names: dict[str, str] = {}
         self.root_name = ""
+        # id -> {"type", "props": {key: (value, line)}, "line"}
+        self.sub: dict[str, dict] = {}
+        self.resource_type = ""
+        self.resource_props: dict[str, tuple[str, int]] = {}
+        self.groups: set[str] = set()
+        # (line, shader source) for every `code = "…"` of a Shader resource.
+        self.shader_code: list[tuple[int, str]] = []
+        # The file as read, so the callers that need raw lines (the Godot 3 scan,
+        # the suppression scan) do not open it again.
+        self.text = ""
 
     def child(self, parent_path: str, name: str) -> Optional[SceneNode]:
         key = (parent_path + "/" + name) if parent_path else name
@@ -1125,18 +1656,92 @@ def _attrs(text: str) -> dict[str, str]:
     return found
 
 
+def _unescape(value: str) -> str:
+    """Undo the .tscn string escaping (`\\n`, `\\"`, `\\\\`) of a quoted value."""
+    return (value.replace("\\\\", "\x00").replace("\\n", "\n").replace("\\t", "\t")
+            .replace('\\"', '"').replace("\x00", "\\"))
+
+
+def _value_delta(value: str) -> int:
+    """Net `([{` minus `)]}` outside strings. Unlike `_bracket_delta` this one
+    honours backslash escapes, which a .tscn value (an embedded shader's
+    `code = "…\\"…"`) really does contain."""
+    delta = 0
+    quote = ""
+    index = 0
+    length = len(value)
+    while index < length:
+        char = value[index]
+        if quote:
+            if char == "\\":
+                index += 2
+                continue
+            if char == quote:
+                quote = ""
+        elif char in "\"'":
+            quote = char
+        elif char in "([{":
+            delta += 1
+        elif char in ")]}":
+            delta -= 1
+        index += 1
+    return delta
+
+
 def parse_scene_text(text: str, res_path: str) -> SceneDoc:
     doc = SceneDoc(res_path)
+    doc.text = text
     current: Optional[SceneNode] = None
+    # The sink for property lines of the section we are inside, and whether it
+    # keeps every key (a sub_resource we care about) or only _KEPT_NODE_PROPS.
+    sink: Optional[dict[str, tuple[str, int]]] = None
+    keep_all = False
+    # A `_data = {` / `animations = [{` value runs over many lines; accumulate
+    # until the brackets balance again.
+    pending_key = ""
+    pending_line = 0
+    pending: list[str] = []
+    depth = 0
+
+    def flush_pending() -> None:
+        nonlocal pending_key, pending, depth
+        if pending_key and sink is not None:
+            sink[pending_key] = ("\n".join(pending), pending_line)
+        pending_key = ""
+        pending = []
+        depth = 0
+
     for number, raw in enumerate(text.splitlines(), start=1):
         line = raw.strip()
+        if pending_key:
+            pending.append(line)
+            depth += _value_delta(line)
+            if depth <= 0:
+                flush_pending()
+            continue
         if not line or line.startswith(";"):
             continue
         section = _SECTION.match(line)
         if section:
             current = None
+            sink = None
+            keep_all = False
             kind = section.group("kind")
             attrs = _attrs(section.group("attrs"))
+            if kind == "sub_resource":
+                entry = {"type": attrs.get("type", ""), "props": {}, "line": number}
+                doc.sub[attrs.get("id", "")] = entry
+                if entry["type"] in _KEPT_RESOURCE_TYPES:
+                    sink = entry["props"]
+                    keep_all = True
+                continue
+            if kind == "resource":
+                sink = doc.resource_props
+                keep_all = True
+                continue
+            if kind in ("gd_resource", "gd_scene"):
+                doc.resource_type = attrs.get("type", "")
+                continue
             if kind == "ext_resource":
                 doc.ext[attrs.get("id", "")] = {
                     "type": attrs.get("type", ""),
@@ -1161,7 +1766,13 @@ def parse_scene_text(text: str, res_path: str) -> SceneDoc:
                 parent_path = "" if parent in (None, ".") else parent.rstrip("/")
                 if parent is not None:
                     doc.children.setdefault(parent_path, []).append(name)
+                groups = _GROUPS_ATTR.search(section.group("attrs"))
+                if groups:
+                    node.groups = [_unescape(item)
+                                   for item in _QUOTED.findall(groups.group("items"))]
+                    doc.groups.update(node.groups)
                 current = node
+                sink = node.props
             elif kind == "connection":
                 doc.connections.append({
                     "signal": attrs.get("signal", ""),
@@ -1171,20 +1782,36 @@ def parse_scene_text(text: str, res_path: str) -> SceneDoc:
                     "line": number,
                 })
             continue
-        if current is None:
-            continue
         prop = _PROPERTY.match(line)
         if not prop:
             continue
         key = prop.group("key")
         value = prop.group("value")
-        if key == "script":
-            ref = _EXT_REF.search(value)
-            if ref:
-                current.script_id = ref.group(1)
-        elif key == "unique_name_in_owner" and value.strip().lower().startswith("true"):
-            current.unique = True
-            doc.unique_names[current.name] = current.path
+        if current is not None:
+            if key == "script":
+                ref = _EXT_REF.search(value)
+                if ref:
+                    current.script_id = ref.group(1)
+            elif key == "unique_name_in_owner" and value.strip().lower().startswith("true"):
+                current.unique = True
+                doc.unique_names[current.name] = current.path
+        if sink is None:
+            continue
+        if not keep_all and key not in _KEPT_NODE_PROPS and not key.startswith("libraries/"):
+            continue
+        delta = _value_delta(value)
+        if delta > 0:
+            pending_key = key
+            pending_line = number
+            pending = [value]
+            depth = delta
+            continue
+        sink[key] = (value, number)
+        if keep_all and key == "code":
+            literal = _QUOTED.match(value.strip())
+            if literal:
+                doc.shader_code.append((number, _unescape(literal.group(1))))
+    flush_pending()
     return doc
 
 
@@ -1196,8 +1823,11 @@ _FUNC = re.compile(r"^\s*(?:static\s+)?func\s+(\w+)\s*\((?P<params>.*)$")
 # `var name: Type` / `var name =` / `const name` — the annotation decides whether a
 # `name[...]` read has an element type. Bare `Array` / `Dictionary` do not.
 _DECL = re.compile(
-    r"^\s*(?:@\w+(?:\([^)]*\))?\s+)*(?:var|const)\s+(?P<name>\w+)\s*(?::\s*(?P<type>[\w\[\], ]+?)\s*)?(?:=|:=|$)")
+    r"^\s*(?:@\w+(?:\([^)]*\))?\s+)*(?P<kw>var|const)\s+(?P<name>\w+)\s*(?::\s*(?P<type>[\w\[\], ]+?)\s*)?(?P<op>:=|=|$)")
 _UNTYPED_CONTAINERS = frozenset({"Array", "Dictionary", "Variant"})
+# A `:=` right-hand side that provably produces a container with no element
+# type: an array/dictionary literal, or the bare Array()/Dictionary() constructor.
+_UNTYPED_LITERAL_RHS = re.compile(r"^\s*(?:\[|\{|Array\s*\(|Dictionary\s*\()")
 _CLASS_NAME = re.compile(r"^\s*class_name\s+(\w+)")
 _EXTENDS = re.compile(r"^\s*extends\s+(.+?)\s*$")
 _DOLLAR = re.compile(r"\$(/?[%A-Za-z_][\w/]*)")
@@ -1217,29 +1847,89 @@ _DYNAMIC = ("%s", "%d", "+", "str(")
 
 class ScriptInfo:
     __slots__ = ("res_path", "funcs", "refs", "extends", "class_name", "exists",
-                 "func_returns", "typed_names", "untyped_names")
+                 "func_returns", "typed_names", "untyped_names", "anim_refs",
+                 "const_strings", "bindings", "shadowed", "declared")
 
     def __init__(self, res_path: str) -> None:
         self.res_path = res_path
         self.funcs: set[str] = set()
         self.refs: list[dict] = []
+        self.anim_refs: list[dict] = []
+        # `const FIRE: StringName = &"fire"` -> {"FIRE": "fire"}. A const cannot
+        # be reassigned, so `Input.is_action_pressed(FIRE)` is exactly as certain
+        # as the literal. Same-file only: no enums, no other files, no static var.
+        self.const_strings: dict[str, str] = {}
+        # `@onready var anim: AnimatedSprite2D = $Sprite` -> {"anim": "$Sprite"}.
+        # Only entries whose name is in neither `shadowed` nor declared twice are
+        # used; see `binding_target()`.
+        self.bindings: dict[str, str] = {}
+        # Names that are reassigned, shadowed by a parameter or a `for` variable,
+        # or declared more than once — anything that makes a binding uncertain.
+        self.shadowed: set[str] = set()
+        self.declared: set[str] = set()
         self.extends: Optional[str] = None
         self.class_name: Optional[str] = None
         self.exists = True
         # func name -> whether it declares `-> Type`. A function without one
         # returns Variant, so `var x := that()` cannot be inferred.
         self.func_returns: dict[str, bool] = {}
-        # Names declared with a concrete element type anywhere in the file, and
-        # names declared with none. A name in both is treated as typed: the
+        # Names whose `x[...]` read is *provably* Variant, and names where it is
+        # not (typed, or not provable). A name in both is treated as typed: the
         # analysis is per-file, not per-scope, and a miss beats a false alarm.
         self.typed_names: set[str] = set()
         self.untyped_names: set[str] = set()
 
-    def note_declaration(self, name: str, annotation: Optional[str]) -> None:
-        if annotation and annotation.strip() not in _UNTYPED_CONTAINERS:
+    def note_declaration(self, name: str, annotation: Optional[str],
+                         operator: str = "", rhs: str = "", keyword: str = "var") -> None:
+        """Record whether `name[...]` is provably a Variant read.
+
+        Measured on godot 4.7 by compiling one script per case (`var x :=
+        base[0]`, thirty-odd declaration forms). What actually decides it:
+
+        - an annotation of exactly `Array` / `Dictionary` / `Variant` -> Variant;
+          any other annotation (`Array[int]`, `PackedFloat32Array`,
+          `Dictionary[String, int]`) carries an element type and infers fine;
+        - `var x = <anything>` (plain `=`, no annotation) -> Variant. Even
+          `var packed = PackedByteArray([1])` fails: only `:=` infers;
+        - `var x` with nothing at all -> Variant;
+        - `var x := []` / `{}` / `Array()` / `Dictionary()` -> an untyped
+          container, so the read is Variant;
+        - every other `:=` right-hand side -> whatever that expression is, which
+          this analysis does not track. `var packed := PackedByteArray([1])`,
+          `var files := DirAccess.get_files_at(p)`, `var row := grid[0]` (grid
+          being `Array[PackedInt32Array]`), `var text := "abc"` and
+          `var b := make()` with `make() -> PackedByteArray` all compile, so they
+          are NOT reported;
+        - `const` never: constants are folded, and `const NAMES := ["a"]` gives
+          `NAMES[0]` a concrete type.
+        """
+        if keyword == "const":
             self.typed_names.add(name)
-        else:
-            self.untyped_names.add(name)
+            return
+        if annotation:
+            if annotation.strip() in _UNTYPED_CONTAINERS:
+                self.untyped_names.add(name)
+            else:
+                self.typed_names.add(name)
+            return
+        if operator == ":=" and (not _UNTYPED_LITERAL_RHS.match(rhs)
+                                 or " as " in rhs or " if " in rhs):
+            self.typed_names.add(name)
+            return
+        self.untyped_names.add(name)
+
+    def binding_target(self, name: str) -> Optional[str]:
+        """The `$Path` / `%Name` / `get_node()` path `name` is bound to, if certain.
+
+        Certain means: declared exactly once, as an `@onready var` whose whole
+        right-hand side is one node lookup, and never assigned, shadowed by a
+        parameter or a `for` variable, or re-declared anywhere in the file. A
+        plain `var anim = $Sprite` inside `_ready()` does not qualify — it is a
+        local whose name may mean something else three functions down.
+        """
+        if name in self.shadowed:
+            return None
+        return self.bindings.get(name)
 
 
 # ---------------------------------------------------------------------------
@@ -1255,8 +1945,9 @@ class Linter:
         self.subpath = subpath.strip("/")
         self.diagnostics: list[dict] = []
         self.scan_summary = {
-            "gd": 0, "tscn": 0, "tres": 0, "project_godot": 0,
+            "gd": 0, "tscn": 0, "tres": 0, "shader": 0, "project_godot": 0,
             "scene_script_pairs": 0, "node_paths_checked": 0, "skipped_dynamic_paths": 0,
+            "skipped_gdignore_dirs": 0,
         }
         self._scenes: dict[str, Optional[SceneDoc]] = {}
         self._scripts: dict[str, ScriptInfo] = {}
@@ -1264,6 +1955,24 @@ class Linter:
         self._pending_godot3: list[tuple] = []
         self.autoloads: dict[str, str] = {}
         self.class_index: dict[str, str] = {}
+        # --- suppressions: (file, line) -> set of categories, "*" = all -------
+        self._suppress: dict[str, dict[int, set[str]]] = {}
+        self._suppress_used: set[tuple[str, int]] = set()
+        self._suppress_sites: list[dict] = []
+        # --- cross-reference indexes -----------------------------------------
+        # Emission is deferred: `add_to_group("boss")` in the last script of the
+        # walk still defines the group for the first one.
+        self.defined_actions: dict[str, str] = {}      # action -> where it comes from
+        self.probed_actions: set[str] = set()          # asked about with InputMap.has_action()
+        self.defined_groups: dict[str, str] = {}       # group -> where it comes from
+        self.written_paths: set[str] = set()           # res:// paths the project creates
+        self._pending_actions: list[dict] = []
+        self._pending_groups: list[dict] = []
+        self._pending_res: list[dict] = []
+        self._reported_load: set[tuple[str, int, str]] = set()
+        self._project_funcs: set[str] = set()
+        self._dir_cache: dict[Path, dict] = {}
+        self._excused_names: set[tuple[str, str]] = set()
 
     # -- helpers ----------------------------------------------------------
     def res(self, path: Path) -> str:
@@ -1277,6 +1986,8 @@ class Linter:
     def emit(self, severity: str, category: str, message: str, file: str,
              line: Optional[int], fix: str, rule: str = "") -> None:
         if category not in self.only:
+            return
+        if self.suppressed(file, line, category):
             return
         key = (category, rule, file, line, message)
         if key in self._seen:
@@ -1292,6 +2003,69 @@ class Linter:
             "suggested_fix": fix,
         })
 
+    # -- suppression comments ---------------------------------------------
+    def collect_suppressions(self, res_path: str, text: str) -> None:
+        """Index every `lint:ignore` comment in a file.
+
+        A comment on line N covers line N (it is trailing the offending code) and
+        line N+1 (it sits on the line above). Three comment markers, so the same
+        spelling works in `.gd` (`#`), `.tscn`/`.tres`/`project.godot` (`;`) and
+        `.gdshader` (`//`).
+        """
+        if "lint:ignore" not in text:
+            return
+        table = self._suppress.setdefault(res_path, {})
+        for number, raw in enumerate(text.splitlines(), start=1):
+            match = _SUPPRESS.search(raw)
+            if match is None:
+                continue
+            names = {name for name in re.split(r"[,\s]+", match.group("cats").strip()) if name}
+            categories = names or {"*"}
+            for target in (number, number + 1):
+                table.setdefault(target, set()).update(categories)
+            self._suppress_sites.append({
+                "file": res_path, "line": number,
+                "categories": sorted(categories),
+                "unknown": sorted(name for name in names if name not in CATEGORIES),
+            })
+
+    def suppressed(self, file: str, line: Optional[int], category: str) -> bool:
+        table = self._suppress.get(file)
+        if not table or line is None:
+            return False
+        categories = table.get(line)
+        if not categories or not ({"*", category} & categories):
+            return False
+        # Mark the comment that covers this line (it is either on it or above it).
+        for source in (line, line - 1):
+            entry = table.get(source)
+            if entry and ({"*", category} & entry):
+                self._suppress_used.add((file, source))
+        return True
+
+    def suppression_report(self) -> dict:
+        """`{total, used, unused[]}` — never diagnostics, so never an exit code.
+
+        Under `--only`, a suppression for a category that was filtered out counts
+        as unused: it genuinely matched nothing *in this run*. Judge unused
+        suppressions from a full run.
+        """
+        unused = []
+        for site in self._suppress_sites:
+            if (site["file"], site["line"]) in self._suppress_used:
+                continue
+            reason = "no diagnostic of that category on this line or the next"
+            if site["unknown"]:
+                reason = (f"unknown categor{'y' if len(site['unknown']) == 1 else 'ies'} "
+                          f"{', '.join(site['unknown'])}; valid: {', '.join(CATEGORIES)}")
+            unused.append({"file": site["file"], "line": site["line"],
+                           "categories": site["categories"], "reason": reason})
+        return {
+            "total": len(self._suppress_sites),
+            "used": len(self._suppress_sites) - len(unused),
+            "unused": unused,
+        }
+
     # -- file walk --------------------------------------------------------
     def iter_files(self) -> Iterable[Path]:
         root = self.project / self.subpath if self.subpath else self.project
@@ -1301,10 +2075,20 @@ class Linter:
                 f"that exists inside the project (for example --path scripts), or drop --path to "
                 f"lint the whole project.")
         for dirpath, dirnames, filenames in os.walk(root):
-            dirnames[:] = [
-                name for name in sorted(dirnames)
-                if not name.startswith(".") and (self.include_addons or name != "addons")
-            ]
+            keep: list[str] = []
+            for name in sorted(dirnames):
+                if name.startswith(".") or (not self.include_addons and name == "addons"):
+                    continue
+                # A directory holding a `.gdignore` file is invisible to Godot —
+                # it is never imported, never scanned, and nothing in it can be
+                # loaded. Linting it would report on code the engine never sees
+                # and, worse, index its `add_to_group` / `InputMap.add_action`
+                # calls as if they ran.
+                if (Path(dirpath) / name / ".gdignore").is_file():
+                    self.scan_summary["skipped_gdignore_dirs"] += 1
+                    continue
+                keep.append(name)
+            dirnames[:] = keep
             for name in sorted(filenames):
                 if name.startswith(".") or name.endswith(".import"):
                     continue
@@ -1316,8 +2100,10 @@ class Linter:
         if not path.is_file():
             return
         self.scan_summary["project_godot"] = 1
+        text = path.read_text(encoding="utf-8", errors="replace")
+        self.collect_suppressions("res://project.godot", text)
         section = ""
-        for number, raw in enumerate(path.read_text(encoding="utf-8", errors="replace").splitlines(), 1):
+        for number, raw in enumerate(text.splitlines(), 1):
             line = raw.strip()
             if not line or line.startswith(";"):
                 continue
@@ -1332,6 +2118,12 @@ class Linter:
             if section == "autoload":
                 self.autoloads[key] = value
                 self.check_project_resource(value.lstrip("*"), number, f"autoload `{key}`")
+            elif section == "input":
+                # `jump.macos=...` is the same action with a platform override.
+                self.defined_actions.setdefault(
+                    key.split(".")[0], "project.godot [input]")
+            elif section == "global_group":
+                self.defined_groups.setdefault(key, "project.godot [global_group]")
             elif key == "run/main_scene":
                 self.check_project_resource(value, number, "run/main_scene")
 
@@ -1369,6 +2161,7 @@ class Linter:
         info = ScriptInfo(res_path)
         self._scripts[res_path] = info
         text = path.read_text(encoding="utf-8", errors="replace")
+        self.collect_suppressions(res_path, text)
         scrubbed = [scrub_line(raw) for raw in text.splitlines()]
 
         # Pass one builds the file's symbol table. The inference analysis needs it
@@ -1383,6 +2176,8 @@ class Linter:
                 self.check_godot3_line(res_path, number, blank)
                 self.check_inference_line(res_path, number, blank, info)
                 self.check_load_calls(res_path, number, blank, strings)
+                self.collect_calls(info, res_path, number, blank, strings)
+                self.collect_res_literals(res_path, number, blank, strings)
             self.collect_node_refs(info, number, blank, strings)
         if record:
             self.scan_summary["gd"] += 1
@@ -1390,15 +2185,31 @@ class Linter:
 
     def collect_symbols(self, info: ScriptInfo, res_path: str, blank: str,
                         strings: dict[int, str]) -> None:
+        # Anything that makes a member name mean something else later: a plain
+        # assignment, a `for` variable, a parameter, a second declaration.
+        rebind = _ASSIGNMENT.match(blank)
+        if rebind:
+            info.shadowed.add(rebind.group("name"))
+        loop = _FOR_VAR.match(blank)
+        if loop:
+            info.shadowed.add(loop.group(1))
         func = _FUNC.match(blank)
         if func:
             info.funcs.add(func.group(1))
             info.func_returns[func.group(1)] = "->" in func.group("params")
             for param in _split_params(func.group("params")):
-                name, _, annotation = param.split("=")[0].partition(":")
+                # `a := PackedByteArray()` infers; `a = PackedByteArray()` does
+                # NOT (verified on 4.7) — a plain `=` default leaves the
+                # parameter Variant. The two forms have to be told apart.
+                if ":=" in param:
+                    head, operator, rhs = param.partition(":=")
+                else:
+                    head, operator, rhs = param.partition("=")
+                name, _, annotation = head.partition(":")
                 name = name.strip()
                 if name:
-                    info.note_declaration(name, annotation.strip() or None)
+                    info.note_declaration(name, annotation.strip() or None, operator, rhs)
+                    info.shadowed.add(name)
             return
         cname = _CLASS_NAME.match(blank)
         if cname:
@@ -1413,7 +2224,23 @@ class Linter:
                 return
         decl = _DECL.match(blank)
         if decl:
-            info.note_declaration(decl.group("name"), decl.group("type"))
+            name = decl.group("name")
+            rhs = blank[decl.end():]
+            info.note_declaration(name, decl.group("type"), decl.group("op"), rhs,
+                                  decl.group("kw"))
+            if name in info.declared:
+                info.shadowed.add(name)       # two declarations: which one wins?
+            info.declared.add(name)
+            if decl.group("kw") == "const":
+                literal = literal_argument(decl.end(), rhs, strings)
+                if literal is not None:
+                    info.const_strings[name] = literal
+            elif blank.lstrip().startswith("@onready"):
+                target = node_expression(decl.end(), rhs, strings)
+                if target is not None:
+                    info.bindings[name] = target
+                else:
+                    info.shadowed.add(name)   # bound to something we cannot follow
 
     def collect_node_refs(self, info: ScriptInfo, number: int, blank: str,
                           strings: dict[int, str]) -> None:
@@ -1437,6 +2264,149 @@ class Linter:
             kind = "get_node_or_null" if match.group("safe") else "get_node"
             info.refs.append({"kind": kind, "path": literal, "line": number,
                               "raw": f'{kind}("{literal}")'})
+        if not _ANIM_ANY.search(blank):
+            return
+        for regex, template in ((_ANIM_PLAY, '{s}.{m}("{a}")'),
+                                (_ANIM_ASSIGN, '{s}.{m} = "{a}"')):
+            for match in regex.finditer(blank):
+                literal = strings.get(match.start("quote"))
+                if not literal:
+                    continue
+                subject = match.group("node")
+                info.anim_refs.append({
+                    "node": subject, "member": match.group("method"),
+                    # A bare identifier only resolves through an @onready
+                    # binding; `$Path` / `%Name` resolve directly.
+                    "binding": subject[0] not in "$%",
+                    "animation": literal, "line": number,
+                    "raw": template.format(s=subject, m=match.group("method"), a=literal),
+                })
+
+    # -- cross-reference collectors ---------------------------------------
+    def collect_calls(self, info: ScriptInfo, res_path: str, number: int, blank: str,
+                      strings: dict[int, str]) -> None:
+        """Queue input-action and group names used or defined on this line.
+
+        An argument counts when it is a string literal, a `&"name"` StringName
+        literal, or an identifier this file declares as a `const` holding one —
+        `const FIRE: StringName = &"fire"` cannot be reassigned, so
+        `Input.is_action_pressed(FIRE)` is exactly as certain as the literal.
+        Anything else (a variable, an expression, a const from another file, an
+        enum) is never guessed at.
+        """
+        want_actions = "input_action" in self.only
+        want_groups = "group_ref" in self.only
+        if not (want_actions or want_groups) or not _CALL_NAMES_ANY.search(blank):
+            return
+        for match in _METHOD_CALL.finditer(blank):
+            name = match.group("name")
+            receiver = match.group("recv")
+            args: Optional[list[tuple[int, str]]] = None
+
+            def literal_at(index: int) -> Optional[str]:
+                nonlocal args
+                if args is None:
+                    args = split_call_args(blank, match.end() - 1)
+                if index >= len(args):
+                    return None
+                start, text = args[index]
+                found = literal_argument(start, text, strings)
+                if found is not None:
+                    return found
+                return info.const_strings.get(text.strip())
+
+            if want_actions:
+                indexes: tuple[int, ...] = ()
+                if receiver == "InputMap" and name == "add_action":
+                    literal = literal_at(0)
+                    if literal:
+                        self.defined_actions.setdefault(
+                            literal, f"InputMap.add_action() in {res_path}")
+                    continue
+                if receiver == "InputMap" and name in _INPUTMAP_PROBES:
+                    literal = literal_at(0)
+                    if literal:
+                        self.probed_actions.add(literal)
+                    continue
+                if receiver in ("Input", "InputMap"):
+                    indexes = (_INPUT_SINGLETON_ACTION_ARGS if receiver == "Input"
+                               else _INPUTMAP_ACTION_ARGS).get(name, ())
+                elif receiver is not None:
+                    indexes = _ANY_RECEIVER_ACTION_ARGS.get(name, ())
+                for index in indexes:
+                    literal = literal_at(index)
+                    if literal:
+                        self._pending_actions.append({
+                            "action": literal, "file": res_path, "line": number,
+                            "call": f"{receiver}.{name}()", "engine_call": receiver in
+                            ("Input", "InputMap"), "method": name})
+            if want_groups:
+                if name in _GROUP_PROVIDERS:
+                    literal = literal_at(_GROUP_PROVIDERS[name])
+                    if literal:
+                        self.defined_groups.setdefault(literal, f"add_to_group() in {res_path}")
+                elif name in _GROUP_ARG:
+                    literal = literal_at(_GROUP_ARG[name])
+                    if literal:
+                        self._pending_groups.append({
+                            "group": literal, "file": res_path, "line": number,
+                            "call": f"{name}()"})
+
+    def collect_res_literals(self, res_path: str, number: int, blank: str,
+                             strings: dict[int, str]) -> None:
+        """Queue every `res://…` literal on the line, and note the ones written.
+
+        The literals come from `strings`, not from `blank`: `scrub_line` blanks
+        string *contents* out of the code view, so `res://` is simply not there.
+        """
+        if "res_path" not in self.only:
+            return
+        if not strings and not _PATH_CONTEXT_ANY.search(blank):
+            return
+        if _PROBE_CALL.search(blank):
+            # `FileAccess.file_exists("res://save.cfg")`. The path usually lives
+            # in a const a few lines up, so excuse both the literals and the
+            # names on this line — a `const CONFIG := "res://export_presets.cfg"`
+            # that is only ever probed is not a missing file.
+            for literal in strings.values():
+                if literal.startswith("res://"):
+                    self.written_paths.add(literal)
+            self._excused_names.update((res_path, name) for name in _IDENT.findall(blank))
+            return
+        if not strings:
+            return
+        if blank.lstrip().startswith("@export"):
+            # `@export var next_scene: String = "res://scenes/level_1.tscn"` is a
+            # placeholder: the real value is set per instance in the inspector or
+            # through `attach_script` `script_properties`. templates/gdscript
+            # ships two of these and both are correct as written.
+            return
+        writes = bool(_WRITE_MODE.search(blank)) or bool(_WRITE_CALL.search(blank))
+        for offset, literal in strings.items():
+            if not literal.startswith("res://"):
+                continue
+            if _FORMAT_MARKER.search(literal):
+                continue                      # a template, not a path
+            # Glued to a neighbour: this literal is a prefix or a suffix.
+            before = blank[:offset].rstrip()
+            after = blank[offset + len(literal) + 2:].lstrip()
+            if before.endswith("+") or after.startswith(("+", "%", ".path_join", ".format")):
+                continue
+            if _STRING_METHOD_ARG.search(before):
+                continue                      # `path.begins_with("res://addons/")`
+            if writes:
+                self.written_paths.add(literal)
+                continue
+            declared = _DECL.match(blank)
+            self._pending_res.append({
+                "path": literal, "file": res_path, "line": number,
+                # The const may be probed further down the file, so the excuse
+                # can only be applied once the whole project has been read.
+                "name": declared.group("name") if declared else None,
+                # `extends "res://x.gd"` of a missing file is a parse error, the
+                # same class as `preload()`, so it is an error not a warning.
+                "extends": blank.lstrip().startswith("extends"),
+            })
 
     def check_godot3_line(self, res_path: str, number: int, blank: str) -> None:
         if "godot3_api" not in self.only:
@@ -1479,7 +2449,7 @@ class Linter:
                 continue
             if rule["suppress_if_func"] and rule["suppress_if_func"] in project_funcs:
                 continue
-            self.emit(rule["severity"], "godot3_api", rule["message"], res_path, number,
+            self.emit(rule["severity"], rule["category"], rule["message"], res_path, number,
                       rule["fix"], rule=rule["id"])
 
     def check_inference_line(self, res_path: str, number: int, blank: str,
@@ -1514,6 +2484,8 @@ class Linter:
             if target is not None and target.exists():
                 continue
             kind = match.group("kind")
+            # Claimed by `missing_resource`; `res_path` must not say it again.
+            self._reported_load.add((res_path, number, literal))
             self.emit(
                 "error", "missing_resource",
                 f"`{kind}(\"{literal}\")` refers to a file that does not exist on disk.",
@@ -1523,6 +2495,211 @@ class Linter:
                 f"far from here.",
                 rule="missing_load",
             )
+
+    # -- deferred cross-reference reports ---------------------------------
+    def flush_input_actions(self) -> None:
+        if "input_action" not in self.only:
+            return
+        known = set(self.defined_actions) | BUILTIN_INPUT_ACTIONS
+        project_actions = sorted(self.defined_actions)
+        for entry in self._pending_actions:
+            action = entry["action"]
+            if action in known or action.split(".")[0] in known:
+                continue
+            if action in self.probed_actions:
+                continue
+            # `event.is_action_pressed(...)` on some object the project itself
+            # implements is that project's method, not the engine's.
+            if not entry["engine_call"] and entry["method"] in self._project_funcs:
+                continue
+            close = nearest_names(action, known)
+            hint = f" Did you mean {' or '.join('`' + n + '`' for n in close)}?" if close else ""
+            self.emit(
+                "error", "input_action",
+                f"`{entry['call']}` uses the action `{action}`, which nothing defines: it is not "
+                f"in project.godot's `[input]` section, it is not one of the engine's built-in "
+                f"`ui_*` actions, and no script calls "
+                f"`InputMap.add_action(\"{action}\")`. At runtime Godot prints "
+                f"`ERROR: The InputMap action \"{action}\" doesn't exist` (or silently answers "
+                f"false, depending on the call) and the input never fires.{hint} "
+                f"Actions this project defines: {listed(project_actions)}.",
+                entry["file"], entry["line"],
+                (f"Fix the spelling to `{close[0]}`, " if close else "")
+                + f"or create the action and bind a key (32 = Space; pick your own keycode):\n"
+                f"  godot --headless --path /absolute/project --script "
+                f"/absolute/path/to/godot/scripts/core/dispatcher.gd project_batch "
+                f"'{{\"actions\":["
+                f"{{\"type\":\"add_input_action\",\"action_name\":\"{action}\"}},"
+                f"{{\"type\":\"add_input_event\",\"action_name\":\"{action}\",\"event\":"
+                f"{{\"__resource_type\":\"InputEventKey\",\"properties\":"
+                f"{{\"physical_keycode\":32}}}}}}]}}'\n"
+                f"If the action is instead created at runtime, call "
+                f"`InputMap.add_action(\"{action}\")` before the first use, or guard the use "
+                f"with `InputMap.has_action(\"{action}\")` — the linter finds either and goes "
+                f"quiet.",
+                rule="undefined_input_action",
+            )
+
+    def flush_groups(self) -> None:
+        if "group_ref" not in self.only:
+            return
+        known = set(self.defined_groups)
+        for entry in self._pending_groups:
+            group = entry["group"]
+            if group in known:
+                continue
+            close = nearest_names(group, known)
+            hint = f" Did you mean {' or '.join('`' + n + '`' for n in close)}?" if close else ""
+            self.emit(
+                "warning", "group_ref",
+                f"`{entry['call']}` uses the group `{group}`, which nothing in this project ever "
+                f"joins: no `.tscn` node carries it in `groups=[…]`, no script calls "
+                f"`add_to_group(\"{group}\")`, and project.godot has no `[global_group]` entry "
+                f"for it. The call succeeds and returns nothing, so the feature just never "
+                f"happens.{hint} Groups this project provides: {listed(known)}.",
+                entry["file"], entry["line"],
+                f"Put the nodes in the group — `configure_node` with "
+                f"`{{\"groups\": [\"{group}\"]}}`, the line `groups=[\"{group}\"]` on the [node] "
+                f"header, or `add_to_group(\"{group}\")` in `_ready()` — or fix the spelling. A "
+                f"group that only ever exists at runtime can also be declared under "
+                f"`[global_group]` in project.godot.",
+                rule="unknown_group",
+            )
+
+    def flush_res_paths(self) -> None:
+        if "res_path" not in self.only:
+            return
+        for entry in self._pending_res:
+            path = entry["path"]
+            if (entry["file"], entry["line"], path) in self._reported_load:
+                continue                      # already reported as missing_resource
+            if path in self.written_paths:
+                continue
+            if entry["name"] and (entry["file"], entry["name"]) in self._excused_names:
+                continue
+            if not path.startswith("res://"):
+                continue
+            exact, actual = self.resolve_on_disk(path[len("res://"):])
+            if exact:
+                continue
+            if actual is not None:
+                self.emit(
+                    "warning", "res_path",
+                    f"`{path}` differs from the file on disk only in case — the real name is "
+                    f"`{actual}`. It loads on macOS and Windows and fails on Linux and in every "
+                    f"exported .pck, which are case-sensitive.",
+                    entry["file"], entry["line"],
+                    f"Use the on-disk spelling: `{actual}`.",
+                    rule="res_path_case",
+                )
+                continue
+            if entry["extends"]:
+                self.emit(
+                    "error", "res_path",
+                    f"`extends \"{path}\"` names a script that does not exist on disk. That is a "
+                    f"parse error — this file never loads, and neither does any scene using it.",
+                    entry["file"], entry["line"],
+                    f"Create `{path}`, or fix the path. A path-extends is resolved at parse time, "
+                    f"exactly like `preload()`.",
+                    rule="res_path_extends",
+                )
+                continue
+            self.emit(
+                "warning", "res_path",
+                f"The literal `{path}` does not exist on disk (no file and no directory). "
+                f"Nothing here proves it is loaded, so this is a warning — but a `res://` string "
+                f"in a script is almost always a path that is about to be opened, and the load "
+                f"will return null.",
+                entry["file"], entry["line"],
+                f"Create `{path}`, fix the path, or — if the file is produced at runtime — write "
+                f"it through `FileAccess.open(…, FileAccess.WRITE)` / `ResourceSaver.save()`, "
+                f"which the linter recognises and stops reporting. "
+                f"`# lint:ignore res_path` on the line silences it for good.",
+                rule="res_path_missing",
+            )
+
+    def resolve_on_disk(self, relative: str) -> tuple[bool, Optional[str]]:
+        """(exists with exactly this spelling, the real `res://` path if only the
+        case differs).
+
+        Deliberately case-sensitive on every host. macOS and Windows filesystems
+        are not, so `Path.exists()` there happily answers True for
+        `res://art/HERO.png` when the file is `hero.png` — and then the Linux CI
+        box and every exported .pck fail to load it. Doing the comparison by
+        listing the directory gives the same answer everywhere.
+        """
+        current = self.project
+        parts = [part for part in relative.split("/") if part not in ("", ".")]
+        if not parts:
+            return True, None
+        renamed: list[str] = []
+        exact = True
+        for index, part in enumerate(parts):
+            entries = self._dir_index(current)
+            if entries is None:
+                return False, None
+            if part in entries:
+                renamed.append(part)
+            else:
+                match = entries.get(part.lower())
+                if match is None or index < len(parts) - 1 and not (current / match).is_dir():
+                    return False, None
+                exact = False
+                renamed.append(match)
+            current = current / renamed[-1]
+        if exact:
+            return True, None
+        return False, "res://" + "/".join(renamed)
+
+    def _dir_index(self, directory: Path) -> Optional[dict]:
+        """{exact name: True} plus {lowercase name: exact name}, cached per dir."""
+        cached = self._dir_cache.get(directory)
+        if cached is None:
+            if not directory.is_dir():
+                self._dir_cache[directory] = {}
+                return None
+            cached = {}
+            for entry in directory.iterdir():
+                cached[entry.name] = entry.name
+                cached.setdefault(entry.name.lower(), entry.name)
+            self._dir_cache[directory] = cached
+        return cached or None
+
+    # -- shaders ----------------------------------------------------------
+    def scan_shader_file(self, path: Path) -> None:
+        res_path = self.res(path)
+        text = path.read_text(encoding="utf-8", errors="replace")
+        self.collect_suppressions(res_path, text)
+        self.scan_summary["shader"] += 1
+        self.check_shader_source(res_path, text, 0)
+
+    def check_shader_source(self, res_path: str, source: str, line_offset: int,
+                            where: str = "") -> None:
+        """Run the `godot3_shader` rules over one shader body.
+
+        `line_offset` is 0 for a `.gdshader` file (the diagnostic line is the
+        shader's own line) and the `.tscn` line of the `code = "…"` property for
+        embedded code, whose inner line number then goes in the message.
+        """
+        if "godot3_shader" not in self.only:
+            return
+        stripped = strip_shader_comments(source)
+        declared = set(_SHADER_DECL.findall(stripped))
+        for index, line in enumerate(stripped.split("\n"), start=1):
+            candidates = _SHADER_RULES_ACTIVE if _SHADER_ANY.search(line) else _SHADER_ALWAYS
+            for rule in candidates:
+                if not rule["shader_regex"].search(line):
+                    continue
+                if rule["suppress_if_declared"] and rule["suppress_if_declared"] in declared:
+                    continue
+                inside = f" ({where} line {index})" if line_offset else ""
+                self.emit(rule["severity"], "godot3_shader",
+                          rule["message"] + inside,
+                          res_path, line_offset or index, rule["fix"], rule=rule["id"])
+
+    def check_embedded_shaders(self, res_path: str, doc: SceneDoc) -> None:
+        for number, code in doc.shader_code:
+            self.check_shader_source(res_path, code, number, "embedded shader")
 
     # -- scenes -----------------------------------------------------------
     def scene_doc(self, res_path: str) -> Optional[SceneDoc]:
@@ -1535,11 +2712,27 @@ class Linter:
         self._scenes[res_path] = doc
         return doc
 
+    def index_scene(self, path: Path) -> Optional[SceneDoc]:
+        """Parse a scene and register everything other files may depend on.
+
+        Runs over every scene before any of them is checked, so a group joined in
+        the last scene of the walk is already known when the first one is linted.
+        """
+        res_path = self.res(path)
+        doc = self.scene_doc(res_path)
+        if doc is None:
+            return None
+        self.collect_suppressions(res_path, doc.text)
+        for group in doc.groups:
+            self.defined_groups.setdefault(group, f"groups=[…] in {res_path}")
+        return doc
+
     def scan_scene(self, path: Path) -> None:
         res_path = self.res(path)
-        text = path.read_text(encoding="utf-8", errors="replace")
-        doc = parse_scene_text(text, res_path)
-        self._scenes[res_path] = doc
+        doc = self.scene_doc(res_path)
+        if doc is None:
+            return
+        text = doc.text
         self.scan_summary["tscn"] += 1
         for number, raw in enumerate(text.splitlines(), start=1):
             if raw.lstrip().startswith(";"):
@@ -1548,17 +2741,23 @@ class Linter:
         self.check_ext_resources(res_path, doc)
         self.check_scene_scripts(doc)
         self.check_connections(doc)
+        self.check_scene_animations(doc)
+        self.check_embedded_shaders(res_path, doc)
 
     def scan_resource(self, path: Path) -> None:
         res_path = self.res(path)
-        text = path.read_text(encoding="utf-8", errors="replace")
-        doc = parse_scene_text(text, res_path)
+        doc = self.scene_doc(res_path)
+        if doc is None:
+            return
+        text = doc.text
+        self.collect_suppressions(res_path, text)
         self.scan_summary["tres"] += 1
         for number, raw in enumerate(text.splitlines(), start=1):
             if raw.lstrip().startswith(";"):
                 continue
             self.check_scene_line(res_path, number, raw)
         self.check_ext_resources(res_path, doc)
+        self.check_embedded_shaders(res_path, doc)
 
     def check_ext_resources(self, res_path: str, doc: SceneDoc) -> None:
         for ref in doc.ext.values():
@@ -1607,7 +2806,9 @@ class Linter:
     def resolve(self, doc: SceneDoc, base: str, path: str) -> tuple[str, dict]:
         """Resolve `path` from node `base` of `doc`.
 
-        Returns ("ok" | "missing" | "skip", info).
+        Returns ("ok" | "missing" | "skip", info). On "ok" the info carries the
+        `scene` the walk ended in and the `node` it landed on (which is what the
+        animation check needs to know the node's type and properties).
         """
         frames: list[list] = [[doc, base]]
         for segment in [part for part in path.split("/") if part != ""]:
@@ -1639,7 +2840,8 @@ class Linter:
                 frames[-1][1] = segment
                 continue
             return "missing", self._missing_info(frames, segment)
-        return "ok", {}
+        scene, current = frames[-1]
+        return "ok", {"scene": scene, "node": scene.nodes.get(current)}
 
     def _missing_info(self, frames: list[list], segment: str) -> dict:
         scene, current = frames[-1]
@@ -1669,7 +2871,7 @@ class Linter:
         return f"{info['ancestor']} has children: {listed}."
 
     def check_scene_scripts(self, doc: SceneDoc) -> None:
-        if not ({"node_ref", "unique_name"} & self.only):
+        if not ({"node_ref", "unique_name", "animation_ref"} & self.only):
             return
         for node in doc.nodes.values():
             if not node.script_id:
@@ -1690,6 +2892,187 @@ class Linter:
             self.scan_summary["scene_script_pairs"] += 1
             for entry in info.refs:
                 self.check_ref(doc, node, info, entry)
+            for entry in info.anim_refs:
+                self.check_anim_ref(doc, node, info, entry)
+
+    # -- animations -------------------------------------------------------
+    def locate_node(self, doc: SceneDoc, base: str, path: str
+                    ) -> Optional[tuple[SceneDoc, SceneNode]]:
+        """The node a `$Path` / `%Name` expression names, or None when unsure."""
+        if path.startswith("$"):
+            path = path[1:]
+        if path.startswith("%"):
+            name = path[1:].split("/", 1)[0]
+            if name not in doc.unique_names:
+                return None
+            rest = path[1:].split("/", 1)
+            base = doc.unique_names[name]
+            path = rest[1] if len(rest) > 1 else ""
+        if path.startswith("/") or path.split("/", 1)[0] in self.autoloads:
+            return None
+        status, detail = self.resolve(doc, base, path)
+        if status != "ok":
+            return None
+        scene = detail.get("scene")
+        node = detail.get("node")
+        if scene is None or node is None:
+            return None
+        return scene, node
+
+    def animation_names(self, doc: SceneDoc, node: SceneNode) -> Optional[tuple[set[str], str]]:
+        """(animation names, what provided them), or None when not resolvable.
+
+        Silence is the default: an AnimatedSprite2D whose `sprite_frames` comes
+        from an instanced scene, an AnimationPlayer with no `libraries`, a
+        resource that is not on disk — every one of those returns None rather
+        than guessing.
+        """
+        if node.type in _ANIMATED_SPRITE_TYPES:
+            value = node.props.get("sprite_frames")
+            if value is None:
+                return None
+            frames = self.resource_body(doc, value[0], "SpriteFrames")
+            if frames is None:
+                return None
+            body, origin = frames
+            animations = body.get("animations")
+            if animations is None:
+                return None
+            return set(_SPRITE_FRAME_NAME.findall(animations[0])), origin
+        if node.type == "AnimationPlayer":
+            libraries: dict[str, str] = {}
+            for key, (value, _line) in node.props.items():
+                if key.startswith("libraries/"):
+                    libraries[key[len("libraries/"):]] = value
+                elif key == "libraries":
+                    for entry in re.finditer(
+                            r"&?\"((?:[^\"\\]|\\.)*)\"\s*:\s*((?:Sub|Ext)Resource\([^)]*\))",
+                            value):
+                        libraries[_unescape(entry.group(1))] = entry.group(2)
+            if not libraries:
+                return None
+            names: set[str] = set()
+            origins: list[str] = []
+            for library, value in libraries.items():
+                found = self.resource_body(doc, value, "AnimationLibrary")
+                if found is None:
+                    return None               # one unreadable library -> stay silent
+                body, origin = found
+                data = body.get("_data")
+                if data is None:
+                    return None
+                origins.append(origin)
+                prefix = f"{library}/" if library else ""
+                for entry in _LIBRARY_ENTRY.finditer(data[0]):
+                    names.add(prefix + _unescape(entry.group(1)))
+            return names, ", ".join(sorted(set(origins)))
+        return None
+
+    def resource_body(self, doc: SceneDoc, value: str, expected: str
+                      ) -> Optional[tuple[dict[str, tuple[str, int]], str]]:
+        """The property table of the SubResource/ExtResource `value` refers to."""
+        sub = _SUB_REF.search(value)
+        if sub:
+            entry = doc.sub.get(sub.group(1))
+            if entry is None or entry["type"] != expected:
+                return None
+            return entry["props"], f"the inline {expected} in {doc.res_path}"
+        ext = _EXT_REF.search(value)
+        if ext:
+            ref = doc.ext.get(ext.group(1))
+            if ref is None or not ref["path"].endswith(".tres"):
+                return None
+            other = self.scene_doc(ref["path"])
+            if other is None or other.resource_type != expected:
+                return None
+            return other.resource_props, ref["path"]
+        return None
+
+    def check_anim_ref(self, doc: SceneDoc, node: SceneNode, info: ScriptInfo,
+                       entry: dict) -> None:
+        if "animation_ref" not in self.only:
+            return
+        expression = entry["node"]
+        if entry["binding"]:
+            # `anim.play("walk")` — the house style everywhere in
+            # templates/gdscript. Only an @onready member bound to exactly one
+            # node lookup, never reassigned, resolves; anything else is silent.
+            expression = info.binding_target(expression)
+            if expression is None:
+                return
+        located = self.locate_node(doc, node.path, expression)
+        if located is None:
+            return
+        scene, target = located
+        if target.type == "AnimationPlayer" and entry["member"] == "animation":
+            return                            # AnimationPlayer has no `animation` property
+        if target.type != "AnimationPlayer" and entry["member"] in ("queue",
+                                                                    "current_animation"):
+            return                            # AnimationPlayer-only API
+        if target.type in _ANIMATED_SPRITE_TYPES and entry["member"] == "current_animation":
+            return
+        found = self.animation_names(scene, target)
+        if found is None:
+            return
+        names, origin = found
+        if not names or entry["animation"] in names:
+            return
+        close = nearest_names(entry["animation"], names)
+        hint = f" Did you mean {' or '.join('`' + n + '`' for n in close)}?" if close else ""
+        self.emit(
+            "warning", "animation_ref",
+            f"`{entry['raw']}` names an animation that does not exist. "
+            + (f"`{entry['node']}` is bound to `{expression}` by an `@onready var`, and "
+               if entry["binding"] else "")
+            + f"{doc.res_path} resolves `{expression}` to the {target.type} "
+            f"`{target.path or target.name}`, whose animations come from {origin} and are: "
+            f"{listed(names)}.{hint} "
+            + ("An AnimatedSprite2D silently keeps playing the old animation when the name is "
+               "unknown." if target.type in _ANIMATED_SPRITE_TYPES else
+               "AnimationPlayer.play() with an unknown name prints "
+               "`Animation not found` and plays nothing."),
+            info.res_path, entry["line"],
+            f"Use one of {listed(names)}, or add `{entry['animation']}` to {origin} "
+            f"(`build_sprite_frames` for a SpriteFrames, `build_animation` for an "
+            f"AnimationPlayer library).",
+            rule="unknown_animation",
+        )
+
+    def check_scene_animations(self, doc: SceneDoc) -> None:
+        """`animation = &"walk"` / `autoplay = "walk"` written straight into the scene."""
+        if "animation_ref" not in self.only:
+            return
+        for node in doc.nodes.values():
+            if node.instance_id or self.inside_instance(doc, node):
+                continue
+            for key in ("animation", "autoplay", "current_animation"):
+                prop = node.props.get(key)
+                if prop is None:
+                    continue
+                literal = _QUOTED.match(prop[0].strip())
+                if literal is None:
+                    continue
+                wanted = _unescape(literal.group(1))
+                if not wanted or wanted == "[stop]":
+                    continue
+                found = self.animation_names(doc, node)
+                if found is None:
+                    continue
+                names, origin = found
+                if not names or wanted in names:
+                    continue
+                close = nearest_names(wanted, names)
+                hint = (f" Did you mean {' or '.join('`' + n + '`' for n in close)}?"
+                        if close else "")
+                self.emit(
+                    "warning", "animation_ref",
+                    f"`{key} = \"{wanted}\"` on the {node.type} "
+                    f"`{node.path or node.name}` names an animation that does not exist. Its "
+                    f"animations come from {origin} and are: {listed(names)}.{hint}",
+                    doc.res_path, prop[1],
+                    f"Use one of {listed(names)}, or add `{wanted}` to {origin}.",
+                    rule="unknown_animation",
+                )
 
     def inside_instance(self, doc: SceneDoc, node: SceneNode) -> bool:
         """True when `node` is an instanced sub-scene root, or sits under one.
@@ -1883,12 +3266,26 @@ class Linter:
         for path in files:
             if path.suffix == ".gd":
                 self.scan_script(path)
+        for script in self._scripts.values():
+            self._project_funcs |= script.funcs
+        for path in files:
+            if path.suffix in (".tscn", ".scn"):
+                self.index_scene(path)
         for path in files:
             if path.suffix in (".tscn", ".scn"):
                 self.scan_scene(path)
             elif path.suffix == ".tres":
                 self.scan_resource(path)
+            elif path.suffix in (".gdshader", ".gdshaderinc"):
+                self.scan_shader_file(path)
+            elif path.suffix == ".shader":
+                self.emit("error", "godot3_shader", SHADER_EXTENSION_RULE["message"],
+                          self.res(path), 1, SHADER_EXTENSION_RULE["fix"],
+                          rule=SHADER_EXTENSION_RULE["id"])
         self.flush_godot3()
+        self.flush_input_actions()
+        self.flush_groups()
+        self.flush_res_paths()
         order = {"error": 0, "warning": 1}
         self.diagnostics.sort(key=lambda item: (
             order.get(item["severity"], 2), item["file"] or "", item["line"] or 0, item["category"]))
@@ -1907,6 +3304,7 @@ class Linter:
             "counts": counts,
             "categories": by_category,
             "scan_summary": self.scan_summary,
+            "suppressions": self.suppression_report(),
             "diagnostics": self.diagnostics,
         }
 
@@ -1954,9 +3352,28 @@ def rules_markdown() -> str:
     return "\n".join(lines).rstrip() + "\n"
 
 
+SUPPRESSION_HELP = """
+Suppressing one finding
+-----------------------
+  var layer := $Parallax  # lint:ignore node_ref
+  # lint:ignore godot3_api,inference
+  var legacy := old_api()
+
+`# lint:ignore <category>[,<category>…]` covers the line it sits on and the line
+directly below it. A bare `# lint:ignore` covers every category there. The
+comment marker follows the file type: `#` in .gd, `;` in .tscn/.tres and
+project.godot, `//` in .gdshader. Suppressions that matched nothing are listed
+under `suppressions.unused` in the JSON and never change the exit code.
+
+A directory containing a `.gdignore` file is skipped entirely — Godot does not
+import it, so the linter does not read it either.
+"""
+
+
 def main(argv: Optional[list[str]] = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Static Godot 4.x project linter (no Godot binary required).")
+        description="Static Godot 4.x project linter (no Godot binary required).",
+        epilog=SUPPRESSION_HELP, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("project_path", nargs="?", help="Godot project directory.")
     parser.add_argument("--pretty", action="store_true", help="Pretty-print the JSON output.")
     parser.add_argument("--json", action="store_true",

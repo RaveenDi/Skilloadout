@@ -20,7 +20,20 @@ finishes in well under a second:
 ```bash
 python3 /absolute/path/to/godot/scripts/debug/lint_project.py /absolute/project --pretty
 python3 /absolute/path/to/godot/scripts/debug/lint_project.py /absolute/project --only godot3_api
+python3 /absolute/path/to/godot/scripts/debug/lint_project.py /absolute/project --only godot3_shader
 ```
+
+Two categories: the **Shaders** group at the bottom of the table is `godot3_shader`
+(it scans `.gdshader`/`.gdshaderinc` and the `code = "…"` of a Shader
+sub-resource inside a `.tscn`/`.tres`); everything above it is `godot3_api`.
+Every shader row was verified by compiling both the Godot 3 spelling and its
+replacement on 4.7 — the first has to fail, the second has to compile. Names
+that read like Godot 3 but 4.7 still accepts (`hint_normal`, `OUTPUT_IS_SRGB`,
+`AT_LIGHT_PASS`, `ATTENUATION`, `hint_roughness_gray`, `render_mode
+specular_toon`, `render_mode specular_disabled`) are deliberately absent: do not
+"fix" them either. Nothing in this table can be silenced by accident, but one
+line that genuinely has to name an old identifier can carry
+`# lint:ignore godot3_api` (`//` in a shader, `;` in a `.tscn`).
 
 `Level` is the linter severity, and it means one thing throughout: `error` =
 Godot refuses to parse or load the file, so the project does not run; `warning` =
@@ -38,6 +51,13 @@ checked against `godot 4.7.stable`, not assumed.
 `visible_characters`, and `theme_override_constants/margin_left` (a
 MarginContainer theme constant, unrelated to the removed `Control.margin_left`)
 are all current 4.7 API.
+
+In shaders: `hint_normal`, `hint_default_transparent`, `hint_roughness_gray` /
+`hint_roughness_r`, `OUTPUT_IS_SRGB`, `AT_LIGHT_PASS`, `ATTENUATION`,
+`SSS_STRENGTH`, `PROJECTION_MATRIX`, `INV_PROJECTION_MATRIX`,
+`MODELVIEW_MATRIX`, `CANVAS_MATRIX`, `SCREEN_PIXEL_SIZE`, `TEXTURE_PIXEL_SIZE`,
+`INSTANCE_CUSTOM` and the render modes `specular_toon` / `specular_disabled`
+all compile on 4.7 — each one was checked by compiling it.
 
 ## The Table
 
@@ -174,6 +194,36 @@ are all current 4.7 API.
 | `OS.get_ticks_msec()` | `Time.get_ticks_msec()` | error | `os_get_ticks` | `OS.get_ticks_msec()` -> `Time.get_ticks_msec()`; `OS.get_ticks_usec()` -> `Time.get_ticks_usec()`; `OS.get_datetime()` -> `Time.get_datetime_dict_from_system()`. |
 | `OS.window_size` | `DisplayServer.window_get_size()` | error | `os_window_size` | `OS.window_size` -> `get_window().size` (or `DisplayServer.window_get_size()`); `OS.window_fullscreen = true` -> `get_window().mode = Window.MODE_FULLSCREEN`. |
 | `Engine.editor_hint` | `Engine.is_editor_hint()` | error | `engine_editor_hint` | `if Engine.editor_hint:` -> `if Engine.is_editor_hint():`. |
+
+### Shaders
+
+| Godot 3 | Godot 4.7 | Level | Rule id | Fix |
+| --- | --- | --- | --- | --- |
+| `hint_color` | `source_color` | error | `shader_hint_color` | `uniform vec4 tint : hint_color;` -> `uniform vec4 tint : source_color;`. |
+| `hint_albedo` | `source_color` | error | `shader_hint_albedo` | `uniform vec4 albedo : hint_albedo;` -> `uniform vec4 albedo : source_color;` (same hint for a sampler2D albedo texture). |
+| `hint_black` | `hint_default_black` | error | `shader_hint_black` | `uniform sampler2D tex : hint_black;` -> `: hint_default_black;`. `hint_black_albedo` -> `hint_default_black, source_color`. |
+| `hint_white` | `hint_default_white` | error | `shader_hint_white` | `uniform sampler2D tex : hint_white;` -> `: hint_default_white;`. (`hint_default_transparent` is the third one and is spelled the same in 4.x.) |
+| `hint_aniso` | `hint_anisotropy` | error | `shader_hint_aniso` | `uniform sampler2D flow : hint_aniso;` -> `: hint_anisotropy;`. |
+| `SCREEN_TEXTURE` | `hint_screen_texture uniform` | error | `shader_screen_texture` | Add `uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;` near the top of the shader and leave the `texture(SCREEN_TEXTURE, SCREEN_UV)` calls alone — that is the engine's own minimal-change migration. A fresh shader should name the uniform `screen_tex` instead. The node must be under a BackBufferCopy (2D) for the read to see anything. |
+| `DEPTH_TEXTURE` | `hint_depth_texture uniform` | error | `shader_depth_texture` | Add `uniform sampler2D DEPTH_TEXTURE : hint_depth_texture;` (or name it `depth_tex` and update the reads). |
+| `NORMAL_ROUGHNESS_TEXTURE` | `hint_normal_roughness_texture uniform` | error | `shader_normal_roughness_texture` | Add `uniform sampler2D NORMAL_ROUGHNESS_TEXTURE : hint_normal_roughness_texture;` (Forward+ only). |
+| `WORLD_MATRIX` | `MODEL_MATRIX` | error | `shader_world_matrix` | `WORLD_MATRIX` -> `MODEL_MATRIX`. |
+| `EXTRA_MATRIX` | `MODEL_MATRIX` | error | `shader_extra_matrix` | `EXTRA_MATRIX` -> `MODEL_MATRIX` (the item transform). The canvas transform is `CANVAS_MATRIX` and the view transform `SCREEN_MATRIX`. |
+| `CAMERA_MATRIX` | `INV_VIEW_MATRIX` | error | `shader_camera_matrix` | `CAMERA_MATRIX` -> `INV_VIEW_MATRIX` (camera-to-world). Careful: the *other* one flipped too — Godot 3's `INV_CAMERA_MATRIX` is 4.x's `VIEW_MATRIX`. |
+| `INV_CAMERA_MATRIX` | `VIEW_MATRIX` | error | `shader_inv_camera_matrix` | `INV_CAMERA_MATRIX` -> `VIEW_MATRIX` (world-to-camera). `PROJECTION_MATRIX`, `INV_PROJECTION_MATRIX` and `MODELVIEW_MATRIX` keep their names and are not reported. |
+| `TRANSMISSION` | `BACKLIGHT` | error | `shader_transmission` | `TRANSMISSION = vec3(…)` -> `BACKLIGHT = vec3(…)`. |
+| `ALPHA_SCISSOR` | `ALPHA_SCISSOR_THRESHOLD` | error | `shader_alpha_scissor` | `ALPHA_SCISSOR = 0.5;` -> `ALPHA_SCISSOR_THRESHOLD = 0.5;`. |
+| `NORMALMAP` | `NORMAL_MAP` | error | `shader_normalmap` | `NORMALMAP` -> `NORMAL_MAP`. |
+| `NORMALMAP_DEPTH` | `NORMAL_MAP_DEPTH` | error | `shader_normalmap_depth` | `NORMALMAP_DEPTH` -> `NORMAL_MAP_DEPTH`. |
+| `SIDE` | `FRONT_FACING` | error | `shader_side` | `SIDE` -> `FRONT_FACING` (still a bool: true on front faces). |
+| `CLEARCOAT_GLOSS` | `CLEARCOAT_ROUGHNESS` | error | `shader_clearcoat_gloss` | `CLEARCOAT_GLOSS = g;` -> `CLEARCOAT_ROUGHNESS = 1.0 - g;` — it is roughness now, so the value has to be flipped, not just renamed. |
+| `SHADOW_ATTENUATION` | `ATTENUATION` | error | `shader_shadow_attenuation` | `SHADOW_ATTENUATION` -> `ATTENUATION`, which in 4.x already has the shadow factor folded in. (`ATTENUATION` itself is still valid 4.7 and is not reported.) |
+| `LIGHT_HEIGHT` | `LIGHT_VERTEX.z` | error | `shader_light_height` | Set `LIGHT_VERTEX.z` in `fragment()` instead (`LIGHT_VERTEX.z = 8.0;`) — the 2D light height is the z of LIGHT_VERTEX now. |
+| `MODULATE` | `uniform vec4 : source_color` | error | `shader_modulate` | Pass the colour in yourself: `uniform vec4 modulate_color : source_color = vec4(1.0);` plus `COLOR *= modulate_color;`, and set it from GDScript with `material.set_shader_parameter("modulate_color", c)`. The node's own `modulate` is already multiplied into the canvas_item `COLOR` you get in `fragment()`. |
+| `render_mode depth_draw_alpha_prepass` | `depth_prepass_alpha` | error | `shader_depth_draw_alpha_prepass` | `render_mode depth_draw_alpha_prepass;` -> `render_mode depth_prepass_alpha;`. `depth_draw_opaque` and `depth_draw_never` keep their names. |
+| `render_mode depth_test_disable` | `depth_test_disabled` | error | `shader_depth_test_disable` | `render_mode depth_test_disable;` -> `render_mode depth_test_disabled;`. |
+| `render_mode async_visible` | `(delete it)` | error | `shader_async_render_mode` | Delete the render mode. Shader compilation is handled by the engine in 4.x (`rendering/shader_compiler/shader_cache`). |
+| `.shader (file extension)` | `.gdshader` | error | `shader_file_extension` | Rename the file to `.gdshader` and update every `res://…` reference to it (scripts/project/move_resource.py does both in one step). |
 
 ## Migration Order
 

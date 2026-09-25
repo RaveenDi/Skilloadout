@@ -9,9 +9,20 @@ import subprocess
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from godot_log_parser import parse_log  # noqa: E402
+
+ERROR_SEVERITIES = ("error", "script_error", "parse_error", "shader_error")
+
 
 def parse_args(argv: list[str]) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run a deterministic Godot input/assertion/screenshot/performance scenario.")
+    parser = argparse.ArgumentParser(
+        description=(
+            "Run a deterministic Godot input/assertion/screenshot/performance scenario. "
+            "Text read-backs of the run land in the result JSON: ui_reports (Control layout), "
+            "spatial_reports (2D/3D world placement), tree_dumps, screenshots."
+        )
+    )
     parser.add_argument("project_path")
     parser.add_argument("scenario_path")
     parser.add_argument("--godot-bin", default=os.environ.get("GODOT_BIN", "godot"))
@@ -42,10 +53,11 @@ RESULT_MARKER = "[SCENARIO_RESULT] "
 def extract_payload(output: str) -> dict:
     """Pull the runner's result JSON out of its stdout.
 
-    Steps now print human-readable material of their own — ``ui_report`` ASCII
-    rows, ``dump_tree`` lines, screenshot summaries — so the payload carries a
-    marker rather than relying on "last line that looks like JSON". The old
-    heuristic stays as a fallback for a runner without the marker.
+    Steps now print human-readable material of their own — ``ui_report`` and
+    ``spatial_report`` ASCII maps, ``dump_tree`` lines, screenshot summaries — so
+    the payload carries a marker rather than relying on "last line that looks
+    like JSON". The old heuristic stays as a fallback for a runner without the
+    marker.
     """
     lines = output.splitlines()
     for line in reversed(lines):
@@ -62,9 +74,11 @@ def extract_payload(output: str) -> dict:
 def needs_rendering(scenario: dict) -> bool:
     """Only a screenshot needs a real framebuffer.
 
-    Everything else the runner reports — assertions, ui_report rects, performance
-    monitors — comes from the scene tree, which the headless dummy renderer
-    builds and lays out exactly as a windowed run does.
+    Everything else the runner reports — assertions, ui_report rects,
+    spatial_report world rects / AABBs / frustum tests, performance monitors —
+    comes from the scene tree, the physics space state and resource metadata,
+    all of which the headless dummy renderer builds exactly as a windowed run
+    does.
     """
     return any(step.get("type") == "screenshot" for step in scenario.get("steps", []))
 
@@ -147,15 +161,48 @@ def main(argv: list[str] | None = None) -> int:
             "expected": expected,
         })
 
+    # A script or engine error printed while the scenario ran used to leave
+    # "ok": true as long as the assertions held — a HUD script dying every frame
+    # passed any scenario that asserted something else. The log is parsed like
+    # run_project.py parses it, and an error-level diagnostic fails the run
+    # unless the scenario asked for that line itself (a log_assertion that
+    # requires it) or opted out with "log_errors": "allow".
+    report = parse_log(combined)
+    log_errors_mode = str(scenario.get("log_errors", "fail"))
+    expected_patterns = [item["pattern"] for item, assertion in zip(log_results, scenario.get("log_assertions", []))
+                         if int(assertion.get("min_count", 1)) >= 1]
+    unexpected = []
+    for diagnostic in report["diagnostics"]:
+        if diagnostic["severity"] not in ERROR_SEVERITIES:
+            continue
+        text = "%s\n%s" % (diagnostic.get("message") or "", diagnostic.get("raw") or "")
+        if any(re.search(pattern, text, re.MULTILINE) for pattern in expected_patterns):
+            continue
+        unexpected.append(diagnostic)
+
     failed_external = [item for item in [*log_results, *performance_results] if not item["passed"]]
+    log_failed = log_errors_mode != "allow" and bool(unexpected)
     result.update({
-        "ok": bool(result.get("ok", False)) and completed.returncode == 0 and not failed_external,
+        "ok": bool(result.get("ok", False)) and completed.returncode == 0 and not failed_external and not log_failed,
         "returncode": completed.returncode,
         "log_assertions": log_results,
         "performance_assertions": performance_results,
+        "log_errors": log_errors_mode,
+        "counts": report["counts"],
+        "diagnostics": report["diagnostics"],
     })
     if failed_external:
         result.setdefault("errors", []).extend(f"External assertion failed: {item['label']}" for item in failed_external)
+    if log_errors_mode not in ("fail", "allow"):
+        result["ok"] = False
+        result.setdefault("errors", []).append(
+            f'scenario.log_errors must be "fail" (default) or "allow", got {log_errors_mode!r}')
+    if log_failed:
+        for diagnostic in unexpected[:10]:
+            where = f" ({diagnostic['file']}:{diagnostic['line']})" if diagnostic.get("file") else ""
+            result.setdefault("errors", []).append(
+                f"Log error during the scenario: {diagnostic['message']}{where}. Fix it; or, when the error is the "
+                'point of the scenario, require it with a log_assertions entry or set "log_errors": "allow".')
     print(json.dumps(result, indent=2 if args.pretty else None))
     return 0 if result["ok"] else 1
 

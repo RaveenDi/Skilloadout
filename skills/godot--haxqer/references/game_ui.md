@@ -494,8 +494,22 @@ minigame inside a modern UI).
 
 ### Register A Custom Font
 
-The default font is the single loudest "this is an engine default" signal. Drop a
-`.ttf`/`.otf` into the project, let it import, then point the theme at it.
+The default font is the single loudest "this is an engine default" signal. The
+theme's font slot takes any `Font` resource: a `.ttf`/`.otf` you dropped into the
+project and imported, or — when you have no font file at all — a `SystemFont`
+resource naming faces the machine already has, which is one `resource_batch` call:
+
+```bash
+godot --headless --path /absolute/path/to/project \
+  --script /absolute/path/to/godot/scripts/core/dispatcher.gd \
+  resource_batch '{
+    "resource_path": "fonts/ui_body.tres",
+    "create_if_missing": true,
+    "resource_type": "SystemFont",
+    "actions": [{"type":"set_properties","properties":{"font_names":["Sans-Serif"]}}]
+  }'
+```
+
 `build_theme` merges into an existing theme, so this can run after the main call:
 
 ```bash
@@ -503,20 +517,22 @@ godot --headless --path /absolute/path/to/project \
   --script /absolute/path/to/godot/scripts/core/dispatcher.gd \
   build_theme '{
     "resource_path": "theme/game.tres",
-    "default_font": {"__resource":"res://fonts/ui_body.ttf"},
+    "default_font": {"__resource":"res://fonts/ui_body.tres"},
     "default_font_size": 18,
     "variations": {
       "TitleLabel": {
         "base": "Label",
-        "fonts": {"font": {"__resource_type":"FontVariation","properties":{"base_font":{"__resource":"res://fonts/ui_body.ttf"},"spacing_glyph":2}}},
+        "fonts": {"font": {"__resource_type":"FontVariation","properties":{"base_font":{"__resource":"res://fonts/ui_body.tres"},"spacing_glyph":2}}},
         "font_sizes": {"font_size": 56}
       }
     }
   }'
 ```
 
-- A font file must be imported before `{"__resource": ...}` can load it. Run
-  `godot --headless --import --path /absolute/path/to/project` after adding it.
+- `res://fonts/ui_body.ttf` goes in exactly the same two slots once you have a
+  real face — a font *file* must be imported before `{"__resource": ...}` can
+  load it, so run `godot --headless --import --path /absolute/path/to/project`
+  after adding it. A `.tres` resource written by `resource_batch` needs no import.
 - `FontVariation` gives a display face extra letter-spacing (`spacing_glyph`),
   faux bold (`variation_embolden`), or slant (`variation_transform`) without a
   second font file.
@@ -616,7 +632,26 @@ silence. Wire the settings sliders to the bus with
 
 `StyleBoxFlat` covers clean modern UI. For decorated frames — carved wood, riveted
 metal, rune-etched borders — use a `StyleBoxTexture` so the art's corners stay
-crisp while the middle stretches:
+crisp while the middle stretches.
+
+The frame art is a PNG like any other; `draw_image` can author one (see
+`references/pixel_art.md`), and it has to be imported before a theme may load it:
+
+```bash
+godot --headless --path /absolute/path/to/project \
+  --script /absolute/path/to/godot/scripts/core/dispatcher.gd \
+  draw_image '{
+    "output_path": "ui/frame_9patch.png",
+    "width": 48, "height": 48,
+    "read_back": false,
+    "shapes": [
+      {"type": "rect", "color": "#262b44"},
+      {"type": "rect_outline", "x": 0, "y": 0, "width": 48, "height": 48, "color": "#c9a227", "thickness": 3},
+      {"type": "rect_outline", "x": 5, "y": 5, "width": 38, "height": 38, "color": "#7a5c12", "thickness": 1}
+    ]
+  }'
+python3 /absolute/path/to/godot/scripts/import/import_project.py /absolute/path/to/project
+```
 
 ```bash
 godot --headless --path /absolute/path/to/project \
@@ -721,7 +756,8 @@ scene serialized, not that anything is visible or correctly placed.
 2. Assert the specific numbers that matter (a menu column's width, a footer's
    position) so a regression fails loudly instead of drifting.
 
-```json
+```bash
+cat > /absolute/path/to/project/ui_scenario.json <<'JSON'
 {
   "scene_path": "scenes/title.tscn",
   "viewport_size": {"width": 1280, "height": 720},
@@ -737,11 +773,12 @@ scene serialized, not that anything is visible or correctly placed.
     {"assertion": "visible", "node_path": "Frame/Column/Title", "expected": true}
   ]
 }
+JSON
 ```
 
 ```bash
 python3 /absolute/path/to/godot/scripts/debug/run_scenario.py \
-  /absolute/path/to/project /absolute/path/to/ui_scenario.json --headless --pretty
+  /absolute/path/to/project /absolute/path/to/project/ui_scenario.json --headless --pretty
 ```
 
 3. Add a `{"type": "screenshot", "path": "/absolute/output/title.png"}` step and

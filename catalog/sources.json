@@ -718,6 +718,86 @@
       "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
       "reviewer": "heuristic",
       "status": "active"
+    },
+    {
+      "repo": "phuryn/pm-skills",
+      "tier": 2,
+      "addedAt": "2026-09-25T10:20:17.507Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "JimLiu/baoyu-skills",
+      "tier": 2,
+      "addedAt": "2026-09-25T10:20:17.507Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "Donchitos/Claude-Code-Game-Studios",
+      "tier": 2,
+      "addedAt": "2026-09-25T10:20:17.507Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "titanwings/distilly",
+      "tier": 2,
+      "addedAt": "2026-09-25T10:20:17.507Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "pascalorg/editor",
+      "tier": 2,
+      "addedAt": "2026-09-25T10:20:17.507Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "mksglu/context-mode",
+      "tier": 2,
+      "addedAt": "2026-09-25T10:20:17.507Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "KKKKhazix/khazix-skills",
+      "tier": 2,
+      "addedAt": "2026-09-25T10:20:17.507Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "teng-lin/notebooklm-py",
+      "tier": 2,
+      "addedAt": "2026-09-25T10:20:17.507Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "NVIDIA/SkillSpector",
+      "tier": 2,
+      "addedAt": "2026-09-25T10:20:17.508Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "composio-community/awesome-codex-skills",
+      "tier": 2,
+      "addedAt": "2026-09-25T10:20:17.508Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
     }
   ]
 }

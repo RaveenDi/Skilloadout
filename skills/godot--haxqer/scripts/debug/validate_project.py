@@ -78,6 +78,22 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         help="Fail the run when any warning is reported, not just on errors.",
     )
     parser.add_argument(
+        "--no-config-warnings",
+        dest="config_warnings",
+        action="store_false",
+        help=(
+            "Skip the node configuration pass (the editor's yellow triangles, re-derived "
+            "over the instantiated tree: a body with no shape, an AnimatedSprite2D with no "
+            "frames, a PathFollow2D that is not under a Path2D, ...)."
+        ),
+    )
+    parser.add_argument(
+        "--no-physics-layers",
+        dest="physics_layers",
+        action="store_false",
+        help="Skip the project-wide physics layer/mask survey and its hints.",
+    )
+    parser.add_argument(
         "--no-debugger",
         dest="debugger",
         action="store_false",
@@ -107,6 +123,31 @@ def extract_payload(output: str) -> dict:
         if line.startswith("{") and line.endswith("}"):
             return json.loads(line)
     return {"failed_count": 1, "failed": [{"kind": "validator", "reason": "check_project emitted no JSON"}]}
+
+
+def node_config_summary(static: dict) -> dict:
+    """Lift the node-configuration pass out of the check_project payload.
+
+    Each *warning* is also printed by check_project as a ``WARNING:
+    [node_config:...]`` line, so it is already in ``diagnostics`` (category
+    ``node_config``) and already obeys ``--warnings-as-errors``. Hints never
+    reach the log — they are heuristics and must not decide an exit code — so
+    this summary is where they are surfaced.
+    """
+    findings = static.get("config_warnings") or []
+    hints = [entry for entry in findings if entry.get("severity") == "hint"]
+    summary = {
+        "ran": bool(static.get("config_warnings_enabled", False)),
+        "counts": {
+            "warnings": int(static.get("config_warning_count", 0) or 0),
+            "hints": int(static.get("config_hint_count", 0) or 0),
+        },
+        "hints": hints,
+    }
+    physics = static.get("physics_layers")
+    if physics is not None:
+        summary["physics_layers"] = physics
+    return summary
 
 
 def command_result(completed: subprocess.CompletedProcess[str]) -> dict:
@@ -161,7 +202,11 @@ def main(argv: list[str] | None = None) -> int:
 
     # Passed explicitly rather than left to the operation's default: this is the
     # comprehensive pass, and a scene that cannot be instantiated must fail it.
-    params: dict = {"instantiate": args.instantiate}
+    params: dict = {
+        "instantiate": args.instantiate,
+        "config_warnings": args.config_warnings,
+        "physics_layers": args.physics_layers,
+    }
     if args.project_subpath:
         params["project_path"] = args.project_subpath
     command = [args.godot_bin, "--headless"]
@@ -216,6 +261,7 @@ def main(argv: list[str] | None = None) -> int:
         "diagnostics": lint_diagnostics + report["diagnostics"],
         "lint": {key: lint[key] for key in ("ran", "ok", "counts", "categories", "scan_summary")
                  if key in lint},
+        "node_config": node_config_summary(static),
         "godot": command_result(checked),
         "csharp": csharp,
     }

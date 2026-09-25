@@ -45,5 +45,6 @@ child. Key properties: `scroll_scale` (per-axis depth factor; <1 = far),
 ## Grouped Transparency And Screen Effects
 
 - `CanvasGroup` renders children into one buffer so overlapping translucent parts fade as a unit (`fit_margin`, `clear_margin`).
-- `BackBufferCopy` exposes what is behind a node to shaders (`rect`, `copy_mode`) for distortion/glass.
+- Ready-made screen effects live in `templates/shaders/` — `crt`, `blur`, `shockwave`, `water_2d`, `vignette`, plus the sprite effects (`flash`, `outline_2d`, `dissolve_2d`, `palette_swap`, `scroll`, `wave`, `pixelate`, `silhouette`, `progress_radial`). Attach recipes and the verification loop: `references/shaders.md`.
+- `BackBufferCopy` exposes what is behind a node to shaders (`rect`, `copy_mode`) for distortion/glass. In 4.x a full-screen reader does **not** need one: declaring `uniform sampler2D tex : hint_screen_texture;` makes the engine copy the framebuffer for that item by itself.
 - `CanvasItemMaterial.blend_mode`: `0` mix, `1` add, `2` subtract, `3` multiply, `4` premultiplied alpha.

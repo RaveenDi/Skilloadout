@@ -13,6 +13,7 @@ description: >-
   locked down, e.g. before a launch. Don't use for diagnosing a specific
   access failure or 403, managing or configuring storage, investigating a
   live outage, or non-GCS resources (Compute Engine, GKE, etc.).
+license: Apache-2.0
 metadata:
     version: v3
     publisher: google
@@ -23,7 +24,6 @@ metadata:
       - saif
     category: security
     support_tier: primary
-license: Apache-2.0
 ---
 
 # Security Posture Assessment Skill

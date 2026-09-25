@@ -94,6 +94,16 @@ Running `godot --headless --path <proj> --import` populates `.godot/uid_cache.bi
 and writes `.uid` sidecars; `get_uid` / `resave_resources` inspect and repair
 them.
 
+**Moving a file invalidates every `path=` that names it, never its `uid`** — the
+uid lives in the moved file's own header, `.import` or `.uid` sidecar. That is
+exactly why a shell `mv` is so dangerous here: the uid still resolves, so the
+scene loads with no diagnostic while its recorded `path` is wrong (row four of
+the matrix again, self-inflicted). Use
+`scripts/project/move_resource.py PROJECT SRC DST`, which moves the file plus its
+sidecars, rewrites every `[ext_resource] path=`, `preload()`, `project.godot`
+entry and `#include`, re-imports, and re-runs the `missing_resource` lint to
+prove nothing broke — see **Automation API → Move Or Rename Files Safely**.
+
 ## Node Hierarchy — The Part That Breaks Silently
 
 This is the section that matters. Godot expresses the tree entirely through the
@@ -336,6 +346,24 @@ Header, uid, quoting, comment, and declaration-order rules are identical to
 
 After **any** hand-written or hand-edited `.tscn`, run these immediately. Neither
 step is optional, and neither alone is sufficient.
+
+The steps below all read the same hand-written menu — four nodes, three levels
+deep, no `load_steps`, no `uid`:
+
+```bash
+cat > /absolute/path/to/project/scenes/menu.tscn <<'TSCN'
+[gd_scene format=3]
+
+[node name="Menu" type="Control"]
+
+[node name="Panel" type="Panel" parent="."]
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+
+[node name="StartButton" type="Button" parent="Panel/VBox"]
+text = "Start"
+TSCN
+```
 
 **1. `check_project` — catches the parse/resource failures.**
 

@@ -2,7 +2,7 @@
 
 - **Item:** Dial Cli (`dial-cli`)
 - **Original source:** https://github.com/nanocoai/nanoclaw/tree/main/.claude/skills/add-dial-tool/container-skills/dial-cli
-- **Repository:** https://github.com/nanocoai/nanoclaw @ `7902716b5b93`
+- **Repository:** https://github.com/nanocoai/nanoclaw @ `c313d061b026`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

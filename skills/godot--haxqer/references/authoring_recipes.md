@@ -4,6 +4,8 @@ Recipes for Godot 4.7 features that the generic ops already cover (so they need 
 
 ## Text Shaders And ShaderMaterial
 
+**Do not write a shader from memory** — copy a verified one from `templates/shaders/` (flash, outline, dissolve, palette swap, scroll, CRT, blur, toon, triplanar, 3D outline, water…) and follow `references/shaders.md` for the attach recipes, per-instance variation, and the 4.7 shading-language traps. A shader that fails to compile is silently replaced by the default material at draw time, so `check_project` is the only thing that tells you.
+
 `.gdshader` is a native resource — there is no `.import` sidecar and no import step. Write the file, then wire it up:
 
 1. Write `res://shaders/tint.gdshader` with an ordinary file write.

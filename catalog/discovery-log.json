@@ -1,5 +1,184 @@
 [
   {
+    "date": "2026-09-25T10:20:17.509Z",
+    "reviewer": "heuristic",
+    "candidates": 29,
+    "accepted": [
+      "phuryn/pm-skills",
+      "JimLiu/baoyu-skills",
+      "Donchitos/Claude-Code-Game-Studios",
+      "titanwings/distilly",
+      "pascalorg/editor",
+      "mksglu/context-mode",
+      "KKKKhazix/khazix-skills",
+      "teng-lin/notebooklm-py",
+      "NVIDIA/SkillSpector",
+      "composio-community/awesome-codex-skills"
+    ],
+    "decisions": [
+      {
+        "repo": "mvanhorn/last30days-skill",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "sickn33/agentic-awesome-skills",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 16%, 7692 skills)"
+      },
+      {
+        "repo": "LibreChat-AI/LibreChat",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 66%, 3 skills)"
+      },
+      {
+        "repo": "iOfficeAI/AionUi",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 75%, 4 skills)"
+      },
+      {
+        "repo": "feder-cr/invisible_playwright_mcp",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "zarazhangrui/frontend-slides",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 2 skills)"
+      },
+      {
+        "repo": "Nutlope/hallmark",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "phuryn/pm-skills",
+        "stars": 26585,
+        "skills": 69,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "JimLiu/baoyu-skills",
+        "stars": 26144,
+        "skills": 22,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "Donchitos/Claude-Code-Game-Studios",
+        "stars": 25430,
+        "skills": 74,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "titanwings/distilly",
+        "stars": 25020,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "pascalorg/editor",
+        "stars": 24298,
+        "skills": 5,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "mksglu/context-mode",
+        "stars": 24051,
+        "skills": 11,
+        "rules": 1,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "KKKKhazix/khazix-skills",
+        "stars": 20931,
+        "skills": 6,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "teng-lin/notebooklm-py",
+        "stars": 19463,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "NVIDIA/SkillSpector",
+        "stars": 18260,
+        "skills": 27,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "microsoft/SkillOpt",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 5 skills)"
+      },
+      {
+        "repo": "composio-community/awesome-codex-skills",
+        "stars": 16648,
+        "skills": 880,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      }
+    ]
+  },
+  {
     "date": "2026-09-22T10:08:31.128Z",
     "reviewer": "heuristic",
     "candidates": 29,

@@ -2,7 +2,7 @@
 
 - **Item:** Agent Payment X402 (`agent-payment-x402`)
 - **Original source:** https://github.com/affaan-m/ECC/tree/main/skills/agent-payment-x402
-- **Repository:** https://github.com/affaan-m/ECC @ `bf70150eb2df`
+- **Repository:** https://github.com/affaan-m/ECC @ `e482e579415f`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

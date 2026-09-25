@@ -242,16 +242,22 @@ excuse for shipping code that does not parse. Run generated GDScript through one
 of them before you call the task done:
 
 ```bash
-# whole project, structured output, gates on the parsed log as well as exit code
-python3 scripts/debug/validate_project.py /abs/project --pretty
+python3 /absolute/path/to/godot/scripts/debug/validate_project.py /absolute/path/to/project --pretty
+```
 
-# or the dispatcher operation directly
-godot --headless --debug --ignore-error-breaks --path /abs/project \
-  --script /abs/skill/scripts/core/dispatcher.gd check_project '{}' 2>&1 \
-  | python3 /abs/skill/scripts/debug/godot_log_parser.py -
+Or the dispatcher operation behind it, gating on the parsed log as well as the exit code:
 
-# then confirm it actually boots
-python3 scripts/debug/run_project.py /abs/project --quit-after 120 --timeout 60
+```bash
+godot --headless --debug --ignore-error-breaks --path /absolute/path/to/project \
+  --script /absolute/path/to/godot/scripts/core/dispatcher.gd check_project '{}' 2>&1 \
+  | python3 /absolute/path/to/godot/scripts/debug/godot_log_parser.py -
+```
+
+Then confirm the scene actually boots (drop the scene argument to boot the project's main scene):
+
+```bash
+python3 /absolute/path/to/godot/scripts/debug/run_project.py /absolute/path/to/project \
+  scenes/main.tscn --quit-after 120 --timeout 60
 ```
 
 Success is `"ok": true` with `counts.parse_errors == 0` and `counts.errors == 0`.

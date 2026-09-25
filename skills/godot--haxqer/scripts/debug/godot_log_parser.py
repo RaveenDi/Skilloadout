@@ -93,6 +93,22 @@ _QUOTED_RES_PATH = re.compile(r"'(res://[^']+)'")
 _BARE_LINE_LOC = re.compile(r"^:(\d+)$")
 _SHADER_CONTEXT = re.compile(r"^\[INFO\]\s*Compiling shader:\s*(\S+)\s*$")
 
+# Node configuration warnings. The editor's yellow triangles are unreachable
+# from a --script run (Node::get_configuration_warnings() is not bound outside
+# the editor), so check_project re-derives them and prints one line per warning
+# in a shape this parser can file precisely:
+#
+#   WARNING: [node_config:body_without_shape] res://scenes/level.tscn::root/Player: This node has no shape, ...
+#      fix: add_node '{"scene_path":"res://scenes/level.tscn", ...}'
+#
+# The scene becomes `file` (these warnings are about a node, not a line), the
+# rule id and node path are kept, and the indented `fix:` continuation — which
+# is always a runnable dispatcher call — becomes `suggested_fix`.
+_NODE_CONFIG = re.compile(
+    r"^\[node_config:(?P<rule>[a-z0-9_]+)\]\s+(?P<file>res://[^\s]+?)::(?P<path>[^\s:]+):\s*(?P<message>.*)$"
+)
+_NODE_CONFIG_FIX = re.compile(r"^fix:\s*(?P<fix>.+)$")
+
 # "at: <func> (<loc>)" continuation line.
 _AT_LINE = re.compile(r"^at:\s*(?P<func>.*?)\s*\((?P<loc>[^()]*)\)\s*$")
 
@@ -111,6 +127,7 @@ _TS_LOC = re.compile(r"(?P<file>[^\s:@]+\.\w+):(?P<line>\d+)\s+@\s+(?P<func>.*?)
 # indentation was stripped by some capture pipeline.
 _CONT_PREFIXES = (
     "at:",
+    "fix:",
     "GDScript backtrace",
     "<C++ Error>",
     "<C++ Source>",
@@ -118,6 +135,91 @@ _CONT_PREFIXES = (
     "<GDScript>",
     "*Frame ",
 )
+
+
+# Engine shutdown bookkeeping. When the process quits while something still
+# holds a reference, Godot prints these on the way out:
+#     ERROR: 1 resources still in use at exit (run with --verbose for details).
+#     WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+#     ERROR: 1 RID allocations of type 'P11GodotBody2D' were leaked at exit.
+#     WARNING: 1 RID of type "CanvasItem" was leaked.
+# The overwhelmingly common cause in a bounded test run is benign: an
+# AudioStreamPlayer (looping music, an autoplay stream) is still playing when
+# --quit-after fires, so its playback object is alive at teardown. Verified on
+# 4.7: a scene holding nothing but an autoplaying looped AudioStreamPlayer
+# produces exactly the first two lines. Treating them as errors made every game
+# with background music fail run_project.py / smoke_scenes.py, so they are filed
+# as severity "info", category "exit_leak": listed, explained, never counted as
+# an error or a warning. Real node leaks are reported precisely elsewhere
+# (smoke_scenes.py `orphan_nodes` / `node_growth`).
+_EXIT_LEAK = re.compile(
+    r"^(?:\d+ resources? still in use at exit"
+    r"|\d+ ObjectDB instances? (?:were|was) leaked at exit"
+    r"|\d+ RID allocations? of type .* (?:were|was) leaked at exit"
+    r"|\d+ RIDs? of type .* (?:were|was) leaked"
+    r"|Pages in use exist at exit in PagedAllocator"
+    r"|StringName: \d+ unclaimed string names? at exit)",
+    re.IGNORECASE,
+)
+_EXIT_LEAK_FIX = (
+    "Engine shutdown bookkeeping, not a gameplay error: something still held a reference when the run quit. "
+    "In a bounded run this is almost always audio that was still playing (looping music, an autoplay "
+    "AudioStreamPlayer) when --quit-after fired, which is harmless. To make it disappear, stop the players "
+    "before quitting (player.stop(); player.stream = null) or let the sound finish; to investigate a real "
+    "leak, re-run with --verbose to list the objects, and use smoke_scenes.py, whose orphan_nodes and "
+    "node_growth findings name leaked nodes precisely."
+)
+
+
+# Host capability probes. A machine with no GPU and no sound card — every
+# GPU-less Linux CI runner, every container, most remote boxes — makes Godot
+# print its failed driver probes as ERRORs and then recover:
+#     ERROR: Required Vulkan instance extension VK_KHR_surface not found.
+#        at: _initialize_instance_extensions (drivers/vulkan/rendering_context_driver_vulkan.cpp:494)
+#     ERROR: Condition "err != OK" is true. Returning: err
+#        at: initialize (drivers/vulkan/rendering_context_driver_vulkan.cpp:907)
+#     WARNING: Your video card drivers seem not to support the required Vulkan version, switching to OpenGL 3.
+#     ERROR: Condition "status < 0" is true. Returning: ERR_CANT_OPEN
+#        at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+#     WARNING: All audio drivers failed, falling back to the dummy driver.
+# The run then renders, screenshots and asserts normally. Counting them as
+# errors made every windowed scenario fail on a GPU-less Linux host, which is
+# why the `can_render()` probes in the suite came back false under Xvfb even
+# though the PNG they asked for was sitting on disk — nine real-render tests
+# skipped themselves on a box that could render perfectly well.
+#
+# Keyed on the engine source file in the `at:` line rather than on the message,
+# because two of the three messages are generic engine assertions: nothing a
+# project can write produces a diagnostic inside a display or audio driver's
+# own initialisation, and the message text there changes between releases. The
+# list is deliberately the driver-initialisation sites only — a shader that fails to
+# compile is reported from servers/rendering/… and stays an error, and a driver
+# failure the engine cannot recover from still fails the run, because the
+# process then exits non-zero and produces no frames.
+_HOST_DRIVER_SOURCE = re.compile(
+    r"\bdrivers/(?:"
+    r"vulkan/rendering_context_driver_vulkan\.cpp"
+    r"|d3d12/rendering_context_driver_d3d12\.cpp"
+    r"|metal/rendering_context_driver_metal\.mm"
+    r"|alsa/audio_driver_alsa\.cpp"
+    r"|pulseaudio/audio_driver_pulseaudio\.cpp"
+    r"|wasapi/audio_driver_wasapi\.cpp"
+    r"|coreaudio/audio_driver_coreaudio\.cpp"
+    r"):\d+\)"
+)
+_HOST_CAPABILITY_FIX = (
+    "The host has no GPU or no sound card, so the engine probed a driver, failed, and fell back to another "
+    "one (look for the matching 'switching to OpenGL 3' / 'falling back to the dummy driver' warning). "
+    "Nothing in the project causes it and nothing in the project can fix it: it is normal on a headless "
+    "Linux box, a container or a CI runner. If you need the preferred driver, give the machine a GPU or an "
+    "audio device; otherwise ignore it — rendering, screenshots and audio buses all keep working."
+)
+
+
+def _host_capability(raw_lines: list[str]) -> bool:
+    """True when this diagnostic was raised inside a display/audio driver's own
+    initialisation, i.e. by the host's hardware rather than by the project."""
+    return any(_HOST_DRIVER_SOURCE.search(line) for line in raw_lines)
 
 
 # --- Category / suggested-fix heuristics -----------------------------------
@@ -264,6 +366,7 @@ _SEVERITY_ORDER = {
     "shader_error": 1,
     "error": 2,
     "warning": 3,
+    "info": 4,
 }
 
 
@@ -278,6 +381,9 @@ class _Diagnostic:
         "raw_lines",
         "fallback",
         "context_file",
+        "rule",
+        "node_path",
+        "explicit_fix",
     )
 
     def __init__(self, severity: str, message: str) -> None:
@@ -295,6 +401,11 @@ class _Diagnostic:
         # File the enclosing tool said it was working on, used to attribute a
         # pathless diagnostic (shader compile errors) to a source file.
         self.context_file: Optional[str] = None
+        # Set for a `[node_config:<rule>]` warning from check_project: the rule
+        # id, the node it is about, and the runnable fix from its `fix:` line.
+        self.rule: Optional[str] = None
+        self.node_path: Optional[str] = None
+        self.explicit_fix: Optional[str] = None
 
     def set_fallback_location(self, file: str, line: Optional[int]) -> None:
         if self.fallback is None:
@@ -315,7 +426,17 @@ class _Diagnostic:
 
     def to_dict(self) -> dict:
         category, suggested_fix = _classify(self.message)
-        return {
+        if _EXIT_LEAK.match(self.message):
+            self.severity = "info"
+            category, suggested_fix = "exit_leak", _EXIT_LEAK_FIX
+        elif self.severity in ("error", "warning") and _host_capability(self.raw_lines):
+            self.severity = "info"
+            category, suggested_fix = "host_capability", _HOST_CAPABILITY_FIX
+        if self.rule is not None:
+            category = "node_config"
+            if self.explicit_fix:
+                suggested_fix = self.explicit_fix
+        payload = {
             "severity": self.severity,
             "category": category,
             "message": self.message,
@@ -326,6 +447,10 @@ class _Diagnostic:
             "suggested_fix": suggested_fix,
             "raw": "\n".join(self.raw_lines).rstrip(),
         }
+        if self.rule is not None:
+            payload["rule"] = self.rule
+            payload["node_path"] = self.node_path
+        return payload
 
 
 def _classify(message: str) -> tuple[str, str]:
@@ -353,6 +478,14 @@ def _is_continuation(stripped: str) -> bool:
 
 def _apply_continuation(diag: _Diagnostic, stripped: str) -> None:
     """Pull file/line/function and stack frames out of a continuation line."""
+    if diag.rule is not None:
+        # A node_config warning's only continuation is its runnable fix, and the
+        # JSON inside it must never be mined for a res:// location.
+        fix_match = _NODE_CONFIG_FIX.match(stripped)
+        if fix_match:
+            diag.explicit_fix = fix_match.group("fix").strip()
+        return
+
     at_match = _AT_LINE.match(stripped)
     if at_match:
         loc = at_match.group("loc")
@@ -429,6 +562,16 @@ def parse_log(text: str, include_warnings: bool = True) -> dict:
             current.context_file = shader_context if severity == "shader_error" else None
             current.raw_lines.append(raw_line.rstrip())
 
+            # A node configuration warning from check_project names the scene
+            # and the node instead of a file:line.
+            node_config = _NODE_CONFIG.match(message)
+            if node_config:
+                current.rule = node_config.group("rule")
+                current.node_path = node_config.group("path")
+                current.message = node_config.group("message").strip()
+                current.set_fallback_location(node_config.group("file"), None)
+                continue
+
             # The timestamped "E 0:00:.. file.gd:10 @ func(): msg" header also
             # carries its own location inline.
             ts = _TS_LOC.search(stripped)
@@ -474,6 +617,10 @@ def parse_log(text: str, include_warnings: bool = True) -> dict:
         diagnostics = [d for d in diagnostics if d.severity != "warning"]
 
     payload = [d.to_dict() for d in diagnostics]
+    if not include_warnings:
+        # to_dict() is what files shutdown bookkeeping as "info"; it goes with the
+        # warnings when the caller asked for errors only.
+        payload = [d for d in payload if d["severity"] != "info"]
     deduped = _dedupe(payload)
     deduped.sort(key=lambda d: _SEVERITY_ORDER.get(d["severity"], 9))
 
@@ -482,6 +629,7 @@ def parse_log(text: str, include_warnings: bool = True) -> dict:
         "errors": sum(1 for d in deduped if d["severity"] in ("error", "script_error", "shader_error")),
         "parse_errors": sum(1 for d in deduped if d["severity"] == "parse_error"),
         "warnings": sum(1 for d in deduped if d["severity"] == "warning"),
+        "info": sum(1 for d in deduped if d["severity"] == "info"),
     }
     return {"diagnostics": deduped, "counts": counts}
 
@@ -490,7 +638,9 @@ def _dedupe(diagnostics: list[dict]) -> list[dict]:
     seen: dict[tuple, dict] = {}
     order: list[tuple] = []
     for diag in diagnostics:
-        key = (diag["severity"], diag["file"], diag["line"], diag["message"])
+        # node_config warnings share a file and carry no line, so the node path
+        # is what keeps two different broken nodes from collapsing into one.
+        key = (diag["severity"], diag["file"], diag["line"], diag["message"], diag.get("node_path"))
         if key in seen:
             seen[key]["occurrences"] += 1
         else:

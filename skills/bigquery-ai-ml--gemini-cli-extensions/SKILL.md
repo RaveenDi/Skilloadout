@@ -1,67 +1,47 @@
 ---
 name: bigquery-ai-ml
+license: Apache-2.0
 metadata:
-  version: v1
-description: >-
-  Leverages BigQuery's built-in machine learning and GenAI capabilities
-  for advanced data analytics. Use when you need to write SQL queries
-  that perform time-series forecasting, detect outliers, find key drivers, or leverage generative AI capabilities in BigQuery.
+  author: google-adk
+  version: "1.0"
+description: |
+  Skill for BigQuery AI and Machine Learning queries using standard SQL
+  and `AI.*` functions (preferred over dedicated tools).
+
 ---
 
-# BigQuery AI & ML
+# Skill: bigquery-ai-ml
 
-BigQuery integrates with Vertex AI to provide powerful machine learning and
-generative AI capabilities directly within SQL queries using built-in functions
-like `AI.FORECAST`, `AI.KEY_DRIVERS`, `AI.DETECT_ANOMALIES`, and `AI.GENERATE`.
+This skill defines the usage and rules for BigQuery AI/ML functions,
+preferring SQL-based Skills over dedicated BigQuery tools.
 
-> [!IMPORTANT]
-> You MUST read and follow the global constraints and mandatory function routing rules in
-> [ai_function_best_practices.md](references/ai_function_best_practices.md) before writing any BQML AI/ML SQL query.
+## 1. Skill vs Tool Preference (BigQuery AI/ML)
 
-## Reference Directory
+Agents should **prefer using the Skill (SQL via `execute_sql()`)** over
+dedicated BigQuery tools for functionalities like Forecasting and Anomaly
+Detection.
 
--   **Best Practices**:
-    [ai_function_best_practices.md](references/ai_function_best_practices.md)
+Use `execute_sql()` with the standard BigQuery `AI.*` functions for these tasks
+instead of the corresponding high-level tools.
 
--   **Functions Reference**:
+## 2. Mandatory Reference Routing
 
-    -   **AI.AGG**: [ai_agg.md](references/ai_agg.md) - Multi-row semantic
-        aggregation and summarization.
-    -   **AI.CLASSIFY**: [ai_classify.md](references/ai_classify.md) -
-        Classify text.
-    -   **AI.DETECT_ANOMALIES**:
-        [ai_detect_anomalies.md](references/ai_detect_anomalies.md) -
-        Detect anomalies.
-    -   **AI.EVALUATE**: [ai_evaluate.md](references/ai_evaluate.md) -
-        Evaluate models.
-    -   **AI.FORECAST**: [ai_forecast.md](references/ai_forecast.md) -
-        Time-series forecasting.
-    -   **AI.GENERATE**: [ai_generate.md](references/ai_generate.md) -
-        Generate text using LLMs.
-    -   **AI.GENERATE_EMBEDDING**:
-        [ai_generate_embedding.md](references/ai_generate_embedding.md) -
-        Generate embeddings.
-    -   **AI.GENERATE_TABLE**:
-        [ai_generate_table.md](references/ai_generate_table.md) -
-        Table-valued AI generation.
-    -   **AI.IF**: [ai_if.md](references/ai_if.md) - Evaluate semantic
-        conditions.
-    -   **AI.KEY_DRIVERS**:
-        [ai_key_drivers.md](references/ai_key_drivers.md) - Identifies key
-        drivers, this is a TVF.
-    -   **AI.SCORE**: [ai_score.md](references/ai_score.md) - Score data.
-    -   **AI.SEARCH**: [ai_search.md](references/ai_search.md) - Semantic
-        search.
-    -   **AI.SIMILARITY**:
-        [ai_similarity.md](references/ai_similarity.md) - Semantic
-        similarity.
-    -   **Remote Models**:
-        [remote_models.md](references/remote_models.md) - Working with
-        remote models (Vertex AI).
-    -   **CONTRIBUTION_ANALYSIS**:
-        [ml_contribution_analysis.md](references/ml_contribution_analysis.md)
-        -   Finds contributing factors, key drivers of change. Requires creating
-            a MODEL entity.
-    -   **VECTOR_SEARCH**:
-        [vector_search.md](references/vector_search.md) - Vector search
-        best practices.
+This skill file does not contain the syntax for these functions. You **MUST**
+read the associated reference file before generating SQL.
+
+**CRITICAL**: DO NOT GUESS filenames. You MUST only use the exact paths
+provided below.
+
+| Function | Description | Required Reference File to Retrieve |
+| :--- | :--- | :--- |
+| **AI.FORECAST** | Time-series forecasting via the pre-trained TimesFM model | `references/bigquery_ai_forecast.md` |
+| **AI.CLASSIFY** | Categorize unstructured data into predefined labels | `references/bigquery_ai_classify.md` |
+| **AI.DETECT_ANOMALIES** | Identify deviations in time-series data via the pre-trained TimesFM model | `references/bigquery_ai_detect_anomalies.md` |
+| **AI.GENERATE** | General-purpose text and content generation | `references/bigquery_ai_generate.md` |
+| **AI.GENERATE_BOOL** | Generate a boolean value (TRUE/FALSE) based on a prompt | `references/bigquery_ai_generate_bool.md` |
+| **AI.GENERATE_DOUBLE** | Generate a floating-point number based on a prompt | `references/bigquery_ai_generate_double.md` |
+| **AI.GENERATE_INT** | Generate an integer value based on a prompt | `references/bigquery_ai_generate_int.md` |
+| **AI.IF** | Evaluate a natural-language boolean condition | `references/bigquery_ai_if.md` |
+| **AI.SCORE** | Rank items by semantic relevance (use with ORDER BY) | `references/bigquery_ai_score.md` |
+| **AI.SIMILARITY** | Compute cosine similarity between two inputs | `references/bigquery_ai_similarity.md` |
+| **AI.SEARCH** | Semantic search on tables with autonomous embedding generation | `references/bigquery_ai_search.md` |

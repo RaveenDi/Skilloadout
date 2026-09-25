@@ -2,7 +2,7 @@
 
 - **Item:** Open Code Review (`open-code-review`)
 - **Original source:** https://github.com/alibaba/open-code-review/tree/main/plugins/open-code-review/skills/open-code-review
-- **Repository:** https://github.com/alibaba/open-code-review @ `2e4896bb94af`
+- **Repository:** https://github.com/alibaba/open-code-review @ `486022daaf14`
 - **License:** Apache-2.0 (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.
