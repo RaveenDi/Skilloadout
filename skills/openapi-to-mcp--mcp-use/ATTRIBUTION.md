@@ -2,7 +2,7 @@
 
 - **Item:** Openapi To Mcp (`openapi-to-mcp`)
 - **Original source:** https://github.com/mcp-use/mcp-use/tree/main/skills/openapi-to-mcp
-- **Repository:** https://github.com/mcp-use/mcp-use @ `a7075d1f162f`
+- **Repository:** https://github.com/mcp-use/mcp-use @ `6efd1046651e`
 - **License:** Apache-2.0 (resolved via skill)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

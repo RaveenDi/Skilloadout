@@ -1,13 +1,13 @@
 {
   "name": "bigquery-conversational-analytics",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "Connect, query, and generate data insights for BigQuery datasets and data.",
   "mcpServers": {
     "bigquery_conversational_analytics": {
       "command": "npx",
       "args": [
         "-y",
-        "@toolbox-sdk/server@1.13.0",
+        "@toolbox-sdk/server@1.13.1",
         "--tools-file",
         "${extensionPath}${/}tools.yaml",
         "--stdio"

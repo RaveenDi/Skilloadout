@@ -41,4 +41,4 @@ The first call downloads the pinned server and dependencies, so it can take abou
 
 ## Upstream pin
 
-The plugin pins an immutable upstream Git SHA in [`../../.mcp.json`](../../.mcp.json). Maintainers should upgrade the SHA deliberately and verify an MCP initialization and `tools/list` handshake before release.
+The plugin pins an immutable upstream Git SHA in [`../../.mcp.json`](../../.mcp.json). Maintainers should upgrade the SHA deliberately: pick a reviewed commit, update the pin, run a real MCP initialize + `tools/list` handshake, confirm every tool is still read-only, and reconcile the tool catalog in `SKILL.md` with the registered tool names and schemas before release.

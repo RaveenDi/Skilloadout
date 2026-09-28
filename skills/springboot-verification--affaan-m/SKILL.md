@@ -1,59 +1,60 @@
 ---
 name: springboot-verification
-description: "Bucle de verificación para proyectos Spring Boot: build, análisis estático, pruebas con cobertura, escaneos de seguridad y revisión de diff antes del lanzamiento o PR."
-origin: ECC
+description: Run the full Spring Boot verification loop — Maven or Gradle build, SpotBugs, PMD, and Checkstyle static analysis, unit and Testcontainers integration tests with JaCoCo coverage, OWASP dependency and secret scans, and diff review — producing a pass/fail readiness report. Use when preparing a Spring Boot pull request, validating coverage thresholds, or running pre-deploy verification.
+metadata:
+  origin: ECC
 ---
 
-# Bucle de Verificación Spring Boot
+# Spring Boot Verification Loop
 
-Ejecutar antes de PRs, después de cambios importantes y antes del despliegue.
+Run before PRs, after major changes, and pre-deploy.
 
-## Cuándo Activar
+## When to Activate
 
-- Antes de abrir un pull request para un servicio Spring Boot
-- Después de refactorizaciones importantes o actualizaciones de dependencias
-- Verificación previa al despliegue para staging o producción
-- Ejecutar el pipeline completo de build → lint → test → escaneo de seguridad
-- Validar que la cobertura de pruebas cumpla los umbrales
+- Before opening a pull request for a Spring Boot service
+- After major refactoring or dependency upgrades
+- Pre-deployment verification for staging or production
+- Running full build → lint → test → security scan pipeline
+- Validating test coverage meets thresholds
 
-## Fase 1: Build
+## Phase 1: Build
 
 ```bash
 mvn -T 4 clean verify -DskipTests
-# o
+# or
 ./gradlew clean assemble -x test
 ```
 
-Si el build falla, detener y corregir.
+If build fails, stop and fix.
 
-## Fase 2: Análisis Estático
+## Phase 2: Static Analysis
 
-Maven (plugins comunes):
+Maven (common plugins):
 ```bash
 mvn -T 4 spotbugs:check pmd:check checkstyle:check
 ```
 
-Gradle (si está configurado):
+Gradle (if configured):
 ```bash
 ./gradlew checkstyleMain pmdMain spotbugsMain
 ```
 
-## Fase 3: Pruebas + Cobertura
+## Phase 3: Tests + Coverage
 
 ```bash
 mvn -T 4 test
-mvn jacoco:report   # verificar cobertura 80%+
-# o
+mvn jacoco:report   # verify 80%+ coverage
+# or
 ./gradlew test jacocoTestReport
 ```
 
-Reporte:
-- Total de pruebas, pasadas/fallidas
-- % de cobertura (líneas/ramas)
+Report:
+- Total tests, passed/failed
+- Coverage % (lines/branches)
 
-### Pruebas Unitarias
+### Unit Tests
 
-Probar la lógica del servicio en aislamiento con dependencias mockeadas:
+Test service logic in isolation with mocked dependencies:
 
 ```java
 @ExtendWith(MockitoExtension.class)
@@ -85,9 +86,9 @@ class UserServiceTest {
 }
 ```
 
-### Pruebas de Integración con Testcontainers
+### Integration Tests with Testcontainers
 
-Probar contra una base de datos real en lugar de H2:
+Test against a real database instead of H2:
 
 ```java
 @SpringBootTest
@@ -119,9 +120,9 @@ class UserRepositoryIntegrationTest {
 }
 ```
 
-### Pruebas de API con MockMvc
+### API Tests with MockMvc
 
-Probar la capa controller con el contexto completo de Spring:
+Test controller layer with full Spring context:
 
 ```java
 @WebMvcTest(UserController.class)
@@ -156,76 +157,76 @@ class UserControllerTest {
 }
 ```
 
-## Fase 4: Escaneo de Seguridad
+## Phase 4: Security Scan
 
 ```bash
-# CVEs de dependencias
+# Dependency CVEs
 mvn org.owasp:dependency-check-maven:check
-# o
+# or
 ./gradlew dependencyCheckAnalyze
 
-# Secretos en código fuente
+# Secrets in source
 grep -rn "password\s*=\s*\"" src/ --include="*.java" --include="*.yml" --include="*.properties"
 grep -rn "sk-\|api_key\|secret" src/ --include="*.java" --include="*.yml"
 
-# Secretos (historial de git)
-git secrets --scan  # si está configurado
+# Secrets (git history)
+git secrets --scan  # if configured
 ```
 
-### Hallazgos Comunes de Seguridad
+### Common Security Findings
 
-```bash
-# Verificar System.out.println (usar logger en su lugar)
+```
+# Check for System.out.println (use logger instead)
 grep -rn "System\.out\.print" src/main/ --include="*.java"
 
-# Verificar mensajes de excepción en bruto en respuestas
+# Check for raw exception messages in responses
 grep -rn "e\.getMessage()" src/main/ --include="*.java"
 
-# Verificar CORS comodín
+# Check for wildcard CORS
 grep -rn "allowedOrigins.*\*" src/main/ --include="*.java"
 ```
 
-## Fase 5: Lint/Formato (compuerta opcional)
+## Phase 5: Lint/Format (optional gate)
 
 ```bash
-mvn spotless:apply   # si se usa el plugin Spotless
+mvn spotless:apply   # if using Spotless plugin
 ./gradlew spotlessApply
 ```
 
-## Fase 6: Revisión de Diff
+## Phase 6: Diff Review
 
 ```bash
 git diff --stat
 git diff
 ```
 
-Lista de verificación:
-- Sin logs de depuración residuales (`System.out`, `log.debug` sin guardias)
-- Errores y códigos HTTP con significado
-- Transacciones y validación presentes donde se necesitan
-- Cambios de configuración documentados
+Checklist:
+- No debugging logs left (`System.out`, `log.debug` without guards)
+- Meaningful errors and HTTP statuses
+- Transactions and validation present where needed
+- Config changes documented
 
-## Plantilla de Salida
+## Output Template
 
 ```
-REPORTE DE VERIFICACIÓN
-=======================
-Build:      [PASS/FAIL]
-Estático:   [PASS/FAIL] (spotbugs/pmd/checkstyle)
-Pruebas:    [PASS/FAIL] (X/Y pasadas, Z% cobertura)
-Seguridad:  [PASS/FAIL] (hallazgos CVE: N)
-Diff:       [X archivos modificados]
+VERIFICATION REPORT
+===================
+Build:     [PASS/FAIL]
+Static:    [PASS/FAIL] (spotbugs/pmd/checkstyle)
+Tests:     [PASS/FAIL] (X/Y passed, Z% coverage)
+Security:  [PASS/FAIL] (CVE findings: N)
+Diff:      [X files changed]
 
-General:    [LISTO / NO LISTO]
+Overall:   [READY / NOT READY]
 
-Problemas a Corregir:
+Issues to Fix:
 1. ...
 2. ...
 ```
 
-## Modo Continuo
+## Continuous Mode
 
-- Volver a ejecutar las fases ante cambios significativos o cada 30–60 minutos en sesiones largas
-- Mantener un bucle corto: `mvn -T 4 test` + spotbugs para retroalimentación rápida
+- Re-run phases on significant changes or every 30–60 minutes in long sessions
+- Keep a short loop: `mvn -T 4 test` + spotbugs for quick feedback
 
-**Recuerda**: La retroalimentación rápida supera las sorpresas tardías. Mantener la compuerta estricta — tratar las advertencias como defectos en sistemas de producción.
+**Remember**: Fast feedback beats late surprises. Keep the gate strict—treat warnings as defects in production systems.

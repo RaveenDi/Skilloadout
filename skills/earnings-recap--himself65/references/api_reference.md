@@ -18,9 +18,21 @@ Columns:
 - `epsDifference` — actual minus estimate
 - `surprisePercent` — surprise as a percentage (decimal form: 0.037 = 3.7%)
 
-Index is datetime of each earnings report date.
+Index (`quarter`) is the fiscal quarter-end date, sorted oldest first — the latest quarter is the **last** row. It is not the announcement date, so don't use it for the price-reaction window.
 
-**Usage for recap**: The most recent row (index[0]) is the latest earnings report. Use this as the primary data point for the recap.
+---
+
+## Earnings Dates
+
+```python
+ticker.get_earnings_dates(limit=12)
+```
+
+Returns a DataFrame indexed by `Earnings Date` — tz-aware announcement timestamps (America/New_York), newest first, including the next scheduled report.
+
+Columns: `EPS Estimate`, `Reported EPS`, `Surprise(%)` (already in percent, e.g. 6.74).
+
+**Usage for recap**: the most recent report is the first row with a non-null `Reported EPS`. The timestamp's time of day (US Eastern) gives the reaction window — at or after 16:00 means the company reported after the close (reaction = report-day close → next session's close); anything earlier means before the open, or occasionally during the session (reaction = prior close → report-day close).
 
 ---
 
@@ -53,11 +65,10 @@ net_margin = df.loc['Net Income'] / df.loc['Total Revenue']
 
 **YoY Growth:**
 ```python
-# Columns are ordered most-recent-first
-# Column 0 = latest quarter, Column 4 = same quarter last year (if available)
-# Match by quarter (e.g., Q3 2024 vs Q3 2023)
+# Columns are ordered most-recent-first; yfinance usually returns about five quarters
+# Column 0 = latest quarter, column 4 = same quarter last year (if present)
 revenue = df.loc['Total Revenue']
-yoy_growth = (revenue.iloc[0] - revenue.iloc[3]) / abs(revenue.iloc[3])
+yoy_growth = (revenue.iloc[0] - revenue.iloc[4]) / abs(revenue.iloc[4]) if len(revenue) > 4 else None
 ```
 
 Note: Column indexing depends on how many quarters are returned. Typically 4-5 quarters are available.
@@ -90,11 +101,11 @@ Key rows:
 ## Historical Prices
 
 ```python
-# Around earnings date
+# Around a report timestamp from get_earnings_dates() (not an earnings_history index value)
 from datetime import timedelta
 hist = ticker.history(
-    start=earnings_date - timedelta(days=10),
-    end=earnings_date + timedelta(days=10)
+    start=(earnings_date - timedelta(days=10)).date(),
+    end=(earnings_date + timedelta(days=10)).date()
 )
 ```
 

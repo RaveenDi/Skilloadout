@@ -22,7 +22,11 @@ This skill researches a SaaS company's funding history and computes ARR-based va
 
 ## Known benchmarks
 
-Includes pre-loaded comparables for Vercel, WorkOS, Netlify, Fastly, Stripe, and HashiCorp with compression percentages and primary causes.
+`references/benchmarks.md` holds dated reference data: private-market median ARR multiples by period, public SaaS drawdowns from the April 2026 software selloff, and comparables for Vercel, WorkOS, Netlify, Fastly, Stripe, and HashiCorp with compression percentages and primary causes. Refresh it when the snapshot goes stale.
+
+## Reference files
+
+- `references/benchmarks.md` — Dated private-market ARR multiples, April 2026 public SaaS drawdowns, and known round-pair comparables
 
 ## Platform
 

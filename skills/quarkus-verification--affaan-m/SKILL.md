@@ -1,23 +1,24 @@
 ---
 name: quarkus-verification
-description: "Bucle de verificación para proyectos Quarkus: build, análisis estático, pruebas con cobertura, escaneos de seguridad, compilación nativa y revisión de diff antes del lanzamiento o PR."
-origin: ECC
+description: "Verification loop for Quarkus projects: build, static analysis (Checkstyle, PMD, SpotBugs), tests with JaCoCo coverage, OWASP dependency and container security scans, GraalVM native compilation, health checks, and config validation. Use when verifying a Quarkus service before a PR, after major refactoring or dependency upgrades, or pre-deploy."
+metadata:
+  origin: ECC
 ---
 
-# Bucle de Verificación Quarkus
+# Quarkus Verification Loop
 
-Ejecutar antes de PRs, después de cambios importantes y antes del despliegue.
+Run before PRs, after major changes, and pre-deploy.
 
-## Cuándo Activar
+## When to Activate
 
-- Antes de abrir un pull request para un servicio Quarkus
-- Después de refactorizaciones importantes o actualizaciones de dependencias
-- Verificación previa al despliegue para staging o producción
-- Ejecutar el pipeline completo de build → lint → test → escaneo de seguridad → compilación nativa
-- Validar que la cobertura de pruebas cumpla los umbrales (80%+)
-- Probar compatibilidad con imagen nativa
+- Before opening a pull request for a Quarkus service
+- After major refactoring or dependency upgrades
+- Pre-deployment verification for staging or production
+- Running full build → lint → test → security scan → native compilation pipeline
+- Validating test coverage meets thresholds (80%+)
+- Testing native image compatibility
 
-## Fase 1: Build
+## Phase 1: Build
 
 ```bash
 # Maven
@@ -27,9 +28,9 @@ mvn clean verify -DskipTests
 ./gradlew clean assemble -x test
 ```
 
-Si el build falla, detener y corregir errores de compilación.
+If build fails, stop and fix compilation errors.
 
-## Fase 2: Análisis Estático
+## Phase 2: Static Analysis
 
 ### Checkstyle, PMD, SpotBugs (Maven)
 
@@ -37,7 +38,7 @@ Si el build falla, detener y corregir errores de compilación.
 mvn checkstyle:check pmd:check spotbugs:check
 ```
 
-### SonarQube (si está configurado)
+### SonarQube (if configured)
 
 ```bash
 mvn sonar:sonar \
@@ -46,32 +47,33 @@ mvn sonar:sonar \
   -Dsonar.login=${SONAR_TOKEN}
 ```
 
-### Problemas Comunes a Resolver
+### Common Issues to Address
 
-- Importaciones o variables sin usar
-- Métodos complejos (alta complejidad ciclomática)
-- Posibles desreferencias de puntero nulo
-- Problemas de seguridad detectados por SpotBugs
+- Unused imports or variables
+- Complex methods (high cyclomatic complexity)
+- Potential null pointer dereferences
+- Security issues flagged by SpotBugs
 
-## Fase 3: Pruebas + Cobertura
+## Phase 3: Tests + Coverage
 
 ```bash
-# Ejecutar todas las pruebas
+# Run all tests
 mvn clean test
 
-# Generar reporte de cobertura
+# Generate coverage report
 mvn jacoco:report
 
-# Exigir umbral de cobertura (80%)
+# Enforce coverage threshold (80%)
 mvn jacoco:check
 
-# O con Gradle
+# Or with Gradle
 ./gradlew test jacocoTestReport jacocoTestCoverageVerification
 ```
 
-### Categorías de Prueba
+### Test Categories
 
-#### Pruebas Unitarias
+#### Unit Tests
+Test service logic with mocked dependencies:
 
 ```java
 @ExtendWith(MockitoExtension.class)
@@ -83,6 +85,7 @@ class UserServiceTest {
   void createUser_validInput_returnsUser() {
     var dto = new CreateUserDto("Alice", "alice@example.com");
 
+    // Panache persist() is void — use doNothing + verify
     doNothing().when(userRepository).persist(any(User.class));
 
     User result = userService.create(dto);
@@ -93,7 +96,8 @@ class UserServiceTest {
 }
 ```
 
-#### Pruebas de Integración
+#### Integration Tests
+Test with real database (Testcontainers):
 
 ```java
 @QuarkusTest
@@ -119,7 +123,8 @@ class UserRepositoryIntegrationTest {
 }
 ```
 
-#### Pruebas de API
+#### API Tests
+Test REST endpoints with REST Assured:
 
 ```java
 @QuarkusTest
@@ -152,31 +157,34 @@ class UserResourceTest {
 }
 ```
 
-### Reporte de Cobertura
+### Coverage Report
 
-Verificar `target/site/jacoco/index.html` para cobertura detallada:
-- Cobertura de líneas total (objetivo: 80%+)
-- Cobertura de ramas (objetivo: 70%+)
-- Identificar rutas críticas sin cobertura
+Check `target/site/jacoco/index.html` for detailed coverage:
+- Overall line coverage (target: 80%+)
+- Branch coverage (target: 70%+)
+- Identify uncovered critical paths
 
-## Fase 4: Escaneo de Seguridad
+## Phase 4: Security Scanning
 
-### Vulnerabilidades de Dependencias (Maven)
+### Dependency Vulnerabilities (Maven)
 
 ```bash
 mvn org.owasp:dependency-check-maven:check
 ```
 
-Revisar `target/dependency-check-report.html` para CVEs.
+Review `target/dependency-check-report.html` for CVEs.
 
-### Auditoría de Seguridad Quarkus
+### Quarkus Security Audit
 
 ```bash
+# Check vulnerable extensions
 mvn quarkus:audit
+
+# List all extensions
 mvn quarkus:list-extensions
 ```
 
-### OWASP ZAP (Pruebas de Seguridad de API)
+### OWASP ZAP (API Security Testing)
 
 ```bash
 docker run -t ghcr.io/zaproxy/zaproxy:stable zap-api-scan.py \
@@ -184,52 +192,52 @@ docker run -t ghcr.io/zaproxy/zaproxy:stable zap-api-scan.py \
   -f openapi
 ```
 
-### Verificaciones de Seguridad Comunes
+### Common Security Checks
 
-- [ ] Todos los secretos en variables de entorno (no en código)
-- [ ] Validación de entrada en todos los endpoints
-- [ ] Autenticación/autorización configurada
-- [ ] CORS correctamente configurado
-- [ ] Cabeceras de seguridad establecidas
-- [ ] Contraseñas hasheadas con BCrypt
-- [ ] Protección contra inyección SQL (consultas parametrizadas)
-- [ ] Limitación de velocidad en endpoints públicos
+- [ ] All secrets in environment variables (not in code)
+- [ ] Input validation on all endpoints
+- [ ] Authentication/authorization configured
+- [ ] CORS properly configured
+- [ ] Security headers set
+- [ ] Passwords hashed with BCrypt
+- [ ] SQL injection protection (parameterized queries)
+- [ ] Rate limiting on public endpoints
 
-## Fase 5: Compilación Nativa
+## Phase 5: Native Compilation
 
-Probar compatibilidad de imagen nativa GraalVM:
+Test GraalVM native image compatibility:
 
 ```bash
-# Construir ejecutable nativo
+# Build native executable
 mvn package -Dnative
 
-# O con contenedor
+# Or with container
 mvn package -Dnative -Dquarkus.native.container-build=true
 
-# Probar ejecutable nativo
+# Test native executable
 ./target/*-runner
 
-# Ejecutar smoke tests básicos
+# Run basic smoke tests
 curl http://localhost:8080/q/health/live
 curl http://localhost:8080/q/health/ready
 ```
 
-### Solución de Problemas de Imagen Nativa
+### Native Image Troubleshooting
 
-Problemas comunes:
-- **Reflexión**: Agregar config de reflexión para clases dinámicas
-- **Recursos**: Incluir recursos con `quarkus.native.resources.includes`
-- **JNI**: Registrar clases JNI si se usan bibliotecas nativas
+Common issues:
+- **Reflection**: Add reflection config for dynamic classes
+- **Resources**: Include resources with `quarkus.native.resources.includes`
+- **JNI**: Register JNI classes if using native libraries
 
-Ejemplo de configuración de reflexión:
+Example reflection config:
 ```java
 @RegisterForReflection(targets = {MyDynamicClass.class})
 public class ReflectionConfiguration {}
 ```
 
-## Fase 6: Pruebas de Rendimiento
+## Phase 6: Performance Testing
 
-### Prueba de Carga con K6
+### Load Testing with K6
 
 ```javascript
 // load-test.js
@@ -253,11 +261,20 @@ export default function () {
 }
 ```
 
+Run:
 ```bash
 k6 run load-test.js
 ```
 
-## Fase 7: Health Checks
+### Metrics to Monitor
+
+- Response time (p50, p95, p99)
+- Throughput (requests/sec)
+- Error rate
+- Memory usage
+- CPU usage
+
+## Phase 7: Health Checks
 
 ```bash
 # Liveness
@@ -266,113 +283,199 @@ curl http://localhost:8080/q/health/live
 # Readiness
 curl http://localhost:8080/q/health/ready
 
-# Todos los health checks
+# All health checks
 curl http://localhost:8080/q/health
 
-# Métricas (si están habilitadas)
+# Metrics (if enabled)
 curl http://localhost:8080/q/metrics
 ```
 
-## Fase 8: Build de Imagen de Contenedor
+Expected responses:
+```json
+{
+  "status": "UP",
+  "checks": [
+    {
+      "name": "Database connection",
+      "status": "UP"
+    }
+  ]
+}
+```
+
+## Phase 8: Container Image Build
 
 ```bash
-# Construir imagen de contenedor
+# Build container image
 mvn package -Dquarkus.container-image.build=true
 
-# Escaneo de seguridad del contenedor
+# Or with specific registry
+mvn package \
+  -Dquarkus.container-image.build=true \
+  -Dquarkus.container-image.registry=docker.io \
+  -Dquarkus.container-image.group=myorg \
+  -Dquarkus.container-image.tag=1.0.0
+
+# Test container
+docker run -p 8080:8080 myorg/my-quarkus-app:1.0.0
+```
+
+### Container Security Scan
+
+```bash
+# Trivy
 trivy image myorg/my-quarkus-app:1.0.0
+
+# Grype
 grype myorg/my-quarkus-app:1.0.0
 ```
 
-## Fase 9: Validación de Configuración
+## Phase 9: Configuration Validation
 
 ```bash
+# Check all configuration properties
 mvn quarkus:info
+
+# List all config sources
+curl http://localhost:8080/q/dev/io.quarkus.quarkus-vertx-http/config
 ```
 
-### Verificaciones por Entorno
+### Environment-Specific Checks
 
-- [ ] URLs de base de datos configuradas por entorno
-- [ ] Secretos externalizados (Vault, variables de entorno)
-- [ ] Niveles de logging apropiados
-- [ ] Orígenes CORS configurados correctamente
-- [ ] Limitación de velocidad configurada
-- [ ] Monitoreo/trazado habilitado
+- [ ] Database URLs configured per environment
+- [ ] Secrets externalized (Vault, env vars)
+- [ ] Logging levels appropriate
+- [ ] CORS origins set correctly
+- [ ] Rate limiting configured
+- [ ] Monitoring/tracing enabled
 
-## Fase 10: Revisión de Documentación
+## Phase 10: Documentation Review
 
-- [ ] Docs OpenAPI/Swagger actualizadas (`/q/swagger-ui`)
-- [ ] README tiene instrucciones de configuración
-- [ ] Cambios de API documentados
-- [ ] Guía de migración para cambios disruptivos
+- [ ] OpenAPI/Swagger docs up to date (`/q/swagger-ui`)
+- [ ] README has setup instructions
+- [ ] API changes documented
+- [ ] Migration guide for breaking changes
+- [ ] Configuration properties documented
 
-Generar especificación OpenAPI:
+Generate OpenAPI spec:
 ```bash
 curl http://localhost:8080/q/openapi -o openapi.json
 ```
 
-## Lista de Verificación
+## Verification Checklist
 
-### Calidad del Código
-- [ ] El build pasa sin advertencias
-- [ ] Análisis estático limpio (sin problemas altos/medios)
-- [ ] El código sigue las convenciones del equipo
-- [ ] Sin código comentado ni TODOs en el PR
+### Code Quality
+- [ ] Build passes without warnings
+- [ ] Static analysis clean (no high/medium issues)
+- [ ] Code follows team conventions
+- [ ] No commented-out code or TODOs in PR
 
-### Pruebas
-- [ ] Todas las pruebas pasan
-- [ ] Cobertura de código ≥ 80%
-- [ ] Pruebas de integración con base de datos real
-- [ ] Pruebas de seguridad pasan
-- [ ] Rendimiento dentro de límites aceptables
+### Testing
+- [ ] All tests pass
+- [ ] Code coverage ≥ 80%
+- [ ] Integration tests with real database
+- [ ] Security tests pass
+- [ ] Performance within acceptable limits
 
-### Seguridad
-- [ ] Sin vulnerabilidades en dependencias
-- [ ] Autenticación/autorización probada
-- [ ] Validación de entrada completa
-- [ ] Secretos no en código fuente
-- [ ] Cabeceras de seguridad configuradas
+### Security
+- [ ] No dependency vulnerabilities
+- [ ] Authentication/authorization tested
+- [ ] Input validation complete
+- [ ] Secrets not in source code
+- [ ] Security headers configured
 
-### Despliegue
-- [ ] Compilación nativa exitosa
-- [ ] Imagen de contenedor construida
-- [ ] Health checks responden correctamente
-- [ ] Configuración válida para el entorno objetivo
+### Deployment
+- [ ] Native compilation successful
+- [ ] Container image builds
+- [ ] Health checks respond correctly
+- [ ] Configuration valid for target environment
 
-## Script de Verificación Automatizado
+### Native Image
+- [ ] Native executable builds
+- [ ] Native tests pass
+- [ ] Startup time < 100ms
+- [ ] Memory footprint acceptable
+
+## Automated Verification Script
 
 ```bash
 #!/bin/bash
 set -e
 
-echo "=== Fase 1: Build ==="
+echo "=== Phase 1: Build ==="
 mvn clean verify -DskipTests
 
-echo "=== Fase 2: Análisis Estático ==="
+echo "=== Phase 2: Static Analysis ==="
 mvn checkstyle:check pmd:check spotbugs:check
 
-echo "=== Fase 3: Pruebas + Cobertura ==="
+echo "=== Phase 3: Tests + Coverage ==="
 mvn test jacoco:report jacoco:check
 
-echo "=== Fase 4: Escaneo de Seguridad ==="
+echo "=== Phase 4: Security Scan ==="
 mvn org.owasp:dependency-check-maven:check
 
-echo "=== Fase 5: Compilación Nativa ==="
+echo "=== Phase 5: Native Compilation ==="
 mvn package -Dnative -Dquarkus.native.container-build=true
 
-echo "=== Todas las Fases Completadas ==="
-echo "Revisar reportes:"
-echo "  - Cobertura: target/site/jacoco/index.html"
-echo "  - Seguridad: target/dependency-check-report.html"
+echo "=== All Phases Complete ==="
+echo "Review reports:"
+echo "  - Coverage: target/site/jacoco/index.html"
+echo "  - Security: target/dependency-check-report.html"
+echo "  - Native: target/*-runner"
 ```
 
-## Buenas Prácticas
+## CI/CD Integration
 
-- Ejecutar el bucle de verificación antes de cada PR
-- Automatizar en el pipeline CI/CD
-- Corregir problemas inmediatamente; no acumular deuda técnica
-- Mantener cobertura por encima del 80%
-- Actualizar dependencias regularmente
-- Probar compilación nativa periódicamente
-- Monitorear tendencias de rendimiento
-- Documentar cambios disruptivos
+### GitHub Actions Example
+
+```yaml
+name: Verification
+
+on: [push, pull_request]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Cache Maven packages
+        uses: actions/cache@v6
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+
+      - name: Build
+        run: mvn clean verify -DskipTests
+
+      - name: Test with Coverage
+        run: mvn test jacoco:report jacoco:check
+
+      - name: Security Scan
+        run: mvn org.owasp:dependency-check-maven:check
+
+      - name: Upload Coverage
+        uses: codecov/codecov-action@v7
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: target/site/jacoco/jacoco.xml
+```
+
+## Best Practices
+
+- Run verification loop before every PR
+- Automate in CI/CD pipeline
+- Fix issues immediately; don't accumulate debt
+- Keep coverage above 80%
+- Update dependencies regularly
+- Test native compilation periodically
+- Monitor performance trends
+- Document breaking changes
+- Review security scan results
+- Validate configuration for each environment

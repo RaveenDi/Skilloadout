@@ -1,5 +1,179 @@
 [
   {
+    "date": "2026-09-28T11:50:43.927Z",
+    "reviewer": "heuristic",
+    "candidates": 29,
+    "accepted": [
+      "wanshuiyin/Auto-claude-code-research-in-sleep",
+      "earthtojake/text-to-cad",
+      "yusufkaraaslan/Skill_Seekers",
+      "NevaMind-AI/memU",
+      "nidhinjs/prompt-master",
+      "kangarooking/cangjie-skill",
+      "wonderwhy-er/DesktopCommanderMCP",
+      "Vincentwei1021/video-shotcraft",
+      "AgriciDaniel/claude-ads",
+      "nexu-io/html-anything"
+    ],
+    "decisions": [
+      {
+        "repo": "mvanhorn/last30days-skill",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "sickn33/agentic-awesome-skills",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 16%, 7726 skills)"
+      },
+      {
+        "repo": "iOfficeAI/AionUi",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 75%, 4 skills)"
+      },
+      {
+        "repo": "feder-cr/invisible_playwright_mcp",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "zarazhangrui/frontend-slides",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 2 skills)"
+      },
+      {
+        "repo": "Nutlope/hallmark",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "microsoft/SkillOpt",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 5 skills)"
+      },
+      {
+        "repo": "wanshuiyin/Auto-claude-code-research-in-sleep",
+        "stars": 16745,
+        "skills": 189,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "earthtojake/text-to-cad",
+        "stars": 16445,
+        "skills": 14,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "yusufkaraaslan/Skill_Seekers",
+        "stars": 15042,
+        "skills": 26,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "NevaMind-AI/memU",
+        "stars": 14463,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "nidhinjs/prompt-master",
+        "stars": 13743,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "kangarooking/cangjie-skill",
+        "stars": 10683,
+        "skills": 36,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "wonderwhy-er/DesktopCommanderMCP",
+        "stars": 9803,
+        "skills": 18,
+        "rules": 2,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "Vincentwei1021/video-shotcraft",
+        "stars": 9779,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "AgriciDaniel/claude-ads",
+        "stars": 9600,
+        "skills": 34,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "nexu-io/html-anything",
+        "stars": 8968,
+        "skills": 81,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      }
+    ]
+  },
+  {
     "date": "2026-09-25T10:20:17.509Z",
     "reviewer": "heuristic",
     "candidates": 29,

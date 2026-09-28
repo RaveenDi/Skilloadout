@@ -147,7 +147,7 @@ Columns:
 - `epsDifference` — actual minus estimate
 - `surprisePercent` — in decimal form (0.037 = 3.7%)
 
-Index: earnings report dates (datetime)
+Index (`quarter`): fiscal quarter-end dates, oldest first — not announcement dates (use `ticker.get_earnings_dates()` for those)
 
 ---
 

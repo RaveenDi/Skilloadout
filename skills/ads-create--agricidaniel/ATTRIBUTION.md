@@ -1,0 +1,9 @@
+# Attribution
+
+- **Item:** Ads Create (`ads-create`)
+- **Original source:** https://github.com/AgriciDaniel/claude-ads/tree/main/skills/ads-create
+- **Repository:** https://github.com/AgriciDaniel/claude-ads @ `ac2164493391`
+- **License:** MIT (resolved via repo-file)
+
+Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.
+

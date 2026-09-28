@@ -70,9 +70,24 @@ Columns:
 - `epsDifference` — actual minus estimate
 - `surprisePercent` — surprise as a percentage (decimal)
 
-Index is datetime of each earnings report.
+Index (`quarter`) is the fiscal quarter-end date, oldest first — not the announcement date. Use `ticker.get_earnings_dates()` for report timestamps.
 
 **Note**: `surprisePercent` is already in decimal form (0.037 = 3.7%). Multiply by 100 for display.
+
+---
+
+## Earnings Dates
+
+```python
+ticker.get_earnings_dates(limit=8)
+```
+
+Returns a DataFrame indexed by `Earnings Date` — tz-aware announcement timestamps (America/New_York), newest first, including the next scheduled report.
+
+Columns: `EPS Estimate`, `Reported EPS`, `Surprise(%)` (already in percent, e.g. 6.74).
+
+- The upcoming report is the row with no `Reported EPS`.
+- The time of day (US Eastern) gives the timing: at or after 16:00 means after the close; earlier times mean before the open, or occasionally during the session.
 
 ---
 

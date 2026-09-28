@@ -798,6 +798,86 @@
       "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
       "reviewer": "heuristic",
       "status": "active"
+    },
+    {
+      "repo": "wanshuiyin/Auto-claude-code-research-in-sleep",
+      "tier": 2,
+      "addedAt": "2026-09-28T11:50:43.925Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "earthtojake/text-to-cad",
+      "tier": 2,
+      "addedAt": "2026-09-28T11:50:43.926Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "yusufkaraaslan/Skill_Seekers",
+      "tier": 2,
+      "addedAt": "2026-09-28T11:50:43.926Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "NevaMind-AI/memU",
+      "tier": 2,
+      "addedAt": "2026-09-28T11:50:43.926Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "nidhinjs/prompt-master",
+      "tier": 2,
+      "addedAt": "2026-09-28T11:50:43.926Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "kangarooking/cangjie-skill",
+      "tier": 2,
+      "addedAt": "2026-09-28T11:50:43.926Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "wonderwhy-er/DesktopCommanderMCP",
+      "tier": 2,
+      "addedAt": "2026-09-28T11:50:43.926Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "Vincentwei1021/video-shotcraft",
+      "tier": 2,
+      "addedAt": "2026-09-28T11:50:43.926Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "AgriciDaniel/claude-ads",
+      "tier": 2,
+      "addedAt": "2026-09-28T11:50:43.926Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "nexu-io/html-anything",
+      "tier": 2,
+      "addedAt": "2026-09-28T11:50:43.926Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
     }
   ]
 }

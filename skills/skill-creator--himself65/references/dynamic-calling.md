@@ -1,6 +1,6 @@
 # Dynamic Calling Patterns
 
-Skills MUST detect what's available at runtime and adapt. Never hardcode a single tool or method. This reference catalogs every dynamic pattern used in production skills.
+Skills that touch external tools should detect what's available at runtime and adapt, rather than hardcoding a single tool or method — environments differ, and a hardcoded tool fails for every user who lacks it. This reference catalogs every dynamic pattern used in production skills.
 
 **Core principle:** The skill should work in as many environments as possible. A user with `gh` CLI gets the rich path. A user with only `git` gets the minimal path. A user with nothing gets clear install instructions. The skill never fails silently because a hardcoded tool is missing.
 

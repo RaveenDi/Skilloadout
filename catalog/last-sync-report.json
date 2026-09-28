@@ -1,22 +1,17 @@
 {
-  "date": "2026-09-25T10:23:55.514Z",
-  "durationSec": 218,
-  "written": 3554,
+  "date": "2026-09-28T11:54:46.924Z",
+  "durationSec": 243,
+  "written": 2800,
   "report": [
+    {
+      "repo": "anthropics/skills",
+      "items": 19,
+      "reused": true
+    },
     {
       "repo": "openai/skills",
       "items": 42,
       "reused": true
-    },
-    {
-      "repo": "anthropics/skills",
-      "items": 19,
-      "reused": false
-    },
-    {
-      "repo": "anthropics/knowledge-work-plugins",
-      "items": 252,
-      "reused": false
     },
     {
       "repo": "anthropics/claude-plugins-official",
@@ -24,9 +19,19 @@
       "reused": false
     },
     {
+      "repo": "anthropics/knowledge-work-plugins",
+      "items": 245,
+      "reused": true
+    },
+    {
       "repo": "openai/plugins",
       "items": 442,
       "reused": true
+    },
+    {
+      "repo": "google-gemini/gemini-cli",
+      "items": 15,
+      "reused": false
     },
     {
       "repo": "firebase/agent-skills",
@@ -35,23 +40,13 @@
     },
     {
       "repo": "google/skills",
-      "items": 152,
+      "items": 153,
       "reused": false
     },
     {
-      "repo": "google-gemini/gemini-cli",
-      "items": 15,
-      "reused": false
-    },
-    {
-      "repo": "microsoft/skills",
-      "items": 205,
-      "reused": false
-    },
-    {
-      "repo": "googleapis/genai-toolbox",
-      "items": 5,
-      "reused": false
+      "repo": "github/awesome-copilot",
+      "items": 440,
+      "reused": true
     },
     {
       "repo": "vercel-labs/agent-skills",
@@ -59,8 +54,13 @@
       "reused": true
     },
     {
-      "repo": "github/awesome-copilot",
-      "items": 441,
+      "repo": "microsoft/skills",
+      "items": 202,
+      "reused": true
+    },
+    {
+      "repo": "googleapis/genai-toolbox",
+      "items": 5,
       "reused": false
     },
     {
@@ -69,18 +69,8 @@
       "reused": true
     },
     {
-      "repo": "hashicorp/agent-skills",
-      "items": 20,
-      "reused": false
-    },
-    {
       "repo": "supabase/agent-skills",
       "items": 2,
-      "reused": false
-    },
-    {
-      "repo": "stripe/agent-toolkit",
-      "items": 60,
       "reused": false
     },
     {
@@ -89,14 +79,19 @@
       "reused": false
     },
     {
+      "repo": "hashicorp/agent-skills",
+      "items": 20,
+      "reused": true
+    },
+    {
       "repo": "getsentry/skills",
       "items": 26,
       "reused": true
     },
     {
-      "repo": "remotion-dev/skills",
-      "items": 12,
-      "reused": false
+      "repo": "expo/skills",
+      "items": 26,
+      "reused": true
     },
     {
       "repo": "callstackincubator/agent-skills",
@@ -104,9 +99,9 @@
       "reused": true
     },
     {
-      "repo": "expo/skills",
-      "items": 26,
-      "reused": false
+      "repo": "remotion-dev/skills",
+      "items": 12,
+      "reused": true
     },
     {
       "repo": "phaserjs/phaser",
@@ -114,14 +109,19 @@
       "reused": true
     },
     {
-      "repo": "huggingface/skills",
-      "items": 26,
+      "repo": "stripe/agent-toolkit",
+      "items": 60,
       "reused": false
     },
     {
+      "repo": "huggingface/skills",
+      "items": 26,
+      "reused": true
+    },
+    {
       "repo": "neondatabase/agent-skills",
-      "items": 17,
-      "reused": false
+      "items": 9,
+      "reused": true
     },
     {
       "repo": "prisma/skills",
@@ -129,13 +129,13 @@
       "reused": true
     },
     {
-      "repo": "posthog/skills",
-      "items": 331,
-      "reused": false
+      "repo": "mongodb/agent-skills",
+      "items": 8,
+      "reused": true
     },
     {
-      "repo": "mongodb/agent-skills",
-      "items": 34,
+      "repo": "shadcn-ui/ui",
+      "items": 2,
       "reused": false
     },
     {
@@ -144,13 +144,18 @@
       "reused": false
     },
     {
-      "repo": "shadcn-ui/ui",
-      "items": 2,
+      "repo": "JetBrains/skills",
+      "items": 71,
       "reused": true
     },
     {
-      "repo": "pmndrs/koota",
-      "items": 1,
+      "repo": "posthog/skills",
+      "items": 331,
+      "reused": false
+    },
+    {
+      "repo": "trailofbits/skills",
+      "items": 83,
       "reused": true
     },
     {
@@ -159,38 +164,23 @@
       "reused": false
     },
     {
-      "repo": "trailofbits/skills",
-      "items": 83,
-      "reused": false
-    },
-    {
-      "repo": "JetBrains/skills",
-      "items": 71,
-      "reused": true
-    },
-    {
-      "repo": "better-auth/skills",
-      "items": 6,
+      "repo": "pmndrs/koota",
+      "items": 1,
       "reused": true
     },
     {
       "repo": "nextlevelbuilder/ui-ux-pro-max-skill",
-      "items": 7,
-      "reused": true
+      "items": 13,
+      "reused": false
     },
     {
       "repo": "obra/superpowers",
       "items": 15,
-      "reused": true
-    },
-    {
-      "repo": "K-Dense-AI/claude-scientific-skills",
-      "items": 166,
       "reused": false
     },
     {
-      "repo": "wshobson/agents",
-      "items": 183,
+      "repo": "better-auth/skills",
+      "items": 6,
       "reused": true
     },
     {
@@ -202,6 +192,11 @@
       "repo": "Orchestra-Research/AI-research-SKILLs",
       "items": 98,
       "reused": true
+    },
+    {
+      "repo": "wshobson/agents",
+      "items": 183,
+      "reused": false
     },
     {
       "repo": "alirezarezvani/claude-skills",
@@ -219,18 +214,23 @@
       "reused": true
     },
     {
-      "repo": "MengTo/Skills",
-      "items": 142,
-      "reused": false
-    },
-    {
       "repo": "Dimillian/Skills",
       "items": 16,
       "reused": true
     },
     {
+      "repo": "MengTo/Skills",
+      "items": 146,
+      "reused": false
+    },
+    {
       "repo": "CloudAI-X/threejs-skills",
       "items": 10,
+      "reused": false
+    },
+    {
+      "repo": "K-Dense-AI/claude-scientific-skills",
+      "items": 166,
       "reused": false
     },
     {
@@ -241,11 +241,11 @@
     {
       "repo": "majidmanzarpour/threejs-game-skills",
       "items": 9,
-      "reused": true
+      "reused": false
     },
     {
-      "repo": "oso95/scroll-world",
-      "items": 1,
+      "repo": "iart-ai/webgl-animation-skills",
+      "items": 3,
       "reused": true
     },
     {
@@ -259,13 +259,13 @@
       "reused": true
     },
     {
-      "repo": "iart-ai/webgl-animation-skills",
-      "items": 3,
+      "repo": "woliveiras/web-graphics-skills",
+      "items": 2,
       "reused": true
     },
     {
-      "repo": "woliveiras/web-graphics-skills",
-      "items": 2,
+      "repo": "oso95/scroll-world",
+      "items": 1,
       "reused": true
     },
     {
@@ -274,22 +274,17 @@
       "reused": true
     },
     {
-      "repo": "zubair-trabzada/scroll-cinematic-claude",
-      "items": 1,
-      "reused": true
-    },
-    {
       "repo": "Impertio-Studio/CesiumJS-Claude-Skill-Package",
       "items": 30,
       "reused": true
     },
     {
-      "repo": "Ilm-Alan/frontend-design",
+      "repo": "oimiragieo/omega-cinematic-3d-website",
       "items": 1,
       "reused": true
     },
     {
-      "repo": "oimiragieo/omega-cinematic-3d-website",
+      "repo": "zubair-trabzada/scroll-cinematic-claude",
       "items": 1,
       "reused": true
     },
@@ -299,14 +294,9 @@
       "reused": true
     },
     {
-      "repo": "PatrickJS/awesome-cursorrules",
-      "items": 248,
-      "reused": true
-    },
-    {
-      "repo": "Shopify/agent-skills",
-      "items": 15,
-      "reused": true
+      "repo": "Ilm-Alan/frontend-design",
+      "items": 1,
+      "reused": false
     },
     {
       "repo": "anthropics/k12-teacher-skills",
@@ -314,9 +304,19 @@
       "reused": true
     },
     {
+      "repo": "PatrickJS/awesome-cursorrules",
+      "items": 248,
+      "reused": true
+    },
+    {
       "repo": "heygen-com/hyperframes",
       "items": 40,
       "reused": false
+    },
+    {
+      "repo": "Shopify/agent-skills",
+      "items": 15,
+      "reused": true
     },
     {
       "repo": "addyosmani/agent-skills",
@@ -329,18 +329,28 @@
       "reused": true
     },
     {
-      "repo": "nexu-io/open-design",
-      "items": 533,
-      "reused": false
-    },
-    {
       "repo": "tt-a1i/archify",
       "items": 2,
       "reused": false
     },
     {
+      "repo": "nexu-io/open-design",
+      "items": 533,
+      "reused": false
+    },
+    {
       "repo": "thedotmack/claude-mem",
-      "items": 30,
+      "items": 35,
+      "reused": false
+    },
+    {
+      "repo": "Egonex-AI/Understand-Anything",
+      "items": 9,
+      "reused": false
+    },
+    {
+      "repo": "zubair-trabzada/geo-seo-claude",
+      "items": 16,
       "reused": false
     },
     {
@@ -349,23 +359,13 @@
       "reused": true
     },
     {
-      "repo": "Egonex-AI/Understand-Anything",
-      "items": 9,
-      "reused": true
-    },
-    {
       "repo": "AgriciDaniel/claude-seo",
-      "items": 35,
-      "reused": false
+      "items": 33,
+      "reused": true
     },
     {
       "repo": "himself65/finance-skills",
       "items": 26,
-      "reused": true
-    },
-    {
-      "repo": "zubair-trabzada/geo-seo-claude",
-      "items": 16,
       "reused": false
     },
     {
@@ -394,11 +394,6 @@
       "reused": true
     },
     {
-      "repo": "RKiding/Awesome-finance-skills",
-      "items": 9,
-      "reused": true
-    },
-    {
       "repo": "JoelLewis/finance_skills",
       "items": 91,
       "reused": true
@@ -409,8 +404,18 @@
       "reused": true
     },
     {
+      "repo": "RKiding/Awesome-finance-skills",
+      "items": 9,
+      "reused": true
+    },
+    {
       "repo": "iannuttall/seo",
       "items": 1,
+      "reused": false
+    },
+    {
+      "repo": "RobLe3/cc-blender-skill",
+      "items": 30,
       "reused": true
     },
     {
@@ -424,13 +429,13 @@
       "reused": true
     },
     {
-      "repo": "RobLe3/cc-blender-skill",
-      "items": 30,
+      "repo": "earthtojake/cad-skill",
+      "items": 2,
       "reused": true
     },
     {
-      "repo": "earthtojake/cad-skill",
-      "items": 2,
+      "repo": "haxqer/godot-skill",
+      "items": 1,
       "reused": true
     },
     {
@@ -444,8 +449,8 @@
       "reused": true
     },
     {
-      "repo": "haxqer/godot-skill",
-      "items": 1,
+      "repo": "rerun-io/rerun",
+      "items": 13,
       "reused": false
     },
     {
@@ -454,9 +459,9 @@
       "reused": false
     },
     {
-      "repo": "rerun-io/rerun",
-      "items": 13,
-      "reused": false
+      "repo": "austintgriffith/ethskills",
+      "items": 26,
+      "reused": true
     },
     {
       "repo": "arpitg1304/robotics-agent-skills",
@@ -464,13 +469,13 @@
       "reused": true
     },
     {
-      "repo": "austintgriffith/ethskills",
-      "items": 26,
+      "repo": "tuanductran/hr-skills",
+      "items": 163,
       "reused": true
     },
     {
-      "repo": "anthropics/healthcare",
-      "items": 11,
+      "repo": "aipoch/medical-research-skills",
+      "items": 603,
       "reused": true
     },
     {
@@ -479,18 +484,13 @@
       "reused": false
     },
     {
-      "repo": "tuanductran/hr-skills",
-      "items": 163,
+      "repo": "anthropics/healthcare",
+      "items": 11,
       "reused": true
     },
     {
       "repo": "composio-community/support-skills",
       "items": 40,
-      "reused": true
-    },
-    {
-      "repo": "aipoch/medical-research-skills",
-      "items": 603,
       "reused": true
     },
     {
@@ -516,7 +516,7 @@
     {
       "repo": "ruvnet/RuView",
       "items": 53,
-      "reused": true
+      "reused": false
     },
     {
       "repo": "lobehub/lobehub",
@@ -539,14 +539,24 @@
       "reused": false
     },
     {
-      "repo": "shanraisshan/claude-code-best-practice",
-      "items": 9,
+      "repo": "CherryHQ/cherry-studio",
+      "items": 35,
       "reused": false
     },
     {
       "repo": "calesthio/OpenMontage",
       "items": 74,
       "reused": true
+    },
+    {
+      "repo": "shanraisshan/claude-code-best-practice",
+      "items": 9,
+      "reused": false
+    },
+    {
+      "repo": "Imbad0202/academic-research-skills",
+      "items": 4,
+      "reused": false
     },
     {
       "repo": "kepano/obsidian-skills",
@@ -556,16 +566,6 @@
     {
       "repo": "blader/humanizer",
       "items": 1,
-      "reused": true
-    },
-    {
-      "repo": "Imbad0202/academic-research-skills",
-      "items": 4,
-      "reused": false
-    },
-    {
-      "repo": "CherryHQ/cherry-studio",
-      "items": 35,
       "reused": false
     },
     {
@@ -574,18 +574,23 @@
       "reused": false
     },
     {
+      "repo": "cathrynlavery/diagram-design",
+      "items": 1,
+      "reused": false
+    },
+    {
+      "repo": "Yuan1z0825/nature-skills",
+      "items": 20,
+      "reused": false
+    },
+    {
       "repo": "reactive-resume/reactive-resume",
       "items": 1,
       "reused": false
     },
     {
-      "repo": "cathrynlavery/diagram-design",
-      "items": 1,
-      "reused": true
-    },
-    {
-      "repo": "Yuan1z0825/nature-skills",
-      "items": 20,
+      "repo": "danny-avila/LibreChat",
+      "items": 2,
       "reused": false
     },
     {
@@ -594,17 +599,7 @@
       "reused": false
     },
     {
-      "repo": "zhaoxuya520/reverse-skill",
-      "items": 88,
-      "reused": true
-    },
-    {
-      "repo": "danny-avila/LibreChat",
-      "items": 2,
-      "reused": false
-    },
-    {
-      "repo": "JCodesMore/ai-website-cloner-template",
+      "repo": "virgiliojr94/book-to-skill",
       "items": 1,
       "reused": true
     },
@@ -614,18 +609,13 @@
       "reused": true
     },
     {
-      "repo": "virgiliojr94/book-to-skill",
+      "repo": "zhaoxuya520/reverse-skill",
+      "items": 88,
+      "reused": true
+    },
+    {
+      "repo": "JCodesMore/ai-website-cloner-template",
       "items": 1,
-      "reused": false
-    },
-    {
-      "repo": "iOfficeAI/OfficeCLI",
-      "items": 12,
-      "reused": false
-    },
-    {
-      "repo": "topoteretes/cognee",
-      "items": 11,
       "reused": false
     },
     {
@@ -634,14 +624,19 @@
       "reused": true
     },
     {
-      "repo": "nanocoai/nanoclaw",
-      "items": 63,
+      "repo": "topoteretes/cognee",
+      "items": 11,
       "reused": false
     },
     {
-      "repo": "op7418/guizang-ppt-skill",
-      "items": 1,
-      "reused": true
+      "repo": "iOfficeAI/OfficeCLI",
+      "items": 12,
+      "reused": false
+    },
+    {
+      "repo": "nanocoai/nanoclaw",
+      "items": 63,
+      "reused": false
     },
     {
       "repo": "OthmanAdi/planning-with-files",
@@ -649,23 +644,38 @@
       "reused": false
     },
     {
-      "repo": "phuryn/pm-skills",
-      "items": 69,
-      "reused": false
+      "repo": "Donchitos/Claude-Code-Game-Studios",
+      "items": 74,
+      "reused": true
     },
     {
       "repo": "JimLiu/baoyu-skills",
       "items": 22,
-      "reused": false
+      "reused": true
     },
     {
-      "repo": "Donchitos/Claude-Code-Game-Studios",
-      "items": 74,
-      "reused": false
+      "repo": "op7418/guizang-ppt-skill",
+      "items": 1,
+      "reused": true
+    },
+    {
+      "repo": "phuryn/pm-skills",
+      "items": 69,
+      "reused": true
     },
     {
       "repo": "titanwings/distilly",
       "items": 1,
+      "reused": true
+    },
+    {
+      "repo": "pascalorg/editor",
+      "items": 5,
+      "reused": false
+    },
+    {
+      "repo": "KKKKhazix/khazix-skills",
+      "items": 6,
       "reused": false
     },
     {
@@ -674,18 +684,13 @@
       "reused": false
     },
     {
-      "repo": "pascalorg/editor",
-      "items": 5,
-      "reused": false
-    },
-    {
       "repo": "teng-lin/notebooklm-py",
       "items": 1,
       "reused": false
     },
     {
-      "repo": "KKKKhazix/khazix-skills",
-      "items": 6,
+      "repo": "wanshuiyin/Auto-claude-code-research-in-sleep",
+      "items": 189,
       "reused": false
     },
     {
@@ -695,7 +700,52 @@
     },
     {
       "repo": "composio-community/awesome-codex-skills",
-      "items": 879,
+      "items": 844,
+      "reused": true
+    },
+    {
+      "repo": "earthtojake/text-to-cad",
+      "items": 14,
+      "reused": false
+    },
+    {
+      "repo": "kangarooking/cangjie-skill",
+      "items": 36,
+      "reused": false
+    },
+    {
+      "repo": "yusufkaraaslan/Skill_Seekers",
+      "items": 2,
+      "reused": false
+    },
+    {
+      "repo": "nidhinjs/prompt-master",
+      "items": 1,
+      "reused": false
+    },
+    {
+      "repo": "NevaMind-AI/memU",
+      "items": 1,
+      "reused": false
+    },
+    {
+      "repo": "wonderwhy-er/DesktopCommanderMCP",
+      "items": 18,
+      "reused": false
+    },
+    {
+      "repo": "AgriciDaniel/claude-ads",
+      "items": 34,
+      "reused": false
+    },
+    {
+      "repo": "Vincentwei1021/video-shotcraft",
+      "items": 1,
+      "reused": false
+    },
+    {
+      "repo": "nexu-io/html-anything",
+      "items": 81,
       "reused": false
     },
     {
@@ -704,8 +754,8 @@
       "reused": true
     },
     {
-      "repo": "gemini-cli-extensions/security",
-      "items": 4,
+      "repo": "gemini-cli-extensions/code-review",
+      "items": 2,
       "reused": true
     },
     {
@@ -714,57 +764,57 @@
       "reused": true
     },
     {
-      "repo": "gemini-cli-extensions/bigquery-data-analytics",
-      "items": 2,
-      "reused": false
-    },
-    {
-      "repo": "gemini-cli-extensions/code-review",
-      "items": 2,
+      "repo": "gemini-cli-extensions/security",
+      "items": 4,
       "reused": true
     },
     {
       "repo": "gemini-cli-extensions/alloydb",
       "items": 1,
-      "reused": false
+      "reused": true
     },
     {
       "repo": "gemini-cli-extensions/cloud-sql-postgresql",
       "items": 1,
+      "reused": true
+    },
+    {
+      "repo": "gemini-cli-extensions/bigquery-data-analytics",
+      "items": 2,
       "reused": false
     },
     {
       "repo": "gemini-cli-extensions/cloud-sql-mysql",
       "items": 1,
-      "reused": false
-    },
-    {
-      "repo": "gemini-cli-extensions/knowledge-catalog",
-      "items": 1,
-      "reused": false
+      "reused": true
     },
     {
       "repo": "gemini-cli-extensions/cloud-sql-sqlserver",
       "items": 1,
-      "reused": false
+      "reused": true
     },
     {
       "repo": "gemini-cli-extensions/firestore-native",
       "items": 1,
-      "reused": false
+      "reused": true
     },
     {
       "repo": "gemini-cli-extensions/looker",
       "items": 1,
-      "reused": false
+      "reused": true
+    },
+    {
+      "repo": "gemini-cli-extensions/knowledge-catalog",
+      "items": 1,
+      "reused": true
     },
     {
       "repo": "gemini-cli-extensions/spanner",
       "items": 1,
-      "reused": false
+      "reused": true
     },
     {
-      "repo": "gemini-cli-extensions/postgres",
+      "repo": "gemini-cli-extensions/mcp-toolbox",
       "items": 1,
       "reused": true
     },
@@ -774,19 +824,19 @@
       "reused": true
     },
     {
+      "repo": "gemini-cli-extensions/postgres",
+      "items": 1,
+      "reused": true
+    },
+    {
       "repo": "gemini-cli-extensions/sql-server",
       "items": 1,
       "reused": true
     },
     {
-      "repo": "gemini-cli-extensions/cloud-sql-postgresql-observability",
+      "repo": "gemini-cli-extensions/alloydb-observability",
       "items": 1,
       "reused": true
-    },
-    {
-      "repo": "gemini-cli-extensions/mcp-toolbox",
-      "items": 1,
-      "reused": false
     },
     {
       "repo": "gemini-cli-extensions/cloud-sql-mysql-observability",
@@ -794,7 +844,7 @@
       "reused": true
     },
     {
-      "repo": "gemini-cli-extensions/alloydb-observability",
+      "repo": "gemini-cli-extensions/cloud-sql-postgresql-observability",
       "items": 1,
       "reused": true
     },
@@ -824,9 +874,9 @@
       "reused": true
     },
     {
-      "repo": "gemini-cli-extensions/firebase",
-      "items": 0,
-      "reused": false
+      "repo": "gemini-cli-extensions/jules",
+      "items": 1,
+      "reused": true
     },
     {
       "repo": "gemini-cli-extensions/genkit",
@@ -834,17 +884,12 @@
       "reused": true
     },
     {
-      "repo": "gemini-cli-extensions/jules",
-      "items": 1,
-      "reused": true
+      "repo": "gemini-cli-extensions/firebase",
+      "items": 0,
+      "reused": false
     },
     {
       "repo": "gemini-cli-extensions/datacommons",
-      "items": 1,
-      "reused": true
-    },
-    {
-      "repo": "gemini-cli-extensions/looker-conversational-analytics",
       "items": 1,
       "reused": true
     },
@@ -859,8 +904,8 @@
       "reused": false
     },
     {
-      "repo": "gemini-cli-extensions/conductor",
-      "items": 6,
+      "repo": "gemini-cli-extensions/looker-conversational-analytics",
+      "items": 1,
       "reused": true
     },
     {
@@ -869,14 +914,19 @@
       "reused": true
     },
     {
-      "repo": "gemini-cli-extensions/oracledb",
+      "repo": "gemini-cli-extensions/ralph",
       "items": 1,
       "reused": false
     },
     {
-      "repo": "gemini-cli-extensions/ralph",
+      "repo": "gemini-cli-extensions/oracledb",
       "items": 1,
-      "reused": false
+      "reused": true
+    },
+    {
+      "repo": "gemini-cli-extensions/conductor",
+      "items": 6,
+      "reused": true
     },
     {
       "repo": "gemini-cli-extensions/developer-knowledge",

@@ -22,6 +22,10 @@ Reads TradingView's macOS desktop app for market data via Chrome DevTools Protoc
 
 No API key, no token. The adapter attaches to the user's already-logged-in TradingView desktop app over CDP. Just have `TradingView.app` installed and logged in.
 
+## How it works
+
+Data commands harvest session cookies via CDP `Storage.getCookies`, then fire HTTP requests from Node directly. Page-context fetch is blocked by browser CORS preflight even from TradingView's own pages — the desktop app uses Electron's main process (Node network stack) to bypass this, and the adapter replicates that path. No Browser Bridge extension or `apps.yaml` registration is required.
+
 ## Triggers
 
 - "options chain for X", "what's the IV on Y", "show me SNDK puts"
