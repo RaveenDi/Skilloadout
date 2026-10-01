@@ -2,7 +2,7 @@
 
 - **Item:** Resume Modern (`resume-modern`)
 - **Original source:** https://github.com/nexu-io/open-design/tree/main/plugins/_official/examples/resume-modern
-- **Repository:** https://github.com/nexu-io/open-design @ `64710082d02c`
+- **Repository:** https://github.com/nexu-io/open-design @ `53231d40b778`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

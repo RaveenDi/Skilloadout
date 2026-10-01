@@ -2,7 +2,7 @@
 
 - **Item:** Extension To Functions Codebase (`extension-to-functions-codebase`)
 - **Original source:** https://github.com/firebase/agent-skills/tree/main/skills/extension-to-functions-codebase
-- **Repository:** https://github.com/firebase/agent-skills @ `cad501960f60`
+- **Repository:** https://github.com/firebase/agent-skills @ `daaf0e1577b2`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

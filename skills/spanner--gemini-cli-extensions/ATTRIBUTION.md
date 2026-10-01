@@ -2,7 +2,7 @@
 
 - **Item:** Spanner (`spanner`)
 - **Original source:** https://github.com/gemini-cli-extensions/spanner/tree/main
-- **Repository:** https://github.com/gemini-cli-extensions/spanner @ `b2e4f26f985e`
+- **Repository:** https://github.com/gemini-cli-extensions/spanner @ `d4db42a27080`
 - **License:** Apache-2.0 (resolved via skill)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

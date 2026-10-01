@@ -2,7 +2,7 @@
 
 - **Item:** Eas Workflows (`eas-workflows`)
 - **Original source:** https://github.com/expo/skills/tree/main/plugins/expo/skills/eas-workflows
-- **Repository:** https://github.com/expo/skills @ `efa52f0a9d21`
+- **Repository:** https://github.com/expo/skills @ `c0dadf355d4c`
 - **License:** MIT (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

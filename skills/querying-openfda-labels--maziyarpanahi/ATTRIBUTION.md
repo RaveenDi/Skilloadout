@@ -2,7 +2,7 @@
 
 - **Item:** Querying Openfda Labels (`querying-openfda-labels`)
 - **Original source:** https://github.com/maziyarpanahi/openmed/tree/master/skills/querying-openfda-labels
-- **Repository:** https://github.com/maziyarpanahi/openmed @ `5132cb955324`
+- **Repository:** https://github.com/maziyarpanahi/openmed @ `a88fe2feb699`
 - **License:** Apache-2.0 (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

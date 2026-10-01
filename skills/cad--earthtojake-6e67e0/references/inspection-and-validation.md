@@ -38,8 +38,8 @@ for face in housing.entities("face"):
 ```
 
 `read_step` keeps its existing name. `read_scene` replaces the old
-`load_step_scene` helper. Both record their document as a build input inside a
-model. Paths expand `~` and resolve relative to the working directory.
+`load_step_scene` helper. Inside a model, the document either reads is a build
+input, as every file a build reads is. Paths expand `~` and resolve relative to the working directory.
 
 - `scene.roots` and `occurrence.children` are tuples. `scene.leaves()` yields
   geometry occurrences, including repeated copies. A leaf can hold multiple
@@ -190,8 +190,10 @@ path or motion checks need an explicit sampling or swept-volume strategy.
 ## Geometry diagnostics
 
 ```python
-from cadgen.geometry import topology_errors, boundary_edges, self_intersections
+from cadgen.geometry import is_sound, topology_errors, boundary_edges, self_intersections
 
+ok = shape.is_valid                       # bool: BRepCheck passes (build123d)
+clean = is_sound(shape)                   # bool: the boolean kernel's argument check passes, expensive
 issues = topology_errors(shape)            # tuple[GeometryIssue, ...]
 free = boundary_edges(shell)              # tuple[Edge, ...]
 crossings = self_intersections(shape)     # tuple[GeometryIssue, ...], expensive
@@ -201,6 +203,14 @@ crossings = self_intersections(shape)     # tuple[GeometryIssue, ...], expensive
 Topology codes are OCCT `BRepCheck_*` statuses; self-intersection codes are
 `BOPAlgo_SelfIntersect`. Failed/inconclusive checks raise `GeometryError`,
 never an empty success result. None of these functions repairs geometry.
+
+`is_sound` is `BRepAlgoAPI_Check`'s verdict: BRepCheck-valid, no
+self-intersections, no too-small edges, an argument type a boolean accepts.
+It is the gate a fuse or cut demands of an operand. Closure, solid count and
+signed volume stay the script's own checks. `is_sound` is `False` for a null
+or empty shape, which the boolean kernel rejects as an argument. A check costs
+kernel time, so gate where a failure is plausible rather than after every
+operation.
 
 Choose checks appropriate to the artifact. For an intended closed solid,
 check topology, free shell edges and each solid's signed volume. A reversed

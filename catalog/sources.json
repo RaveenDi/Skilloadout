@@ -878,6 +878,86 @@
       "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
       "reviewer": "heuristic",
       "status": "active"
+    },
+    {
+      "repo": "ahmedkhaleel2004/gitdiagram",
+      "tier": 2,
+      "addedAt": "2026-10-01T11:43:53.098Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "google-labs-code/stitch-skills",
+      "tier": 2,
+      "addedAt": "2026-10-01T11:43:53.098Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "firecrawl/firecrawl-mcp-server",
+      "tier": 2,
+      "addedAt": "2026-10-01T11:43:53.098Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "anbeime/skill",
+      "tier": 2,
+      "addedAt": "2026-10-01T11:43:53.099Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "Gentleman-Programming/gentle-ai",
+      "tier": 2,
+      "addedAt": "2026-10-01T11:43:53.099Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "WenyuChiou/awesome-agentic-ai-zh",
+      "tier": 2,
+      "addedAt": "2026-10-01T11:43:53.099Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "zenstory-ai/oh-story-claudecode",
+      "tier": 2,
+      "addedAt": "2026-10-01T11:43:53.099Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "SnailSploit/Claude-Red",
+      "tier": 2,
+      "addedAt": "2026-10-01T11:43:53.099Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "deanpeters/Product-Manager-Skills",
+      "tier": 2,
+      "addedAt": "2026-10-01T11:43:53.099Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "ParthJadhav/app-store-screenshots",
+      "tier": 2,
+      "addedAt": "2026-10-01T11:43:53.099Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
     }
   ]
 }

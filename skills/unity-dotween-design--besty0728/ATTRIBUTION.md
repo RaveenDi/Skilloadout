@@ -2,7 +2,7 @@
 
 - **Item:** Unity Dotween Design (`unity-dotween-design`)
 - **Original source:** https://github.com/Besty0728/Unity-Skills/tree/main/SkillsForUnity/unity-skills~/skills/dotween-design
-- **Repository:** https://github.com/Besty0728/Unity-Skills @ `86eaf83db18c`
+- **Repository:** https://github.com/Besty0728/Unity-Skills @ `73fae56c0de8`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

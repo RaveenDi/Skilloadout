@@ -1,201 +1,201 @@
 {
   "repos": {
     "anthropics/skills": {
-      "sha": "33375500bcea98d610eb30ce10ac4e59b89c390d",
-      "stars": 178738,
-      "syncedAt": "2026-09-28T11:50:46.069Z",
+      "sha": "8a1541c4a3ffa5a20a5a91de0dcf3f0bab1d1ef4",
+      "stars": 179237,
+      "syncedAt": "2026-10-01T11:43:56.427Z",
       "items": 19
     },
     "greensock/gsap-skills": {
       "sha": "aed9cfd3277740755f6bfc1155c7aa645403b760",
-      "stars": 15748,
-      "syncedAt": "2026-09-28T11:51:01.002Z",
+      "stars": 15844,
+      "syncedAt": "2026-10-01T11:44:23.744Z",
       "items": 8
     },
     "oso95/scroll-world": {
       "sha": "71cc36d3bb150248ae36a2c552f9cbf88802a79c",
-      "stars": 9556,
-      "syncedAt": "2026-09-28T11:51:46.013Z",
+      "stars": 9622,
+      "syncedAt": "2026-10-01T11:45:01.972Z",
       "items": 1
     },
     "zyliu0/3d-frontend": {
       "sha": "5e79671fba32bb85c7c12b8e6387e3e4bf9033f7",
       "stars": 17,
-      "syncedAt": "2026-09-28T11:51:48.324Z",
+      "syncedAt": "2026-10-01T11:45:05.115Z",
       "items": 1
     },
     "patrickjs/awesome-cursorrules": {
       "sha": "b044f956f021b6e8877f16781bcfc466a6a120e9",
-      "stars": 40848,
-      "syncedAt": "2026-09-28T11:51:50.433Z",
+      "stars": 40868,
+      "syncedAt": "2026-10-01T11:45:05.375Z",
       "items": 248
     },
     "gemini-cli-extensions/looker": {
       "sha": "13ed738a97a13efae7a408439dea3d43cff6f224",
-      "stars": 54,
-      "syncedAt": "2026-09-28T11:54:21.703Z",
+      "stars": 56,
+      "syncedAt": "2026-10-01T11:47:06.255Z",
       "items": 1
     },
     "anthropics/knowledge-work-plugins": {
       "sha": "da38ec1ee89d41e5380e652a97382695003396e7",
-      "stars": 25795,
-      "syncedAt": "2026-09-28T11:50:50.039Z",
+      "stars": 25953,
+      "syncedAt": "2026-10-01T11:43:56.872Z",
       "items": 245
     },
     "openai/skills": {
       "sha": "49f948faa9258a0c61caceaf225e179651397431",
-      "stars": 27757,
-      "syncedAt": "2026-09-28T11:50:46.512Z",
+      "stars": 27834,
+      "syncedAt": "2026-10-01T11:43:57.155Z",
       "items": 42
     },
     "anthropics/claude-plugins-official": {
-      "sha": "fa59bc9037741ecfa131aa27938272605710d7b2",
-      "stars": 37121,
-      "syncedAt": "2026-09-28T11:50:49.363Z",
-      "items": 30
+      "sha": "ab024cdcfa7ca80be204acd4907656ba5a968589",
+      "stars": 37268,
+      "syncedAt": "2026-10-01T11:43:59.580Z",
+      "items": 32
     },
     "openai/plugins": {
-      "sha": "1dc195897af4161d039b80d8471ec0a10c9bbc89",
-      "stars": 7211,
-      "syncedAt": "2026-09-28T11:50:50.476Z",
-      "items": 442
+      "sha": "5fd93af4cd0c623e020d0cc7e9ce178b4ac1f70f",
+      "stars": 7249,
+      "syncedAt": "2026-10-01T11:44:08.828Z",
+      "items": 532
     },
     "google-gemini/gemini-cli": {
-      "sha": "2fe7c2d3f065dc40ad573d50b2091116f8a4aa18",
-      "stars": 107169,
-      "syncedAt": "2026-09-28T11:50:52.826Z",
+      "sha": "c6bccb7ecbf6d8368d995455dd725ed34466faad",
+      "stars": 107217,
+      "syncedAt": "2026-10-01T11:44:10.504Z",
       "items": 15
     },
     "google/skills": {
-      "sha": "f566651a2f60aecbc4654f8868fb239f85a783f6",
-      "stars": 20445,
-      "syncedAt": "2026-09-28T11:50:57.171Z",
-      "items": 153
+      "sha": "d5d905232ec501743831cc68e6763af90da3cd69",
+      "stars": 20552,
+      "syncedAt": "2026-10-01T11:44:12.749Z",
+      "items": 155
     },
     "vercel-labs/agent-skills": {
       "sha": "063bee94c3f4df8453406c830b0a7df0f2860278",
-      "stars": 31654,
-      "syncedAt": "2026-09-28T11:50:58.385Z",
+      "stars": 31787,
+      "syncedAt": "2026-10-01T11:44:14.260Z",
       "items": 8
     },
     "cloudflare/skills": {
-      "sha": "626547c06881a20b3322bdc2ed6e6451b33a4fb6",
-      "stars": 2923,
-      "syncedAt": "2026-09-28T11:51:04.036Z",
-      "items": 14
+      "sha": "d8c1937dcd7a11d447965a87330c3a0fbf70ae22",
+      "stars": 2958,
+      "syncedAt": "2026-10-01T11:44:25.094Z",
+      "items": 16
     },
     "googleapis/genai-toolbox": {
-      "sha": "e7e102537915b7fcc0b5f9aec5ca108754b2019f",
-      "stars": 16498,
-      "syncedAt": "2026-09-28T11:51:00.461Z",
-      "items": 5
+      "sha": "912189f6c842fdf8fc6ceb7d7a556cf9fa05286b",
+      "stars": 16544,
+      "syncedAt": "2026-10-01T11:44:23.466Z",
+      "items": 6
     },
     "hashicorp/agent-skills": {
-      "sha": "516354c484b43fa5469567485113dd0c769c3d24",
-      "stars": 877,
-      "syncedAt": "2026-09-28T11:51:04.434Z",
+      "sha": "f706481af9b8fedb66de909f6243ad29601afa0c",
+      "stars": 880,
+      "syncedAt": "2026-10-01T11:44:27.461Z",
       "items": 20
     },
     "getsentry/skills": {
-      "sha": "c2f99a5b04b4cd992ec3022d7c2c3e23e938d241",
-      "stars": 1022,
-      "syncedAt": "2026-09-28T11:51:04.866Z",
-      "items": 26
+      "sha": "d18b7aa8ba878354e5c348310230e652f7690f9c",
+      "stars": 1030,
+      "syncedAt": "2026-10-01T11:44:26.491Z",
+      "items": 28
     },
     "stripe/agent-toolkit": {
-      "sha": "f23b5bad7a5b20d403bb11cf425044b85ee7c716",
-      "stars": 1842,
-      "syncedAt": "2026-09-28T11:51:08.928Z",
+      "sha": "85d998e928da17ee263312a77d02a4f15acc8121",
+      "stars": 1851,
+      "syncedAt": "2026-10-01T11:44:34.201Z",
       "items": 60
     },
     "callstackincubator/agent-skills": {
       "sha": "61e6e7dfdf3a8ee862254c200d751fcb1fb863dc",
-      "stars": 1658,
-      "syncedAt": "2026-09-28T11:51:05.706Z",
+      "stars": 1659,
+      "syncedAt": "2026-10-01T11:44:29.886Z",
       "items": 13
     },
     "remotion-dev/skills": {
-      "sha": "cf49eff5d4463b33966b6618c83f7295797dd028",
-      "stars": 4752,
-      "syncedAt": "2026-09-28T11:51:06.132Z",
+      "sha": "0b5db9daae40f42c73544d1cc0a8c733bd530eaa",
+      "stars": 4793,
+      "syncedAt": "2026-10-01T11:44:29.633Z",
       "items": 12
     },
     "phaserjs/phaser": {
       "sha": "02d8931b626d9764c133cbb3fbf99966c03c757c",
-      "stars": 40380,
-      "syncedAt": "2026-09-28T11:51:06.718Z",
+      "stars": 40398,
+      "syncedAt": "2026-10-01T11:44:30.260Z",
       "items": 28
     },
     "prisma/skills": {
-      "sha": "1123817e60d15ca0f3af91878923241dee7e3b09",
-      "stars": 65,
-      "syncedAt": "2026-09-28T11:51:10.567Z",
-      "items": 9
+      "sha": "be16a8740d01363d13552b317042431ee8dfc581",
+      "stars": 68,
+      "syncedAt": "2026-10-01T11:44:35.148Z",
+      "items": 10
     },
     "posthog/skills": {
-      "sha": "2510ec1b8684429947f91683b8a536461e4ce06a",
-      "stars": 71,
-      "syncedAt": "2026-09-28T11:51:20.166Z",
+      "sha": "daced02eb01d63c4c392a81666ec8c8d26886b59",
+      "stars": 72,
+      "syncedAt": "2026-10-01T11:44:39.824Z",
       "items": 331
     },
     "figma/mcp-server-guide": {
-      "sha": "38308b7bbc676a9e9d57795ad4793fa9682d1644",
-      "stars": 2027,
-      "syncedAt": "2026-09-28T11:51:14.968Z",
+      "sha": "18041328491dc104d613fe7bf8ba2838e237dfd2",
+      "stars": 2039,
+      "syncedAt": "2026-10-01T11:44:47.150Z",
       "items": 30
     },
     "trailofbits/skills": {
-      "sha": "0cc1c73a5e96749ab32d7ea5e14892fafa6972ae",
-      "stars": 7276,
-      "syncedAt": "2026-09-28T11:51:20.622Z",
+      "sha": "82fe8226252622fa807643bdca1710901198553a",
+      "stars": 7319,
+      "syncedAt": "2026-10-01T11:44:44.004Z",
       "items": 83
     },
     "better-auth/skills": {
       "sha": "20c9e88a5c007461a703f1c213572b073196113e",
-      "stars": 221,
-      "syncedAt": "2026-09-28T11:51:28.048Z",
+      "stars": 222,
+      "syncedAt": "2026-10-01T11:44:45.803Z",
       "items": 6
     },
     "obra/superpowers": {
       "sha": "8ca22dba9a94f28898bbce59f2537ff4d87c747d",
-      "stars": 292348,
-      "syncedAt": "2026-09-28T11:51:27.549Z",
+      "stars": 293656,
+      "syncedAt": "2026-10-01T11:44:47.464Z",
       "items": 15
     },
     "wshobson/agents": {
-      "sha": "9b15b34b0bfc13a815cbfc2366e14ea549e09422",
-      "stars": 40051,
-      "syncedAt": "2026-09-28T11:51:31.808Z",
-      "items": 183
+      "sha": "156b7a5e7a8b93642628a339ee4039c925b34c7f",
+      "stars": 40125,
+      "syncedAt": "2026-10-01T11:44:50.333Z",
+      "items": 184
     },
     "k-dense-ai/claude-scientific-skills": {
-      "sha": "065b734670d7d990627dbc06a05b5a99be33f1f1",
-      "stars": 46937,
-      "syncedAt": "2026-09-28T11:51:41.865Z",
-      "items": 166
+      "sha": "91497e335489dcb544ec8ddc8f6b7ce5fd6d1121",
+      "stars": 47258,
+      "syncedAt": "2026-10-01T11:44:59.687Z",
+      "items": 181
     },
     "orchestra-research/ai-research-skills": {
       "sha": "773a52944ba4747a18bd4ae9ade53fff041adcbc",
-      "stars": 13102,
-      "syncedAt": "2026-09-28T11:51:29.157Z",
+      "stars": 13167,
+      "syncedAt": "2026-10-01T11:44:50.898Z",
       "items": 98
     },
     "alirezarezvani/claude-skills": {
       "sha": "19392f7a08264ed00486a251f5b2098321771f94",
-      "stars": 26709,
-      "syncedAt": "2026-09-28T11:51:32.283Z",
+      "stars": 27100,
+      "syncedAt": "2026-10-01T11:44:50.658Z",
       "items": 464
     },
     "jeffallan/claude-skills": {
       "sha": "882ef55e377dbf9a4dbe496bb41ac6ccd0e555cf",
-      "stars": 11657,
-      "syncedAt": "2026-09-28T11:51:33.076Z",
+      "stars": 11694,
+      "syncedAt": "2026-10-01T11:44:52.578Z",
       "items": 67
     },
     "dimillian/skills": {
       "sha": "05ba982bfeb0d77d3c97d4542b0ee15034d05f84",
-      "stars": 3983,
-      "syncedAt": "2026-09-28T11:51:33.514Z",
+      "stars": 3989,
+      "syncedAt": "2026-10-01T11:44:52.829Z",
       "items": 16
     },
     "davila7/claude-code-templates": {
@@ -206,26 +206,26 @@
     },
     "freshtechbro/claudedesignskills": {
       "sha": "1da73febff0c3e1dfefc07f8a5ef8f7d1dfdb6cd",
-      "stars": 944,
-      "syncedAt": "2026-09-28T11:51:44.798Z",
+      "stars": 957,
+      "syncedAt": "2026-10-01T11:45:01.673Z",
       "items": 22
     },
     "sawyerhood/dev-browser": {
       "sha": "a25e7672e199153b2f5b52a841a62436a28d925f",
-      "stars": 6637,
-      "syncedAt": "2026-09-28T11:51:45.169Z",
+      "stars": 6642,
+      "syncedAt": "2026-10-01T11:45:03.062Z",
       "items": 1
     },
     "iart-ai/webgl-animation-skills": {
       "sha": "50697d659fbf70152f48f9f8aadf1efe78bbdde1",
-      "stars": 14,
-      "syncedAt": "2026-09-28T11:51:44.409Z",
+      "stars": 15,
+      "syncedAt": "2026-10-01T11:45:02.479Z",
       "items": 3
     },
     "12-studio/tackl": {
       "sha": "2cbae0924f5561392fd8ee15e8c7e1e97ad689b3",
       "stars": 10,
-      "syncedAt": "2026-09-28T11:51:46.429Z",
+      "syncedAt": "2026-10-01T11:45:03.562Z",
       "items": 13
     },
     "mindrally/skills": {
@@ -237,169 +237,169 @@
     "woliveiras/web-graphics-skills": {
       "sha": "21430cd8bd18514ed06f1449d0673f0541239f46",
       "stars": 3,
-      "syncedAt": "2026-09-28T11:51:45.615Z",
+      "syncedAt": "2026-10-01T11:45:02.805Z",
       "items": 2
     },
     "impertio-studio/cesiumjs-claude-skill-package": {
       "sha": "381b640812ab4654c3147d97ad70c05841b872c6",
       "stars": 2,
-      "syncedAt": "2026-09-28T11:51:46.845Z",
+      "syncedAt": "2026-10-01T11:45:03.877Z",
       "items": 30
     },
     "zubair-trabzada/scroll-cinematic-claude": {
       "sha": "5f3cc0e65e474dab1d80ee3fda1e847f3552f708",
-      "stars": 64,
-      "syncedAt": "2026-09-28T11:51:47.923Z",
+      "stars": 65,
+      "syncedAt": "2026-10-01T11:45:04.162Z",
       "items": 1
     },
     "oimiragieo/omega-cinematic-3d-website": {
       "sha": "3458cbb910fe5e696d73fac2d271fe59785571d9",
       "stars": 0,
-      "syncedAt": "2026-09-28T11:51:47.524Z",
+      "syncedAt": "2026-10-01T11:45:04.822Z",
       "items": 1
     },
     "ilm-alan/frontend-design": {
       "sha": "f8966e6cc9b90247aa102d71f7e675ec3462b419",
-      "stars": 127,
-      "syncedAt": "2026-09-28T11:51:49.603Z",
+      "stars": 129,
+      "syncedAt": "2026-10-01T11:45:04.438Z",
       "items": 1
     },
     "gemini-cli-extensions/workspace": {
       "sha": "089927ead01433f38c65c12cdcd2ed9a18165277",
-      "stars": 642,
-      "syncedAt": "2026-09-28T11:54:16.410Z",
+      "stars": 643,
+      "syncedAt": "2026-10-01T11:47:02.877Z",
       "items": 7
     },
     "gemini-cli-extensions/security": {
       "sha": "2227f3cf7150972baac695b8233abc2186408538",
       "stars": 794,
-      "syncedAt": "2026-09-28T11:54:17.789Z",
+      "syncedAt": "2026-10-01T11:47:03.189Z",
       "items": 4
     },
     "gemini-cli-extensions/alloydb": {
       "sha": "2954566c7f791d0cef47cabeae76f7a75dd42f2b",
-      "stars": 23,
-      "syncedAt": "2026-09-28T11:54:18.228Z",
+      "stars": 24,
+      "syncedAt": "2026-10-01T11:47:03.812Z",
       "items": 1
     },
     "gemini-cli-extensions/bigquery-data-analytics": {
       "sha": "6f9b35627d208b03e840271f6522a28f76e7f8df",
-      "stars": 49,
-      "syncedAt": "2026-09-28T11:54:19.876Z",
+      "stars": 50,
+      "syncedAt": "2026-10-01T11:47:04.352Z",
       "items": 2
     },
     "gemini-cli-extensions/cloud-sql-sqlserver": {
       "sha": "7efeaaf026b3ad8cabb973eded693428dae81179",
       "stars": 9,
-      "syncedAt": "2026-09-28T11:54:20.811Z",
+      "syncedAt": "2026-10-01T11:47:05.001Z",
       "items": 1
     },
     "gemini-cli-extensions/knowledge-catalog": {
       "sha": "630397520359ca4594d9133c147c6e25f8b52125",
-      "stars": 33,
-      "syncedAt": "2026-09-28T11:54:22.082Z",
+      "stars": 34,
+      "syncedAt": "2026-10-01T11:47:05.576Z",
       "items": 1
     },
     "gemini-cli-extensions/firestore-native": {
       "sha": "6e6a841c2173b1fa1f95a9743f589bdbaa275caf",
       "stars": 30,
-      "syncedAt": "2026-09-28T11:54:21.256Z",
+      "syncedAt": "2026-10-01T11:47:05.976Z",
       "items": 1
     },
     "gemini-cli-extensions/spanner": {
-      "sha": "b2e4f26f985eed7334038634a9a09cd799b01bab",
+      "sha": "d4db42a2708045d66e70f52610a6d27889e457bc",
       "stars": 19,
-      "syncedAt": "2026-09-28T11:54:22.459Z",
+      "syncedAt": "2026-10-01T11:47:07.082Z",
       "items": 1
     },
     "gemini-cli-extensions/mcp-toolbox": {
       "sha": "4fdd1d21b702ba16459b64b3f8e3baa1746aefb9",
       "stars": 108,
-      "syncedAt": "2026-09-28T11:54:22.847Z",
+      "syncedAt": "2026-10-01T11:47:07.340Z",
       "items": 1
     },
     "gemini-cli-extensions/mysql": {
       "sha": "d072c373ac04620703e9de51feff21a37aeb2acf",
-      "stars": 43,
-      "syncedAt": "2026-09-28T11:54:23.263Z",
+      "stars": 42,
+      "syncedAt": "2026-10-01T11:47:08.062Z",
       "items": 1
     },
     "gemini-cli-extensions/sql-server": {
       "sha": "c3e0b788d38afb4ce738ef33d2d982710dbb55bc",
       "stars": 24,
-      "syncedAt": "2026-09-28T11:54:24.179Z",
+      "syncedAt": "2026-10-01T11:47:08.342Z",
       "items": 1
     },
     "gemini-cli-extensions/cloud-sql-mysql-observability": {
       "sha": "bc38e0a5337e044839c6e1be8a0000bdbffaf004",
       "stars": 5,
-      "syncedAt": "2026-09-28T11:54:24.998Z",
+      "syncedAt": "2026-10-01T11:47:08.692Z",
       "items": 1
     },
     "gemini-cli-extensions/alloydb-observability": {
       "sha": "6ee0cf72a4fdce360f9ace23ebf7395d05b70c45",
       "stars": 7,
-      "syncedAt": "2026-09-28T11:54:24.580Z",
+      "syncedAt": "2026-10-01T11:47:09.271Z",
       "items": 1
     },
     "gemini-cli-extensions/gcloud": {
       "sha": "ec545cd8252d33c83f02b97939690b8ae16888ef",
       "stars": 64,
-      "syncedAt": "2026-09-28T11:54:26.204Z",
+      "syncedAt": "2026-10-01T11:47:10.152Z",
       "items": 1
     },
     "gemini-cli-extensions/bigquery-conversational-analytics": {
       "sha": "d30b7251513d582bdfb1751a656bb6024ba54bff",
       "stars": 28,
-      "syncedAt": "2026-09-28T11:54:27.443Z",
+      "syncedAt": "2026-10-01T11:47:09.766Z",
       "items": 1
     },
     "gemini-cli-extensions/nanobanana": {
       "sha": "5badc5aafea8751fe059a054b629cf2d989bceb1",
       "stars": 1129,
-      "syncedAt": "2026-09-28T11:54:28.211Z",
+      "syncedAt": "2026-10-01T11:47:10.669Z",
       "items": 1
     },
     "gemini-cli-extensions/genkit": {
       "sha": "052c587c539dc81f71f9388d085988256344a800",
       "stars": 176,
-      "syncedAt": "2026-09-28T11:54:29.179Z",
+      "syncedAt": "2026-10-01T11:47:12.105Z",
       "items": 1
     },
     "gemini-cli-extensions/firebase": {
       "sha": "c9f5226e7af57cdfe32d7215351a9dbef6f517a4",
       "stars": 126,
-      "syncedAt": "2026-09-28T11:54:30.177Z",
+      "syncedAt": "2026-10-01T11:47:11.811Z",
       "items": 0
     },
     "gemini-cli-extensions/looker-conversational-analytics": {
       "sha": "10ce8b832c30f0bd3914e3dcf4d8db83aa6feb0e",
       "stars": 11,
-      "syncedAt": "2026-09-28T11:54:32.721Z",
+      "syncedAt": "2026-10-01T11:47:13.186Z",
       "items": 1
     },
     "gemini-cli-extensions/vertex": {
       "sha": "b2333fc8e2069ed40c4286c97cfe51ecd879137a",
       "stars": 22,
-      "syncedAt": "2026-09-28T11:54:31.084Z",
+      "syncedAt": "2026-10-01T11:47:13.440Z",
       "items": 1
     },
     "gemini-cli-extensions/stitch": {
       "sha": "e22b3aac9a43bce2d740c5172844e9a2eebba37f",
-      "stars": 472,
-      "syncedAt": "2026-09-28T11:54:32.310Z",
+      "stars": 473,
+      "syncedAt": "2026-10-01T11:47:14.453Z",
       "items": 1
     },
     "gemini-cli-extensions/oracledb": {
       "sha": "8d24bdc3185c1bc8e0d81bb9fb2618e6e124c060",
       "stars": 12,
-      "syncedAt": "2026-09-28T11:54:34.741Z",
+      "syncedAt": "2026-10-01T11:47:14.967Z",
       "items": 1
     },
     "gemini-cli-extensions/ralph": {
       "sha": "5d0247dc7809a053c5ef48d6caa114f6bdca6821",
       "stars": 332,
-      "syncedAt": "2026-09-28T11:54:34.372Z",
+      "syncedAt": "2026-10-01T11:47:16.083Z",
       "items": 1
     },
     "gemini-cli-extensions/data-agent-kit-starter-pack": {
@@ -409,105 +409,105 @@
       "items": 28
     },
     "gemini-cli-extensions/google-cloud-storage": {
-      "sha": "61a323865dfd8ebee2237f46175ea944b3a299ac",
+      "sha": "7dbed139cdebc44b35d8b61ed27fd40bda07f277",
       "stars": 30,
-      "syncedAt": "2026-09-28T11:54:37.378Z",
+      "syncedAt": "2026-10-01T11:47:17.111Z",
       "items": 6
     },
     "firebase/agent-skills": {
-      "sha": "cad501960f600a0f5ed9c5b80bdf349559d927b5",
-      "stars": 456,
-      "syncedAt": "2026-09-28T11:50:54.281Z",
+      "sha": "daaf0e1577b2d4ac23cfa9d31f421178ef229735",
+      "stars": 461,
+      "syncedAt": "2026-10-01T11:44:13.725Z",
       "items": 13
     },
     "supabase/agent-skills": {
       "sha": "544bfc56c89afe2b87b20017a59b2c6e9502a1fb",
-      "stars": 2658,
-      "syncedAt": "2026-09-28T11:51:02.322Z",
+      "stars": 2670,
+      "syncedAt": "2026-10-01T11:44:25.385Z",
       "items": 2
     },
     "microsoft/skills": {
-      "sha": "23d0dac5f83f268166a17f0bc7dc6c73dc348a33",
-      "stars": 3060,
-      "syncedAt": "2026-09-28T11:50:58.874Z",
-      "items": 202
+      "sha": "b4e3de36897b648a6c1a7362d0d01fcafd1a32e6",
+      "stars": 3068,
+      "syncedAt": "2026-10-01T11:44:22.387Z",
+      "items": 205
     },
     "github/awesome-copilot": {
-      "sha": "6c4d33b9cfca967a28bb2962ef4d55e4a384c88c",
-      "stars": 39470,
-      "syncedAt": "2026-09-28T11:50:57.936Z",
-      "items": 440
+      "sha": "d6131471b85fbb4799e64175ebc42c9309ecc28a",
+      "stars": 39584,
+      "syncedAt": "2026-10-01T11:44:18.885Z",
+      "items": 444
     },
     "neondatabase/agent-skills": {
-      "sha": "80164a28443aca7c82ac1a70aed836950d6c29ea",
-      "stars": 96,
-      "syncedAt": "2026-09-28T11:51:10.190Z",
-      "items": 9
+      "sha": "b8250e6f902076c52645c4cd6f88a9e57f28854e",
+      "stars": 97,
+      "syncedAt": "2026-10-01T11:44:32.651Z",
+      "items": 17
     },
     "expo/skills": {
-      "sha": "efa52f0a9d2176db75992736281c77da1b714fa3",
-      "stars": 2621,
-      "syncedAt": "2026-09-28T11:51:05.300Z",
+      "sha": "c0dadf355d4caa4e1720de372f0f8766df1a8978",
+      "stars": 2645,
+      "syncedAt": "2026-10-01T11:44:28.624Z",
       "items": 26
     },
     "mongodb/agent-skills": {
       "sha": "d1d2d86754ff303ac441624b2ac8e0380465aa9b",
-      "stars": 187,
-      "syncedAt": "2026-09-28T11:51:10.947Z",
+      "stars": 188,
+      "syncedAt": "2026-10-01T11:44:35.401Z",
       "items": 8
     },
     "huggingface/skills": {
-      "sha": "80f9fa530e46f4ae642fcb9e1725bad0e1979395",
-      "stars": 11110,
-      "syncedAt": "2026-09-28T11:51:09.662Z",
+      "sha": "c22647596169860014c298dac9df9125700b97d5",
+      "stars": 11118,
+      "syncedAt": "2026-10-01T11:44:31.558Z",
       "items": 26
     },
     "shadcn-ui/ui": {
-      "sha": "984f4351cb3877fc60726ccec8c4d0bc1631bc0d",
-      "stars": 124751,
-      "syncedAt": "2026-09-28T11:51:12.845Z",
+      "sha": "d75a96ab781f3d659be1ad287347d5887ce9f2fc",
+      "stars": 124940,
+      "syncedAt": "2026-10-01T11:44:41.142Z",
       "items": 2
     },
     "nextlevelbuilder/ui-ux-pro-max-skill": {
       "sha": "09170eec67eefd46a7ae85de61b40c194020f997",
-      "stars": 131145,
-      "syncedAt": "2026-09-28T11:51:25.631Z",
-      "items": 13
+      "stars": 132183,
+      "syncedAt": "2026-10-01T11:44:48.014Z",
+      "items": 7
     },
     "mcp-use/mcp-use": {
-      "sha": "6efd1046651e8357c94b39559385d58d9a9fd17d",
-      "stars": 10684,
-      "syncedAt": "2026-09-28T11:51:22.500Z",
+      "sha": "bde34336cb6cff3e10fb9c4b1d67850be57e6ad6",
+      "stars": 10711,
+      "syncedAt": "2026-10-01T11:44:45.564Z",
       "items": 6
     },
     "jetbrains/skills": {
       "sha": "e0f258b5cfed145015cb3e48da9a97947f7c4ed7",
       "stars": 357,
-      "syncedAt": "2026-09-28T11:51:15.342Z",
+      "syncedAt": "2026-10-01T11:44:41.399Z",
       "items": 71
     },
     "coreyhaines31/marketingskills": {
       "sha": "5b2c0007766c6a1cf1d53fd8fc73e979e0821022",
-      "stars": 51764,
-      "syncedAt": "2026-09-28T11:51:28.488Z",
+      "stars": 52085,
+      "syncedAt": "2026-10-01T11:44:47.734Z",
       "items": 50
     },
     "pmndrs/koota": {
       "sha": "cb1d015e3bbd25c935d921323f25942f71cfebd6",
-      "stars": 744,
-      "syncedAt": "2026-09-28T11:51:23.181Z",
+      "stars": 746,
+      "syncedAt": "2026-10-01T11:44:44.286Z",
       "items": 1
     },
     "mengto/skills": {
-      "sha": "798db0a3ee4429ac8ed6bc5f4a59b6d45e7a914d",
-      "stars": 6316,
-      "syncedAt": "2026-09-28T11:51:36.188Z",
-      "items": 146
+      "sha": "d5bd3a7e9c9f4b00853e84fffa60bc38eee9e744",
+      "stars": 6536,
+      "syncedAt": "2026-10-01T11:44:55.771Z",
+      "items": 157
     },
     "cloudai-x/threejs-skills": {
       "sha": "b1c623076c661fc9b03dac19292e825a5d106823",
-      "stars": 3403,
-      "syncedAt": "2026-09-28T11:51:37.790Z",
+      "stars": 3437,
+      "syncedAt": "2026-10-01T11:45:00.595Z",
       "items": 10
     },
     "composiohq/awesome-claude-skills": {
@@ -518,20 +518,20 @@
     },
     "majidmanzarpour/threejs-game-skills": {
       "sha": "8286774b22a2566bf894dbc825825c16921866af",
-      "stars": 2153,
-      "syncedAt": "2026-09-28T11:51:43.744Z",
+      "stars": 2403,
+      "syncedAt": "2026-10-01T11:45:01.276Z",
       "items": 9
     },
     "muratcankoylan/agent-skills-for-context-engineering": {
-      "sha": "6dbe1a1d868eab51a3bc9011b0f55e2891513e40",
-      "stars": 18039,
-      "syncedAt": "2026-09-28T11:51:32.662Z",
-      "items": 23
+      "sha": "58b55a8921758d13453b440704fb1b5b208c0b0e",
+      "stars": 18053,
+      "syncedAt": "2026-10-01T11:44:52.298Z",
+      "items": 24
     },
     "wondelai/skills": {
       "sha": "c172996495bed0fcd26896a9416b2093fd7073f0",
-      "stars": 2274,
-      "syncedAt": "2026-09-28T11:51:42.283Z",
+      "stars": 2298,
+      "syncedAt": "2026-10-01T11:45:00.892Z",
       "items": 65
     },
     "terminalskills/skills": {
@@ -549,622 +549,682 @@
     "gemini-cli-extensions/code-review": {
       "sha": "dd1a10d2c9d07b2ebade866590fdfa59cd8f9d04",
       "stars": 531,
-      "syncedAt": "2026-09-28T11:54:16.820Z",
+      "syncedAt": "2026-10-01T11:47:04.075Z",
       "items": 2
     },
     "gemini-cli-extensions/cicd": {
       "sha": "85812c656ac5e04349e93958b2f2823e15c5adf5",
       "stars": 51,
-      "syncedAt": "2026-09-28T11:54:17.401Z",
+      "syncedAt": "2026-10-01T11:47:03.535Z",
       "items": 4
     },
     "gemini-cli-extensions/cloud-sql-postgresql": {
       "sha": "1d758bb34795a37a29f543e78910eb7414927ac8",
       "stars": 42,
-      "syncedAt": "2026-09-28T11:54:18.621Z",
+      "syncedAt": "2026-10-01T11:47:04.638Z",
       "items": 1
     },
     "gemini-cli-extensions/postgres": {
       "sha": "bd37e21789c18dc9d5a7b67e36f558f1a366cebb",
       "stars": 96,
-      "syncedAt": "2026-09-28T11:54:23.782Z",
+      "syncedAt": "2026-10-01T11:47:07.793Z",
       "items": 1
     },
     "gemini-cli-extensions/cloud-sql-mysql": {
       "sha": "51aa269094a89b5eca705792705a3b507486b2d7",
       "stars": 12,
-      "syncedAt": "2026-09-28T11:54:20.247Z",
+      "syncedAt": "2026-10-01T11:47:05.267Z",
       "items": 1
     },
     "gemini-cli-extensions/cloud-sql-postgresql-observability": {
       "sha": "bcccd18ea0fe88b30a8199d4d2af9698bb48f172",
       "stars": 6,
-      "syncedAt": "2026-09-28T11:54:25.397Z",
+      "syncedAt": "2026-10-01T11:47:08.985Z",
       "items": 1
     },
     "gemini-cli-extensions/flutter": {
       "sha": "c7a84f28e2570a27f22aaf817d3406ae26178822",
       "stars": 401,
-      "syncedAt": "2026-09-28T11:54:25.799Z",
+      "syncedAt": "2026-10-01T11:47:09.525Z",
       "items": 1
     },
     "gemini-cli-extensions/observability": {
       "sha": "1718a1ac20c507e871be9a8d01141ac596e7cc65",
       "stars": 27,
-      "syncedAt": "2026-09-28T11:54:27.834Z",
+      "syncedAt": "2026-10-01T11:47:10.410Z",
       "items": 1
     },
     "gemini-cli-extensions/jules": {
       "sha": "9f2fc14a41e8b604bdaf2d50ae6041cdc5507175",
       "stars": 414,
-      "syncedAt": "2026-09-28T11:54:28.770Z",
+      "syncedAt": "2026-10-01T11:47:12.603Z",
       "items": 1
     },
     "gemini-cli-extensions/datacommons": {
       "sha": "fa5f699883a0d9ec183fb2e139f7ac19d6e1a988",
       "stars": 36,
-      "syncedAt": "2026-09-28T11:54:30.691Z",
+      "syncedAt": "2026-10-01T11:47:12.894Z",
       "items": 1
     },
     "gemini-cli-extensions/angular": {
       "sha": "6be2eeba3f14ab664b2aa81f935b65a72857225a",
       "stars": 16,
-      "syncedAt": "2026-09-28T11:54:33.125Z",
+      "syncedAt": "2026-10-01T11:47:13.690Z",
       "items": 1
     },
     "gemini-cli-extensions/conductor": {
       "sha": "6e8f9a860bcdd6a2c423473c12e745200688c633",
-      "stars": 3749,
-      "syncedAt": "2026-09-28T11:54:35.113Z",
+      "stars": 3752,
+      "syncedAt": "2026-10-01T11:47:14.737Z",
       "items": 6
     },
     "gemini-cli-extensions/developer-knowledge": {
       "sha": "3f8b3834dd52de535c2e1a13bbd22039a8e63ecd",
       "stars": 9,
-      "syncedAt": "2026-09-28T11:54:35.505Z",
+      "syncedAt": "2026-10-01T11:47:15.268Z",
       "items": 1
     },
     "gemini-cli-extensions/sre": {
       "sha": "ef738e33bad6f8439aad70d65a52b381b8d1f6e1",
       "stars": 84,
-      "syncedAt": "2026-09-28T11:54:35.903Z",
+      "syncedAt": "2026-10-01T11:47:17.393Z",
       "items": 17
     },
     "anthropics/k12-teacher-skills": {
       "sha": "281eb8d41fe2837d911541c9bbb870b58add804c",
-      "stars": 537,
-      "syncedAt": "2026-09-28T11:51:49.987Z",
+      "stars": 541,
+      "syncedAt": "2026-10-01T11:45:05.624Z",
       "items": 4
     },
     "shopify/agent-skills": {
       "sha": "6b9ed0552d5116ee33d0e211dfa6681f2f5bdffe",
-      "stars": 86,
-      "syncedAt": "2026-09-28T11:51:54.723Z",
+      "stars": 87,
+      "syncedAt": "2026-10-01T11:45:05.893Z",
       "items": 15
     },
     "heygen-com/hyperframes": {
-      "sha": "93ab2899f13a1120002986793a7b11b657841b69",
-      "stars": 53772,
-      "syncedAt": "2026-09-28T11:51:54.303Z",
+      "sha": "d0404b450cb6f1f0392bbd458ff87131b2bc8cea",
+      "stars": 55008,
+      "syncedAt": "2026-10-01T11:45:08.797Z",
       "items": 40
     },
     "dietrichgebert/ponytail": {
       "sha": "e3ba2aa6f1e6f0bc4d69eb09c9f0d0a93af56156",
-      "stars": 147200,
-      "syncedAt": "2026-09-28T11:51:57.095Z",
+      "stars": 149738,
+      "syncedAt": "2026-10-01T11:45:19.061Z",
       "items": 6
     },
     "tt-a1i/archify": {
-      "sha": "1017b47ee707aeb8e88960b35aabf5672a012242",
-      "stars": 73216,
-      "syncedAt": "2026-09-28T11:52:00.096Z",
+      "sha": "d5a1333d7447c866a765adac7d4d062f2f02e4d2",
+      "stars": 75538,
+      "syncedAt": "2026-10-01T11:45:22.148Z",
       "items": 2
     },
     "addyosmani/agent-skills": {
       "sha": "2686b620fc1fed2e8f60c704839c766b8594c6b6",
-      "stars": 99605,
-      "syncedAt": "2026-09-28T11:51:56.616Z",
+      "stars": 100244,
+      "syncedAt": "2026-10-01T11:45:06.181Z",
       "items": 25
     },
     "egonex-ai/understand-anything": {
       "sha": "b05cc3b20990afca537b4fc0a49b4d7fbdc65bb0",
-      "stars": 84437,
-      "syncedAt": "2026-09-28T11:52:12.821Z",
+      "stars": 84907,
+      "syncedAt": "2026-10-01T11:45:19.366Z",
       "items": 9
     },
     "thedotmack/claude-mem": {
-      "sha": "7d0355413c2aaa3fa57fe6788b2ba2717fa7ff6f",
-      "stars": 94818,
-      "syncedAt": "2026-09-28T11:52:11.169Z",
-      "items": 35
+      "sha": "e290f3dd7097715c8c481a1e386fe03beb48ed81",
+      "stars": 95065,
+      "syncedAt": "2026-10-01T11:45:24.031Z",
+      "items": 36
     },
     "multica-ai/andrej-karpathy-skills": {
       "sha": "2c606141936f1eeef17fa3043a72095b4765b9c2",
-      "stars": 215626,
-      "syncedAt": "2026-09-28T11:52:14.935Z",
+      "stars": 216111,
+      "syncedAt": "2026-10-01T11:45:22.432Z",
       "items": 1
     },
     "agricidaniel/claude-seo": {
-      "sha": "e77e783e38eeb738424eb72117abbd2dacdd88af",
-      "stars": 17841,
-      "syncedAt": "2026-09-28T11:52:15.381Z",
-      "items": 33
+      "sha": "ff87fcee0734845d3f59128c8c905799ee2298da",
+      "stars": 18085,
+      "syncedAt": "2026-10-01T11:45:25.270Z",
+      "items": 35
     },
     "zubair-trabzada/geo-seo-claude": {
-      "sha": "413bf6b4c9fbb6b30a295c047d2f976431e663b0",
-      "stars": 10863,
-      "syncedAt": "2026-09-28T11:52:14.500Z",
+      "sha": "a9e6cc4f377ceec7f298df77b5c1210abc4508ee",
+      "stars": 10901,
+      "syncedAt": "2026-10-01T11:45:26.263Z",
       "items": 16
     },
     "himself65/finance-skills": {
       "sha": "7fe91853b536304b13bce210ecf8b685cf77ec48",
-      "stars": 3347,
-      "syncedAt": "2026-09-28T11:52:17.286Z",
+      "stars": 3362,
+      "syncedAt": "2026-10-01T11:45:26.529Z",
       "items": 26
     },
     "tradermonty/claude-trading-skills": {
-      "sha": "1b2d158574ee2aba8ad9fcf175a733cb862d451e",
-      "stars": 2902,
-      "syncedAt": "2026-09-28T11:52:20.771Z",
+      "sha": "b981835f7c4cc06fb2ac09fab39b078085c9e972",
+      "stars": 2922,
+      "syncedAt": "2026-10-01T11:45:29.213Z",
       "items": 94
     },
     "evolsb/claude-legal-skill": {
       "sha": "bca0d2e9d5ec81298ddfbfde78fa4f38fb4589b0",
-      "stars": 456,
-      "syncedAt": "2026-09-28T11:52:21.164Z",
+      "stars": 458,
+      "syncedAt": "2026-10-01T11:45:29.462Z",
       "items": 1
     },
     "besty0728/unity-skills": {
-      "sha": "86eaf83db18c2e81d4cdb2f2ed5cf4a477e38e4b",
-      "stars": 1790,
-      "syncedAt": "2026-09-28T11:52:23.627Z",
+      "sha": "73fae56c0de80a428804822ceb9d0edd36e69aea",
+      "stars": 1800,
+      "syncedAt": "2026-10-01T11:45:31.180Z",
       "items": 83
     },
     "lawve-ai/awesome-legal-skills": {
       "sha": "180fd1582cc56fb0fc122a8e734ff3a1a666b87a",
-      "stars": 711,
-      "syncedAt": "2026-09-28T11:52:24.058Z",
+      "stars": 720,
+      "syncedAt": "2026-10-01T11:45:31.722Z",
       "items": 255
     },
     "gfodor/legal-skills": {
       "sha": "3c98f2599bafa60cce7fd519636822ab2a00d314",
-      "stars": 394,
-      "syncedAt": "2026-09-28T11:52:24.458Z",
+      "stars": 392,
+      "syncedAt": "2026-10-01T11:45:32.572Z",
       "items": 3
     },
     "joellewis/finance_skills": {
       "sha": "5c498eacf7057e31238c4c5a8012a1afe9ec7c8a",
-      "stars": 196,
-      "syncedAt": "2026-09-28T11:52:24.869Z",
+      "stars": 200,
+      "syncedAt": "2026-10-01T11:45:32.291Z",
       "items": 91
     },
     "agiprolabs/claude-trading-skills": {
       "sha": "981e1d736cdc02bdc1c55c74ec9224e956414706",
-      "stars": 398,
-      "syncedAt": "2026-09-28T11:52:25.270Z",
+      "stars": 405,
+      "syncedAt": "2026-10-01T11:45:32.834Z",
       "items": 68
     },
     "rkiding/awesome-finance-skills": {
       "sha": "853f09b4d0baae747759ed31e21ed5c5b2316a5f",
-      "stars": 3044,
-      "syncedAt": "2026-09-28T11:52:25.685Z",
+      "stars": 3051,
+      "syncedAt": "2026-10-01T11:45:32.035Z",
       "items": 9
     },
     "iannuttall/seo": {
       "sha": "5b794fe9c8addbc227c49262bb6ac79ad8429452",
-      "stars": 540,
-      "syncedAt": "2026-09-28T11:52:27.022Z",
+      "stars": 545,
+      "syncedAt": "2026-10-01T11:45:33.105Z",
       "items": 1
     },
     "arjun988/blender-skills": {
       "sha": "8f778d2405a214b508d4c7d80742be8e43acdd52",
-      "stars": 236,
-      "syncedAt": "2026-09-28T11:52:27.989Z",
+      "stars": 255,
+      "syncedAt": "2026-10-01T11:45:33.380Z",
       "items": 94
     },
     "roble3/cc-blender-skill": {
       "sha": "11016c9a5847897491dde935c346571bd7548e3d",
-      "stars": 74,
-      "syncedAt": "2026-09-28T11:52:27.576Z",
+      "stars": 80,
+      "syncedAt": "2026-10-01T11:45:33.657Z",
       "items": 30
     },
     "flowful-ai/cad-skill": {
       "sha": "fe4215970d39f388ff1afc411fac49a9c5f79756",
-      "stars": 624,
-      "syncedAt": "2026-09-28T11:52:28.383Z",
+      "stars": 642,
+      "syncedAt": "2026-10-01T11:45:33.933Z",
       "items": 1
     },
     "earthtojake/cad-skill": {
       "sha": "fb945aa2d71063a42a8c4ecbfe1f64f3091b6af0",
       "stars": 42,
-      "syncedAt": "2026-09-28T11:52:28.780Z",
-      "items": 2
+      "syncedAt": "2026-10-01T11:45:34.206Z",
+      "items": 1
     },
     "bitwize-music-studio/claude-ai-music-skills": {
       "sha": "58f32c25b9fb2dfe569478459b0a591e0dff22e8",
-      "stars": 518,
-      "syncedAt": "2026-09-28T11:52:29.640Z",
+      "stars": 524,
+      "syncedAt": "2026-10-01T11:45:34.474Z",
       "items": 52
     },
     "haxqer/godot-skill": {
       "sha": "037c03e9858ae748bf66c010aeb9942dbe9b93d6",
-      "stars": 162,
-      "syncedAt": "2026-09-28T11:52:29.202Z",
+      "stars": 166,
+      "syncedAt": "2026-10-01T11:45:34.750Z",
       "items": 1
     },
     "ayghri/i-have-adhd": {
       "sha": "839872f9d1cd634fed642b4589ce7226199cc15f",
-      "stars": 51746,
-      "syncedAt": "2026-09-28T11:52:30.085Z",
+      "stars": 52564,
+      "syncedAt": "2026-10-01T11:45:35.048Z",
       "items": 1
     },
     "rerun-io/rerun": {
-      "sha": "8f6c4edb704fc0a8075217741d230ce1ce9c6c88",
-      "stars": 11503,
-      "syncedAt": "2026-09-28T11:52:32.524Z",
+      "sha": "20bbcfa3c1dd2ed9447c2febf4dede4511b1ec95",
+      "stars": 11522,
+      "syncedAt": "2026-10-01T11:45:36.992Z",
       "items": 13
     },
     "arpitg1304/robotics-agent-skills": {
       "sha": "f9bc5467ff9ee3d23f1a1b0b29a649843bb6ad11",
-      "stars": 367,
-      "syncedAt": "2026-09-28T11:52:40.694Z",
+      "stars": 368,
+      "syncedAt": "2026-10-01T11:45:37.265Z",
       "items": 10
     },
     "austintgriffith/ethskills": {
       "sha": "06ea4efa08076ff04f6ca4945ef4a2ca881115b0",
-      "stars": 291,
-      "syncedAt": "2026-09-28T11:52:40.294Z",
+      "stars": 293,
+      "syncedAt": "2026-10-01T11:45:35.334Z",
       "items": 26
     },
     "affaan-m/ecc": {
-      "sha": "d3b8a3e908904e242ed2dbe66af62cca71131419",
-      "stars": 268659,
-      "syncedAt": "2026-09-28T11:52:39.849Z",
-      "items": 903
+      "sha": "c70874fae9eb0e5ad0365beb7e2955899fd1d30f",
+      "stars": 270409,
+      "syncedAt": "2026-10-01T11:45:46.313Z",
+      "items": 1027
     },
     "tuanductran/hr-skills": {
       "sha": "078f2fb651f1090e73a8cc6ba96f323f8b00b171",
       "stars": 63,
-      "syncedAt": "2026-09-28T11:52:41.153Z",
+      "syncedAt": "2026-10-01T11:45:37.542Z",
       "items": 163
     },
     "composio-community/support-skills": {
       "sha": "83382c4b055fc4e5b055044adb5bfb7585484c9a",
       "stars": 19,
-      "syncedAt": "2026-09-28T11:52:45.146Z",
+      "syncedAt": "2026-10-01T11:45:46.608Z",
       "items": 40
     },
     "anthropics/healthcare": {
       "sha": "c7ed150d376bdd13219eb0bfeb4203e12da85516",
-      "stars": 413,
-      "syncedAt": "2026-09-28T11:52:44.721Z",
+      "stars": 416,
+      "syncedAt": "2026-10-01T11:45:46.873Z",
       "items": 11
     },
     "aipoch/medical-research-skills": {
       "sha": "686e09dfdb45d9fa1a08664f06bb93769b3c9d91",
-      "stars": 1934,
-      "syncedAt": "2026-09-28T11:52:41.841Z",
+      "stars": 1948,
+      "syncedAt": "2026-10-01T11:45:49.540Z",
       "items": 603
     },
     "proficientlyjobs/proficiently-claude-skills": {
       "sha": "9bc1f6fd7af532fe0cd4a1843e06ab2b474d0d53",
-      "stars": 399,
-      "syncedAt": "2026-09-28T11:52:45.548Z",
+      "stars": 401,
+      "syncedAt": "2026-10-01T11:45:48.991Z",
       "items": 7
     },
     "maziyarpanahi/openmed": {
-      "sha": "5132cb95532476e6698b6b440751e8beb553e394",
-      "stars": 5426,
-      "syncedAt": "2026-09-28T11:52:44.344Z",
+      "sha": "a88fe2feb699fd1945d053859998e54e00237825",
+      "stars": 5444,
+      "syncedAt": "2026-10-01T11:45:48.659Z",
       "items": 74
     },
     "nexu-io/open-design": {
-      "sha": "64710082d02c041da47bf8c6d6c5316b36b28b22",
-      "stars": 98436,
-      "syncedAt": "2026-09-28T11:52:08.713Z",
+      "sha": "53231d40b778d88eba23f35547bf99485d3ae9fc",
+      "stars": 99005,
+      "syncedAt": "2026-10-01T11:45:18.775Z",
       "items": 533
     },
     "juliusbrussee/caveman": {
-      "sha": "2fd153c67988e980fb0b2455c90832159a6a5a25",
-      "stars": 108138,
-      "syncedAt": "2026-09-28T11:52:48.802Z",
-      "items": 20
+      "sha": "f5d729488caa8f6a5b6c8086fe2cccd3e8a63f91",
+      "stars": 108653,
+      "syncedAt": "2026-10-01T11:45:54.657Z",
+      "items": 24
     },
     "langgenius/dify": {
-      "sha": "e6f1d77ed5869e659e426b5459439d44bdabdbe5",
-      "stars": 157401,
-      "syncedAt": "2026-09-28T11:52:48.313Z",
-      "items": 5
+      "sha": "f004f6b67d6408e11aeb5a2cc7a14d6c9ea628c3",
+      "stars": 157652,
+      "syncedAt": "2026-10-01T11:45:51.519Z",
+      "items": 6
     },
     "graphify-labs/graphify": {
-      "sha": "d6eaa8aae8df155874ebb1044302c055c286342a",
-      "stars": 122000,
-      "syncedAt": "2026-09-28T11:52:51.313Z",
+      "sha": "ef4450d9c28acb2b8cdc22d369c1777b77148eef",
+      "stars": 122923,
+      "syncedAt": "2026-10-01T11:45:53.311Z",
       "items": 1
     },
     "ruvnet/ruview": {
-      "sha": "5ef001b4fef3e08433043ebd248e6121f1221528",
-      "stars": 95260,
-      "syncedAt": "2026-09-28T11:52:53.600Z",
+      "sha": "b90b592d4f08c5c47d47f8c5d4d822b9fb3cbe0a",
+      "stars": 95786,
+      "syncedAt": "2026-10-01T11:45:56.481Z",
       "items": 53
     },
     "leonxlnx/taste-skill": {
       "sha": "ce26fc25c0e5e8cab638f883de62d9a86ee5e45b",
-      "stars": 90782,
-      "syncedAt": "2026-09-28T11:52:58.695Z",
+      "stars": 91658,
+      "syncedAt": "2026-10-01T11:45:57.604Z",
       "items": 13
     },
     "ruvnet/ruflo": {
-      "sha": "b14c79e6f7793a358f13b7e3f9b5eb27317b4988",
-      "stars": 73421,
-      "syncedAt": "2026-09-28T11:53:07.433Z",
-      "items": 361
+      "sha": "6cfd88654f2c571940f32704d79a2a1892de4392",
+      "stars": 73610,
+      "syncedAt": "2026-10-01T11:46:05.999Z",
+      "items": 373
     },
     "lobehub/lobehub": {
-      "sha": "69012b8e86e725449cabca6d434832b6b19a876c",
-      "stars": 82873,
-      "syncedAt": "2026-09-28T11:52:57.214Z",
+      "sha": "c9b5b76ddff179e957d1d0e8e88e171f7b60b0b7",
+      "stars": 82941,
+      "syncedAt": "2026-10-01T11:46:00.481Z",
       "items": 52
     },
     "code-yeongyu/oh-my-openagent": {
-      "sha": "fe427efeed97e95f009dc6ca7fb17a3ac857f79f",
-      "stars": 69617,
-      "syncedAt": "2026-09-28T11:53:02.366Z",
+      "sha": "cfa4a98f00cf7d64290a87ed0be02e07a1680e74",
+      "stars": 69715,
+      "syncedAt": "2026-10-01T11:46:08.827Z",
       "items": 59
     },
     "calesthio/openmontage": {
       "sha": "08e2151fa02de28a5d6a312b3d575692bf147ad7",
-      "stars": 61652,
-      "syncedAt": "2026-09-28T11:53:10.880Z",
+      "stars": 62076,
+      "syncedAt": "2026-10-01T11:46:12.756Z",
       "items": 74
     },
     "shanraisshan/claude-code-best-practice": {
-      "sha": "cca026c790efb80c3d2afd15e885b23b514bf74a",
-      "stars": 66484,
-      "syncedAt": "2026-09-28T11:53:13.287Z",
+      "sha": "c7b1a7e4021a6d6ceb2667219a022dbec4281d09",
+      "stars": 66919,
+      "syncedAt": "2026-10-01T11:46:12.453Z",
       "items": 9
     },
     "imbad0202/academic-research-skills": {
-      "sha": "e79085d0d38609984ef8cfe0faf2d254aac9e0a9",
-      "stars": 49730,
-      "syncedAt": "2026-09-28T11:53:16.058Z",
+      "sha": "ef44b8f4cd80df38b15d7742e163516b0ccbec57",
+      "stars": 50056,
+      "syncedAt": "2026-10-01T11:46:15.270Z",
       "items": 4
     },
     "blader/humanizer": {
       "sha": "225a6f39ac85f76ee48dbad772ea4abe4ed6c9d8",
-      "stars": 52515,
-      "syncedAt": "2026-09-28T11:53:17.805Z",
+      "stars": 53256,
+      "syncedAt": "2026-10-01T11:46:13.275Z",
       "items": 1
     },
     "cherryhq/cherry-studio": {
-      "sha": "f6a153384388d41f624d1dc5bbe032d231988bcb",
-      "stars": 52208,
-      "syncedAt": "2026-09-28T11:53:10.449Z",
+      "sha": "e2f53146eb6944718b091661df0854c75a4d933a",
+      "stars": 52299,
+      "syncedAt": "2026-10-01T11:46:10.888Z",
       "items": 35
     },
     "kepano/obsidian-skills": {
       "sha": "3ccff5338ea700537839b21900aa5358a0402c98",
-      "stars": 48966,
-      "syncedAt": "2026-09-28T11:53:16.430Z",
+      "stars": 49058,
+      "syncedAt": "2026-10-01T11:46:13.584Z",
       "items": 6
     },
     "reactive-resume/reactive-resume": {
-      "sha": "a7f1829484438d9e888d2276bc11320f2b382b8f",
-      "stars": 43501,
-      "syncedAt": "2026-09-28T11:53:25.344Z",
+      "sha": "b53c43c3722741946603ac46beda173931aeb646",
+      "stars": 43639,
+      "syncedAt": "2026-10-01T11:46:17.126Z",
       "items": 1
     },
     "zhayujie/cowagent": {
-      "sha": "4c00ca6d0149eb3debcb40d09e3e3f69a4fbb705",
-      "stars": 47147,
-      "syncedAt": "2026-09-28T11:53:19.245Z",
+      "sha": "986f44a19508b572d15d40dcb8bd5b2796559ec7",
+      "stars": 47195,
+      "syncedAt": "2026-10-01T11:46:16.184Z",
       "items": 3
     },
     "danny-avila/librechat": {
-      "sha": "c8c5478cf1aad413fd398eb80d551eaa7d7d7721",
-      "stars": 45026,
-      "syncedAt": "2026-09-28T11:53:27.499Z",
+      "sha": "f10b1d91f1eee3a2c82d5247bf620351486b7c1b",
+      "stars": 45176,
+      "syncedAt": "2026-10-01T11:46:18.433Z",
       "items": 2
     },
     "yuan1z0825/nature-skills": {
       "sha": "84880815fb37317b3766bff2c2abba395b8993c3",
-      "stars": 44946,
-      "syncedAt": "2026-09-28T11:53:23.906Z",
+      "stars": 45454,
+      "syncedAt": "2026-10-01T11:46:18.733Z",
       "items": 20
     },
     "cathrynlavery/diagram-design": {
-      "sha": "cea465e7f5ea1043d8dab21a99f2dd3f7f661beb",
-      "stars": 42636,
-      "syncedAt": "2026-09-28T11:53:21.352Z",
+      "sha": "57148ac6f7cf8f2d0080f23437ab2929bca15f3e",
+      "stars": 42948,
+      "syncedAt": "2026-10-01T11:46:20.313Z",
       "items": 1
     },
     "alibaba/open-code-review": {
-      "sha": "ebb69835a3a2d25468b6a68ba6092b9b8fe6bcb0",
-      "stars": 42126,
-      "syncedAt": "2026-09-28T11:53:29.312Z",
+      "sha": "a758d9cbfb689937c7857ad64b2dd66adb58c0c2",
+      "stars": 43050,
+      "syncedAt": "2026-10-01T11:46:21.422Z",
       "items": 4
     },
     "zhaoxuya520/reverse-skill": {
       "sha": "cab634bd855fc287f6e420c1f36fd1a6b9245960",
-      "stars": 38489,
-      "syncedAt": "2026-09-28T11:53:30.907Z",
+      "stars": 39176,
+      "syncedAt": "2026-10-01T11:46:21.678Z",
       "items": 88
     },
     "jcodesmore/ai-website-cloner-template": {
       "sha": "f50066df3f4bdca057d3b239be6f49f17724bb13",
-      "stars": 35390,
-      "syncedAt": "2026-09-28T11:53:32.566Z",
+      "stars": 35523,
+      "syncedAt": "2026-10-01T11:46:21.920Z",
       "items": 1
     },
     "mukul975/anthropic-cybersecurity-skills": {
       "sha": "54a798831d2266a3ca61ce68a7acb80b81160d57",
-      "stars": 33496,
-      "syncedAt": "2026-09-28T11:53:30.512Z",
+      "stars": 33642,
+      "syncedAt": "2026-10-01T11:46:30.009Z",
       "items": 818
     },
     "virgiliojr94/book-to-skill": {
-      "sha": "80ae087784ddbc21dbbfde355fe5509631e0e322",
-      "stars": 32846,
-      "syncedAt": "2026-09-28T11:53:29.959Z",
+      "sha": "c108d25b0cb58e1bdc361f3de02ed9f37075152f",
+      "stars": 33216,
+      "syncedAt": "2026-10-01T11:46:22.807Z",
       "items": 1
     },
     "nanocoai/nanoclaw": {
-      "sha": "63082563bdb12305451bef5117875876b13af827",
-      "stars": 30856,
-      "syncedAt": "2026-09-28T11:53:42.473Z",
+      "sha": "64706602d4252dadcb82fa4954b7f810908d3b3c",
+      "stars": 30865,
+      "syncedAt": "2026-10-01T11:46:29.464Z",
       "items": 63
     },
     "googleworkspace/cli": {
       "sha": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
-      "stars": 31177,
-      "syncedAt": "2026-09-28T11:53:33.076Z",
+      "stars": 31221,
+      "syncedAt": "2026-10-01T11:46:29.748Z",
       "items": 95
     },
     "iofficeai/officecli": {
-      "sha": "dc68d63f5285005a9e7c5943dfb321d93ee2a076",
-      "stars": 31331,
-      "syncedAt": "2026-09-28T11:53:40.158Z",
+      "sha": "97576af891a3b5d9c81c57d4f420113968abfee5",
+      "stars": 31448,
+      "syncedAt": "2026-10-01T11:46:24.290Z",
       "items": 12
     },
     "topoteretes/cognee": {
-      "sha": "c4cd8ceb9509dff6bddfabdadbeab7cc040bc32b",
-      "stars": 31110,
-      "syncedAt": "2026-09-28T11:53:37.347Z",
-      "items": 11
+      "sha": "ba3631f2ed363a6ea50d649c34c56885af6b36fe",
+      "stars": 31258,
+      "syncedAt": "2026-10-01T11:46:27.885Z",
+      "items": 19
     },
     "othmanadi/planning-with-files": {
       "sha": "51c1caa27f9fefe259e45a7cc92fa79ee8787cd7",
-      "stars": 27164,
-      "syncedAt": "2026-09-28T11:53:44.612Z",
-      "items": 18
+      "stars": 27225,
+      "syncedAt": "2026-10-01T11:46:30.284Z",
+      "items": 6
     },
     "op7418/guizang-ppt-skill": {
       "sha": "c91369c449d34755d320a8b81d0734000d99d1ab",
-      "stars": 27033,
-      "syncedAt": "2026-09-28T11:53:46.111Z",
+      "stars": 27154,
+      "syncedAt": "2026-10-01T11:46:30.534Z",
       "items": 1
     },
     "phuryn/pm-skills": {
       "sha": "8607e3b077817f89bf4a9b623246219734ac3be0",
-      "stars": 26635,
-      "syncedAt": "2026-09-28T11:53:46.664Z",
+      "stars": 26715,
+      "syncedAt": "2026-10-01T11:46:30.841Z",
       "items": 69
     },
     "jimliu/baoyu-skills": {
       "sha": "1567581c26ec29f4216c6e6835415bf30343b0e3",
-      "stars": 26197,
-      "syncedAt": "2026-09-28T11:53:45.711Z",
+      "stars": 26246,
+      "syncedAt": "2026-10-01T11:46:32.672Z",
       "items": 22
     },
     "donchitos/claude-code-game-studios": {
-      "sha": "7ed2c3e9c46c880c9780fbce49266e7edfa15141",
-      "stars": 25496,
-      "syncedAt": "2026-09-28T11:53:45.279Z",
+      "sha": "b21fa0f7f289fc3e726cf36fb12b9bc1e7a51e4d",
+      "stars": 25598,
+      "syncedAt": "2026-10-01T11:46:32.416Z",
       "items": 74
     },
     "titanwings/distilly": {
       "sha": "b830d3dcbde006370f141155795b89021e3a947b",
-      "stars": 25087,
-      "syncedAt": "2026-09-28T11:53:47.098Z",
+      "stars": 25198,
+      "syncedAt": "2026-10-01T11:46:32.949Z",
       "items": 1
     },
     "mksglu/context-mode": {
-      "sha": "5d13dc4556a5a5d30eb5ea4653b10a2f9142c8a1",
-      "stars": 24160,
-      "syncedAt": "2026-09-28T11:53:52.341Z",
+      "sha": "573e697bcab10d8b743ab3e9444bcf0a0fcc709a",
+      "stars": 24642,
+      "syncedAt": "2026-10-01T11:46:35.286Z",
       "items": 11
     },
     "pascalorg/editor": {
-      "sha": "cd14090ef4d147a5de59aa4a100eab208f26e1da",
-      "stars": 24348,
-      "syncedAt": "2026-09-28T11:53:48.730Z",
-      "items": 5
+      "sha": "a0ef742424e02481a9c936230561d675fe616c16",
+      "stars": 24474,
+      "syncedAt": "2026-10-01T11:46:34.056Z",
+      "items": 6
     },
     "teng-lin/notebooklm-py": {
-      "sha": "2cd62cd7bd540dbda559385ea44b1b309fa41fd0",
-      "stars": 19515,
-      "syncedAt": "2026-09-28T11:53:55.227Z",
+      "sha": "5d2fd5e29d1b99999a7d45230bfddca7bd1cbc81",
+      "stars": 19585,
+      "syncedAt": "2026-10-01T11:46:38.443Z",
       "items": 1
     },
     "kkkkhazix/khazix-skills": {
-      "sha": "b81ad3b442e778bb7bf27047034c1d0d9f0637ff",
-      "stars": 20966,
-      "syncedAt": "2026-09-28T11:53:50.082Z",
+      "sha": "1e6adab5ecfbc36156071295a0d3e7757d50c53e",
+      "stars": 21088,
+      "syncedAt": "2026-10-01T11:46:36.148Z",
       "items": 6
     },
     "nvidia/skillspector": {
-      "sha": "89e90872e2ec813bcb137bf6b3145c92e55811ae",
-      "stars": 18487,
-      "syncedAt": "2026-09-28T11:53:59.780Z",
+      "sha": "2226747e4ca97198bb82faf5085b8a75f2e1dc02",
+      "stars": 18865,
+      "syncedAt": "2026-10-01T11:46:39.262Z",
       "items": 1
     },
     "composio-community/awesome-codex-skills": {
       "sha": "0930e1373789d2eda449039f7ac154b33031de89",
-      "stars": 16696,
-      "syncedAt": "2026-09-28T11:54:00.220Z",
+      "stars": 16735,
+      "syncedAt": "2026-10-01T11:46:41.953Z",
       "items": 844
     },
     "wanshuiyin/auto-claude-code-research-in-sleep": {
-      "sha": "c4535ea8ae1e013399a2525dc7d285859f672b62",
-      "stars": 16745,
-      "syncedAt": "2026-09-28T11:53:58.470Z",
+      "sha": "2132036060e03e8d0df69a4b21e5971819c0c2d6",
+      "stars": 16866,
+      "syncedAt": "2026-10-01T11:46:41.618Z",
       "items": 189
     },
     "earthtojake/text-to-cad": {
-      "sha": "b10144ad98616fa7156f655cbd2aba0091216d40",
-      "stars": 16445,
-      "syncedAt": "2026-09-28T11:54:02.409Z",
-      "items": 14
+      "sha": "dbcb77058db9a1168d36d587a2594a113a0c658e",
+      "stars": 16519,
+      "syncedAt": "2026-10-01T11:46:43.364Z",
+      "items": 13
     },
     "kangarooking/cangjie-skill": {
       "sha": "874eb414e6414dd6d399222a7e3925206dfdb585",
-      "stars": 10683,
-      "syncedAt": "2026-09-28T11:54:04.332Z",
-      "items": 36
+      "stars": 10790,
+      "syncedAt": "2026-10-01T11:46:45.284Z",
+      "items": 21
     },
     "yusufkaraaslan/skill_seekers": {
-      "sha": "76d59ab4eaee61522eec6cb357cf901305ca74e1",
-      "stars": 15042,
-      "syncedAt": "2026-09-28T11:54:05.737Z",
+      "sha": "5b5d8dfca263fa76e6daae9f292890b311ef36aa",
+      "stars": 15070,
+      "syncedAt": "2026-10-01T11:46:44.316Z",
       "items": 2
     },
     "nidhinjs/prompt-master": {
       "sha": "2bd92518e26bf659e21e3d9ab90573fcf3ddeccb",
-      "stars": 13743,
-      "syncedAt": "2026-09-28T11:54:06.986Z",
+      "stars": 13920,
+      "syncedAt": "2026-10-01T11:46:44.598Z",
       "items": 1
     },
     "nevamind-ai/memu": {
       "sha": "2c050bc9681a4c0aff1af211a000e73d14f33356",
-      "stars": 14463,
-      "syncedAt": "2026-09-28T11:54:08.405Z",
+      "stars": 14496,
+      "syncedAt": "2026-10-01T11:46:44.972Z",
       "items": 1
     },
     "wonderwhy-er/desktopcommandermcp": {
-      "sha": "7bad545f4524d6b46ca84369b0015f4ebf151fec",
-      "stars": 9803,
-      "syncedAt": "2026-09-28T11:54:09.883Z",
+      "sha": "c774c3b505de990219637ecdc9a830c8772fae9d",
+      "stars": 9865,
+      "syncedAt": "2026-10-01T11:46:46.287Z",
       "items": 18
     },
     "agricidaniel/claude-ads": {
       "sha": "ac21644933910419529bcf81efb95a9ca71edf81",
-      "stars": 9600,
-      "syncedAt": "2026-09-28T11:54:11.632Z",
+      "stars": 9661,
+      "syncedAt": "2026-10-01T11:46:46.569Z",
       "items": 34
     },
     "vincentwei1021/video-shotcraft": {
-      "sha": "e2d8928c57ef84701f9b0119ca4a1c28a62050c1",
-      "stars": 9779,
-      "syncedAt": "2026-09-28T11:54:13.309Z",
+      "sha": "5ddbf521038b0a7accfb6dc1e0a9eb29c67277ab",
+      "stars": 10115,
+      "syncedAt": "2026-10-01T11:46:47.644Z",
       "items": 1
     },
     "nexu-io/html-anything": {
       "sha": "553ed98c283f9c0f489902d035416a972d6a9699",
-      "stars": 8968,
-      "syncedAt": "2026-09-28T11:54:15.946Z",
-      "items": 81
+      "stars": 8986,
+      "syncedAt": "2026-10-01T11:46:47.998Z",
+      "items": 58
+    },
+    "ahmedkhaleel2004/gitdiagram": {
+      "sha": "7d9aba46c3b635027b27f9c23578627ee7dd1627",
+      "stars": 17656,
+      "syncedAt": "2026-10-01T11:46:49.477Z",
+      "items": 2
+    },
+    "firecrawl/firecrawl-mcp-server": {
+      "sha": "c37cf21809bcb2573b74c1f0e90056e551395e4e",
+      "stars": 7538,
+      "syncedAt": "2026-10-01T11:46:50.305Z",
+      "items": 4
+    },
+    "google-labs-code/stitch-skills": {
+      "sha": "0337446dadde6f8c94210444e2aa9d546126480f",
+      "stars": 8409,
+      "syncedAt": "2026-10-01T11:46:51.340Z",
+      "items": 16
+    },
+    "anbeime/skill": {
+      "sha": "7fd9e028dbfc7c01654071746db0e8205f6963a1",
+      "stars": 7453,
+      "syncedAt": "2026-10-01T11:46:53.073Z",
+      "items": 84
+    },
+    "gentleman-programming/gentle-ai": {
+      "sha": "47409837b692e71852627bbd0d4afb93bab6e6ab",
+      "stars": 7442,
+      "syncedAt": "2026-10-01T11:46:54.522Z",
+      "items": 26
+    },
+    "zenstory-ai/oh-story-claudecode": {
+      "sha": "4a50d5583590eb7f207037e35136c1168bc02201",
+      "stars": 7196,
+      "syncedAt": "2026-10-01T11:46:56.056Z",
+      "items": 13
+    },
+    "wenyuchiou/awesome-agentic-ai-zh": {
+      "sha": "ea24e0006023ce8e0abf79e77ae773701c7fafa4",
+      "stars": 7239,
+      "syncedAt": "2026-10-01T11:46:57.215Z",
+      "items": 1
+    },
+    "snailsploit/claude-red": {
+      "sha": "739512a8588b28ff3b554e669391c22508602878",
+      "stars": 7157,
+      "syncedAt": "2026-10-01T11:46:59.058Z",
+      "items": 79
+    },
+    "deanpeters/product-manager-skills": {
+      "sha": "1b5a524ebb95e9497fa3f25002d8b8ec528d4444",
+      "stars": 7133,
+      "syncedAt": "2026-10-01T11:47:00.560Z",
+      "items": 77
+    },
+    "parthjadhav/app-store-screenshots": {
+      "sha": "8bd752043f33c54e69c2e77dd169fc3fbca8a4e4",
+      "stars": 7120,
+      "syncedAt": "2026-10-01T11:47:02.556Z",
+      "items": 1
     }
   },
   "pipelineVersion": 4,
-  "lastRun": "2026-09-28T11:54:46.924Z"
+  "lastRun": "2026-10-01T11:47:29.032Z"
 }
