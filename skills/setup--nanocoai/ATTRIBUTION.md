@@ -2,7 +2,7 @@
 
 - **Item:** Setup (`setup`)
 - **Original source:** https://github.com/nanocoai/nanoclaw/tree/main/.claude/skills/setup
-- **Repository:** https://github.com/nanocoai/nanoclaw @ `64706602d425`
+- **Repository:** https://github.com/nanocoai/nanoclaw @ `17bf7c4fb255`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

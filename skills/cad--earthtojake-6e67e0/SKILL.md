@@ -1,6 +1,7 @@
 ---
 name: cad
 description: Create/edit parametric CAD models, organize CAD projects, export STEP/STL/3MF/GLB files, resolve prompt references, and measure geometry with cadgen. Open and visually review existing STEP/STP, STL, 3MF and GLB files in CAD Viewer.
+license: MIT
 ---
 
 # CAD modeling and inspection
@@ -20,7 +21,7 @@ Read only the references needed for the request.
 | **Resolve a reference from a prompt** | Identify its saved STEP/STP document, open it with `read_scene`, and call `scene.resolve(ref)` as shown below. | [Reference syntax and inspection](references/inspection-and-validation.md#reference-syntax) |
 | **Measure or check geometry** | Write a Python check using native build123d geometry and, where useful, `cadgen.geometry`. | [Inspection and validation](references/inspection-and-validation.md) |
 | **Model from an image or drawing** | Extract the specified dimensions and record meaningful assumptions. | [Interpreting the request](references/cad-brief.md) |
-| **Open an existing STEP/STP, STL, 3MF or GLB** | Launch CAD Viewer and return a live link. | [CAD Viewer](#cad-viewer) |
+| **Open an existing STEP/STP, STL, 3MF or GLB** | Show it to the user. | [Show the model](#show-the-model) |
 | **Review appearance or motion** | Snapshot the saved document; use declared kinematics or animation for poses and clips. | [Snapshots](references/snapshot-review.md), [kinematics](references/kinematics.md) |
 | **Diagnose a failure** | Read the error and check the relevant model, geometry or command contract. | [Repair loop](references/repair-loop.md), [version migration](references/migrations.md) |
 | **A message says to migrate** | Do the migration now; an unmigrated model silently loses kinematics, materials and animation. | [Version migration](references/migrations.md) |
@@ -120,21 +121,29 @@ for decorator examples, mesh tolerances and animated GLB.
 
 ## Prompt references and inspection
 
-A reference such as `assembly.step#o1.2.f7` identifies geometry in a particular
-saved document. Use the prompt's file context to select that document:
+A reference such as `STEP/assembly.step#o1.2.f7` identifies geometry in a
+particular saved document. Its file part is the document as CAD Viewer copied it:
+the path relative to the viewer's root (the folder it serves; for `cad_show`, the
+thread's project folder), or the full path when the model has no project around
+it, always with the file's real name and extension. A relative path resolves from
+the working directory, so from the viewer's root pass it to `read_scene` as is:
 
 ```python
 from cadgen import read_scene
 
 scene = read_scene("STEP/assembly.step")
-selection = scene.resolve("assembly.step#o1.2.f7")
+selection = scene.resolve("STEP/assembly.step#o1.2.f7")
 face = selection.shape()  # owned native geometry, in document world coordinates
 print(selection.ref, face.area)
 ```
 
-For a bare `#o1.2.f7`, use the identified target file. For a model-script prefix,
-find its declared STEP output and resolve the `#...` portion there. Do not guess
-between ambiguous files or labels. Numeric refs belong to that saved revision;
+A note from the viewer's Quick Edit reads: what the person wants, then
+`File:` (the document it is about), `References:` (one per line, as above) and,
+when they sketched on the view, `Sketch: <path>`: a PNG of the view with their
+markup (or the image itself, attached). Look at the sketch before changing the model.
+
+For a bare `#o1.2.f7`, use the identified target file. Do not guess between
+ambiguous files or labels. Numeric refs belong to that saved revision;
 reopen and reselect after rebuilding. The [inspection reference](references/inspection-and-validation.md)
 covers label aliases, enumeration, measurements and small reusable operations.
 
@@ -151,8 +160,10 @@ do not add a STEP solely to satisfy the workflow. Report units, thresholds,
 selected geometry and untested requirements. A failed computation is not a pass.
 
 After creating or visibly changing geometry, generate and review at least one
-snapshot of the resulting STEP or mesh. Choose additional views to expose the
-features under review; see [snapshot policy and options](references/snapshot-review.md).
+snapshot of the resulting STEP or mesh. Snapshots are your own review: always
+render and read them yourself, never rely on the viewer for it. Choose additional
+views to expose the features under review; see
+[snapshot policy and options](references/snapshot-review.md).
 
 ```bash
 cadgen step snapshot STEP/bracket.step tmp/review.png
@@ -165,34 +176,32 @@ geometric evidence. `cadgen store why <model>.py` explains unexpected rebuilds;
 `python <model>.py --force` forces one model, and `cadgen daemon status` shows
 build progress. More diagnostics are in the [model contract](references/step-generation.md).
 
-Include output files, reviewed PNGs, checks actually run, and material
-assumptions or limitations in the final response. Explain any snapshot skip or
-failure using the cases in the snapshot reference.
+Include output files, checks actually run, and material assumptions or
+limitations in the final response. The user sees the model in the viewer (Show
+the model), so don't attach snapshots unless they ask for an image. Explain any
+snapshot skip or failure using the cases in the snapshot reference.
 
-### CAD Viewer
+### Show the model
 
-After creating or updating STEP/STP, STL, 3MF or GLB files, **always run the command below
-and return live links**, even if a viewer is already running. Snapshots and
-validation do not replace this step. Use it also to open existing files.
+Show the user each file you create or change, and any they ask to see. Snapshots and
+validation don't replace this.
 
-Run from the directory containing the project’s models, usually `models/`.
-The viewer lists files recursively beneath this directory, so choose it rather
-than an individual artifact’s output folder.
+- If your tools include `cad_show` (your host may prefix it), use it, and follow its
+  description for when to call it again. `cad_view` reads what the user selected;
+  `cad_screenshot` shows you what they see. Neither is a review of your own work.
+- Otherwise run the CAD Viewer from the models directory (usually `models/`, not an
+  artifact's output folder):
 
-```bash
-cd /absolute/path/to/model-workspace && cadgen viewer --host 127.0.0.1 --json --detach
-```
+  ```bash
+  cd /absolute/path/to/model-workspace && cadgen viewer --host 127.0.0.1 --json --detach
+  ```
 
-`--detach` returns once the server answers requests and leaves it running in the
-background. Always use it for agent launches; a foreground server does not exit,
-so piping its output through `tail` can hide the URL indefinitely.
-
-The launcher starts or reuses the correct instance. Read `url` from its single
-JSON stdout line; never guess the port. Verify each artifact exists under the root,
-then append `?file=<URL-encoded path relative to that root>` to return one link
-per file. For directory review, return the origin alone.
-
-If launching fails, report the failure explicitly.
+  `--detach` returns once the viewer answers requests and leaves it running in the
+  background: always pass it, since a foreground viewer never exits (and piping its
+  output through `tail` can hide the URL for good). It starts or reuses the viewer.
+  Read `url` from its one JSON line (never guess the port); for each file under that
+  directory return `url?file=<URL-encoded relative path>`, or `url` alone to review the
+  directory. If it fails to launch, say so.
 
 Generate changed artifacts first: the viewer never runs model scripts. Existing
 STEP files compile on open when needed. Topology selection and measurement

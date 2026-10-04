@@ -2,7 +2,7 @@
 
 - **Item:** Slides (`slides`)
 - **Original source:** https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/main/.claude/skills/slides
-- **Repository:** https://github.com/nextlevelbuilder/ui-ux-pro-max-skill @ `09170eec67ee`
+- **Repository:** https://github.com/nextlevelbuilder/ui-ux-pro-max-skill @ `477bcb28c981`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

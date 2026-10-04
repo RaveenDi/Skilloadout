@@ -2,7 +2,7 @@
 
 - **Item:** Firebase Hosting Basics (`firebase-hosting-basics`)
 - **Original source:** https://github.com/firebase/agent-skills/tree/main/skills/firebase-hosting-basics
-- **Repository:** https://github.com/firebase/agent-skills @ `daaf0e1577b2`
+- **Repository:** https://github.com/firebase/agent-skills @ `de359da26586`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

@@ -2,7 +2,7 @@
 
 - **Item:** Gpt Image 2 Prompt Engine (`gpt-image-2-prompt-engine`)
 - **Original source:** https://github.com/anbeime/skill/tree/main/skills/gpt-image-2-prompt-engine
-- **Repository:** https://github.com/anbeime/skill @ `7fd9e028dbfc`
+- **Repository:** https://github.com/anbeime/skill @ `1550e35f9f64`
 - **License:** MIT (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

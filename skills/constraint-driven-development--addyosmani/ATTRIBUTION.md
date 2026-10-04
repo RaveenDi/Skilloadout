@@ -2,7 +2,7 @@
 
 - **Item:** Constraint Driven Development (`constraint-driven-development`)
 - **Original source:** https://github.com/addyosmani/agent-skills/tree/main/skills/constraint-driven-development
-- **Repository:** https://github.com/addyosmani/agent-skills @ `2686b620fc1f`
+- **Repository:** https://github.com/addyosmani/agent-skills @ `1401c8b8030e`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

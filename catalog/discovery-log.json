@@ -1,5 +1,179 @@
 [
   {
+    "date": "2026-10-04T11:12:46.550Z",
+    "reviewer": "heuristic",
+    "candidates": 24,
+    "accepted": [
+      "career-ops-hq/career-ops",
+      "latent-spaces/brag",
+      "tech-leads-club/agent-skills",
+      "Devin-AXIS/iPolloWork",
+      "internet-court/internet-court-skill",
+      "gosom/google-maps-scraper",
+      "jacob-bd/gemini-notebook-mcp-cli",
+      "Q00/ouroboros",
+      "browser-act/skills",
+      "google/agents-cli"
+    ],
+    "decisions": [
+      {
+        "repo": "career-ops-hq/career-ops",
+        "stars": 73435,
+        "skills": 13,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "mvanhorn/last30days-skill",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "sickn33/agentic-awesome-skills",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 13%, 8218 skills)"
+      },
+      {
+        "repo": "iOfficeAI/AionUi",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 75%, 4 skills)"
+      },
+      {
+        "repo": "feder-cr/invisible_playwright_mcp",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "Nutlope/hallmark",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "microsoft/SkillOpt",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 5 skills)"
+      },
+      {
+        "repo": "latent-spaces/brag",
+        "stars": 13378,
+        "skills": 2,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "jnMetaCode/superpowers-zh",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 76%, 21 skills)"
+      },
+      {
+        "repo": "tech-leads-club/agent-skills",
+        "stars": 7030,
+        "skills": 92,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "Devin-AXIS/iPolloWork",
+        "stars": 6620,
+        "skills": 92,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "internet-court/internet-court-skill",
+        "stars": 6361,
+        "skills": 95,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "gosom/google-maps-scraper",
+        "stars": 6265,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "jacob-bd/gemini-notebook-mcp-cli",
+        "stars": 6223,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "Q00/ouroboros",
+        "stars": 6178,
+        "skills": 24,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "browser-act/skills",
+        "stars": 6093,
+        "skills": 103,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "google/agents-cli",
+        "stars": 6047,
+        "skills": 15,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      }
+    ]
+  },
+  {
     "date": "2026-10-01T11:43:53.100Z",
     "reviewer": "heuristic",
     "candidates": 27,

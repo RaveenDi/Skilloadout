@@ -2,7 +2,7 @@
 
 - **Item:** Rerun Docs (`rerun-docs`)
 - **Original source:** https://github.com/rerun-io/rerun/tree/main/skills/rerun-docs
-- **Repository:** https://github.com/rerun-io/rerun @ `20bbcfa3c1dd`
+- **Repository:** https://github.com/rerun-io/rerun @ `107beb60f2a0`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

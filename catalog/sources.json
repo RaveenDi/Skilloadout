@@ -958,6 +958,86 @@
       "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
       "reviewer": "heuristic",
       "status": "active"
+    },
+    {
+      "repo": "career-ops-hq/career-ops",
+      "tier": 2,
+      "addedAt": "2026-10-04T11:12:46.547Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "latent-spaces/brag",
+      "tier": 2,
+      "addedAt": "2026-10-04T11:12:46.548Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "tech-leads-club/agent-skills",
+      "tier": 2,
+      "addedAt": "2026-10-04T11:12:46.548Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "Devin-AXIS/iPolloWork",
+      "tier": 2,
+      "addedAt": "2026-10-04T11:12:46.548Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "internet-court/internet-court-skill",
+      "tier": 2,
+      "addedAt": "2026-10-04T11:12:46.548Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "gosom/google-maps-scraper",
+      "tier": 2,
+      "addedAt": "2026-10-04T11:12:46.548Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "jacob-bd/gemini-notebook-mcp-cli",
+      "tier": 2,
+      "addedAt": "2026-10-04T11:12:46.548Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "Q00/ouroboros",
+      "tier": 2,
+      "addedAt": "2026-10-04T11:12:46.548Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "browser-act/skills",
+      "tier": 2,
+      "addedAt": "2026-10-04T11:12:46.549Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "google/agents-cli",
+      "tier": 2,
+      "addedAt": "2026-10-04T11:12:46.549Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
     }
   ]
 }
