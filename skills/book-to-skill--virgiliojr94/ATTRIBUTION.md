@@ -2,7 +2,7 @@
 
 - **Item:** Book To Skill (`book-to-skill`)
 - **Original source:** https://github.com/virgiliojr94/book-to-skill/tree/master
-- **Repository:** https://github.com/virgiliojr94/book-to-skill @ `c108d25b0cb5`
+- **Repository:** https://github.com/virgiliojr94/book-to-skill @ `e180fc46365e`
 - **License:** MIT (resolved via skill)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

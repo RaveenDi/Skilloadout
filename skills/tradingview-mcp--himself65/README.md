@@ -13,7 +13,7 @@ Read-only, headless TradingView market data through the bundled [tradingview-mcp
 - Global market and Bitcoin snapshots
 - Optional Marketaux-powered news and sentiment
 
-All 37 bundled MCP tools are annotated read-only. The skill never places trades or changes an account.
+All 39 bundled MCP tools are annotated read-only. The skill never places trades or changes an account.
 
 ## When to choose the desktop reader instead
 

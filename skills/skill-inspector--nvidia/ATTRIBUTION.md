@@ -2,7 +2,7 @@
 
 - **Item:** Skill Inspector (`skill-inspector`)
 - **Original source:** https://github.com/NVIDIA/SkillSpector/tree/main/skills/skill-inspector
-- **Repository:** https://github.com/NVIDIA/SkillSpector @ `4a5506276795`
+- **Repository:** https://github.com/NVIDIA/SkillSpector @ `3c8e4b958fda`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

@@ -2,7 +2,7 @@
 
 - **Item:** Planning With Files Zh (`planning-with-files-zh`)
 - **Original source:** https://github.com/OthmanAdi/planning-with-files/tree/master/skills/i18n/planning-with-files-zh
-- **Repository:** https://github.com/OthmanAdi/planning-with-files @ `dab9d16fbd93`
+- **Repository:** https://github.com/OthmanAdi/planning-with-files @ `41f60aeca8ba`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

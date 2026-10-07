@@ -2,7 +2,7 @@
 
 - **Item:** String Reviewer (`string-reviewer`)
 - **Original source:** https://github.com/google-gemini/gemini-cli/tree/main/.gemini/skills/string-reviewer
-- **Repository:** https://github.com/google-gemini/gemini-cli @ `fb972b2f87fe`
+- **Repository:** https://github.com/google-gemini/gemini-cli @ `ef59c532f07f`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

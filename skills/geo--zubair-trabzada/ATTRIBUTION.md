@@ -2,7 +2,7 @@
 
 - **Item:** Geo (`geo`)
 - **Original source:** https://github.com/zubair-trabzada/geo-seo-claude/tree/main/geo
-- **Repository:** https://github.com/zubair-trabzada/geo-seo-claude @ `ea29bd291a0b`
+- **Repository:** https://github.com/zubair-trabzada/geo-seo-claude @ `989cae01e8eb`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

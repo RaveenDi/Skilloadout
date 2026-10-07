@@ -1,5 +1,179 @@
 [
   {
+    "date": "2026-10-07T11:54:22.567Z",
+    "reviewer": "heuristic",
+    "candidates": 24,
+    "accepted": [
+      "xingkongliang/skills-manager",
+      "rehan-remade/universal-modder",
+      "zebbern/claude-code-guide",
+      "brycewang-stanford/Auto-Empirical-Research-Skills",
+      "Ryze-AI-Adgent/open-seo-mcp-skills",
+      "IvanMurzak/Unity-MCP",
+      "dexhunter/seedance2-skill",
+      "nowork-studio/notfair-plugin",
+      "irinabuht12-oss/marketing-skills",
+      "luoluoluo22/jianying-editor-skill"
+    ],
+    "decisions": [
+      {
+        "repo": "mvanhorn/last30days-skill",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "sickn33/agentic-awesome-skills",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 13%, 8272 skills)"
+      },
+      {
+        "repo": "iOfficeAI/AionUi",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 75%, 4 skills)"
+      },
+      {
+        "repo": "Nutlope/hallmark",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "microsoft/SkillOpt",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 5 skills)"
+      },
+      {
+        "repo": "jnMetaCode/superpowers-zh",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 76%, 21 skills)"
+      },
+      {
+        "repo": "xingkongliang/skills-manager",
+        "stars": 5671,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "rehan-remade/universal-modder",
+        "stars": 4882,
+        "skills": 33,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "zebbern/claude-code-guide",
+        "stars": 4649,
+        "skills": 79,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "brycewang-stanford/Auto-Empirical-Research-Skills",
+        "stars": 4520,
+        "skills": 1172,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "Ryze-AI-Adgent/open-seo-mcp-skills",
+        "stars": 4416,
+        "skills": 8,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "IvanMurzak/Unity-MCP",
+        "stars": 4394,
+        "skills": 80,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "dexhunter/seedance2-skill",
+        "stars": 4222,
+        "skills": 2,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "nowork-studio/notfair-plugin",
+        "stars": 3905,
+        "skills": 96,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "irinabuht12-oss/marketing-skills",
+        "stars": 3810,
+        "skills": 49,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "jordan-gibbs/hyperresearch",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "luoluoluo22/jianying-editor-skill",
+        "stars": 3790,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      }
+    ]
+  },
+  {
     "date": "2026-10-04T11:12:46.550Z",
     "reviewer": "heuristic",
     "candidates": 24,

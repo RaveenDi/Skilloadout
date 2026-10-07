@@ -2,7 +2,7 @@
 
 - **Item:** Benchling Integration (`benchling-integration`)
 - **Original source:** https://github.com/K-Dense-AI/scientific-agent-skills/tree/main/skills/benchling-integration
-- **Repository:** https://github.com/K-Dense-AI/scientific-agent-skills @ `154988403bb5`
+- **Repository:** https://github.com/K-Dense-AI/scientific-agent-skills @ `92ace75ac21e`
 - **License:** MIT (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

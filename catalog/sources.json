@@ -1038,6 +1038,86 @@
       "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
       "reviewer": "heuristic",
       "status": "active"
+    },
+    {
+      "repo": "xingkongliang/skills-manager",
+      "tier": 2,
+      "addedAt": "2026-10-07T11:54:22.565Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "rehan-remade/universal-modder",
+      "tier": 2,
+      "addedAt": "2026-10-07T11:54:22.565Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "zebbern/claude-code-guide",
+      "tier": 2,
+      "addedAt": "2026-10-07T11:54:22.565Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "brycewang-stanford/Auto-Empirical-Research-Skills",
+      "tier": 2,
+      "addedAt": "2026-10-07T11:54:22.566Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "Ryze-AI-Adgent/open-seo-mcp-skills",
+      "tier": 2,
+      "addedAt": "2026-10-07T11:54:22.566Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "IvanMurzak/Unity-MCP",
+      "tier": 2,
+      "addedAt": "2026-10-07T11:54:22.566Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "dexhunter/seedance2-skill",
+      "tier": 2,
+      "addedAt": "2026-10-07T11:54:22.566Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "nowork-studio/notfair-plugin",
+      "tier": 2,
+      "addedAt": "2026-10-07T11:54:22.566Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "irinabuht12-oss/marketing-skills",
+      "tier": 2,
+      "addedAt": "2026-10-07T11:54:22.566Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "luoluoluo22/jianying-editor-skill",
+      "tier": 2,
+      "addedAt": "2026-10-07T11:54:22.566Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
     }
   ]
 }

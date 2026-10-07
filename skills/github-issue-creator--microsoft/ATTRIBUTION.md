@@ -2,7 +2,7 @@
 
 - **Item:** Github Issue Creator (`github-issue-creator`)
 - **Original source:** https://github.com/microsoft/skills/tree/main/.github/skills/github-issue-creator
-- **Repository:** https://github.com/microsoft/skills @ `ce7edea90860`
+- **Repository:** https://github.com/microsoft/skills @ `354361d83247`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.
