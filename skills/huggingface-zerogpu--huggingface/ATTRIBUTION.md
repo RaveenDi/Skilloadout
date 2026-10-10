@@ -2,7 +2,7 @@
 
 - **Item:** Huggingface Zerogpu (`huggingface-zerogpu`)
 - **Original source:** https://github.com/huggingface/skills/tree/main/skills/huggingface-zerogpu
-- **Repository:** https://github.com/huggingface/skills @ `ca0325bb20b2`
+- **Repository:** https://github.com/huggingface/skills @ `c3ff942be3e0`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

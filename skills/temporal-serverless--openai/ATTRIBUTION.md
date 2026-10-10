@@ -2,7 +2,7 @@
 
 - **Item:** Temporal Serverless (`temporal-serverless`)
 - **Original source:** https://github.com/openai/plugins/tree/main/plugins/temporal/skills/temporal-serverless
-- **Repository:** https://github.com/openai/plugins @ `5fd93af4cd0c`
+- **Repository:** https://github.com/openai/plugins @ `0722921d5542`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

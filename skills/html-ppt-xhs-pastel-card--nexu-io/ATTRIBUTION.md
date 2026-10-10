@@ -2,7 +2,7 @@
 
 - **Item:** Html Ppt Xhs Pastel Card (`html-ppt-xhs-pastel-card`)
 - **Original source:** https://github.com/nexu-io/open-design/tree/main/design-templates/html-ppt-xhs-pastel-card
-- **Repository:** https://github.com/nexu-io/open-design @ `53231d40b778`
+- **Repository:** https://github.com/nexu-io/open-design @ `17e255959703`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

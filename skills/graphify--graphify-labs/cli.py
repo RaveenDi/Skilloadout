@@ -104,6 +104,39 @@ def _nudge_for_out(nudge: str) -> str:
     return json.dumps(d, ensure_ascii=False, separators=(",", ":")) + "\n"
 
 
+def _print_cloud_cta(out_dir: "Path") -> None:
+    """Nudge toward Graphify Cloud once after a successful local graph build.
+
+    Kept precise and shown only to humans running the CLI interactively:
+    suppressed in non-interactive/CI runs (stdout is not a TTY, which also
+    covers the AI-assistant pipeline), when the user opts out
+    (``GRAPHIFY_NO_TIPS``/``GRAPHIFY_NO_CTA``), and after the first time per
+    project (a marker under ``graphify-out/``) so repeat builds stay quiet.
+    """
+    if os.environ.get("GRAPHIFY_NO_TIPS") or os.environ.get("GRAPHIFY_NO_CTA"):
+        return
+    try:
+        if not sys.stdout.isatty():
+            return
+    except Exception:
+        return
+    marker = out_dir / ".cloud-cta-shown"
+    try:
+        if marker.exists():
+            return
+    except Exception:
+        return
+    print()
+    print("  Graphify Cloud: faster indexing, fewer tokens, cross-repo search,")
+    print("  and PR review, with your whole SDLC mapped and always current.")
+    print("  Connect a repo at https://app.graphify.com")
+    try:
+        marker.parent.mkdir(parents=True, exist_ok=True)
+        marker.write_text("1", encoding="utf-8")
+    except Exception:
+        pass
+
+
 def _default_graph_path() -> str:
     return str(Path(_GRAPHIFY_OUT) / "graph.json")
 
@@ -4018,6 +4051,7 @@ def dispatch_command(cmd: str) -> None:
                                     "ruby_resolution_schema",
                                     "ruby_method_kind",
                                     "ruby_lookup_unsafe",
+                                    "python_opaque_bases",
                                     "ruby_reopened",
                                     "ruby_external_method_owners",
                                     # Erlang remote-call resolution keys (#3714):
@@ -4515,6 +4549,11 @@ def dispatch_command(cmd: str) -> None:
             # gets this), so apply it directly on the merged node list.
             from graphify.build import disambiguate_file_labels_in_nodes as _disamb_labels
             _disamb_labels(merged["nodes"])
+            # Same endpoint rules as build_from_json (#2873): an import of an
+            # external module gets a typed stub node, and any other edge without
+            # two declared endpoints is dropped instead of shipping a phantom.
+            from graphify.build import finalize_raw_graph_endpoints as _finalize_raw_graph_endpoints
+            _finalize_raw_graph_endpoints(merged)
             # Backfill source_file from endpoint nodes — this raw path bypasses
             # build_from_json's backfill, and semantic edges sometimes omit it (#1279).
             _node_sf = {n.get("id"): n.get("source_file") for n in merged["nodes"]}
@@ -4552,7 +4591,14 @@ def dispatch_command(cmd: str) -> None:
             _backup(graphify_out)
             _invalidate_file_manifest_for_db_graph()
             from graphify.paths import write_json_atomic as _write_json_atomic
-            _write_json_atomic(graph_json_path, merged, indent=2)
+            from graphify.extract import RUN_ONLY_EXTRACTION_KEYS as _RUN_ONLY_KEYS
+            # merge_raw_extraction above has consumed them; graph.json must not
+            # carry this run's absolute input paths.
+            _write_json_atomic(
+                graph_json_path,
+                {k: v for k, v in merged.items() if k not in _RUN_ONLY_KEYS},
+                indent=2,
+            )
             try:
                 # Record the scan root so a later build_merge / update runbook can
                 # relativize deleted-file paths correctly even for a custom --out
@@ -4829,6 +4875,7 @@ def dispatch_command(cmd: str) -> None:
             f"`graphify cluster-only {graphify_out.parent}` "
             "to generate GRAPH_REPORT.md and name communities"
         )
+        _print_cloud_cta(graphify_out)
         stages.total()
 
     elif cmd == "cache-check":

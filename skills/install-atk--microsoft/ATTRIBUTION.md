@@ -2,7 +2,7 @@
 
 - **Item:** Install Atk (`install-atk`)
 - **Original source:** https://github.com/microsoft/skills/tree/main/.github/plugins/microsoft-365-agents-toolkit/skills/install-atk
-- **Repository:** https://github.com/microsoft/skills @ `354361d83247`
+- **Repository:** https://github.com/microsoft/skills @ `d5741a1e9325`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

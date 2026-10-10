@@ -2,7 +2,7 @@
 
 - **Item:** Review Skill (`review-skill`)
 - **Original source:** https://github.com/mongodb/agent-skills/tree/main/tools/review-skill
-- **Repository:** https://github.com/mongodb/agent-skills @ `18b014ee53f5`
+- **Repository:** https://github.com/mongodb/agent-skills @ `c370a63b2707`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

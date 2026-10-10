@@ -2,7 +2,7 @@
 
 - **Item:** Time Skill (`time-skill`)
 - **Original source:** https://github.com/shanraisshan/claude-code-best-practice/tree/main/.claude/skills/time-skill
-- **Repository:** https://github.com/shanraisshan/claude-code-best-practice @ `b8693242f1f7`
+- **Repository:** https://github.com/shanraisshan/claude-code-best-practice @ `63e587bf0ae1`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

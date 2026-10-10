@@ -2,7 +2,7 @@
 
 - **Item:** Unity Pico Design (`unity-pico-design`)
 - **Original source:** https://github.com/Besty0728/Unity-Skills/tree/main/SkillsForUnity/unity-skills~/skills/pico-design
-- **Repository:** https://github.com/Besty0728/Unity-Skills @ `ec8aa7c40756`
+- **Repository:** https://github.com/Besty0728/Unity-Skills @ `e1c8e71dad7b`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

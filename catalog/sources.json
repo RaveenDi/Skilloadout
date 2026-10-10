@@ -1118,6 +1118,86 @@
       "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
       "reviewer": "heuristic",
       "status": "active"
+    },
+    {
+      "repo": "morluto/rea",
+      "tier": 2,
+      "addedAt": "2026-10-10T11:17:33.174Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "feder-cr/invisible_dots",
+      "tier": 2,
+      "addedAt": "2026-10-10T11:17:33.175Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "gotalab/cc-sdd",
+      "tier": 2,
+      "addedAt": "2026-10-10T11:17:33.175Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "ericosiu/ai-marketing-skills",
+      "tier": 2,
+      "addedAt": "2026-10-10T11:17:33.175Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "NVIDIA/skills",
+      "tier": 2,
+      "addedAt": "2026-10-10T11:17:33.175Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "jangviktor-web/nihaixia",
+      "tier": 2,
+      "addedAt": "2026-10-10T11:17:33.175Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "FireRedTeam/FireRed-OpenStoryline",
+      "tier": 2,
+      "addedAt": "2026-10-10T11:17:33.176Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "samber/cc-skills-golang",
+      "tier": 2,
+      "addedAt": "2026-10-10T11:17:33.176Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "ljagiello/ctf-skills",
+      "tier": 2,
+      "addedAt": "2026-10-10T11:17:33.176Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "ScrapeCreators/social-media-research-skills",
+      "tier": 2,
+      "addedAt": "2026-10-10T11:17:33.176Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
     }
   ]
 }

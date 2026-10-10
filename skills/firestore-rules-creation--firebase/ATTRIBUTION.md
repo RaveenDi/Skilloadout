@@ -2,7 +2,7 @@
 
 - **Item:** Firestore Rules Creation (`firestore-rules-creation`)
 - **Original source:** https://github.com/firebase/agent-skills/tree/main/skills/firestore-rules-creation
-- **Repository:** https://github.com/firebase/agent-skills @ `eba80a3dc825`
+- **Repository:** https://github.com/firebase/agent-skills @ `b5735e5baa0d`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

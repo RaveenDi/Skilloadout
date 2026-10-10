@@ -4,28 +4,6 @@ description: Connect NotFair paid-ad accounts and establish reusable campaign co
 argument-hint: "<connect accounts, workspace, or brand>"
 ---
 
-# Paid Ads Setup
+# Canonical NotFair workflow
 
-Read `../shared/operating-contract.md`. Do not alter campaigns during setup.
-
-## Establish access
-
-1. Follow [`../../docs/mcp-connection.md`](../../docs/mcp-connection.md). Use its current instructions and capability descriptions to choose tools, and verify the requested platform and account from live data. Do not infer access from another connected platform.
-2. List only accounts actually returned by the connected surface. Let the user select the intended account when more than one is available; never infer it from an account name.
-3. For Amazon and ChatGPT Ads, check the available tools before proposing a connection. If no verified connector exists, request a current export or describe the plan-only boundary.
-
-## Capture decision-quality context
-
-Read project documents that are clearly marketing-relevant, then ask only for gaps that data cannot establish:
-
-- product, offer, geography, and primary conversion;
-- unit economics: target CPA or break-even ROAS, margin, and customer value;
-- approved claims, differentiators, exclusions, and brand voice;
-- monthly budget, launch constraints, seasonality, and competitors;
-- landing-page URLs and analytics/tracking owner.
-
-Use the Google and Meta audit skills to persist account-specific business context where supported. For X, LinkedIn, Reddit, and TikTok, report the selected account and context without inventing a persistence surface. Do not overwrite an existing `AGENTS.md`, `CLAUDE.md`, or project instructions as a side effect of setup. Offer a clearly marked paid-media context file only after the user approves the exact location and content.
-
-## Finish with a gap register
-
-Report connected platforms, selected accounts, verified conversion signals, available date range, and the smallest next action. State missing tracking, economics, claim proof, or platform access explicitly. Hand off to `/notfair:paid-ads-review` for a baseline, `/notfair:paid-ads-launch` for a new campaign, or the platform audit for a deeper diagnosis.
+Read [`../../paid-ads/paid-ads-setup/WORKFLOW.md`](../../paid-ads/paid-ads-setup/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-setup/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-setup/paid-ads-setup/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-setup/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.

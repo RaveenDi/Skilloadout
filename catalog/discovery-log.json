@@ -1,5 +1,179 @@
 [
   {
+    "date": "2026-10-10T11:17:33.177Z",
+    "reviewer": "heuristic",
+    "candidates": 23,
+    "accepted": [
+      "morluto/rea",
+      "feder-cr/invisible_dots",
+      "gotalab/cc-sdd",
+      "ericosiu/ai-marketing-skills",
+      "NVIDIA/skills",
+      "jangviktor-web/nihaixia",
+      "FireRedTeam/FireRed-OpenStoryline",
+      "samber/cc-skills-golang",
+      "ljagiello/ctf-skills",
+      "ScrapeCreators/social-media-research-skills"
+    ],
+    "decisions": [
+      {
+        "repo": "mvanhorn/last30days-skill",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "morluto/rea",
+        "stars": 59733,
+        "skills": 2,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "sickn33/agentic-awesome-skills",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 16%, 8323 skills)"
+      },
+      {
+        "repo": "iOfficeAI/AionUi",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 75%, 4 skills)"
+      },
+      {
+        "repo": "feder-cr/invisible_dots",
+        "stars": 31929,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "Nutlope/hallmark",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "microsoft/SkillOpt",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 5 skills)"
+      },
+      {
+        "repo": "jnMetaCode/superpowers-zh",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 76%, 21 skills)"
+      },
+      {
+        "repo": "jordan-gibbs/hyperresearch",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "gotalab/cc-sdd",
+        "stars": 3709,
+        "skills": 154,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "ericosiu/ai-marketing-skills",
+        "stars": 3620,
+        "skills": 35,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "NVIDIA/skills",
+        "stars": 3556,
+        "skills": 406,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "jangviktor-web/nihaixia",
+        "stars": 3507,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "FireRedTeam/FireRed-OpenStoryline",
+        "stars": 3472,
+        "skills": 7,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "samber/cc-skills-golang",
+        "stars": 3433,
+        "skills": 46,
+        "rules": 2,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "ljagiello/ctf-skills",
+        "stars": 3423,
+        "skills": 11,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "ScrapeCreators/social-media-research-skills",
+        "stars": 3421,
+        "skills": 13,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      }
+    ]
+  },
+  {
     "date": "2026-10-07T11:54:22.567Z",
     "reviewer": "heuristic",
     "candidates": 24,

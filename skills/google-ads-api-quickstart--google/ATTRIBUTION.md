@@ -2,7 +2,7 @@
 
 - **Item:** Google Ads Api Quickstart (`google-ads-api-quickstart`)
 - **Original source:** https://github.com/google/skills/tree/main/skills/ads/google-ads-api-quickstart
-- **Repository:** https://github.com/google/skills @ `8a1ac055f5ae`
+- **Repository:** https://github.com/google/skills @ `4b940dd4b5f5`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

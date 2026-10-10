@@ -2,7 +2,7 @@
 
 - **Item:** Invoice (`invoice`)
 - **Original source:** https://github.com/nexu-io/open-design/tree/main/design-templates/invoice
-- **Repository:** https://github.com/nexu-io/open-design @ `53231d40b778`
+- **Repository:** https://github.com/nexu-io/open-design @ `17e255959703`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

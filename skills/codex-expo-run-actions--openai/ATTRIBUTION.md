@@ -2,7 +2,7 @@
 
 - **Item:** Codex Expo Run Actions (`codex-expo-run-actions`)
 - **Original source:** https://github.com/openai/plugins/tree/main/plugins/expo/skills/codex-expo-run-actions
-- **Repository:** https://github.com/openai/plugins @ `5fd93af4cd0c`
+- **Repository:** https://github.com/openai/plugins @ `0722921d5542`
 - **License:** MIT (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

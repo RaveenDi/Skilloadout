@@ -4,26 +4,6 @@ description: Create grounded paid-media creative concepts, copy angles, refresh 
 argument-hint: "<platform, audience, or campaign>"
 ---
 
-# Paid Ads Creative
+# Canonical NotFair workflow
 
-Read `../shared/operating-contract.md` and `../shared/measurement-framework.md`. Route platform execution to `/notfair:google-ads-copy`, `/notfair:google-ads-assets`, `/notfair:meta-ads-creative`, `/notfair:paid-ads-x`, `/notfair:paid-ads-linkedin`, `/notfair:paid-ads-reddit`, or `/notfair:paid-ads-tiktok` as appropriate.
-
-## Work from named evidence
-
-Start with a verified source: winning ads, search terms, customer research, approved landing-page claims, sales calls, reviews with permission, or a documented offer. Match each promise to its landing destination. Do not fabricate testimonials, ratings, prices, outcomes, availability, ownership, or product proof.
-
-## Produce a creative slate
-
-Deliver three distinct `ready_for_review` concept cards. Each card contains:
-
-- a concept ID and hypothesis: audience × motivation × angle × format × one variable;
-- the evidence source and claim ledger, with unsupported claims marked `needs_substantiation`;
-- hook, primary message, CTA, destination, and placement adaptation;
-- visual/production brief, including required rights or missing assets;
-- success metric, guardrail, attribution window, observation window, and failure condition.
-
-Do not make cosmetic variants of the same idea. Test one strategic variable at a time: hook, proof, format, angle, audience, or destination. Diagnose fatigue with complete-window frequency, link CTR, CPM, and delivery context before recommending a refresh.
-
-## Publication boundary
-
-Validate current platform specifications and policies from a verified source before publishing. A brief or generated image is not proof that a claim is permitted or that the platform accepted the asset. For platforms without a verified NotFair mutation surface, output an operator-ready brief and clear handoff rather than promising an upload.
+Read [`../../paid-ads/paid-ads-creative/WORKFLOW.md`](../../paid-ads/paid-ads-creative/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-creative/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-creative/paid-ads-creative/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-creative/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.
