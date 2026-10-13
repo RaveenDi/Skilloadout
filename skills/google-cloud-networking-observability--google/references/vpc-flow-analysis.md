@@ -60,7 +60,7 @@ gcloud logging read '(logName:"projects/{project_id}/logs/compute.googleapis.com
 **Aggregate Trends (bq)**
 
 ```bash
-bq query --use_legacy_sql=false --project_id {project_id} '
+bq query --use_legacy_sql=false --format=json --project_id {project_id} '
 SELECT
   timestamp,
   JSON_VALUE(json_payload.connection.src_ip) AS src_ip,

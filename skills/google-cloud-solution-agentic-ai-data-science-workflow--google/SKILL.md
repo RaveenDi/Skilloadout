@@ -1,7 +1,7 @@
 ---
 name: google-cloud-solution-agentic-ai-data-science-workflow
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
   category: MultiProductSolutions
 description: >-
   Designs a tailored multi-product agentic data science

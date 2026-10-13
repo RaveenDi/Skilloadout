@@ -2,7 +2,7 @@
 
 - **Item:** Unity Asmdef (`unity-asmdef`)
 - **Original source:** https://github.com/Besty0728/Unity-Skills/tree/main/SkillsForUnity/unity-skills~/skills/asmdef
-- **Repository:** https://github.com/Besty0728/Unity-Skills @ `e1c8e71dad7b`
+- **Repository:** https://github.com/Besty0728/Unity-Skills @ `fdacbde651bf`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

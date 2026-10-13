@@ -2,7 +2,7 @@
 
 - **Item:** Officecli (`officecli`)
 - **Original source:** https://github.com/iOfficeAI/OfficeCLI/tree/main
-- **Repository:** https://github.com/iOfficeAI/OfficeCLI @ `699cafbc8f0b`
+- **Repository:** https://github.com/iOfficeAI/OfficeCLI @ `fb98e593612d`
 - **License:** Apache-2.0 (resolved via skill)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

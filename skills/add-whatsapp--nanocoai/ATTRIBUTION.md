@@ -2,7 +2,7 @@
 
 - **Item:** Add Whatsapp (`add-whatsapp`)
 - **Original source:** https://github.com/nanocoai/nanoclaw/tree/main/.claude/skills/add-whatsapp
-- **Repository:** https://github.com/nanocoai/nanoclaw @ `af699e7fc2c6`
+- **Repository:** https://github.com/nanocoai/nanoclaw @ `ab09973a8037`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

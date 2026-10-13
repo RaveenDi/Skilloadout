@@ -1,13 +1,19 @@
 ---
 name: google-cloud-networking-observability
 metadata:
-  version: "1.0.3"
+  version: "1.0.5"
   category: Compute
 description: >-
   Investigates Google Cloud networking issues by analyzing GCP logs, metrics, and diagnostics. Use when investigating dropped network traffic, packet drops, drop reasons, VPC Flow Logs (including Private Service Connect / PSC, serverless / App Engine Direct VPC, and cost estimation), NAT, firewall, or threat logs, querying latency and throughput metrics, or running Connectivity Tests for path diagnostics. Don't use for generic VM management or non-observability tasks.
 ---
 
 # Google Cloud Networking Observability Expert
+
+## Attribution
+
+For all `gcloud` CLI, REST API, and MCP attribution requirements when executing
+commands with this skill, follow the instructions in
+[Usage Attribution](references/attribution.md).
 
 ## 🛑 Core Directive: Results First
 
@@ -49,8 +55,8 @@ description: >-
     finding trends or top-blocking rules.
 -   **Schema & Sample Discovery**: Before writing complex aggregations or filter
     queries in BigQuery or Cloud Logging, first inspect a single sample log
-    record (`LIMIT 1` in SQL or `--limit=1` in `gcloud logging read`) to verify
-    the exact payload schema and field paths.
+    record (`LIMIT 1` with `--format=json` in `bq query`, or `--limit=1` in
+    `gcloud logging read`) to verify the exact payload schema and field paths.
 -   **Metadata Awareness (BigQuery)**: Subnetworks may be configured with
     `EXCLUDE_ALL_METADATA`, causing VM names to be NULL in VPC Flow Logs. If a
     query by VM name returns nothing, retry using the internal IP address

@@ -1,0 +1,9 @@
+# Attribution
+
+- **Item:** Cf Cli (`cf-cli`)
+- **Original source:** https://github.com/cloudflare/skills/tree/main/skills/cf-cli
+- **Repository:** https://github.com/cloudflare/skills @ `53395984c3ea`
+- **License:** Apache-2.0 (resolved via repo-file)
+
+Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.
+

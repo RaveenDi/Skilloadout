@@ -1198,6 +1198,86 @@
       "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
       "reviewer": "heuristic",
       "status": "active"
+    },
+    {
+      "repo": "paperclipai/paperclip",
+      "tier": 2,
+      "addedAt": "2026-10-13T12:50:25.816Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "wheresryan22/anatomy",
+      "tier": 2,
+      "addedAt": "2026-10-13T12:50:25.816Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "wesammustafa/Claude-Code-Everything-You-Need-to-Know",
+      "tier": 2,
+      "addedAt": "2026-10-13T12:50:25.816Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "giancarloerra/SocratiCode",
+      "tier": 2,
+      "addedAt": "2026-10-13T12:50:25.816Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "rebelytics/one-skill-to-rule-them-all",
+      "tier": 2,
+      "addedAt": "2026-10-13T12:50:25.816Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "bergside/awesome-design-skills",
+      "tier": 2,
+      "addedAt": "2026-10-13T12:50:25.817Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "SharpAI/DeepCamera",
+      "tier": 2,
+      "addedAt": "2026-10-13T12:50:25.817Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "Agentchengfeng/chengfeng-videocut-skills",
+      "tier": 2,
+      "addedAt": "2026-10-13T12:50:25.817Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "kaankiziltug/logo-design-skill",
+      "tier": 2,
+      "addedAt": "2026-10-13T12:50:25.817Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "ciembor/agent-rules-books",
+      "tier": 2,
+      "addedAt": "2026-10-13T12:50:25.817Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
     }
   ]
 }

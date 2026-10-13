@@ -1,5 +1,179 @@
 [
   {
+    "date": "2026-10-13T12:50:25.818Z",
+    "reviewer": "heuristic",
+    "candidates": 24,
+    "accepted": [
+      "paperclipai/paperclip",
+      "wheresryan22/anatomy",
+      "wesammustafa/Claude-Code-Everything-You-Need-to-Know",
+      "giancarloerra/SocratiCode",
+      "rebelytics/one-skill-to-rule-them-all",
+      "bergside/awesome-design-skills",
+      "SharpAI/DeepCamera",
+      "Agentchengfeng/chengfeng-videocut-skills",
+      "kaankiziltug/logo-design-skill",
+      "ciembor/agent-rules-books"
+    ],
+    "decisions": [
+      {
+        "repo": "paperclipai/paperclip",
+        "stars": 101292,
+        "skills": 74,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "mvanhorn/last30days-skill",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "sickn33/agentic-awesome-skills",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 16%, 8359 skills)"
+      },
+      {
+        "repo": "iOfficeAI/AionUi",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 75%, 4 skills)"
+      },
+      {
+        "repo": "Nutlope/hallmark",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "microsoft/SkillOpt",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 5 skills)"
+      },
+      {
+        "repo": "jnMetaCode/superpowers-zh",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 76%, 21 skills)"
+      },
+      {
+        "repo": "wheresryan22/anatomy",
+        "stars": 7433,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "jordan-gibbs/hyperresearch",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "wesammustafa/Claude-Code-Everything-You-Need-to-Know",
+        "stars": 3352,
+        "skills": 8,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "giancarloerra/SocratiCode",
+        "stars": 3335,
+        "skills": 2,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "rebelytics/one-skill-to-rule-them-all",
+        "stars": 3298,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "bergside/awesome-design-skills",
+        "stars": 3148,
+        "skills": 67,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "SharpAI/DeepCamera",
+        "stars": 3094,
+        "skills": 25,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "Agentchengfeng/chengfeng-videocut-skills",
+        "stars": 3066,
+        "skills": 8,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "kaankiziltug/logo-design-skill",
+        "stars": 3041,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "ciembor/agent-rules-books",
+        "stars": 3022,
+        "skills": 14,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      }
+    ]
+  },
+  {
     "date": "2026-10-10T11:17:33.177Z",
     "reviewer": "heuristic",
     "candidates": 23,

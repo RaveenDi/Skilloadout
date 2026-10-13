@@ -2,7 +2,7 @@
 
 - **Item:** Daily Briefing (`daily-briefing`)
 - **Original source:** https://github.com/anthropics/knowledge-work-plugins/tree/main/sales/skills/daily-briefing
-- **Repository:** https://github.com/anthropics/knowledge-work-plugins @ `95bdacc803aa`
+- **Repository:** https://github.com/anthropics/knowledge-work-plugins @ `02ffa99ff00c`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

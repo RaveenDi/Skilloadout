@@ -2,7 +2,7 @@
 
 - **Item:** Extracting Sdoh (`extracting-sdoh`)
 - **Original source:** https://github.com/maziyarpanahi/openmed/tree/master/skills/extracting-sdoh
-- **Repository:** https://github.com/maziyarpanahi/openmed @ `7f413e56a7cb`
+- **Repository:** https://github.com/maziyarpanahi/openmed @ `0eae83db040c`
 - **License:** Apache-2.0 (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

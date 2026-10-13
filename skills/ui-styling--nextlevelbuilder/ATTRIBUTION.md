@@ -2,7 +2,7 @@
 
 - **Item:** Ui Styling (`ui-styling`)
 - **Original source:** https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/main/.claude/skills/ui-styling
-- **Repository:** https://github.com/nextlevelbuilder/ui-ux-pro-max-skill @ `50d8a7de0900`
+- **Repository:** https://github.com/nextlevelbuilder/ui-ux-pro-max-skill @ `7246805992a4`
 - **License:** Apache-2.0 (resolved via skill)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.
