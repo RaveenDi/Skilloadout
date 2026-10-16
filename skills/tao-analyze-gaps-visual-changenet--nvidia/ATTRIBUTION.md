@@ -2,7 +2,7 @@
 
 - **Item:** Tao Analyze Gaps Visual Changenet (`tao-analyze-gaps-visual-changenet`)
 - **Original source:** https://github.com/NVIDIA/skills/tree/main/skills/tao-analyze-gaps-visual-changenet
-- **Repository:** https://github.com/NVIDIA/skills @ `14a98ae278ce`
+- **Repository:** https://github.com/NVIDIA/skills @ `029363a2023c`
 - **License:** Apache-2.0 (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

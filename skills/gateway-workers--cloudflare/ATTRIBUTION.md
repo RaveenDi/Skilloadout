@@ -1,0 +1,9 @@
+# Attribution
+
+- **Item:** Gateway Workers (`gateway-workers`)
+- **Original source:** https://github.com/cloudflare/skills/tree/main/skills/gateway-workers
+- **Repository:** https://github.com/cloudflare/skills @ `86505e44f87d`
+- **License:** Apache-2.0 (resolved via repo-file)
+
+Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.
+

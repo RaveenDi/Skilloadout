@@ -1,15 +1,15 @@
 ---
 name: spanner-basics
 metadata:
-  version: "1.1.0"
+  version: "1.1.1"
   category: Databases
 description: >-
-  Assists in provisioning instances and databases, designing performant schemas, and querying data in Spanner. Use when designing primary keys, writing SQL queries or client library code, or diagnosing performance issues.
+  Assists in provisioning instances and databases, designing performant schemas, and querying data in Cloud Spanner on Google Cloud. Use when designing primary keys, writing SQL queries or client library code, or diagnosing performance issues.
 ---
 
 # Spanner Basics
 
-This skill provides core workflows and guidance for administering and developing with Google Cloud Spanner, a fully managed, mission-critical database service offering global transactional consistency and automatic, synchronous replication for high availability.
+This skill provides core workflows and guidance for administering and developing with Cloud Spanner on Google Cloud, a fully managed, mission-critical database service offering global transactional consistency and automatic, synchronous replication for high availability.
 
 ## Core Principles
 

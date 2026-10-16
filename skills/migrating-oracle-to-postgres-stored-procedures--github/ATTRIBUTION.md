@@ -2,7 +2,7 @@
 
 - **Item:** Migrating Oracle To Postgres Stored Procedures (`migrating-oracle-to-postgres-stored-procedures`)
 - **Original source:** https://github.com/github/awesome-copilot/tree/main/skills/migrating-oracle-to-postgres-stored-procedures
-- **Repository:** https://github.com/github/awesome-copilot @ `156736fb63e9`
+- **Repository:** https://github.com/github/awesome-copilot @ `cb64ad12e327`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

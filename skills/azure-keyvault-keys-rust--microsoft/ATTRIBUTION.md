@@ -2,7 +2,7 @@
 
 - **Item:** Azure Keyvault Keys Rust (`azure-keyvault-keys-rust`)
 - **Original source:** https://github.com/microsoft/skills/tree/main/.github/plugins/azure-sdk-rust/skills/azure-keyvault-keys-rust
-- **Repository:** https://github.com/microsoft/skills @ `91ec09549ca1`
+- **Repository:** https://github.com/microsoft/skills @ `146f04739114`
 - **License:** MIT (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

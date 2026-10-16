@@ -1278,6 +1278,86 @@
       "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
       "reviewer": "heuristic",
       "status": "active"
+    },
+    {
+      "repo": "Oldcircle/geo-sleuth",
+      "tier": 2,
+      "addedAt": "2026-10-16T09:59:16.613Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "aaron-he-zhu/aaron-marketing-skills",
+      "tier": 3,
+      "addedAt": "2026-10-16T09:59:16.613Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "zenstory-ai/drama-skills",
+      "tier": 3,
+      "addedAt": "2026-10-16T09:59:16.613Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "rohitg00/pro-workflow",
+      "tier": 3,
+      "addedAt": "2026-10-16T09:59:16.613Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "elementalsouls/Claude-OSINT",
+      "tier": 3,
+      "addedAt": "2026-10-16T09:59:16.613Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "cclank/lanshu-create-ai-presenter-video",
+      "tier": 3,
+      "addedAt": "2026-10-16T09:59:16.613Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "Haojae/scipilot-figure-skill",
+      "tier": 3,
+      "addedAt": "2026-10-16T09:59:16.613Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "oxsecurity/megalinter",
+      "tier": 3,
+      "addedAt": "2026-10-16T09:59:16.613Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "oil-oil/oil-motion",
+      "tier": 3,
+      "addedAt": "2026-10-16T09:59:16.613Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "alexgreensh/token-optimizer",
+      "tier": 3,
+      "addedAt": "2026-10-16T09:59:16.613Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
     }
   ]
 }

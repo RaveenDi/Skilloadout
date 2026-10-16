@@ -2,7 +2,7 @@
 
 - **Item:** Diagram Design (`diagram-design`)
 - **Original source:** https://github.com/cathrynlavery/diagram-design/tree/main/skills/diagram-design
-- **Repository:** https://github.com/cathrynlavery/diagram-design @ `0a8ea20ae69b`
+- **Repository:** https://github.com/cathrynlavery/diagram-design @ `b46c9701f035`
 - **License:** MIT (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

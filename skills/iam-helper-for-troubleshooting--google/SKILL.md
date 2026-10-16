@@ -1,7 +1,7 @@
 ---
 name: iam-helper-for-troubleshooting
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
   category: Security
 description: >-
   Diagnoses, remediates, and manages Identity and Access Management (IAM)
@@ -63,6 +63,6 @@ All access modifications and role provisioning operations are governed by the ap
 * [Guardrails & Approval Policy](references/guardrails.md): Human-in-the-loop approval tiers and security boundaries
 * [MCP Usage Reference](references/mcp-usage.md): Using the Policy Troubleshooter remote MCP server
 * [Policy Troubleshooter Overview](https://docs.cloud.google.com/policy-intelligence/docs/troubleshoot-access.md.txt)
-* [Understanding IAM Predefined Roles](https://docs.cloud.google.com/iam/docs/understanding-roles.md.txt)
+* [Understanding IAM Predefined Roles](https://docs.cloud.google.com/iam/docs/roles-permissions.md.txt)
 * [gcloud SDK iam roles list CLI Reference](https://cloud.google.com/sdk/gcloud/reference/iam/roles/list)
 

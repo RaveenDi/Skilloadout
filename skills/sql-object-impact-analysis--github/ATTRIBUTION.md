@@ -2,7 +2,7 @@
 
 - **Item:** Sql Object Impact Analysis (`sql-object-impact-analysis`)
 - **Original source:** https://github.com/github/awesome-copilot/tree/main/skills/sql-object-impact-analysis
-- **Repository:** https://github.com/github/awesome-copilot @ `156736fb63e9`
+- **Repository:** https://github.com/github/awesome-copilot @ `cb64ad12e327`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

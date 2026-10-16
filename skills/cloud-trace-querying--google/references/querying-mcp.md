@@ -40,5 +40,6 @@ become available to the agent environment:
 ## See Also
 
 *   [Model Context Protocol for Cloud Trace - Google Cloud docs](https://docs.cloud.google.com/trace/docs/reference/mcp/mcp)
-*   [Cloud Trace MCP Tools - Google Cloud docs](https://docs.cloud.google.com/trace/docs/reference/mcp/tools)
+*   [Cloud Trace MCP `list_traces` Tool - Google Cloud docs](https://docs.cloud.google.com/trace/docs/reference/mcp/mcp/tools_list/list_traces.md.txt)
+*   [Cloud Trace MCP `get_trace` Tool - Google Cloud docs](https://docs.cloud.google.com/trace/docs/reference/mcp/mcp/tools_list/get_trace.md.txt)
 *   [Cloud Trace Query Syntax (v1)](./filter-syntax.md)

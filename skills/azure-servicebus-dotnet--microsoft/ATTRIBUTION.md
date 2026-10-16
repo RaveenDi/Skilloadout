@@ -2,7 +2,7 @@
 
 - **Item:** Azure Servicebus Dotnet (`azure-servicebus-dotnet`)
 - **Original source:** https://github.com/microsoft/skills/tree/main/.github/plugins/azure-sdk-dotnet/skills/azure-servicebus-dotnet
-- **Repository:** https://github.com/microsoft/skills @ `91ec09549ca1`
+- **Repository:** https://github.com/microsoft/skills @ `146f04739114`
 - **License:** MIT (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

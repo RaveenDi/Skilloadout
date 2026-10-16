@@ -2,7 +2,7 @@
 
 - **Item:** Deploy Model (`deploy-model`)
 - **Original source:** https://github.com/microsoft/skills/tree/main/.github/plugins/azure-skills/skills/microsoft-foundry/models/deploy-model
-- **Repository:** https://github.com/microsoft/skills @ `91ec09549ca1`
+- **Repository:** https://github.com/microsoft/skills @ `146f04739114`
 - **License:** MIT (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

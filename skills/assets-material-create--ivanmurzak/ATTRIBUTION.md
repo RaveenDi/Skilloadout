@@ -1,9 +1,0 @@
-# Attribution
-
-- **Item:** Assets Material Create (`assets-material-create`)
-- **Original source:** https://github.com/IvanMurzak/Unity-MCP/tree/main/Unity-MCP-Plugin/.claude/skills/assets-material-create
-- **Repository:** https://github.com/IvanMurzak/Unity-MCP @ `d522963f1c87`
-- **License:** Apache-2.0 (resolved via repo-file)
-
-Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.
-

@@ -2,7 +2,7 @@
 
 - **Item:** Stripe Projects (`stripe-projects`)
 - **Original source:** https://github.com/stripe/ai/tree/main/providers/agent-plugins/plugin/skills/stripe-projects
-- **Repository:** https://github.com/stripe/ai @ `deae744bc0cb`
+- **Repository:** https://github.com/stripe/ai @ `ad3c5817e5c9`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

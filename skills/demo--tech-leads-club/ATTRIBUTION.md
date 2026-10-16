@@ -1,0 +1,9 @@
+# Attribution
+
+- **Item:** Demo (`demo`)
+- **Original source:** https://github.com/tech-leads-club/agent-skills/tree/main/packages/skills-catalog/skills/(web-automation)/demo
+- **Repository:** https://github.com/tech-leads-club/agent-skills @ `6e7a50e7033a`
+- **License:** MIT (resolved via repo-file)
+
+Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.
+

@@ -2,7 +2,7 @@
 
 - **Item:** Researchwrite (`researchwrite`)
 - **Original source:** https://github.com/Yuan1z0825/nature-skills/tree/main/skills/nature-proposal-writer
-- **Repository:** https://github.com/Yuan1z0825/nature-skills @ `473e8d7b1b91`
+- **Repository:** https://github.com/Yuan1z0825/nature-skills @ `6827ae57b62b`
 - **License:** MIT (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

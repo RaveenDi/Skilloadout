@@ -133,6 +133,22 @@ def _go_collect_type_refs(node, source: bytes, generic: bool, out: list[tuple[st
             if c.is_named:
                 _go_collect_type_refs(c, source, generic, out, skip)
 
+def _go_strip_generic_args(type_text: str) -> str:
+    """Drop a generic instantiation's type arguments from a receiver type's text.
+
+    ``(b *Box[T])`` reads its ``type`` field as ``*Box[T]`` verbatim (after the
+    leading ``*`` is stripped, ``Box[T]``), but the type declaration's own id
+    is keyed on the bare name alone: ``type Box[T any] struct {...}`` captures
+    ``[T any]`` as a separate ``type_parameter_list``, never part of the name.
+    Without stripping this before building an id from it, a generic receiver's
+    id never matched its own type's id, so a generic type's methods attached
+    to a node disconnected from the type itself (#3368) — this must run
+    everywhere a receiver's raw type text turns into an id, not only one of
+    them, or the two computations silently disagree.
+    """
+    return type_text.split("[", 1)[0].strip()
+
+
 def _go_single_type_name(node, source: bytes) -> str | None:
     """The one declared type a Go type expression names, or None.
 
@@ -351,7 +367,9 @@ def extract_go(path: Path) -> dict:
             if param.type == "parameter_declaration":
                 type_node = param.child_by_field_name("type")
                 if type_node:
-                    return _read_text(type_node, source).lstrip("*").strip()
+                    return _go_strip_generic_args(
+                        _read_text(type_node, source).lstrip("*").strip()
+                    )
                 break
         return None
 
@@ -430,7 +448,9 @@ def extract_go(path: Path) -> dict:
                     if param.type == "parameter_declaration":
                         type_node = param.child_by_field_name("type")
                         if type_node:
-                            receiver_type = _read_text(type_node, source).lstrip("*").strip()
+                            receiver_type = _go_strip_generic_args(
+                                _read_text(type_node, source).lstrip("*").strip()
+                            )
                         name_node = param.child_by_field_name("name")
                         if name_node:
                             receiver_name = _read_text(name_node, source)

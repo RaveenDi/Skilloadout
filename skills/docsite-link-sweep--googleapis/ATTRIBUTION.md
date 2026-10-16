@@ -2,7 +2,7 @@
 
 - **Item:** Docsite Link Sweep (`docsite-link-sweep`)
 - **Original source:** https://github.com/googleapis/mcp-toolbox/tree/main/skills/maintainer/docsite-link-sweep
-- **Repository:** https://github.com/googleapis/mcp-toolbox @ `c8922eba2b81`
+- **Repository:** https://github.com/googleapis/mcp-toolbox @ `6d46c5f39df8`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

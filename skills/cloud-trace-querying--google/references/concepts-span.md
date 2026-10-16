@@ -10,5 +10,5 @@ across distributed service networks.
 *   [Traces and Spans Concept - Google Cloud docs](https://docs.cloud.google.com/trace/docs/traces-and-spans)
 *   [Spans Concept - OpenTelemetry docs](https://opentelemetry.io/docs/concepts/signals/traces/#spans)
 *   [Span API Reference - Google Cloud docs](https://cloud.google.com/trace/docs/reference)
-*   [REST API Spans Reference - Google Cloud docs](https://cloud.google.com/trace/docs/reference/v2/rest/v2/projects.traces/spans)
+*   [REST API Spans Reference - Google Cloud docs](https://docs.cloud.google.com/trace/docs/reference/v2/rest/v2/projects.traces.spans.md.txt)
 *   [Tracing API Specification - OpenTelemetry docs](https://opentelemetry.io/docs/specs/otel/trace/api/#span)

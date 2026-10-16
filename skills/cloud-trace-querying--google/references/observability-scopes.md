@@ -62,4 +62,4 @@ the Trace Scopes of candidate projects to resolve the candidate values of
 *   [Observability Scopes REST API Reference - Google Cloud docs](https://docs.cloud.google.com/stackdriver/docs/reference/observability/api/rest/v1/projects.locations.scopes)
 *   [Create and Manage Log Scopes - Google Cloud docs](https://docs.cloud.google.com/logging/docs/log-scope/create-and-manage)
 *   [Create and Manage Trace Scopes - Google Cloud docs](https://docs.cloud.google.com/trace/docs/trace-scope/create-and-manage)
-*   [Create and Manage Metrics Scopes - Google Cloud docs](https://docs.cloud.google.com/monitoring/settings/metrics-scopes)
+*   [Create and Manage Metrics Scopes - Google Cloud docs](https://docs.cloud.google.com/monitoring/settings/multiple-projects.md.txt)

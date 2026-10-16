@@ -2,7 +2,7 @@
 
 - **Item:** Azure Mgmt Fabric Dotnet (`azure-mgmt-fabric-dotnet`)
 - **Original source:** https://github.com/microsoft/skills/tree/main/.github/plugins/azure-sdk-dotnet/skills/azure-mgmt-fabric-dotnet
-- **Repository:** https://github.com/microsoft/skills @ `91ec09549ca1`
+- **Repository:** https://github.com/microsoft/skills @ `146f04739114`
 - **License:** MIT (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

@@ -1,5 +1,189 @@
 [
   {
+    "date": "2026-10-16T09:59:16.615Z",
+    "reviewer": "heuristic",
+    "candidates": 24,
+    "accepted": [
+      "Oldcircle/geo-sleuth",
+      "aaron-he-zhu/aaron-marketing-skills",
+      "zenstory-ai/drama-skills",
+      "rohitg00/pro-workflow",
+      "elementalsouls/Claude-OSINT",
+      "cclank/lanshu-create-ai-presenter-video",
+      "Haojae/scipilot-figure-skill",
+      "oxsecurity/megalinter",
+      "oil-oil/oil-motion",
+      "alexgreensh/token-optimizer"
+    ],
+    "decisions": [
+      {
+        "repo": "mvanhorn/last30days-skill",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "sickn33/agentic-awesome-skills",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 16%, 8332 skills)"
+      },
+      {
+        "repo": "iOfficeAI/AionUi",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 75%, 4 skills)"
+      },
+      {
+        "repo": "zarazhangrui/frontend-slides",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 2 skills)"
+      },
+      {
+        "repo": "Nutlope/hallmark",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "microsoft/SkillOpt",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 5 skills)"
+      },
+      {
+        "repo": "jnMetaCode/superpowers-zh",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 76%, 21 skills)"
+      },
+      {
+        "repo": "jordan-gibbs/hyperresearch",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "Oldcircle/geo-sleuth",
+        "stars": 3040,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "aaron-he-zhu/aaron-marketing-skills",
+        "stars": 2966,
+        "skills": 120,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "3",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "zenstory-ai/drama-skills",
+        "stars": 2946,
+        "skills": 12,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "3",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "rohitg00/pro-workflow",
+        "stars": 2916,
+        "skills": 41,
+        "rules": 11,
+        "decision": "accept",
+        "tier": "3",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "elementalsouls/Claude-OSINT",
+        "stars": 2823,
+        "skills": 10,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "3",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "feder-cr/invisible_playwright_mcp",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "cclank/lanshu-create-ai-presenter-video",
+        "stars": 2715,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "3",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "Haojae/scipilot-figure-skill",
+        "stars": 2655,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "3",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "oxsecurity/megalinter",
+        "stars": 2615,
+        "skills": 27,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "3",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "oil-oil/oil-motion",
+        "stars": 2603,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "3",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "alexgreensh/token-optimizer",
+        "stars": 2573,
+        "skills": 18,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "3",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      }
+    ]
+  },
+  {
     "date": "2026-10-13T12:50:25.818Z",
     "reviewer": "heuristic",
     "candidates": 24,

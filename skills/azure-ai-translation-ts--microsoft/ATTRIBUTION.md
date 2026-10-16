@@ -2,7 +2,7 @@
 
 - **Item:** Azure Ai Translation Ts (`azure-ai-translation-ts`)
 - **Original source:** https://github.com/microsoft/skills/tree/main/.github/plugins/azure-sdk-typescript/skills/azure-ai-translation-ts
-- **Repository:** https://github.com/microsoft/skills @ `91ec09549ca1`
+- **Repository:** https://github.com/microsoft/skills @ `146f04739114`
 - **License:** MIT (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

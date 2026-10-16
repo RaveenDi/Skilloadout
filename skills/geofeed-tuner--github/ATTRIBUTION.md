@@ -2,7 +2,7 @@
 
 - **Item:** Geofeed Tuner (`geofeed-tuner`)
 - **Original source:** https://github.com/github/awesome-copilot/tree/main/skills/geofeed-tuner
-- **Repository:** https://github.com/github/awesome-copilot @ `156736fb63e9`
+- **Repository:** https://github.com/github/awesome-copilot @ `cb64ad12e327`
 - **License:** Apache-2.0 (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

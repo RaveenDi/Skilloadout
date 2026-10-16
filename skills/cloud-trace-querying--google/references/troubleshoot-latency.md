@@ -45,4 +45,4 @@ When inspecting spans, consider the following patterns:
 * [Spans Concept - Trace Skill docs](./concepts-span.md)
 * [Finding Traces in Console - Google Cloud docs](https://cloud.google.com/trace/docs/finding-traces)
 * [Viewing Trace Details - Google Cloud docs](https://cloud.google.com/trace/docs/viewing-details)
-* [Performance Optimization - Google Cloud docs](https://cloud.google.com/trace/docs/optimizing-performance)
+* [View App Latency - Google Cloud docs](https://docs.cloud.google.com/trace/docs/trace-app-latency.md.txt)

@@ -2,7 +2,7 @@
 
 - **Item:** Oversized Cursor (`oversized-cursor`)
 - **Original source:** https://github.com/heygen-com/hyperframes/tree/main/.agents/skills/oversized-cursor
-- **Repository:** https://github.com/heygen-com/hyperframes @ `e8eb358fe21d`
+- **Repository:** https://github.com/heygen-com/hyperframes @ `4d6b5be33bda`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.
