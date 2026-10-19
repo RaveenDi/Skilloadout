@@ -2,7 +2,7 @@
 
 - **Item:** Open Code Review Delegate (`open-code-review-delegate`)
 - **Original source:** https://github.com/alibaba/open-code-review/tree/main/plugins/open-code-review/skills/open-code-review-delegate
-- **Repository:** https://github.com/alibaba/open-code-review @ `8eb83340a487`
+- **Repository:** https://github.com/alibaba/open-code-review @ `27def8684b3f`
 - **License:** Apache-2.0 (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

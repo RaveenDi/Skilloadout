@@ -2,7 +2,7 @@
 
 - **Item:** Check Pr (`check-pr`)
 - **Original source:** https://github.com/paperclipai/paperclip/tree/master/.agents/skills/check-pr
-- **Repository:** https://github.com/paperclipai/paperclip @ `8556539364bc`
+- **Repository:** https://github.com/paperclipai/paperclip @ `2f6ad2226aec`
 - **License:** MIT (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

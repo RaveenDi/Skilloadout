@@ -2,7 +2,7 @@
 
 - **Item:** Ethical Hacking Methodology (`ethical-hacking-methodology`)
 - **Original source:** https://github.com/zebbern/claude-code-guide/tree/main/skills/ethical-hacking-methodology
-- **Repository:** https://github.com/zebbern/claude-code-guide @ `cab276df69d4`
+- **Repository:** https://github.com/zebbern/claude-code-guide @ `812b74a15d73`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

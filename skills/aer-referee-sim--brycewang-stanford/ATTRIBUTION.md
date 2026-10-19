@@ -2,7 +2,7 @@
 
 - **Item:** Aer Referee Sim (`aer-referee-sim`)
 - **Original source:** https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills/tree/main/skills/50-brycewang-aer-skills/skills/aer-referee-sim
-- **Repository:** https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills @ `e0b0c13ca15d`
+- **Repository:** https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills @ `09097ed9533f`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

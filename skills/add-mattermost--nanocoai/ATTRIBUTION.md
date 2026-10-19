@@ -2,7 +2,7 @@
 
 - **Item:** Add Mattermost (`add-mattermost`)
 - **Original source:** https://github.com/nanocoai/nanoclaw/tree/main/.claude/skills/add-mattermost
-- **Repository:** https://github.com/nanocoai/nanoclaw @ `d61af17b541f`
+- **Repository:** https://github.com/nanocoai/nanoclaw @ `2763e592874e`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

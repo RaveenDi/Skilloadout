@@ -2,7 +2,7 @@
 
 - **Item:** Translate To Quarto (`translate-to-quarto`)
 - **Original source:** https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills/tree/main/skills/12-pedrohcgs-claude-code-my-workflow/dot-claude/skills/translate-to-quarto
-- **Repository:** https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills @ `e0b0c13ca15d`
+- **Repository:** https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills @ `09097ed9533f`
 - **License:** CC-BY-SA-4.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

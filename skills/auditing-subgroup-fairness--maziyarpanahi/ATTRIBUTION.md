@@ -2,7 +2,7 @@
 
 - **Item:** Auditing Subgroup Fairness (`auditing-subgroup-fairness`)
 - **Original source:** https://github.com/maziyarpanahi/openmed/tree/master/skills/auditing-subgroup-fairness
-- **Repository:** https://github.com/maziyarpanahi/openmed @ `0386c53a2795`
+- **Repository:** https://github.com/maziyarpanahi/openmed @ `8440bdac5962`
 - **License:** Apache-2.0 (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

@@ -2,7 +2,7 @@
 
 - **Item:** Stat Writing (`stat-writing`)
 - **Original source:** https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills/tree/main/skills/06-fuhaoda-stats-paper-writing/stat-writing
-- **Repository:** https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills @ `e0b0c13ca15d`
+- **Repository:** https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills @ `09097ed9533f`
 - **License:** CC0-1.0 (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

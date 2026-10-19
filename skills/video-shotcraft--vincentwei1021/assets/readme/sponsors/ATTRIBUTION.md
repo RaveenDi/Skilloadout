@@ -1,5 +1,15 @@
 # Sponsor materials
 
+## APIMart
+
+`apimart.png` is the sponsor image supplied by the project maintainer on
+2026-10-16. The English and Chinese sponsor descriptions in the root READMEs
+use the supplied copy, with registration links pointing to
+[APIMart](https://go.apimart.ai/tw-video-shotcraft).
+
+The logo and trademark belong to APIMart and are not covered by this
+repository's Apache-2.0 license.
+
 ## AWS
 
 `aws.svg` uses the official AWS homepage navigation logo's path geometry,

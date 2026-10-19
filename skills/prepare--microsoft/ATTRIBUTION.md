@@ -2,7 +2,7 @@
 
 - **Item:** Prepare (`prepare`)
 - **Original source:** https://github.com/microsoft/skills/tree/main/.github/plugins/azure-skills/skills/azure-app-onboard/prepare
-- **Repository:** https://github.com/microsoft/skills @ `146f04739114`
+- **Repository:** https://github.com/microsoft/skills @ `8850874f66fb`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

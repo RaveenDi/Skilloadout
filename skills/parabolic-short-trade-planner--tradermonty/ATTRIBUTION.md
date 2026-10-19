@@ -2,7 +2,7 @@
 
 - **Item:** Parabolic Short Trade Planner (`parabolic-short-trade-planner`)
 - **Original source:** https://github.com/tradermonty/claude-trading-skills/tree/main/skills/parabolic-short-trade-planner
-- **Repository:** https://github.com/tradermonty/claude-trading-skills @ `25919a61b96e`
+- **Repository:** https://github.com/tradermonty/claude-trading-skills @ `aec21a0fb02d`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

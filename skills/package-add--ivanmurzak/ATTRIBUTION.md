@@ -2,7 +2,7 @@
 
 - **Item:** Package Add (`package-add`)
 - **Original source:** https://github.com/IvanMurzak/Unity-MCP/tree/main/Unity-MCP-Plugin/.claude/skills/package-add
-- **Repository:** https://github.com/IvanMurzak/Unity-MCP @ `ae97f6c9126c`
+- **Repository:** https://github.com/IvanMurzak/Unity-MCP @ `a1d26b868dc7`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

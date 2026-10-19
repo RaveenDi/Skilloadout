@@ -2,7 +2,7 @@
 
 - **Item:** Ginkgo Cloud Lab (`ginkgo-cloud-lab`)
 - **Original source:** https://github.com/K-Dense-AI/scientific-agent-skills/tree/main/skills/ginkgo-cloud-lab
-- **Repository:** https://github.com/K-Dense-AI/scientific-agent-skills @ `a1043ef544e3`
+- **Repository:** https://github.com/K-Dense-AI/scientific-agent-skills @ `593377bb0487`
 - **License:** MIT (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

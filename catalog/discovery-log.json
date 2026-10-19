@@ -1,5 +1,189 @@
 [
   {
+    "date": "2026-10-19T10:59:53.087Z",
+    "reviewer": "heuristic",
+    "candidates": 22,
+    "accepted": [
+      "wiltodelta/remove-ai-watermarks",
+      "lemomo-ai/lemo-opuscar",
+      "michael-denyer/pstack-claude",
+      "Vincentwei1021/anything2explainer",
+      "0xsline/OpenChatCut",
+      "hawk86104/three-vue-tres",
+      "nolangz/pixel2motion",
+      "amElnagdy/delegate-skills",
+      "AgriciDaniel/claude-blog",
+      "Weizhena/Deep-Research-skills"
+    ],
+    "decisions": [
+      {
+        "repo": "mvanhorn/last30days-skill",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "sickn33/agentic-awesome-skills",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 16%, 8371 skills)"
+      },
+      {
+        "repo": "iOfficeAI/AionUi",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 75%, 4 skills)"
+      },
+      {
+        "repo": "zarazhangrui/frontend-slides",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 2 skills)"
+      },
+      {
+        "repo": "Nutlope/hallmark",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "microsoft/SkillOpt",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 5 skills)"
+      },
+      {
+        "repo": "jnMetaCode/superpowers-zh",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 76%, 21 skills)"
+      },
+      {
+        "repo": "wiltodelta/remove-ai-watermarks",
+        "stars": 6056,
+        "skills": 3,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "jordan-gibbs/hyperresearch",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "lemomo-ai/lemo-opuscar",
+        "stars": 3476,
+        "skills": 2,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "michael-denyer/pstack-claude",
+        "stars": 3020,
+        "skills": 63,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "2",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "feder-cr/invisible_playwright_mcp",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "Vincentwei1021/anything2explainer",
+        "stars": 2605,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "3",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "0xsline/OpenChatCut",
+        "stars": 2520,
+        "skills": 31,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "3",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "hawk86104/three-vue-tres",
+        "stars": 2449,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "3",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "nolangz/pixel2motion",
+        "stars": 2447,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "3",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "amElnagdy/delegate-skills",
+        "stars": 2436,
+        "skills": 20,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "3",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "AgriciDaniel/claude-blog",
+        "stars": 2424,
+        "skills": 65,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "3",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "Weizhena/Deep-Research-skills",
+        "stars": 2382,
+        "skills": 20,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "3",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      }
+    ]
+  },
+  {
     "date": "2026-10-16T09:59:16.615Z",
     "reviewer": "heuristic",
     "candidates": 24,

@@ -2,7 +2,7 @@
 
 - **Item:** Rerun Dataset Conversion (`rerun-dataset-conversion`)
 - **Original source:** https://github.com/rerun-io/rerun/tree/main/skills/rerun-dataset-conversion
-- **Repository:** https://github.com/rerun-io/rerun @ `a8f579e83851`
+- **Repository:** https://github.com/rerun-io/rerun @ `32bd0bf4aec8`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

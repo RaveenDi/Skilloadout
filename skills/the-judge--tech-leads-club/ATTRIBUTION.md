@@ -2,7 +2,7 @@
 
 - **Item:** The Judge (`the-judge`)
 - **Original source:** https://github.com/tech-leads-club/agent-skills/tree/main/packages/skills-catalog/skills/(quality)/the-judge
-- **Repository:** https://github.com/tech-leads-club/agent-skills @ `6e7a50e7033a`
+- **Repository:** https://github.com/tech-leads-club/agent-skills @ `59f94a5b1a98`
 - **License:** CC-BY-4.0 (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

@@ -1358,6 +1358,86 @@
       "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
       "reviewer": "heuristic",
       "status": "active"
+    },
+    {
+      "repo": "wiltodelta/remove-ai-watermarks",
+      "tier": 2,
+      "addedAt": "2026-10-19T10:59:53.085Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "lemomo-ai/lemo-opuscar",
+      "tier": 2,
+      "addedAt": "2026-10-19T10:59:53.085Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "michael-denyer/pstack-claude",
+      "tier": 2,
+      "addedAt": "2026-10-19T10:59:53.085Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "Vincentwei1021/anything2explainer",
+      "tier": 3,
+      "addedAt": "2026-10-19T10:59:53.085Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "0xsline/OpenChatCut",
+      "tier": 3,
+      "addedAt": "2026-10-19T10:59:53.085Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "hawk86104/three-vue-tres",
+      "tier": 3,
+      "addedAt": "2026-10-19T10:59:53.085Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "nolangz/pixel2motion",
+      "tier": 3,
+      "addedAt": "2026-10-19T10:59:53.085Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "amElnagdy/delegate-skills",
+      "tier": 3,
+      "addedAt": "2026-10-19T10:59:53.085Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "AgriciDaniel/claude-blog",
+      "tier": 3,
+      "addedAt": "2026-10-19T10:59:53.086Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "Weizhena/Deep-Research-skills",
+      "tier": 3,
+      "addedAt": "2026-10-19T10:59:53.086Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
     }
   ]
 }

@@ -2,7 +2,7 @@
 
 - **Item:** Anndata (`anndata`)
 - **Original source:** https://github.com/K-Dense-AI/scientific-agent-skills/tree/main/skills/anndata
-- **Repository:** https://github.com/K-Dense-AI/scientific-agent-skills @ `a1043ef544e3`
+- **Repository:** https://github.com/K-Dense-AI/scientific-agent-skills @ `593377bb0487`
 - **License:** BSD-3-Clause (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

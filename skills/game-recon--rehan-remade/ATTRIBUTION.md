@@ -2,7 +2,7 @@
 
 - **Item:** Game Recon (`game-recon`)
 - **Original source:** https://github.com/rehan-remade/universal-modder/tree/main/.agents/skills/game-recon
-- **Repository:** https://github.com/rehan-remade/universal-modder @ `23902ef42e8e`
+- **Repository:** https://github.com/rehan-remade/universal-modder @ `6a8865ae171b`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

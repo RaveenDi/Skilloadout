@@ -2,7 +2,7 @@
 
 - **Item:** Neon Auth (`neon-auth`)
 - **Original source:** https://github.com/neondatabase/agent-skills/tree/main/plugins/neon-postgres/skills/neon-auth
-- **Repository:** https://github.com/neondatabase/agent-skills @ `5e693d6d5ddb`
+- **Repository:** https://github.com/neondatabase/agent-skills @ `51c7d594c056`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

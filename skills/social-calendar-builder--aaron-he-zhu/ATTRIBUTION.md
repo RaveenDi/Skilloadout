@@ -2,7 +2,7 @@
 
 - **Item:** Social Calendar Builder (`social-calendar-builder`)
 - **Original source:** https://github.com/aaron-he-zhu/aaron-marketing-skills/tree/main/social/craft/social-calendar-builder
-- **Repository:** https://github.com/aaron-he-zhu/aaron-marketing-skills @ `c6111bd16031`
+- **Repository:** https://github.com/aaron-he-zhu/aaron-marketing-skills @ `497bdd3a3097`
 - **License:** Apache-2.0 (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

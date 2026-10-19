@@ -2,7 +2,7 @@
 
 - **Item:** Stockbee 20pct Study (`stockbee-20pct-study`)
 - **Original source:** https://github.com/tradermonty/claude-trading-skills/tree/main/skills/stockbee-20pct-study
-- **Repository:** https://github.com/tradermonty/claude-trading-skills @ `25919a61b96e`
+- **Repository:** https://github.com/tradermonty/claude-trading-skills @ `aec21a0fb02d`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.
