@@ -1,7 +1,7 @@
 ---
 name: gke-workload-scaling-troubleshooting
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
   category: Containers
 description: >-
   Diagnoses GKE HorizontalPodAutoscaler (HPA) failures — metrics showing as
@@ -28,6 +28,15 @@ diagnostics boundary before proposing manifest or configuration corrections.
 > For configuring HPA/VPA objects and scaling **best practices**, use the
 > `gke-workload-scaling` skill instead. This skill focuses on **failure
 > diagnosis**.
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:gke-workload-scaling-troubleshooting)"`
+and append `agent-skills/1.0 (skill:gke-workload-scaling-troubleshooting)` to `User-Agent` headers.
 
 ## 🔍 Diagnosis & Resolution Workflow
 

@@ -2,7 +2,7 @@
 
 - **Item:** Hsb Ip Create Top (`hsb-ip-create-top`)
 - **Original source:** https://github.com/NVIDIA/skills/tree/main/skills/hsb-ip-create-top
-- **Repository:** https://github.com/NVIDIA/skills @ `4fc9cf6cec78`
+- **Repository:** https://github.com/NVIDIA/skills @ `12ccc89634f3`
 - **License:** Apache-2.0 (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

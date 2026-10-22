@@ -1,7 +1,7 @@
 ---
 name: api-gateway-backend-security-and-rate-limiting
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
   category: Security
 description: >-
   Secures and rate limits backend services behind Google Cloud API Gateway
@@ -17,6 +17,15 @@ description: >-
 # API Gateway Backend Security and Rate Limiting
 
 This skill configures client authentication, gateway-to-backend authentication, and per-project rate limits (quotas) for Google Cloud API Gateway across OpenAPI 2.0 (`swagger: "2.0"`) and OpenAPI 3.0.x (`openapi: 3.0.4`), including gateways with Model Context Protocol (MCP) enabled (Public Preview).
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:api-gateway-backend-security-and-rate-limiting)"`
+and append `agent-skills/1.0 (skill:api-gateway-backend-security-and-rate-limiting)` to `User-Agent` headers.
 
 ## Prerequisites
 

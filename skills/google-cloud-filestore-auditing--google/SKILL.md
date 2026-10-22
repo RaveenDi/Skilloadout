@@ -1,7 +1,7 @@
 ---
 name: google-cloud-filestore-auditing
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
   category: Storage
 description: >-
   Audits Filestore instances on Google Cloud across projects for disaster
@@ -82,7 +82,7 @@ Authenticate the runtime environment using the appropriate method for your execu
 ## Quick Start
 
 1.  Ensure `gcloud` is installed. See
-    [gcloud installation guide](https://cloud.google.com/sdk/docs/install.md.txt) if
+    [gcloud installation guide](https://docs.cloud.google.com/sdk/docs/install-sdk.md.txt) if
     needed.
 2.  Authenticate your environment:
 
@@ -97,7 +97,7 @@ Authenticate the runtime environment using the appropriate method for your execu
     gcloud beta billing projects describe {project_id}
     ```
 4.  Configure a well-supported default region (e.g., `us-central1`). See official
-    [region availability documentation](https://cloud.google.com/about/locations.md.txt):
+    [region availability documentation](https://cloud.google.com/about/locations):
 
     ```bash
     gcloud config set compute/region us-central1

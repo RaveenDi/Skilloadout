@@ -2,7 +2,7 @@
 
 - **Item:** Observe Trace (`observe-trace`)
 - **Original source:** https://github.com/ruvnet/ruflo/tree/main/plugins/ruflo-observability/skills/observe-trace
-- **Repository:** https://github.com/ruvnet/ruflo @ `b93144803bb1`
+- **Repository:** https://github.com/ruvnet/ruflo @ `732e9f07c021`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

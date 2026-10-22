@@ -2,7 +2,7 @@
 
 - **Item:** Contrarian Setup Gate (`contrarian-setup-gate`)
 - **Original source:** https://github.com/tradermonty/claude-trading-skills/tree/main/skills/contrarian-setup-gate
-- **Repository:** https://github.com/tradermonty/claude-trading-skills @ `aec21a0fb02d`
+- **Repository:** https://github.com/tradermonty/claude-trading-skills @ `cb0f3aadffed`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

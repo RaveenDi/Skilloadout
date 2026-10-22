@@ -1,7 +1,7 @@
 ---
 name: google-cloud-solution-architecture
 metadata:
-  version: "1.0.3"
+  version: "1.0.5"
   category: MultiProductSolutions
 description: >-
   Interactively discovers requirements and designs holistic, multi-product
@@ -16,6 +16,12 @@ description: >-
 ---
 
 # Google Cloud solution-architecture workflow
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read and follow the instructions in
+[Usage Attribution](references/attribution.md).
 
 ## Overview of the workflow
 

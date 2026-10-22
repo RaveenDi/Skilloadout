@@ -216,8 +216,7 @@
     "marketing-plan--coreyhaines31",
     "programmatic-seo--coreyhaines31",
     "content-strategy--coreyhaines31",
-    "landing-page-conversion-audit--github",
-    "product-launch-video--heygen-com"
+    "landing-page-conversion-audit--github"
   ],
   "sales-crm": [
     "cold-email--coreyhaines31",
@@ -356,7 +355,6 @@
   ],
   "media-video-audio": [
     "hyperframes--heygen-com",
-    "general-video--heygen-com",
     "speech--openai",
     "transcribe--openai",
     "imagegen--openai",

@@ -1,7 +1,7 @@
 ---
 name: gke-basics
 metadata:
-  version: "1.1.1"
+  version: "1.1.2"
   category: Containers
 description: >-
   Manages core GKE cluster provisioning, credentials, Autopilot vs Standard selection,
@@ -16,6 +16,15 @@ description: >-
 > **Routing Note:** For Workload Identity KSA/GSA setup, open `gke-workload-identity/SKILL.md`. For cluster security flags (`--database-encryption-key`, `--security-posture`, RBAC, Shielded Nodes, Binary Authorization), open `gke-platform-security/SKILL.md`. For cluster upgrades or maintenance windows, open `gke-upgrades/SKILL.md`. For generating Kubernetes YAML manifests (`Deployment`, `StatefulSet`, `Service`, `HTTPRoute`, `PodDisruptionBudget`), open `gke-manifest-generation/SKILL.md`.
 
 Managed Kubernetes platform on Google Cloud. Defaults to Autopilot mode unless Standard is explicitly required.
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:gke-basics)"`
+and append `agent-skills/1.0 (skill:gke-basics)` to `User-Agent` headers.
 
 ## Key Selection Rules: Autopilot vs. Standard
 

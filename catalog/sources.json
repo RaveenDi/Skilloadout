@@ -1438,6 +1438,78 @@
       "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
       "reviewer": "heuristic",
       "status": "active"
+    },
+    {
+      "repo": "gamedev-skills/awesome-gamedev-agent-skills",
+      "tier": 3,
+      "addedAt": "2026-10-22T10:22:02.238Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "Jakeschincariol/linkedin-agent-skill",
+      "tier": 3,
+      "addedAt": "2026-10-22T10:22:02.238Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "Alisa0808/vox-director",
+      "tier": 3,
+      "addedAt": "2026-10-22T10:22:02.238Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "Jakeschincariol/instagram-agent-skill",
+      "tier": 3,
+      "addedAt": "2026-10-22T10:22:02.238Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "gnipbao/story-to-handdrawn-video",
+      "tier": 3,
+      "addedAt": "2026-10-22T10:22:02.238Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "tourmind-com/Tourmind-Booking-Skills",
+      "tier": 3,
+      "addedAt": "2026-10-22T10:22:02.238Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "LearnPrompt/awesome-seedance",
+      "tier": 3,
+      "addedAt": "2026-10-22T10:22:02.238Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "appeeky/aso-skills",
+      "tier": 3,
+      "addedAt": "2026-10-22T10:22:02.238Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
+    },
+    {
+      "repo": "JuneYaooo/nihaisha-nishi-tcm",
+      "tier": 3,
+      "addedAt": "2026-10-22T10:22:02.239Z",
+      "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+      "reviewer": "heuristic",
+      "status": "active"
     }
   ]
 }

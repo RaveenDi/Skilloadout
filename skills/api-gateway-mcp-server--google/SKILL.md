@@ -1,7 +1,7 @@
 ---
 name: api-gateway-mcp-server
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
   category: AiAndMachineLearning
 description: >-
   Configures Google Cloud API Gateway to act as a remote Model Context Protocol
@@ -17,6 +17,15 @@ description: >-
 # API Gateway Remote MCP Server (Public Preview)
 
 This skill converts new or existing REST APIs on Google Cloud API Gateway into remote Model Context Protocol (MCP) servers (`POST https://{default_hostname}/mcp`, **Public Preview**). By annotating an OpenAPI 3.x (3.0.x or 3.1.x) specification with `x-google-api-management.mcp` and `x-google-mcp-tool`, API Gateway translates MCP JSON-RPC 2.0 requests (`initialize`, `notifications/initialized`, `tools/list`, `tools/call`) into standard HTTP REST requests to your backend while enforcing existing authentication and quota policies.
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:api-gateway-mcp-server)"`
+and append `agent-skills/1.0 (skill:api-gateway-mcp-server)` to `User-Agent` headers.
 
 ## Prerequisites
 

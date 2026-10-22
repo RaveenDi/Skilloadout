@@ -1,7 +1,7 @@
 ---
 name: cloud-monitoring-metric-selection
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
   category: CloudObservabilityAndMonitoring
 description: >-
   Retrieve, query, and identify relevant Cloud Monitoring metric descriptors on
@@ -16,6 +16,15 @@ description: >-
 Use this skill to identify the most relevant Cloud Monitoring metric
 descriptors. It queries all metric descriptors for a target service from the API
 and filters them locally inside the agent's context using keyword matching.
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:cloud-monitoring-metric-selection)"`
+and append `agent-skills/1.0 (skill:cloud-monitoring-metric-selection)` to `User-Agent` headers.
 
 ## CRITICAL RULES
 

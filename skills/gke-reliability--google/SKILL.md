@@ -7,7 +7,7 @@ description: >-
   use for generating K8s YAML manifests (use gke-manifest-generation) or
   disaster recovery and cluster backups (use gke-backup-dr).
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
   category: Containers
 ---
 
@@ -20,6 +20,15 @@ clusters and workloads.
 
 > **MCP Tools:** `get_cluster`, `get_k8s_resource`, `describe_k8s_resource`,
 > `apply_k8s_manifest`, `list_k8s_events`
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:gke-reliability)"`
+and append `agent-skills/1.0 (skill:gke-reliability)` to `User-Agent` headers.
 
 ## Golden Path Reliability Defaults
 

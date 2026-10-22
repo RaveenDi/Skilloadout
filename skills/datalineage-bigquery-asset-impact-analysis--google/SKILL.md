@@ -1,7 +1,7 @@
 ---
 name: datalineage-bigquery-asset-impact-analysis
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
   category: BigDataAndAnalytics
 description: >-
   Analyzes the downstream impact (blast radius) using data lineage on Google Cloud when a BigQuery table or view is broken, stale, or modified.
@@ -25,6 +25,15 @@ consequences of modifying or pausing updates to an asset.
 
 It relies primarily on the **data lineage (Knowledge Catalog) MCP Server** on
 Google Cloud to discover relationships between assets.
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:datalineage-bigquery-asset-impact-analysis)"`
+and append `agent-skills/1.0 (skill:datalineage-bigquery-asset-impact-analysis)` to `User-Agent` headers.
 
 ## Prerequisites
 

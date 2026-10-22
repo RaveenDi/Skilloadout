@@ -2,7 +2,7 @@
 
 - **Item:** Add Model Descriptions (`add-model-descriptions`)
 - **Original source:** https://github.com/ruvnet/ruflo/tree/main/ruflo/src/ruvocal/.claude/skills/add-model-descriptions
-- **Repository:** https://github.com/ruvnet/ruflo @ `b93144803bb1`
+- **Repository:** https://github.com/ruvnet/ruflo @ `732e9f07c021`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

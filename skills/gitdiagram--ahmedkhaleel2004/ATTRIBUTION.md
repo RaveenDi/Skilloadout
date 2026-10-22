@@ -2,7 +2,7 @@
 
 - **Item:** Gitdiagram (`gitdiagram`)
 - **Original source:** https://github.com/ahmedkhaleel2004/gitdiagram/tree/main/plugins/gitdiagram/skills/gitdiagram
-- **Repository:** https://github.com/ahmedkhaleel2004/gitdiagram @ `310e2e696b19`
+- **Repository:** https://github.com/ahmedkhaleel2004/gitdiagram @ `cacf276c8be0`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

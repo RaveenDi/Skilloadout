@@ -1,7 +1,7 @@
 ---
 name: bigquery-optimization
 metadata:
-  version: "1.1.0"
+  version: "1.1.1"
   category: BigDataAndAnalytics
 description: >-
   Provides workflows to optimize BigQuery environments (capacity planning,
@@ -19,6 +19,15 @@ description: >-
 ---
 
 # BigQuery Optimization Workflow
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:bigquery-optimization)"`
+and append `agent-skills/1.0 (skill:bigquery-optimization)` to `User-Agent` headers.
 
 ## Prerequisites & Environment Setup
 

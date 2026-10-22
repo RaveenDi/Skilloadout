@@ -1,7 +1,7 @@
 ---
 name: gcloud
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
   category: CloudInfrastructureAndServices
 description: >-
   Provides safety-critical validation, guardrails, and data reduction for gcloud
@@ -72,6 +72,15 @@ This document provides essential guidelines and best practices for AI agents
 interacting with the Google Cloud SDK (`gcloud` CLI). Following these rules is
 critical to avoid hallucinated commands, flags, flag values, and positional
 argument syntax, prevent destructive actions, and minimize context window usage.
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:gcloud)"`
+and append `agent-skills/1.0 (skill:gcloud)` to `User-Agent` headers.
 
 ## Execution Modes
 

@@ -11,7 +11,7 @@ description: >-
   general pod scheduling without a TPU reservation or workload-level container
   crashes.
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
   category: Containers
 ---
 
@@ -37,6 +37,15 @@ pool are deployed. When the free slots in the reservation
 are fewer than the number of nodes that the new TPU node pool needs, creation
 fails with `GCE_STOCKOUT` or `ZONE_RESOURCE_POOL_EXHAUSTED` (or queues due to
 lack of capacity).
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:gke-ai-troubleshooting-tpu-reservation-stockout)"`
+and append `agent-skills/1.0 (skill:gke-ai-troubleshooting-tpu-reservation-stockout)` to `User-Agent` headers.
 
 ## Prerequisites
 

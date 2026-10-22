@@ -10,7 +10,7 @@ description: >-
   gke-ai-troubleshooting-tpu-dynamic-slices-monitoring), quota exhaustion, or
   unresponsive TPU nodes.
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
   category: Containers
 ---
 
@@ -20,6 +20,15 @@ A dynamic slice fails to form with the status reason `SliceCreationFailed` when,
 among other documented causes, any of its nodes are already used by another
 slice. This skill confirms the failure, rules out the other documented causes,
 finds the slice that uses the same nodes, and routes the fix through GKE.
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:gke-ai-troubleshooting-tpu-partition-overlap)"`
+and append `agent-skills/1.0 (skill:gke-ai-troubleshooting-tpu-partition-overlap)` to `User-Agent` headers.
 
 ## Prerequisites
 

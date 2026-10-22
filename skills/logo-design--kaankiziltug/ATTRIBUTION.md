@@ -2,7 +2,7 @@
 
 - **Item:** Logo Design (`logo-design`)
 - **Original source:** https://github.com/kaankiziltug/logo-design-skill/tree/main/skills/logo-design
-- **Repository:** https://github.com/kaankiziltug/logo-design-skill @ `0ecf52e9a4b3`
+- **Repository:** https://github.com/kaankiziltug/logo-design-skill @ `734090317a21`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

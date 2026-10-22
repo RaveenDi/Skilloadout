@@ -2,7 +2,7 @@
 
 - **Item:** Replicate Paper (`replicate-paper`)
 - **Original source:** https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills/tree/main/skills/28-maxwell2732-paper-replicate-agent-demo/dot-claude/skills/replicate-paper
-- **Repository:** https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills @ `09097ed9533f`
+- **Repository:** https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills @ `7a2437b8fc97`
 - **License:** CC-BY-SA-4.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

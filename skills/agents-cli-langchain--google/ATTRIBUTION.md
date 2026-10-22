@@ -2,7 +2,7 @@
 
 - **Item:** Agents Cli Langchain (`agents-cli-langchain`)
 - **Original source:** https://github.com/google/agents-cli/tree/main/extensions/langchain/template/.agents/skills/agents-cli-langchain
-- **Repository:** https://github.com/google/agents-cli @ `d445570c61fd`
+- **Repository:** https://github.com/google/agents-cli @ `bea5875e38af`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

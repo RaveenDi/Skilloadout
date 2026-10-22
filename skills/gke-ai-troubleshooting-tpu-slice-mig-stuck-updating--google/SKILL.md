@@ -11,7 +11,7 @@ description: >-
   gke-ai-troubleshooting-tpu-dynamic-slices-monitoring) or general pod
   scheduling failures unrelated to TPU slices.
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
   category: Containers
 ---
 
@@ -28,6 +28,15 @@ missing) or preflight checks failed (see
 A MIG that is still creating, updating, or repairing instances is one cause to
 check. This skill checks the slice status first, then the stability of the
 backing MIGs.
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:gke-ai-troubleshooting-tpu-slice-mig-stuck-updating)"`
+and append `agent-skills/1.0 (skill:gke-ai-troubleshooting-tpu-slice-mig-stuck-updating)` to `User-Agent` headers.
 
 ## Prerequisites
 

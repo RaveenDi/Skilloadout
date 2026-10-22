@@ -1,7 +1,7 @@
 ---
 name: google-cloud-solution-agentic-ai-data-science-workflow
 metadata:
-  version: "1.0.2"
+  version: "1.0.3"
   category: MultiProductSolutions
 description: >-
   Designs a tailored multi-product agentic data science
@@ -16,6 +16,12 @@ description: >-
 This skill guides agents through the workflow to design and implement a
 tailored multi-product solution in the cloud for a given workload, use case, or
 requirement.
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read and follow the instructions in
+[Usage Attribution](references/attribution.md).
 
 ## Workflow
 

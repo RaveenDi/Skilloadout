@@ -1,8 +1,8 @@
 # Attribution
 
 - **Item:** Prompt Governance (`prompt-governance`)
-- **Original source:** https://github.com/alirezarezvani/claude-skills/tree/main/engineering/prompt-governance/skills/prompt-governance
-- **Repository:** https://github.com/alirezarezvani/claude-skills @ `19392f7a0826`
+- **Original source:** https://github.com/alirezarezvani/claude-skills/tree/main/.gemini/skills/prompt-governance
+- **Repository:** https://github.com/alirezarezvani/claude-skills @ `27cfcd0fb0a4`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

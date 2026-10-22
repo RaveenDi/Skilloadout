@@ -9,7 +9,7 @@ description: >-
   monitoring permission errors. Don't use to configure local application logging
   frameworks or external APMs outside GKE.
 metadata:
-  version: "1.1.0"
+  version: "1.1.1"
   category: CloudObservabilityAndMonitoring
 ---
 
@@ -22,6 +22,15 @@ metrics.
 > **MCP Tools:** `get_cluster`, `list_k8s_events`, `get_k8s_logs`,
 > `get_k8s_cluster_info`, `describe_k8s_resource`. **CLI-only:** `gcloud
 > container clusters update --monitoring=...`, `gcloud logging read`
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:gke-observability)"`
+and append `agent-skills/1.0 (skill:gke-observability)` to `User-Agent` headers.
 
 ## Golden Path Observability Defaults
 

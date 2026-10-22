@@ -2,7 +2,7 @@
 
 - **Item:** Officecli Financial Model (`officecli-financial-model`)
 - **Original source:** https://github.com/iOfficeAI/OfficeCLI/tree/main/skills/officecli-financial-model
-- **Repository:** https://github.com/iOfficeAI/OfficeCLI @ `fb98e593612d`
+- **Repository:** https://github.com/iOfficeAI/OfficeCLI @ `06ab520135a5`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

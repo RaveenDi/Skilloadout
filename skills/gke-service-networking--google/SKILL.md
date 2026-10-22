@@ -10,7 +10,7 @@ description: >-
   Don't use for core cluster IP planning, Dataplane V2 network policies, or
   node NAT egress (use gke-networking instead).
 metadata:
-  version: "1.1.0"
+  version: "1.1.1"
   category: Networking
 ---
 
@@ -21,6 +21,15 @@ to the internet or internal networks.
 
 Deployable manifest templates live in `assets/` — edit the `# Replace ...`
 placeholders before applying.
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:gke-service-networking)"`
+and append `agent-skills/1.0 (skill:gke-service-networking)` to `User-Agent` headers.
 
 ## Workflows
 

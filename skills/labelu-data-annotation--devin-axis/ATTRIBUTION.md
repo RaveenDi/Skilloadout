@@ -2,7 +2,7 @@
 
 - **Item:** Labelu Data Annotation (`labelu-data-annotation`)
 - **Original source:** https://github.com/Devin-AXIS/iPolloWork/tree/main/examples/plugin-packages/labelu-data-annotation/skills/labelu-data-annotation
-- **Repository:** https://github.com/Devin-AXIS/iPolloWork @ `8c3bf443b798`
+- **Repository:** https://github.com/Devin-AXIS/iPolloWork @ `c8537876ac06`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

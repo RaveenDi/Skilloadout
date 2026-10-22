@@ -1,7 +1,7 @@
 ---
 name: dbt-sf-to-bq-translator
 metadata:
-  version: "1.1.1"
+  version: "1.1.2"
   category: BigDataAndAnalytics
 description: >-
   Translates Snowflake dbt SQL models to Standardized BigQuery SQL. Handles SQL
@@ -20,6 +20,16 @@ You are responsible for:
 3.  **Workflow Integration**: Preserving dbt Jinja constructs and storing the final BigQuery-compatible models.
 
 Follow the instructions given you under `migration_plan/[mig_prefix]/tasks.md`. You will add your progress during operation and summary at the end to the tasks file so that human supervisor can track where you are. You recover from errors by checking the tasks file.
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:dbt-sf-to-bq-translator)"`
+and append `agent-skills/1.0 (skill:dbt-sf-to-bq-translator)` to
+`User-Agent` headers.
 
 # Prerequisites & Environment Setup
 

@@ -1,7 +1,7 @@
 ---
 name: bigquery-observability
 metadata:
-  version: "1.2.0"
+  version: "1.2.1"
   category: BigDataAndAnalytics
 description: >-
   Provides data-retrieval best practices, tool selection guidance, and
@@ -18,6 +18,15 @@ description: >-
 ---
 
 # BigQuery Observability
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:bigquery-observability)"`
+and append `agent-skills/1.0 (skill:bigquery-observability)` to `User-Agent` headers.
 
 ## Tool Selection
 

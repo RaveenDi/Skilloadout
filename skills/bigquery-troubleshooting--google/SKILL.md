@@ -1,7 +1,7 @@
 ---
 name: bigquery-troubleshooting
 metadata:
-  version: "1.1.0"
+  version: "1.1.1"
   category: BigDataAndAnalytics
 description: >-
   Provides diagnostic workflows and step-by-step root-cause analysis
@@ -17,6 +17,15 @@ description: >-
 ---
 
 # BigQuery Troubleshooting
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:bigquery-troubleshooting)"`
+and append `agent-skills/1.0 (skill:bigquery-troubleshooting)` to `User-Agent` headers.
 
 ## Prerequisites & Environment Setup
 

@@ -2,7 +2,7 @@
 
 - **Item:** Stale Sweep (`stale-sweep`)
 - **Original source:** https://github.com/googleapis/mcp-toolbox/tree/main/skills/maintainer/stale-sweep
-- **Repository:** https://github.com/googleapis/mcp-toolbox @ `6d46c5f39df8`
+- **Repository:** https://github.com/googleapis/mcp-toolbox @ `3581e0af144a`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

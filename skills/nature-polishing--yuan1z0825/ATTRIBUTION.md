@@ -2,7 +2,7 @@
 
 - **Item:** Nature Polishing (`nature-polishing`)
 - **Original source:** https://github.com/Yuan1z0825/nature-skills/tree/main/skills/nature-polishing
-- **Repository:** https://github.com/Yuan1z0825/nature-skills @ `233ed09957d3`
+- **Repository:** https://github.com/Yuan1z0825/nature-skills @ `c6ae86c74270`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

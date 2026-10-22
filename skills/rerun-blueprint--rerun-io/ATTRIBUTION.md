@@ -2,7 +2,7 @@
 
 - **Item:** Rerun Blueprint (`rerun-blueprint`)
 - **Original source:** https://github.com/rerun-io/rerun/tree/main/skills/rerun-blueprint
-- **Repository:** https://github.com/rerun-io/rerun @ `32bd0bf4aec8`
+- **Repository:** https://github.com/rerun-io/rerun @ `79c7c3a5ad79`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

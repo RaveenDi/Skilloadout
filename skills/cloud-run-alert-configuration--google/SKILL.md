@@ -1,7 +1,7 @@
 ---
 name: cloud-run-alert-configuration
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
   category: Serverless
 description: >-
   Configures best-practice, high-signal alerting policies for Cloud Run
@@ -24,6 +24,15 @@ Production-grade observability for Cloud Run using Terraform and PromQL
 actionable user impact and scaling bounds.
 
 --------------------------------------------------------------------------------
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:cloud-run-alert-configuration)"`
+and append `agent-skills/1.0 (skill:cloud-run-alert-configuration)` to `User-Agent` headers.
 
 ## CRITICAL RULES
 

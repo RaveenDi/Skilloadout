@@ -2,7 +2,7 @@
 
 - **Item:** Go Testing (`go-testing`)
 - **Original source:** https://github.com/Gentleman-Programming/gentle-ai/tree/main/internal/assets/skills/go-testing
-- **Repository:** https://github.com/Gentleman-Programming/gentle-ai @ `4acaf4241bea`
+- **Repository:** https://github.com/Gentleman-Programming/gentle-ai @ `42edf9a905c6`
 - **License:** Apache-2.0 (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

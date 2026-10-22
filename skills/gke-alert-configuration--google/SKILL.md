@@ -1,7 +1,7 @@
 ---
 name: gke-alert-configuration
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
   category: CloudInfrastructure
   canonical_source: https://github.com/google/skills/tree/main/skills/cloud/gke-alert-configuration
 description: >-
@@ -24,6 +24,15 @@ comprehensive coverage of the **4 Golden Signals** and key cluster health
 metrics while minimizing alert noise.
 
 --------------------------------------------------------------------------------
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:gke-alert-configuration)"`
+and append `agent-skills/1.0 (skill:gke-alert-configuration)` to `User-Agent` headers.
 
 ## Critical Rules
 

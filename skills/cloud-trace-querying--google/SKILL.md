@@ -1,7 +1,7 @@
 ---
 name: cloud-trace-querying
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
   category: CloudObservabilityAndMonitoring
 description: >-
   Query Cloud Trace spans, filter by latency thresholds or error status,
@@ -19,6 +19,15 @@ This skill equips the agent to interact with Cloud Trace by providing standard q
 > **AUTONOMOUS TOOL EXECUTION MANDATE**:
 > You MUST execute the tool scripts directly in bash to query telemetry.
 > Do NOT just describe query strings or write Python scripts. Run the provided bash tools directly and report the exact results.
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:cloud-trace-querying)"`
+and append `agent-skills/1.0 (skill:cloud-trace-querying)` to `User-Agent` headers.
 
 ## Prerequisites & Setup
 1. **Google Cloud SDK**: Verify `gcloud` is installed ([Installation Guide](https://docs.cloud.google.com/sdk/docs/install-sdk)).

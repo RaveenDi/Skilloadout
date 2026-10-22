@@ -12,7 +12,7 @@ description: >-
   for Workload Identity (use gke-workload-identity) or workload-level security
   (SecretProviderClass, PSS, NetPol, gVisor pod runtimeClassName; use gke-workload-security).
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
   category: Security
 ---
 
@@ -26,6 +26,15 @@ Standards), refer to the `gke-workload-security` skill.
 
 > **MCP Tools:** `gke:get_cluster`, `k8s:check_k8s_auth`,
 > `k8s:get_k8s_resource`, `k8s:apply_k8s_manifest`, `gke:update_cluster`
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:gke-platform-security)"`
+and append `agent-skills/1.0 (skill:gke-platform-security)` to `User-Agent` headers.
 
 ## Golden Path Security Defaults
 

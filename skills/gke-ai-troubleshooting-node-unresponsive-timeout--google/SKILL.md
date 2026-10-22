@@ -8,7 +8,7 @@ description: >-
   Terminating. Don't use for healthy nodes, pod-only application crashes, or
   routine GKE upgrades.
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
   category: Containers
 ---
 
@@ -21,6 +21,15 @@ condition becomes `Unknown` with `Reason: NodeStatusUnknown` (`Kubelet stopped
 posting node status.`). If node auto-repair is disabled on the node pool, GKE
 doesn't repair the node. The node can stay `NotReady`, and pods on it can stay
 in `Terminating`, which blocks multi-host `JobSet` workloads from recovering.
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:gke-ai-troubleshooting-node-unresponsive-timeout)"`
+and append `agent-skills/1.0 (skill:gke-ai-troubleshooting-node-unresponsive-timeout)` to `User-Agent` headers.
 
 ## Prerequisites
 

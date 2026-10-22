@@ -1,5 +1,193 @@
 [
   {
+    "date": "2026-10-22T10:22:02.240Z",
+    "reviewer": "heuristic",
+    "candidates": 20,
+    "accepted": [
+      "gamedev-skills/awesome-gamedev-agent-skills",
+      "Jakeschincariol/linkedin-agent-skill",
+      "Alisa0808/vox-director",
+      "Jakeschincariol/instagram-agent-skill",
+      "gnipbao/story-to-handdrawn-video",
+      "tourmind-com/Tourmind-Booking-Skills",
+      "LearnPrompt/awesome-seedance",
+      "appeeky/aso-skills",
+      "JuneYaooo/nihaisha-nishi-tcm"
+    ],
+    "decisions": [
+      {
+        "repo": "mvanhorn/last30days-skill",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "sickn33/agentic-awesome-skills",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 16%, 8434 skills)"
+      },
+      {
+        "repo": "iOfficeAI/AionUi",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 75%, 4 skills)"
+      },
+      {
+        "repo": "zarazhangrui/frontend-slides",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 2 skills)"
+      },
+      {
+        "repo": "Nutlope/hallmark",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "microsoft/SkillOpt",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 5 skills)"
+      },
+      {
+        "repo": "jnMetaCode/superpowers-zh",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 76%, 21 skills)"
+      },
+      {
+        "repo": "jordan-gibbs/hyperresearch",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "gamedev-skills/awesome-gamedev-agent-skills",
+        "stars": 2739,
+        "skills": 75,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "3",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "backnotprop/pstack",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 80%, 59 skills)"
+      },
+      {
+        "repo": "Jakeschincariol/linkedin-agent-skill",
+        "stars": 2501,
+        "skills": 11,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "3",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "LottieFiles/motion-design-skill",
+        "decision": "reject",
+        "reason": "likely aggregator/mirror (overlap 100%, 1 skills)"
+      },
+      {
+        "repo": "Alisa0808/vox-director",
+        "stars": 2398,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "3",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "Jakeschincariol/instagram-agent-skill",
+        "stars": 2389,
+        "skills": 13,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "3",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "gnipbao/story-to-handdrawn-video",
+        "stars": 2268,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "3",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "tourmind-com/Tourmind-Booking-Skills",
+        "stars": 2249,
+        "skills": 2,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "3",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "LearnPrompt/awesome-seedance",
+        "stars": 2214,
+        "skills": 15,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "3",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "appeeky/aso-skills",
+        "stars": 2199,
+        "skills": 40,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "3",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "JuneYaooo/nihaisha-nishi-tcm",
+        "stars": 2189,
+        "skills": 1,
+        "rules": 0,
+        "decision": "accept",
+        "tier": "3",
+        "quality": 6,
+        "reason": "heuristic: self-described skill collection, popular, active, reasonable size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      },
+      {
+        "repo": "LeoYeAI/openclaw-master-skills",
+        "stars": 2169,
+        "skills": 2641,
+        "rules": 0,
+        "decision": "reject",
+        "tier": "3",
+        "quality": 3,
+        "reason": "heuristic: below star threshold or implausible size",
+        "safety_concerns": [],
+        "reviewer": "heuristic"
+      }
+    ]
+  },
+  {
     "date": "2026-10-19T10:59:53.087Z",
     "reviewer": "heuristic",
     "candidates": 22,

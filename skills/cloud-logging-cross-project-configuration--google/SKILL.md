@@ -8,7 +8,7 @@ description: >-
   - Troubleshooting cross-project routing.
   Don't use for single-project basic configurations.
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
   category: CloudObservabilityAndMonitoring
 ---
 
@@ -27,6 +27,15 @@ in multiple projects.
 > `{project_id}`, `{source_project_id}`, `{central_project_id}`. Assume these
 > resources exist and proceed directly with configuration commands. Running
 > these discovery commands will cause the execution to hang and timeout.
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:cloud-logging-cross-project-configuration)"`
+and append `agent-skills/1.0 (skill:cloud-logging-cross-project-configuration)` to `User-Agent` headers.
 
 ## Safety and Confirmation Tiers (CRITICAL)
 

@@ -2,7 +2,7 @@
 
 - **Item:** Unity Adr (`unity-adr`)
 - **Original source:** https://github.com/Besty0728/Unity-Skills/tree/main/SkillsForUnity/unity-skills~/skills/adr
-- **Repository:** https://github.com/Besty0728/Unity-Skills @ `bba5a2304199`
+- **Repository:** https://github.com/Besty0728/Unity-Skills @ `7c9dccd4f561`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

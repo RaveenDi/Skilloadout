@@ -2,7 +2,7 @@
 
 - **Item:** Build Zoom Contact Center App (`build-zoom-contact-center-app`)
 - **Original source:** https://github.com/anthropics/knowledge-work-plugins/tree/main/partner-built/zoom-plugin/skills/contact-center
-- **Repository:** https://github.com/anthropics/knowledge-work-plugins @ `33eeda1e8fd8`
+- **Repository:** https://github.com/anthropics/knowledge-work-plugins @ `33d3dea41a34`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

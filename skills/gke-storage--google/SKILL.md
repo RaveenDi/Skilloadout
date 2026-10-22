@@ -8,7 +8,7 @@ description: >-
   gke-storage-troubleshooting. Don't use for database
   administration or replication strategies outside volume provisioning context.
 metadata:
-  version: "1.0.2"
+  version: "1.0.3"
   category: Storage
 ---
 
@@ -21,6 +21,15 @@ persistent disks, file storage, and cloud storage integration.
 
 > **MCP Tools:** `apply_k8s_manifest`, `get_k8s_resource`,
 > `describe_k8s_resource`, `get_cluster`
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:gke-storage)"`
+and append `agent-skills/1.0 (skill:gke-storage)` to `User-Agent` headers.
 
 ## Golden Path Storage Defaults
 

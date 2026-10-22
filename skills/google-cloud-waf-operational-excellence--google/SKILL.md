@@ -1,7 +1,7 @@
 ---
 name: google-cloud-waf-operational-excellence
 metadata:
-  version: "1.1.0"
+  version: "1.1.1"
   category: WellArchitectedFramework
 description: >-
   Generates operational guidance for CI/CD deployment pipelines, observability,
@@ -15,6 +15,12 @@ description: >-
 ---
 
 # Google Cloud Well-Architected Framework skill for the Operational Excellence pillar
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read and follow the instructions in
+[Usage Attribution](references/attribution.md).
 
 ## Overview
 

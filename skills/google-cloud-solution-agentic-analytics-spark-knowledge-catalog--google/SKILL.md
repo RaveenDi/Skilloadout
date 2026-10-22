@@ -1,7 +1,7 @@
 ---
 name: google-cloud-solution-agentic-analytics-spark-knowledge-catalog
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
   category: MultiProductSolutions
 description: >-
   Discovers requirements and designs an end-to-end governed agentic analytics
@@ -21,6 +21,12 @@ This skill provides a workflow to design and implement a governed, secure
 pipeline for agentic analytics solution across structured and unstructured data
 that's distributed across Google Cloud, on-premises systems, and other cloud
 providers.
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read and follow the instructions in
+[Usage Attribution](references/attribution.md).
 
 ## Overview of the workflow
 

@@ -2,7 +2,7 @@
 
 - **Item:** Rql Schema (`rql-schema`)
 - **Original source:** https://github.com/IvanMurzak/Unity-MCP/tree/main/Unity-MCP-Plugin/.claude/skills/rql-schema
-- **Repository:** https://github.com/IvanMurzak/Unity-MCP @ `a1d26b868dc7`
+- **Repository:** https://github.com/IvanMurzak/Unity-MCP @ `748c4d9b1946`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

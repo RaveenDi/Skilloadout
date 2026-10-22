@@ -1,7 +1,7 @@
 ---
 name: gke-workload-identity
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
   category: Security
 description: >-
   Configures and diagnoses Workload Identity Federation for GKE authentication failures for Pods
@@ -28,6 +28,15 @@ Federation for GKE** cannot authenticate to Google Cloud APIs. Typical symptoms:
     `ComputeEngineCredentials cannot find the metadata server`
 -   API calls that unexpectedly use the node's default Compute Engine service
     account instead of the workload's identity.
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:gke-workload-identity)"`
+and append `agent-skills/1.0 (skill:gke-workload-identity)` to `User-Agent` headers.
 
 ## Read-only boundary
 

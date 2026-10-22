@@ -12,7 +12,7 @@ description: >-
   control plane security, RBAC hardening, Binary Authorization, Shielded Nodes,
   or enabling platform-level GKE add-ons (use gke-platform-security instead).
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
   category: Security
 ---
 
@@ -23,6 +23,15 @@ metadata:
 This skill provides workflows and best practices for securing GKE workloads. It
 covers security auditing, Identity and Access Management (Workload Identity),
 Network Security (Network Policies), and Node Security.
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:gke-workload-security)"`
+and append `agent-skills/1.0 (skill:gke-workload-security)` to `User-Agent` headers.
 
 ## Workflows
 

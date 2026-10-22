@@ -2,7 +2,7 @@
 
 - **Item:** Fal Assets (`fal-assets`)
 - **Original source:** https://github.com/rehan-remade/universal-modder/tree/main/.agents/skills/fal-assets
-- **Repository:** https://github.com/rehan-remade/universal-modder @ `6a8865ae171b`
+- **Repository:** https://github.com/rehan-remade/universal-modder @ `c1dff2166366`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

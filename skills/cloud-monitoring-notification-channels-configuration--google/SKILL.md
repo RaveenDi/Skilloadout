@@ -1,7 +1,7 @@
 ---
 name: cloud-monitoring-notification-channels-configuration
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
   category: CloudObservabilityAndMonitoring
 description: >-
   Generates Terraform HCL configurations for Cloud Monitoring notification
@@ -17,6 +17,15 @@ description: >-
 ---
 
 # Cloud Monitoring Notification Channels Configuration
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:cloud-monitoring-notification-channels-configuration)"`
+and append `agent-skills/1.0 (skill:cloud-monitoring-notification-channels-configuration)` to `User-Agent` headers.
 
 ## Context Provided
 

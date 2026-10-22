@@ -8,7 +8,7 @@ description: >-
   GKE RAG with Cloud SQL/AlloyDB (use google-cloud-solution-rag-enterprise-search-gke-sqldb),
   or batch/HPC (use gke-batch-hpc).
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
   category: Containers
 ---
 
@@ -22,6 +22,15 @@ Inference Quickstart (GIQ) and best practices for LLM serving.
 > **MCP Tools:** `apply_k8s_manifest`, `get_k8s_resource`, `get_k8s_logs`,
 > `get_k8s_rollout_status`, `describe_k8s_resource`, `list_k8s_events`.
 > **CLI-only:** `gcloud container ai profiles *`
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:gke-inference)"`
+and append `agent-skills/1.0 (skill:gke-inference)` to `User-Agent` headers.
 
 ## When to Use
 
