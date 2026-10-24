@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "skill-loadout": {
+      "command": "node",
+      "args": ["mcp-server/index.mjs"]
+    }
+  }
+}

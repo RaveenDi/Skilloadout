@@ -1,0 +1,20 @@
+{
+  "name": "skill-loadout-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "MCP server for Skill Loadout — search, inspect, and install AI agent skills straight out of this repo's auto-updated catalog. No backend: reads catalog/index.json and skills/ from the git checkout it runs in.",
+  "type": "module",
+  "bin": {
+    "skill-loadout-mcp": "./index.mjs"
+  },
+  "scripts": {
+    "start": "node index.mjs"
+  },
+  "engines": {
+    "node": ">=20.9"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "^2.4.0",
+    "zod": "^4.0.0"
+  }
+}

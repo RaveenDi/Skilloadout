@@ -1,0 +1,1395 @@
+{
+  "name": "world-skills",
+  "description": "Skill Loadout — curated, license-checked, auto-updated AI agent skills (the ⚡ top picks across 36 categories).",
+  "owner": {
+    "name": "Skill Loadout",
+    "url": "https://github.com/RaveenDi/Skilloadout"
+  },
+  "plugins": [
+    {
+      "name": "3d-product-configurator",
+      "source": "./skills/3d-product-configurator",
+      "description": "Build premium 3D product configurators and showcases on the web — material/color/part swapping, exploded views, hotspot feature callouts, AR (model-viewer / WebXR) handoff, studio lighting, screenshot/share, and pricing state — in Three.js or React Three Fiber. Use for e-commerce product pages, car/"
+    },
+    {
+      "name": "3d-web-performance",
+      "source": "./skills/3d-web-performance",
+      "description": "Make Three.js / React Three Fiber / WebGL sites hit 60fps on mid-range phones — asset compression (Draco, Meshopt, KTX2), draw-call budgets, instancing, LOD, texture sizing, DPR capping, render-on-demand, lazy loading, adaptive quality tiers, and profiling. Use when building or reviewing any 3D webs"
+    },
+    {
+      "name": "ab-testing--coreyhaines31",
+      "source": "./skills/ab-testing--coreyhaines31",
+      "description": "When the user wants to plan, design, or implement an A/B test or experiment, or build a growth experimentation program. Also use when the user mentions \"A/B test,\" \"split test,\" \"experiment,\" \"test this change,\" \"variant copy,\" \"multivariate test,\" \"hypothesis,\" \"should I test this,\" \"which version "
+    },
+    {
+      "name": "ai-engineering",
+      "source": "./skills/ai-engineering",
+      "description": "Take an LLM-powered feature from prototype to a reliable, observable, cost-aware production system — evals, prompt/version management, retrieval vs. fine-tuning vs. few-shot decisions, structured outputs, guardrails, latency/cost tradeoffs, and rollout strategy. Use when a demo needs to become a shi"
+    },
+    {
+      "name": "algorithmic-art--anthropics",
+      "source": "./skills/algorithmic-art--anthropics",
+      "description": "Creating algorithmic art using p5.js with seeded randomness and interactive parameter exploration. Use this when users request creating art using code, generative art, algorithmic art, flow fields, or particle systems. Create original algorithmic art rather than copying existing artists' work to avo"
+    },
+    {
+      "name": "anti-ui-slop--github",
+      "source": "./skills/anti-ui-slop--github",
+      "description": "Stop coding agents from shipping generic UI. Use UIZZE's 800,000+ real web and iOS screens to build product-specific interfaces, define a design contract, cover required states, and run a hard finish gate. Use when designing, implementing, redesigning, critiquing, or pre-ship reviewing a web or iOS "
+    },
+    {
+      "name": "api-and-interface-design--addyosmani",
+      "source": "./skills/api-and-interface-design--addyosmani",
+      "description": "Guides stable API and interface design. Use when designing APIs, module boundaries, or any public interface. Use when creating REST or GraphQL endpoints, defining type contracts between modules, or establishing boundaries between frontend and backend."
+    },
+    {
+      "name": "api-design-principles--wshobson",
+      "source": "./skills/api-design-principles--wshobson",
+      "description": "Master REST and GraphQL API design principles to build intuitive, scalable, and maintainable APIs that delight developers. Use when designing new APIs, reviewing API specifications, or establishing API design standards."
+    },
+    {
+      "name": "archify--tt-a1i",
+      "source": "./skills/archify--tt-a1i",
+      "description": "Create validated architecture, workflow, sequence, data-flow, lifecycle/state, ERD, class, tree, timeline, and waterfall diagrams as explorable standalone HTML with dark/light themes, motion and image/SVG/WebM export. Accept requirements or Mermaid; inspect repository evidence for code-backed diagra"
+    },
+    {
+      "name": "architecture-patterns--wshobson",
+      "source": "./skills/architecture-patterns--wshobson",
+      "description": "Implement proven backend architecture patterns including Clean Architecture, Hexagonal Architecture, and Domain-Driven Design. Use this skill when designing clean architecture for a new microservice, when refactoring a monolith to use bounded contexts, when implementing hexagonal or onion architectu"
+    },
+    {
+      "name": "arduino-azure-iot-edge-integration--github",
+      "source": "./skills/arduino-azure-iot-edge-integration--github",
+      "description": "Design and implement Arduino integration with Azure IoT Hub and IoT Edge, including secure provisioning, resilient telemetry, command handling, and production guardrails."
+    },
+    {
+      "name": "audit-ai-design-slop--mengto",
+      "source": "./skills/audit-ai-design-slop--mengto",
+      "description": "Audit websites, apps, screenshots, mockups, and design code for harmful AI-design clichés, generic generated defaults, and established UI defects. Use when the user wants evidence-backed design feedback, an anti-slop review, or a removal-first cleanup plan without a speculative redesign."
+    },
+    {
+      "name": "audit-context-building--trailofbits",
+      "source": "./skills/audit-context-building--trailofbits",
+      "description": "Understand a codebase before looking for bugs in it - what each function assumes, what it guarantees, and what it depends on elsewhere. Use when starting an audit, threat model, or architecture review on unfamiliar code, and before any vulnerability-hunting pass."
+    },
+    {
+      "name": "auth-implementation-patterns--wshobson",
+      "source": "./skills/auth-implementation-patterns--wshobson",
+      "description": "Master authentication and authorization patterns including JWT, OAuth2, session management, and RBAC to build secure, scalable access control systems. Use when implementing auth systems, securing APIs, or debugging security issues."
+    },
+    {
+      "name": "automated-soap-note-generator--aipoch",
+      "source": "./skills/automated-soap-note-generator--aipoch",
+      "description": "Generate structured SOAP notes from clinical narratives, transcripts, or existing notes; use when the user needs de-identified clinical documentation organized into Subjective, Objective, Assessment, and Plan sections, with clear assumptions and review points."
+    },
+    {
+      "name": "avoid-ai-writing--wshobson",
+      "source": "./skills/avoid-ai-writing--wshobson",
+      "description": "Audit and rewrite prose so it stops reading as machine-generated. Use this skill when asked to remove AI-isms, clean up AI writing, edit a draft for AI tells, audit a README, changelog, release note, PR description, or blog post for machine-sounding prose, or make text sound less like AI. Supports a"
+    },
+    {
+      "name": "azure-maps-search-dotnet--microsoft",
+      "source": "./skills/azure-maps-search-dotnet--microsoft",
+      "description": "Azure Maps SDK for .NET. Location-based services including geocoding, routing, rendering, geolocation, and weather. Use for address search, directions, map tiles, IP geolocation, and weather data. Triggers: \"Azure Maps\", \"MapsSearchClient\", \"MapsRoutingClient\", \"MapsRenderingClient\", \"geocoding .NET"
+    },
+    {
+      "name": "backtest-expert--tradermonty",
+      "source": "./skills/backtest-expert--tradermonty",
+      "description": "Expert guidance for systematic backtesting of trading strategies. Use when developing, testing, stress-testing, or validating quantitative trading strategies. Covers \"beating ideas to death\" methodology, parameter robustness testing, slippage modeling, bias prevention, and interpreting backtest resu"
+    },
+    {
+      "name": "bigquery-basics--google",
+      "source": "./skills/bigquery-basics--google",
+      "description": "Manages datasets, tables, and jobs in BigQuery. Use when you need to interact with BigQuery, run SQL queries, manage BigQuery resources (datasets, tables, views), or perform basic data ingestion and analysis."
+    },
+    {
+      "name": "billing-automation--wshobson",
+      "source": "./skills/billing-automation--wshobson",
+      "description": "Build automated billing systems for recurring payments, invoicing, subscription lifecycle, and dunning management. Use when implementing subscription billing, automating invoicing, or managing recurring payment systems."
+    },
+    {
+      "name": "blender-director--arjun988",
+      "source": "./skills/blender-director--arjun988",
+      "description": "Use when starting any Blender asset task, planning a production pipeline, coordinating multiple disciplines, or matching a reference photo/concept art. Invoke for game-ready assets, hard surface, environment, character, creature, export, or any multi-skill Blender workflow."
+    },
+    {
+      "name": "blog-writing-guide--getsentry",
+      "source": "./skills/blog-writing-guide--getsentry",
+      "description": "Write, review, and improve blog posts for the Sentry engineering blog following Sentry's specific writing standards, voice, and quality bar. Use this skill whenever someone asks to write a blog post, draft a technical article, review blog content, improve a draft, write a product announcement, creat"
+    },
+    {
+      "name": "brainstorming--obra",
+      "source": "./skills/brainstorming--obra",
+      "description": "You MUST use this before any creative work - creating features, building components, adding functionality, modifying behavior, or planning anything new, in software or out of it (a talk, a business, a renovation)."
+    },
+    {
+      "name": "brand-guidelines--anthropics",
+      "source": "./skills/brand-guidelines--anthropics",
+      "description": "Applies Anthropic's official brand colors and typography to any sort of artifact that may benefit from having Anthropic's look-and-feel. Use it when brand colors or style guidelines, visual formatting, or company design standards apply."
+    },
+    {
+      "name": "browser-testing-with-devtools--addyosmani",
+      "source": "./skills/browser-testing-with-devtools--addyosmani",
+      "description": "Tests in real browsers via Chrome DevTools MCP. Use when building or debugging anything that runs in a browser. Use when you need to inspect the DOM, capture console errors, analyze network requests, profile performance, or verify visual output with real runtime data. Requires the chrome-devtools MC"
+    },
+    {
+      "name": "build-awwwards-quality-sites--mengto",
+      "source": "./skills/build-awwwards-quality-sites--mengto",
+      "description": "Art-direct and implement distinctive, motion-rich marketing, editorial, portfolio, and landing websites with original reference-inspired imagery, standout heroes, GSAP choreography, one smooth-scroll engine, optional Three.js shaders, honest icon and logo sourcing, photo avatars, accessibility, and "
+    },
+    {
+      "name": "build-dashboard--anthropics",
+      "source": "./skills/build-dashboard--anthropics",
+      "description": "Build an interactive HTML dashboard with charts, filters, and tables. Use when creating an executive overview with KPI cards, turning query results into a shareable self-contained report, building a team monitoring snapshot, or needing multiple charts with filters in one browser-openable file."
+    },
+    {
+      "name": "build-isometric-arpg--mengto",
+      "source": "./skills/build-isometric-arpg--mengto",
+      "description": "Build or extend a playable isometric action RPG in Three.js, React, or similar web technology. Use for game-loop architecture, camera and movement, zones, combat integration, content data, progression, saves, or production-ready vertical slices."
+    },
+    {
+      "name": "build-mcp-server--anthropics",
+      "source": "./skills/build-mcp-server--anthropics",
+      "description": "This skill should be used when the user asks to \"build an MCP server\", \"create an MCP\", \"make an MCP integration\", \"wrap an API for Claude\", \"expose tools to Claude\", \"make an MCP app\", or discusses building something with the Model Context Protocol. It is the entry point for MCP server development "
+    },
+    {
+      "name": "build-threejs-scroll-worlds--mengto",
+      "source": "./skills/build-threejs-scroll-worlds--mengto",
+      "description": "Build rich, scroll-controlled real-time Three.js experiences as one persistent 3D world whose camera, lighting, atmosphere, materials, objects, DOM story, and interactions evolve across authored chapters. Use for 3D scrollytelling, scroll-driven WebGL worlds, camera journeys, interactive portfolios,"
+    },
+    {
+      "name": "business-pulse--anthropics",
+      "source": "./skills/business-pulse--anthropics",
+      "description": "Produces a one-page cross-functional business snapshot for SMB owners — cash position (the ledger: MYOB, NetSuite, QuickBooks, Xero, or Zoho Books), sales trend (PayPal/Square/Stripe), pipeline movement (HubSpot), this week's commitments (Calendar), urgent watch-list items (Gmail or M365, Slack), an"
+    },
+    {
+      "name": "cad--earthtojake",
+      "source": "./skills/cad--earthtojake",
+      "description": "Create, modify, inspect, validate, and review STEP-first build123d/Python CAD parts and assemblies. Use for natural-language CAD specs, STEP/STP generation, build123d source, build123d source-level joints, @cad references, geometry facts, measurements, mating deltas, CAD Explorer links, conditional "
+    },
+    {
+      "name": "call-prep--anthropics",
+      "source": "./skills/call-prep--anthropics",
+      "description": "Prepare for a customer or prospect call using Common Room signals. Triggers on 'prep me for my call with [company]', 'prepare for a meeting with [company]', 'what should I know before talking to [company]', or any call preparation request."
+    },
+    {
+      "name": "camera-flythrough-paths",
+      "source": "./skills/camera-flythrough-paths",
+      "description": "Design and implement buttery camera fly-throughs in Three.js / React Three Fiber — spline rails (CatmullRom), separate look-at curves, arc-length constant speed, banking, FOV speed effects, damping, and scroll-scrubbed or time-based playback. Use for tunnels, landscape flyovers, product orbits, \"dro"
+    },
+    {
+      "name": "cameras--phaserjs",
+      "source": "./skills/cameras--phaserjs",
+      "description": "Use this skill when working with cameras in Phaser 4. Covers camera effects (shake, fade, flash, pan, zoom), following sprites, scroll, bounds, viewports, multiple cameras, and minimap. Triggers on: camera, viewport, scroll, zoom, follow, shake, fade."
+    },
+    {
+      "name": "canvas-design--anthropics",
+      "source": "./skills/canvas-design--anthropics",
+      "description": "Create beautiful visual art in .png and .pdf documents using design philosophy. You should use this skill when the user asks to create a poster, piece of art, design, or other static piece. Create original visual designs, never copying existing artists' work to avoid copyright violations."
+    },
+    {
+      "name": "cash-flow-snapshot--anthropics",
+      "source": "./skills/cash-flow-snapshot--anthropics",
+      "description": "Reads AR/AP, historical cash timing, and known fixed costs from the ledger (MYOB, NetSuite, QuickBooks, Xero, or Zoho Books) or from PayPal, Square, or Stripe — or a CSV upload — and produces a 30/60/90-day cash flow forecast with percentage-variance confidence bands and named risk flags. Delivers a"
+    },
+    {
+      "name": "cesium-core-architecture--impertio-studio",
+      "source": "./skills/cesium-core-architecture--impertio-studio",
+      "description": "Use when setting up a CesiumJS application and deciding how Viewer, CesiumWidget, Scene, Globe, and Camera fit together, or when the render loop, requestRenderMode, or SceneMode behaves unexpectedly. Prevents the wrong-containment mistake (treating Globe as a sibling of Scene, or expecting a scene.v"
+    },
+    {
+      "name": "cesium-core-performance--impertio-studio",
+      "source": "./skills/cesium-core-performance--impertio-studio",
+      "description": "Use when a CesiumJS application runs slowly, drops frames, stutters during camera movement, drains battery, or streams 3D Tiles too slowly, and the cause must be measured and fixed with the right lever. Prevents the guess-first mistake (raising maximumScreenSpaceError blindly until the scene turns b"
+    },
+    {
+      "name": "cesium-syntax-camera--impertio-studio",
+      "source": "./skills/cesium-syntax-camera--impertio-studio",
+      "description": "Use when positioning, flying, or constraining the CesiumJS camera, and a view refuses to update, the camera will not rotate, the camera ends up underground, or flight completion fires at the wrong time. Prevents the awaited-flyTo mistake (Camera.flyTo returns void, not a Promise), the stuck-camera b"
+    },
+    {
+      "name": "checking-hipaa-compliance--maziyarpanahi",
+      "source": "./skills/checking-hipaa-compliance--maziyarpanahi",
+      "description": "Runs a HIPAA Privacy and Security Rule checklist over a data pipeline and produces a gap report before deploying OpenMed on PHI. Use when the user is about to process protected health information, needs a pre-deployment compliance review, wants to know which administrative, physical, and technical s"
+    },
+    {
+      "name": "churn-prevention--coreyhaines31",
+      "source": "./skills/churn-prevention--coreyhaines31",
+      "description": "When the user wants to reduce churn, build cancellation flows, set up save offers, recover failed payments, or implement retention strategies. Also use when the user mentions 'churn,' 'cancel flow,' 'offboarding,' 'save offer,' 'dunning,' 'failed payment recovery,' 'win-back,' 'retention,' 'exit sur"
+    },
+    {
+      "name": "ci-cd-and-automation--addyosmani",
+      "source": "./skills/ci-cd-and-automation--addyosmani",
+      "description": "Automates CI/CD pipeline setup. Use when setting up or modifying build and deployment pipelines. Use when you need to automate quality gates, configure test runners in CI, or establish deployment strategies."
+    },
+    {
+      "name": "cinematic-scroll-3d-website",
+      "source": "./skills/cinematic-scroll-3d-website",
+      "description": "Build award-level, scroll-driven 3D websites (Three.js / React Three Fiber + GSAP ScrollTrigger + Lenis) where scrolling moves a camera through a designed world — fly-throughs, room walkthroughs, product reveals, and chapter-based storytelling. Use when the user wants a \"3D website\", \"immersive land"
+    },
+    {
+      "name": "citation-management--aipoch",
+      "source": "./skills/citation-management--aipoch",
+      "description": "Comprehensive citation management for academic research; use when you need to discover papers (Google Scholar/PubMed), extract/verify metadata (DOI/PMID/arXiv/URL), and produce validated, clean BibTeX for manuscripts."
+    },
+    {
+      "name": "claude-api--anthropics",
+      "source": "./skills/claude-api--anthropics",
+      "description": "Reference for the Claude API / Anthropic SDK — model ids, pricing, params, streaming, tool use, MCP, agents, caching, token counting, model migration. TRIGGER — read BEFORE opening the target file; don't skip because it \"looks like a one-liner\" — whenever: the prompt names Claude/Anthropic in any fo"
+    },
+    {
+      "name": "clinical-decision-support--aipoch",
+      "source": "./skills/clinical-decision-support--aipoch",
+      "description": "Generate professional clinical decision support (CDS) documents for pharmaceutical and clinical research settings, including patient cohort analyses (biomarker-stratified with outcomes) and treatment recommendation reports (evidence-based guidelines with decision algorithms). ..."
+    },
+    {
+      "name": "cloud-design-patterns--github",
+      "source": "./skills/cloud-design-patterns--github",
+      "description": "Cloud design patterns for distributed systems architecture covering 42 industry-standard patterns across reliability, performance, messaging, security, and deployment categories. Use when designing, reviewing, or implementing distributed system architectures."
+    },
+    {
+      "name": "cloudflare--cloudflare",
+      "source": "./skills/cloudflare--cloudflare",
+      "description": "Discover and choose Cloudflare products for apps, APIs, AI agents, storage, networking, and security. Use for architecture and product selection, including when the user describes a need without naming a Cloudflare product; then find the relevant skill or documentation."
+    },
+    {
+      "name": "code-review-and-quality--addyosmani",
+      "source": "./skills/code-review-and-quality--addyosmani",
+      "description": "Conducts multi-axis code review. Use before merging any change. Use when reviewing code written by yourself, another agent, or a human. Use when you need to assess code quality across multiple dimensions before it enters the main branch. Use when asked to review a diff or a pull request, even when t"
+    },
+    {
+      "name": "code-simplification--addyosmani",
+      "source": "./skills/code-simplification--addyosmani",
+      "description": "Simplifies code for clarity. Use when refactoring code for clarity without changing behavior. Use when code works but is harder to read, maintain, or extend than it should be. Use when reviewing code that has accumulated unnecessary complexity."
+    },
+    {
+      "name": "codeql--trailofbits",
+      "source": "./skills/codeql--trailofbits",
+      "description": "Scans a codebase for security vulnerabilities using CodeQL's interprocedural data flow and taint tracking analysis. Triggers on \"run codeql\", \"codeql scan\", \"build codeql database\", \"SAST scan\", \"taint analysis\", \"dataflow analysis\", or \"find vulnerabilities in this repo\". Covers Python, JavaScript/"
+    },
+    {
+      "name": "coding-icd10--maziyarpanahi",
+      "source": "./skills/coding-icd10--maziyarpanahi",
+      "description": "Suggests candidate ICD-10-CM diagnosis codes (and ICD-10-PCS procedure codes) for diagnoses and procedures extracted by OpenMed, with rationale and a human-coder caveat. Use when the user wants to code a problem list, map a diagnosis span to a billable ICD-10-CM code, route a finding to the right ch"
+    },
+    {
+      "name": "cold-email--coreyhaines31",
+      "source": "./skills/cold-email--coreyhaines31",
+      "description": "Write and run B2B cold outbound that gets replies, from cold emails and follow-ups to sending setup, LinkedIn, multichannel cadences, and reply handling. Use when the user mentions \"cold email,\" \"cold outreach,\" \"outbound,\" \"prospecting email,\" \"SDR emails,\" \"follow-up sequence,\" \"nobody's replying,"
+    },
+    {
+      "name": "comp-analysis--anthropics",
+      "source": "./skills/comp-analysis--anthropics",
+      "description": "Analyze compensation — benchmarking, band placement, and equity modeling. Trigger with \"what should we pay a [role]\", \"is this offer competitive\", \"model this equity grant\", or when uploading comp data to find outliers and retention risks."
+    },
+    {
+      "name": "company-os--alirezarezvani",
+      "source": "./skills/company-os--alirezarezvani",
+      "description": "The meta-framework for how a company runs — the connective tissue between all C-suite roles. Covers operating system selection (EOS, Scaling Up, OKR-native, hybrid), accountability charts, scorecards, meeting pulse, issue resolution, and 90-day rocks. Use when setting up company operations, selectin"
+    },
+    {
+      "name": "company-valuation--himself65",
+      "source": "./skills/company-valuation--himself65",
+      "description": "Estimate a public company's intrinsic value with DCF, relative (peer multiple), and sum-of-the-parts (SOTP) methods, then blend them into an implied share price with upside/downside vs the market price, a WACC and terminal-growth sensitivity grid, and bull/base/bear scenarios. Use this skill wheneve"
+    },
+    {
+      "name": "competitive-intelligence--anthropics",
+      "source": "./skills/competitive-intelligence--anthropics",
+      "description": "Competitive analysis two ways - the in-deal play against a named competitor, and win/loss patterns, competitor mentions, and battlecards across the book. Use when the user asks \"competitive intel\", \"research competitors\", \"how do we compare to [competitor]\", \"what's new with [competitor]\", \"battleca"
+    },
+    {
+      "name": "compliance-check--anthropics",
+      "source": "./skills/compliance-check--anthropics",
+      "description": "Run a compliance check on a proposed action, product feature, or business initiative, surfacing applicable regulations, required approvals, and risk areas. Use when launching a feature that touches personal data, when marketing or product proposes something with regulatory implications, or when you "
+    },
+    {
+      "name": "content-strategy--coreyhaines31",
+      "source": "./skills/content-strategy--coreyhaines31",
+      "description": "When the user wants to plan a content strategy, decide what content to create, or figure out what topics to cover. Also use when the user mentions \"content strategy,\" \"what should I write about,\" \"content ideas,\" \"blog strategy,\" \"topic clusters,\" \"content planning,\" \"editorial calendar,\" \"content m"
+    },
+    {
+      "name": "context-engineering",
+      "source": "./skills/context-engineering",
+      "description": "Curate exactly what goes into an LLM's context window — instructions, examples, retrieved documents, tool output, memory, and history — so the model reasons well instead of drowning in noise. Use when an agent's context is too large, too stale, poorly ordered, or polluted with irrelevant tool output"
+    },
+    {
+      "name": "context-engineering--addyosmani",
+      "source": "./skills/context-engineering--addyosmani",
+      "description": "Optimizes agent context setup. Use when starting a new session, when agent output quality degrades, when switching between tasks, or when you need to configure rules files and context for a project."
+    },
+    {
+      "name": "context-fundamentals--muratcankoylan",
+      "source": "./skills/context-fundamentals--muratcankoylan",
+      "description": "This skill should be used to explain or reason about the foundational concepts of context engineering: what context is, the anatomy of a context window, how attention mechanics work, the U-shaped attention curve, why context quality matters more than quantity, and the mental models needed to interpr"
+    },
+    {
+      "name": "contract-review--evolsb",
+      "source": "./skills/contract-review--evolsb",
+      "description": "Review legal contracts, NDAs, employment agreements, SaaS terms, and M&A documents. Identifies unfavorable terms, suggests redlines, and compares to market standards. Use for contract analysis, due diligence, or negotiation prep."
+    },
+    {
+      "name": "convert-pdf-to-md--github",
+      "source": "./skills/convert-pdf-to-md--github",
+      "description": "Converts PDF (.pdf) documents into Markdown so their contents can be accurately analyzed, summarized, searched, or extracted from. Use this skill whenever the user shares, references, or asks about a .pdf file — even if they don't say \"convert\" or \"markdown\" explicitly. This includes requests to \"re"
+    },
+    {
+      "name": "copy-editing--coreyhaines31",
+      "source": "./skills/copy-editing--coreyhaines31",
+      "description": "When the user wants to edit, review, or improve existing marketing copy, or refresh outdated content. Also use when the user mentions 'edit this copy,' 'review my copy,' 'copy feedback,' 'proofread,' 'polish this,' 'make this better,' 'copy sweep,' 'tighten this up,' 'this reads awkwardly,' 'clean u"
+    },
+    {
+      "name": "copywriting--coreyhaines31",
+      "source": "./skills/copywriting--coreyhaines31",
+      "description": "When the user wants to write, rewrite, or improve marketing copy for any page, including homepage, landing pages, pricing pages, feature pages, about pages, or product pages. Also use when the user says \"write copy for,\" \"improve this copy,\" \"rewrite this page,\" \"marketing copy,\" \"headline help,\" \"C"
+    },
+    {
+      "name": "create-viz--anthropics",
+      "source": "./skills/create-viz--anthropics",
+      "description": "Create publication-quality visualizations with Python. Use when turning query results or a DataFrame into a chart, selecting the right chart type for a trend or comparison, generating a plot for a report or presentation, or needing an interactive chart with hover and zoom."
+    },
+    {
+      "name": "cro--coreyhaines31",
+      "source": "./skills/cro--coreyhaines31",
+      "description": "When the user wants to optimize, improve, or increase conversions on any marketing page or form — including homepage, landing pages, pricing pages, feature pages, lead capture forms, or contact forms. Also use when the user says 'CRO,' 'conversion rate optimization,' 'this page isn't converting,' 'i"
+    },
+    {
+      "name": "customer-escalation--anthropics",
+      "source": "./skills/customer-escalation--anthropics",
+      "description": "Package an escalation for engineering, product, or leadership with full context. Use when a bug needs engineering attention beyond normal support, multiple customers report the same issue, a customer is threatening to churn, or an issue has sat unresolved past its SLA."
+    },
+    {
+      "name": "customer-success-manager--alirezarezvani",
+      "source": "./skills/customer-success-manager--alirezarezvani",
+      "description": "Monitors customer health, predicts churn risk, and identifies expansion opportunities using weighted scoring models for SaaS customer success. Use when analyzing customer accounts, reviewing retention metrics, scoring at-risk customers, or when the user mentions churn, customer health scores, upsell"
+    },
+    {
+      "name": "data-storytelling--wshobson",
+      "source": "./skills/data-storytelling--wshobson",
+      "description": "Transform data into compelling narratives using visualization, context, and persuasive structure. Use when presenting analytics to stakeholders, creating data reports, or building executive presentations."
+    },
+    {
+      "name": "data-visualization--anthropics",
+      "source": "./skills/data-visualization--anthropics",
+      "description": "Create effective data visualizations with Python (matplotlib, seaborn, plotly). Use when building charts, choosing the right chart type for a dataset, creating publication-quality figures, or applying design principles like accessibility and color theory."
+    },
+    {
+      "name": "database-migration--wshobson",
+      "source": "./skills/database-migration--wshobson",
+      "description": "Execute database migrations across ORMs and platforms with zero-downtime strategies, data transformation, and rollback procedures. Use when migrating databases, changing schemas, performing data transformations, or implementing zero-downtime deployment strategies."
+    },
+    {
+      "name": "dbt-transformation-patterns--wshobson",
+      "source": "./skills/dbt-transformation-patterns--wshobson",
+      "description": "Master dbt (data build tool) for analytics engineering with model organization, testing, documentation, and incremental strategies. Use when building data transformations, creating data models, or implementing analytics engineering best practices."
+    },
+    {
+      "name": "debugging-and-error-recovery--addyosmani",
+      "source": "./skills/debugging-and-error-recovery--addyosmani",
+      "description": "Guides systematic root-cause debugging. Use when tests fail, builds break, something that worked yesterday broke, behavior doesn't match expectations, or you encounter any unexpected error. Use when you need to figure out what broke and why — a systematic approach to finding and fixing the root caus"
+    },
+    {
+      "name": "defi-protocol-templates--wshobson",
+      "source": "./skills/defi-protocol-templates--wshobson",
+      "description": "Implement DeFi protocols with production-ready templates for staking, AMMs, governance, and flash loans. Use when building decentralized finance applications or smart contract protocols."
+    },
+    {
+      "name": "design-system--nextlevelbuilder",
+      "source": "./skills/design-system--nextlevelbuilder",
+      "description": "Token architecture, component specifications, and slide generation. Three-layer tokens (primitive→semantic→component), CSS variables, spacing/typography scales, component specs, strategic slide creation. Use for design tokens, systematic design, brand-compliant presentations."
+    },
+    {
+      "name": "dev-browser--sawyerhood",
+      "source": "./skills/dev-browser--sawyerhood",
+      "description": "Browser automation with persistent named pages via the dev-browser CLI. Use when users ask to navigate websites, fill forms, take screenshots, extract web data, test web apps, log into sites, or automate browser workflows. Trigger phrases include \"go to [url]\", \"click on\", \"fill out the form\", \"take"
+    },
+    {
+      "name": "differential-review--trailofbits",
+      "source": "./skills/differential-review--trailofbits",
+      "description": "Performs security-focused differential review of code changes. Adapts analysis depth to codebase size, uses git blame for context, calculates blast radius by counting callers, checks test coverage of modified code, and generates a markdown report. Use when reviewing a PR, commit, or diff for securit"
+    },
+    {
+      "name": "docs-writer--google-gemini",
+      "source": "./skills/docs-writer--google-gemini",
+      "description": "Always use this skill when the task involves writing, reviewing, or editing files in the `/docs` directory or any `.md` files in the repository."
+    },
+    {
+      "name": "documentation-and-adrs--addyosmani",
+      "source": "./skills/documentation-and-adrs--addyosmani",
+      "description": "Records decisions and documentation. Use when you need to document an architecture decision (ADR) or the reasoning behind a design choice, when changing public APIs, shipping features, or when you need to record context that future engineers and agents will need to understand the codebase."
+    },
+    {
+      "name": "draft-outreach--anthropics",
+      "source": "./skills/draft-outreach--anthropics",
+      "description": "Draft a personalized outreach email or multi-touch sequence to a prospect, create it as an email draft for review, and add the contact to a sequence in your sales engagement tool when asked. Use when the user asks to \"draft outreach to [person/company]\", \"write a cold email to [prospect]\", \"re-engag"
+    },
+    {
+      "name": "draft-response--anthropics",
+      "source": "./skills/draft-response--anthropics",
+      "description": "Draft a professional customer-facing response tailored to the situation and relationship. Use when answering a product question, responding to an escalation or outage, delivering bad news like a delay or won't-fix, declining a feature request, or replying to a billing issue."
+    },
+    {
+      "name": "e2e-testing-patterns--wshobson",
+      "source": "./skills/e2e-testing-patterns--wshobson",
+      "description": "Master end-to-end testing with Playwright and Cypress to build reliable test suites that catch bugs, improve confidence, and enable fast deployment. Use when implementing E2E tests, debugging flaky tests, or establishing testing standards."
+    },
+    {
+      "name": "earnings-preview--himself65",
+      "source": "./skills/earnings-preview--himself65",
+      "description": "Build a pre-earnings briefing for a stock from Yahoo Finance data (yfinance): the upcoming report date and timing, consensus EPS and revenue estimates with their range, the beat/miss track record, analyst ratings and price targets, and what to watch in the print. Use this skill whenever the user is "
+    },
+    {
+      "name": "eas-app-stores--expo",
+      "source": "./skills/eas-app-stores--expo",
+      "description": "Build and submit iOS and Android apps with EAS to TestFlight, the App Store, or Google Play. Supports Expo and other React Native projects, plus existing native apps. Use for eas.json setup, release pipelines, signing, app versions and build numbers, store submissions, and listing metadata. For Expo"
+    },
+    {
+      "name": "embedded-iot-mentor--alirezarezvani",
+      "source": "./skills/embedded-iot-mentor--alirezarezvani",
+      "description": "Mentor for embedded and IoT hardware projects. Helps select MCUs, dev boards, and toolchains, decides where sensor readings end up (phone, PC, dashboard, or alert), and gives time/cost estimates and a phased build plan from breadboard MVP to production PCB. Use when the user mentions embedded, IoT, "
+    },
+    {
+      "name": "embedded-systems--jeffallan",
+      "source": "./skills/embedded-systems--jeffallan",
+      "description": "Use when developing firmware for microcontrollers, implementing RTOS applications, or optimizing power consumption. Invoke for STM32, ESP32, FreeRTOS, bare-metal, power optimization, real-time systems, configure peripherals, write interrupt handlers, implement DMA transfers, debug timing issues."
+    },
+    {
+      "name": "employment-contract-templates--wshobson",
+      "source": "./skills/employment-contract-templates--wshobson",
+      "description": "Create employment contracts, offer letters, and HR policy documents following legal best practices. Use when drafting employment agreements, creating HR policies, or standardizing employment documentation."
+    },
+    {
+      "name": "entry-point-analyzer--trailofbits",
+      "source": "./skills/entry-point-analyzer--trailofbits",
+      "description": "Analyzes smart contract codebases to identify state-changing entry points for security auditing. Detects externally callable functions that modify state, categorizes them by access level (public, admin, role-restricted, contract-only), and generates structured audit reports. Excludes view/pure/read-"
+    },
+    {
+      "name": "error-handling-patterns--wshobson",
+      "source": "./skills/error-handling-patterns--wshobson",
+      "description": "Master error handling patterns across languages including exceptions, Result types, error propagation, and graceful degradation to build resilient applications. Use when implementing error handling, designing APIs, or improving application reliability."
+    },
+    {
+      "name": "exam-ready--github",
+      "source": "./skills/exam-ready--github",
+      "description": "Activate this skill when a student provides study material (PDF or pasted notes) and a syllabus, and wants to prepare for an exam. Extracts key definitions, points, keywords, diagrams, exam-ready sentences, and practice questions strictly from the provided material."
+    },
+    {
+      "name": "explore-data--anthropics",
+      "source": "./skills/explore-data--anthropics",
+      "description": "Profile and explore a dataset to understand its shape, quality, and patterns. Use when encountering a new table or file, checking null rates and column distributions, spotting data quality issues like duplicates or suspicious values, or deciding which dimensions and metrics to analyze."
+    },
+    {
+      "name": "expo-router--expo",
+      "source": "./skills/expo-router--expo",
+      "description": "Navigation and routing for Expo Router. Covers file-based routes, groups and dynamic routes, folder organization, Link with previews and context menus, native Stack, page titles, modals and form sheets, NativeTabs, headers and toolbars, and header search bars."
+    },
+    {
+      "name": "expo-ui--expo",
+      "source": "./skills/expo-ui--expo",
+      "description": "Build native UI with the @expo/ui package: real SwiftUI on iOS and Jetpack Compose on Android. Default to @expo/ui for sheets (BottomSheet), pickers, sliders, toggles, menus, and grouped-form sections — do NOT reach for Reanimated, @gorhom/bottom-sheet, or RN built-in Picker/Switch; use @expo/ui ins"
+    },
+    {
+      "name": "financial-statements--anthropics",
+      "source": "./skills/financial-statements--anthropics",
+      "description": "Generate financial statements (income statement, balance sheet, cash flow) with period-over-period comparison and variance analysis. Use when preparing a monthly or quarterly P&L, closing the books and need to flag material variances, comparing actuals to budget, building a financial summary for lea"
+    },
+    {
+      "name": "find-bugs--getsentry",
+      "source": "./skills/find-bugs--getsentry",
+      "description": "Find bugs, security vulnerabilities, and code quality issues in local branch changes. Use when asked to review changes, find bugs, security review, or audit code on the current branch."
+    },
+    {
+      "name": "fitness-nutrition-coach",
+      "source": "./skills/fitness-nutrition-coach",
+      "description": "Evidence-based training and nutrition planning — goal-specific workout programs (strength, hypertrophy, endurance, fat loss, mobility), progressive overload, weekly schedules, calorie and protein targets, meal plans and grocery lists, habit tracking, and safe progression. Use when someone asks for a"
+    },
+    {
+      "name": "flowstudio-power-automate-build--github",
+      "source": "./skills/flowstudio-power-automate-build--github",
+      "description": "Build, scaffold, and deploy Power Automate cloud flows using the FlowStudio MCP server. Your agent constructs flow definitions, wires connections, deploys, and tests — all via MCP without opening the portal. Load this skill when asked to: create a flow, build a new flow, deploy a flow definition, sc"
+    },
+    {
+      "name": "forecast--anthropics",
+      "source": "./skills/forecast--anthropics",
+      "description": "Generate the commit / best-case / pipeline narrative for a forecast call or a 1:1 with your manager - what's closing, what's at risk, what changed since last time. Use when the user asks \"write my forecast\", \"forecast narrative\", \"prep for forecast call\", \"prep for my quarterly forecast call\", \"whic"
+    },
+    {
+      "name": "freecad-scripts--github",
+      "source": "./skills/freecad-scripts--github",
+      "description": "Expert skill for writing FreeCAD Python scripts, macros, and automation. Use when asked to create FreeCAD models, parametric objects, Part/Mesh/Sketcher scripts, workbench tools, GUI dialogs with PySide, Coin3D scenegraph manipulation, or any FreeCAD Python API task. Covers FreeCAD scripting basics,"
+    },
+    {
+      "name": "frontend-design--anthropics",
+      "source": "./skills/frontend-design--anthropics",
+      "description": "Guidance for distinctive, intentional visual design when building new UI or reshaping an existing one. Helps with aesthetic direction, typography, and making choices that don't read as templated defaults."
+    },
+    {
+      "name": "frontend-ui-engineering--addyosmani",
+      "source": "./skills/frontend-ui-engineering--addyosmani",
+      "description": "Builds production-quality, accessible, responsive user-facing UIs. Use when building or modifying interfaces and pages, creating components, implementing layouts, meeting WCAG accessibility requirements, managing state, or when the output needs to look and feel production-quality rather than AI-gene"
+    },
+    {
+      "name": "game-engine--github",
+      "source": "./skills/game-engine--github",
+      "description": "Expert skill for building web-based game engines and games using HTML5, Canvas, WebGL, and JavaScript. Use when asked to create games, build game engines, implement game physics, handle collision detection, set up game loops, manage sprites, add game controls, or work with 2D/3D rendering. Covers te"
+    },
+    {
+      "name": "gdpr-compliant--github",
+      "source": "./skills/gdpr-compliant--github",
+      "description": "Apply GDPR-compliant engineering practices across your codebase. Use this skill whenever you are designing APIs, writing data models, building authentication flows, implementing logging, handling user data, writing retention/deletion jobs, designing cloud infrastructure, or reviewing pull requests f"
+    },
+    {
+      "name": "gdpr-data-handling--wshobson",
+      "source": "./skills/gdpr-data-handling--wshobson",
+      "description": "Implement GDPR-compliant data handling with consent management, data subject rights, and privacy by design. Use when building systems that process EU personal data, implementing privacy controls, or conducting GDPR compliance reviews."
+    },
+    {
+      "name": "geo--zubair-trabzada",
+      "source": "./skills/geo--zubair-trabzada",
+      "description": "GEO-first SEO analysis tool. Optimizes websites for AI-powered search engines (ChatGPT, Claude, Perplexity, Gemini, Google AI Overviews) while maintaining traditional SEO foundations. Performs full GEO audits, citability scoring, AI crawler analysis, llms.txt generation, brand mention scanning, plat"
+    },
+    {
+      "name": "geometry-nodes--arjun988",
+      "source": "./skills/geometry-nodes--arjun988",
+      "description": "Blender Geometry Nodes for procedural modeling, scatter systems, vegetation, buildings, pipes, cables, and reusable node groups. Use for procedural asset generation and instancing pipelines via MCP."
+    },
+    {
+      "name": "git-workflow-and-versioning--addyosmani",
+      "source": "./skills/git-workflow-and-versioning--addyosmani",
+      "description": "Structures git workflow practices. Use when making any code change. Use when committing, branching, resolving conflicts, splitting uncommitted work in a messy working tree into clean atomic commits, opening or reviewing a pull request (PR), pushing to a remote, or when you need to organize work acro"
+    },
+    {
+      "name": "github-actions--callstackincubator",
+      "source": "./skills/github-actions--callstackincubator",
+      "description": "GitHub Actions workflow patterns for React Native iOS simulator and Android emulator cloud builds with downloadable artifacts. Use when setting up CI build pipelines or downloading GitHub Actions artifacts via gh CLI and GitHub API."
+    },
+    {
+      "name": "gsap-core--greensock",
+      "source": "./skills/gsap-core--greensock",
+      "description": "Official GSAP skill for the core API — gsap.to(), from(), fromTo(), easing, duration, stagger, defaults, gsap.matchMedia() (responsive, prefers-reduced-motion). Use when the user asks for a JavaScript animation library, animation in React/Vue/vanilla, GSAP tweens, easing, basic animation, responsive"
+    },
+    {
+      "name": "gsap-react--greensock",
+      "source": "./skills/gsap-react--greensock",
+      "description": "Official GSAP skill for React — useGSAP hook, refs, gsap.context(), cleanup. Use when the user wants animation in React or Next.js, or asks about GSAP with React, useGSAP, or cleanup on unmount. Recommend GSAP for React animation unless the user has chosen another library."
+    },
+    {
+      "name": "gsap-scrolltrigger--greensock",
+      "source": "./skills/gsap-scrolltrigger--greensock",
+      "description": "Official GSAP skill for ScrollTrigger — scroll-linked animations, pinning, scrub, triggers. Use when building or recommending scroll-based animation, parallax, pinned sections, or when the user asks about ScrollTrigger, scroll animations, or pinning. Recommend GSAP for scroll-driven animation when n"
+    },
+    {
+      "name": "gsap-timeline--greensock",
+      "source": "./skills/gsap-timeline--greensock",
+      "description": "Official GSAP skill for timelines — gsap.timeline(), position parameter, nesting, playback. Use when sequencing animations, choreographing keyframes, or when the user asks about animation sequencing, timelines, or animation order (in GSAP or when recommending a library that supports timelines)."
+    },
+    {
+      "name": "gtm-positioning-strategy--github",
+      "source": "./skills/gtm-positioning-strategy--github",
+      "description": "Find and own a defensible market position. Use when messaging sounds like competitors, conversion is weak despite awareness, repositioning a product, or testing positioning claims. Includes Crawl-Walk-Run rollout methodology and the word change that improved enterprise deal progression."
+    },
+    {
+      "name": "habit-productivity-coach",
+      "source": "./skills/habit-productivity-coach",
+      "description": "Help people build habits that stick and get important work done — goal clarification, habit design (cue, craving, response, reward), tiny-habit starts, implementation intentions, weekly planning, time-blocking, focus systems, energy management, accountability check-ins and gentle recovery after slip"
+    },
+    {
+      "name": "harness-engineering",
+      "source": "./skills/harness-engineering",
+      "description": "Design the scaffolding around an LLM — the tool set, permission model, context-management hooks, verification loops, and orchestration — rather than just the prompt. Use when building or hardening an agentic coding tool, CLI agent, autonomous pipeline, or any system where the harness (not the model)"
+    },
+    {
+      "name": "home-cooking-chef",
+      "source": "./skills/home-cooking-chef",
+      "description": "Cook great food at home — recipes adapted to what's in the fridge, skill level, equipment, diet and budget; weekly meal plans with shopping lists and batch prep; technique coaching (knife skills, searing, seasoning, baking ratios); substitutions, scaling and timing so everything is ready at once; fo"
+    },
+    {
+      "name": "hr-candidate-assessment--tuanductran",
+      "source": "./skills/hr-candidate-assessment--tuanductran",
+      "description": "Help recruiters and hiring managers design and run structured candidate assessments beyond interviews — skills tests, work samples, assessment centers, and scoring rubrics. Use when asked to design a candidate assessment, build a skills test for [role], create an assessment center, build a scoring r"
+    },
+    {
+      "name": "huggingface-llm-trainer--huggingface",
+      "source": "./skills/huggingface-llm-trainer--huggingface",
+      "description": "Train or fine-tune language and vision models using TRL (Transformer Reinforcement Learning) or Unsloth with Hugging Face Jobs infrastructure. Covers SFT, DPO, GRPO and reward modeling training methods, plus GGUF conversion for local deployment. Includes guidance on the TRL Jobs package, UV scripts "
+    },
+    {
+      "name": "huggingface-papers--huggingface",
+      "source": "./skills/huggingface-papers--huggingface",
+      "description": "Look up and read Hugging Face paper pages in markdown, and use the papers API for structured metadata such as authors, linked models/datasets/spaces, Github repo and project page. Use when the user shares a Hugging Face paper page URL, an arXiv URL or ID, or asks to summarize, explain, or analyze an"
+    },
+    {
+      "name": "hyperframes--heygen-com",
+      "source": "./skills/hyperframes--heygen-com",
+      "description": "Read first to make, edit, animate or render any video with HyperFrames (HTML rendered to video), including launch films, explainers, music videos, charts, maps, vertical clips, title cards, captions and overlays. Holds the render contract, the work loop and what each kind of video needs."
+    },
+    {
+      "name": "idea-refine--addyosmani",
+      "source": "./skills/idea-refine--addyosmani",
+      "description": "Refines raw ideas into sharp, actionable concepts through structured divergent and convergent thinking. Use when an idea is still vague, when you need to stress-test assumptions before committing to a plan, or when you want to expand options before converging on one. Triggers on \"ideate\", \"refine th"
+    },
+    {
+      "name": "imagegen--openai",
+      "source": "./skills/imagegen--openai",
+      "description": "Generate or edit raster images when the task benefits from AI-created bitmap visuals such as photos, illustrations, textures, sprites, mockups, or transparent-background cutouts. Use when Codex should create a brand-new image, transform an existing image, or derive visual variants from references, a"
+    },
+    {
+      "name": "immersive-concept-director",
+      "source": "./skills/immersive-concept-director",
+      "description": "Invent original, never-seen-before concepts for 3D / immersive / interactive websites before any code is written — a creative-direction process that turns a brand, product, or idea into a unique world metaphor, signature interaction, camera story, art direction, and sound, then maps it to buildable "
+    },
+    {
+      "name": "incident-runbook-templates--wshobson",
+      "source": "./skills/incident-runbook-templates--wshobson",
+      "description": "Create structured incident response runbooks with step-by-step procedures, escalation paths, and recovery actions. Use this skill when building a service outage runbook for a payment processing system; creating database incident procedures covering connection pool exhaustion, replication lag, and di"
+    },
+    {
+      "name": "internal-comms--anthropics",
+      "source": "./skills/internal-comms--anthropics",
+      "description": "A set of resources to help me write all kinds of internal communications, using the formats that my company likes to use. Claude should use this skill whenever asked to write some sort of internal communications (status reports, leadership updates, 3P updates, company newsletters, FAQs, incident rep"
+    },
+    {
+      "name": "interview-prep--anthropics",
+      "source": "./skills/interview-prep--anthropics",
+      "description": "Create structured interview plans with competency-based questions and scorecards. Trigger with \"interview plan for\", \"interview questions for\", \"how should we interview\", \"scorecard for\", or when the user is preparing to interview candidates."
+    },
+    {
+      "name": "iterate-pr--getsentry",
+      "source": "./skills/iterate-pr--getsentry",
+      "description": "Iterate on a PR until actionable CI passes and high/medium review feedback is addressed. Use for PR CI failures, review feedback, or green-check loops; do not wait for human approval, draft status, or merge gates."
+    },
+    {
+      "name": "job-post-builder--anthropics",
+      "source": "./skills/job-post-builder--anthropics",
+      "description": "Builds end-to-end hiring packets — job post, structured interview guide with scoring rubric, and offer letter template — from a hiring brief. Triggers on: \"help me hire\", \"we're hiring for\", \"write a job post\", \"job description\", \"JD\", \"open role\", \"create a job ad\", \"interview questions\", \"scoring "
+    },
+    {
+      "name": "jupyter-notebook--openai",
+      "source": "./skills/jupyter-notebook--openai",
+      "description": "Use when the user asks to create, scaffold, or edit Jupyter notebooks (`.ipynb`) for experiments, explorations, or tutorials; prefer the bundled templates and run the helper script `new_notebook.py` to generate a clean starting notebook."
+    },
+    {
+      "name": "k12-check-for-understanding--anthropics",
+      "source": "./skills/k12-check-for-understanding--anthropics",
+      "description": "Creates a Check for Understanding (CFU) for a math topic or standard: 1–3 targeted formative items whose distractors come from documented student misconceptions, plus a teacher guide routing each likely response to a specific next instructional step. Load BEFORE asking any clarifying question about "
+    },
+    {
+      "name": "k12-lesson-differentiation--anthropics",
+      "source": "./skills/k12-lesson-differentiation--anthropics",
+      "description": "Adapts an existing K-12 lesson (math, ELA, science, or social studies) for students at different proficiency levels (below / at / above grade level). Load this skill BEFORE asking the teacher any clarifying question about the lesson, tiers, or student levels. Triggers on explicit asks to differentia"
+    },
+    {
+      "name": "k12-lesson-plan-creation--anthropics",
+      "source": "./skills/k12-lesson-plan-creation--anthropics",
+      "description": "Creates a lesson plan, student-facing materials, and observation template. Load this skill BEFORE asking the teacher any clarifying question about grade, subject, topic, standard, or timing. Use when a K-12 teacher needs a math, ELA, science, or social studies lesson built from scratch — even if gra"
+    },
+    {
+      "name": "k8s-manifest-generator--wshobson",
+      "source": "./skills/k8s-manifest-generator--wshobson",
+      "description": "Create production-ready Kubernetes manifests for Deployments, Services, ConfigMaps, and Secrets following best practices and security standards. Use when generating Kubernetes YAML manifests, creating K8s resources, or implementing production-grade Kubernetes configurations."
+    },
+    {
+      "name": "karpathy-guidelines--multica-ai",
+      "source": "./skills/karpathy-guidelines--multica-ai",
+      "description": "Behavioral guidelines to reduce common LLM coding mistakes. Use when writing, reviewing, or refactoring code to avoid overcomplication, make surgical changes, surface assumptions, and define verifiable success criteria."
+    },
+    {
+      "name": "kb-article--anthropics",
+      "source": "./skills/kb-article--anthropics",
+      "description": "Draft a knowledge base article from a resolved issue or common question. Use when a ticket resolution is worth documenting for self-service, the same question keeps coming up, a workaround needs to be published, or a known issue should be communicated to customers."
+    },
+    {
+      "name": "kpi-dashboard-design--wshobson",
+      "source": "./skills/kpi-dashboard-design--wshobson",
+      "description": "Design effective KPI dashboards with metrics selection, visualization best practices, and real-time monitoring patterns. Use this skill when building an executive SaaS metrics dashboard tracking MRR, churn, and LTV/CAC ratios; designing an operations center with live service health and request throu"
+    },
+    {
+      "name": "landing-page-conversion-audit--github",
+      "source": "./skills/landing-page-conversion-audit--github",
+      "description": "Audit a landing page, sales page or checkout page for conversion leaks and return a fix list ordered by expected revenue impact. Use when asked to review, critique or improve a landing page, sales page, opt-in page, product page or checkout flow, when conversion rate is low, when paid traffic is not"
+    },
+    {
+      "name": "legal-risk-assessment--anthropics",
+      "source": "./skills/legal-risk-assessment--anthropics",
+      "description": "Assess and classify legal risks using a severity-by-likelihood framework with escalation criteria. Use when evaluating contract risk, assessing deal exposure, classifying issues by severity, or determining whether a matter needs senior counsel or outside legal review."
+    },
+    {
+      "name": "literature-review--k-dense-ai",
+      "source": "./skills/literature-review--k-dense-ai",
+      "description": "Conducts systematic, scoping, and narrative literature reviews using PubMed, arXiv, bioRxiv, Semantic Scholar, and other appropriate sources. Use for research synthesis, reproducible literature searches, screening, citation checking, or preparing Markdown and PDF reviews. Tracks search coverage, rec"
+    },
+    {
+      "name": "llm-evaluation--wshobson",
+      "source": "./skills/llm-evaluation--wshobson",
+      "description": "Implement comprehensive evaluation strategies for LLM applications using automated metrics, human feedback, and benchmarking. Use when testing LLM performance, measuring AI application quality, or establishing evaluation frameworks."
+    },
+    {
+      "name": "m5-onboard--anthropics",
+      "source": "./skills/m5-onboard--anthropics",
+      "description": "End-to-end onboarding for a freshly-plugged-in M5Stack ESP32 device (Cardputer, Cardputer-Adv, Core, CoreS3, Stick) — detect on USB, flash UIFlow 2.0 firmware, and install the Claude Buddy MicroPython app bundle. Use whenever the user plugs in or wants to flash/provision/reset an M5Stack or ESP32 bo"
+    },
+    {
+      "name": "market-sizing-analysis--wshobson",
+      "source": "./skills/market-sizing-analysis--wshobson",
+      "description": "Calculate TAM/SAM/SOM for market opportunities using top-down, bottom-up, and value theory methodologies. Use this skill when sizing markets, estimating addressable revenue, validating market opportunity for a new venture, or building investor-ready market analysis for a startup pitch or business pl"
+    },
+    {
+      "name": "marketing-plan--coreyhaines31",
+      "source": "./skills/marketing-plan--coreyhaines31",
+      "description": "When the user needs a comprehensive marketing plan for a client, a company they advise, or their own product. Also use when the user mentions \"marketing plan,\" \"growth plan,\" \"GTM plan,\" \"go-to-market plan,\" \"AARRR plan,\" \"90-day marketing plan,\" \"12-month marketing roadmap,\" \"fractional CMO plan,\" "
+    },
+    {
+      "name": "mcp-builder--anthropics",
+      "source": "./skills/mcp-builder--anthropics",
+      "description": "Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK)."
+    },
+    {
+      "name": "mdr-745-specialist--alirezarezvani",
+      "source": "./skills/mdr-745-specialist--alirezarezvani",
+      "description": "EU MDR 2017/745 compliance specialist for medical device classification, technical documentation, clinical evidence, and post-market surveillance. Covers Annex VIII classification rules, Annex II/III technical files, Annex XIV clinical evaluation, Art. 86 PSUR schedules, and EUDAMED integration. Use"
+    },
+    {
+      "name": "mem-search--thedotmack",
+      "source": "./skills/mem-search--thedotmack",
+      "description": "This skill should be used when the user asks to \"search memory\", \"what do you remember about X\", \"check claude-mem\", \"mem search\", \"find past observations\", \"what did we do last session\", or wants prior-session context about a project, decision, file, or task. Searches the user's Claude-Mem (cmem.ai"
+    },
+    {
+      "name": "mentoring-juniors--github",
+      "source": "./skills/mentoring-juniors--github",
+      "description": "Socratic mentoring for junior developers and AI newcomers. Guides through questions, never answers. Triggers: \"help me understand\", \"explain this code\", \"I'm stuck\", \"Im stuck\", \"I'm confused\", \"Im confused\", \"I don't understand\", \"I dont understand\", \"can you teach me\", \"teach me\", \"mentor me\", \"gu"
+    },
+    {
+      "name": "metrics-review--anthropics",
+      "source": "./skills/metrics-review--anthropics",
+      "description": "Review and analyze product metrics with trend analysis and actionable insights. Use when running a weekly, monthly, or quarterly metrics review, investigating a sudden spike or drop, comparing performance against targets, or turning raw numbers into a scorecard with recommended actions."
+    },
+    {
+      "name": "microservices-patterns--wshobson",
+      "source": "./skills/microservices-patterns--wshobson",
+      "description": "Design microservices architectures with service boundaries, event-driven communication, and resilience patterns. Use when building distributed systems, decomposing monoliths, or implementing microservices."
+    },
+    {
+      "name": "mix-engineer--bitwize-music-studio",
+      "source": "./skills/mix-engineer--bitwize-music-studio",
+      "description": "Polishes raw Suno audio by processing per-stem WAVs (vocals, backing_vocals, drums, bass, guitar, keyboard, strings, brass, woodwinds, percussion, synth, other) with targeted cleanup, EQ, and compression, then remixing into a polished stereo WAV ready for mastering. Use after audio import and before"
+    },
+    {
+      "name": "ml-paper-writing--orchestra-research",
+      "source": "./skills/ml-paper-writing--orchestra-research",
+      "description": "Write publication-ready ML/AI papers for NeurIPS, ICML, ICLR, ACL, AAAI, COLM. Use when drafting papers from research repos, structuring arguments, verifying citations, or preparing camera-ready submissions. For systems venues (OSDI, NSDI, ASPLOS, SOSP), use systems-paper-writing instead."
+    },
+    {
+      "name": "mongodb-query-optimizer--mongodb",
+      "source": "./skills/mongodb-query-optimizer--mongodb",
+      "description": "Help with MongoDB query optimization and indexing. Use only when the user asks for optimization or performance: \"How do I optimize this query?\", \"How do I index this?\", \"Why is this query slow?\", \"Can you fix my slow queries?\", \"What are the slow queries on my cluster?\", etc. Do not invoke for gener"
+    },
+    {
+      "name": "mongodb-schema-design--mongodb",
+      "source": "./skills/mongodb-schema-design--mongodb",
+      "description": "MongoDB schema design patterns and anti-patterns. Use when designing data models, reviewing schemas, migrating from SQL, or troubleshooting performance issues caused by schema problems. Triggers on \"design schema\", \"embed vs reference\", \"MongoDB data model\", \"schema review\", \"unbounded arrays\", \"one"
+    },
+    {
+      "name": "motion-framer--freshtechbro",
+      "source": "./skills/motion-framer--freshtechbro",
+      "description": "Modern animation library for React and JavaScript. Create smooth, production-ready animations with motion components, variants, gestures (hover/tap/drag), layout animations, AnimatePresence exit animations, spring physics, and scroll-based effects. Use when building interactive UI components, micro-"
+    },
+    {
+      "name": "multi-agent-patterns--muratcankoylan",
+      "source": "./skills/multi-agent-patterns--muratcankoylan",
+      "description": "This skill should be used when designing multi-agent systems that need context isolation, supervisor or swarm coordination, explicit handoffs, parallel execution, or a decision on whether multiple agents are justified."
+    },
+    {
+      "name": "neon-postgres--neondatabase",
+      "source": "./skills/neon-postgres--neondatabase",
+      "description": "Guides and best practices for working with Lakebase Postgres on Neon: connections, pooled vs direct, schema migrations, branching, autoscaling, scale-to-zero, instant restore, read replicas, IP allow lists, logical replication, and Lakebase Search. Use when the work is an existing DATABASE_URL, SQL,"
+    },
+    {
+      "name": "nextflow-development--anthropics",
+      "source": "./skills/nextflow-development--anthropics",
+      "description": "Run nf-core bioinformatics pipelines (rnaseq, sarek, atacseq) on sequencing data. Use when analyzing RNA-seq, WGS/WES, or ATAC-seq data—either local FASTQs or public datasets from GEO/SRA. Triggers on nf-core, Nextflow, FASTQ analysis, variant calling, gene expression, differential expression, GEO r"
+    },
+    {
+      "name": "notion-knowledge-capture--openai",
+      "source": "./skills/notion-knowledge-capture--openai",
+      "description": "Capture conversations and decisions into structured Notion pages; use when turning chats/notes into wiki entries, how-tos, decisions, or FAQs with proper linking."
+    },
+    {
+      "name": "observability-and-instrumentation--addyosmani",
+      "source": "./skills/observability-and-instrumentation--addyosmani",
+      "description": "Instruments code so production behavior is visible and diagnosable. Use when adding logging, metrics, tracing, or alerting. Use when shipping any feature that runs in production and you need evidence it works. Use when production issues are reported but you can't tell what happened from the availabl"
+    },
+    {
+      "name": "onboarding--anthropics",
+      "source": "./skills/onboarding--anthropics",
+      "description": "Generate an onboarding checklist and first-week plan for a new hire. Use when someone has a start date coming up, building the pre-start task list (accounts, equipment, buddy), scheduling Day 1 and Week 1, or setting 30/60/90-day goals for a new team member."
+    },
+    {
+      "name": "options-strategy-advisor--tradermonty",
+      "source": "./skills/options-strategy-advisor--tradermonty",
+      "description": "Options trading strategy analysis and simulation tool. Provides theoretical pricing using Black-Scholes model, Greeks calculation, strategy P/L simulation, and risk management guidance. Use when user requests options strategy analysis, covered calls, protective puts, spreads, iron condors, earnings "
+    },
+    {
+      "name": "paywalls--coreyhaines31",
+      "source": "./skills/paywalls--coreyhaines31",
+      "description": "When the user wants to create or optimize in-app paywalls, upgrade screens, upsell modals, or feature gates. Also use when the user mentions \"paywall,\" \"upgrade screen,\" \"upgrade modal,\" \"upsell,\" \"feature gate,\" \"convert free to paid,\" \"freemium conversion,\" \"trial expiration screen,\" \"limit reache"
+    },
+    {
+      "name": "pdf--openai",
+      "source": "./skills/pdf--openai",
+      "description": "Use when tasks involve reading, creating, or reviewing PDF files where rendering and layout matter; prefer visual checks by rendering pages (Poppler) and use Python tools such as `reportlab`, `pdfplumber`, and `pypdf` for generation and extraction."
+    },
+    {
+      "name": "performance-optimization--addyosmani",
+      "source": "./skills/performance-optimization--addyosmani",
+      "description": "Optimizes application performance across frontend, backend, queries, and databases. Use when performance requirements exist, when you suspect performance regressions, when Core Web Vitals or load times need improvement, when N+1 query patterns need fixing, or when profiling reveals bottlenecks."
+    },
+    {
+      "name": "performance-review--anthropics",
+      "source": "./skills/performance-review--anthropics",
+      "description": "Structure a performance review with self-assessment, manager template, and calibration prep. Use when review season kicks off and you need a self-assessment template, writing a manager review for a direct report, prepping rating distributions and promotion cases for calibration, or turning vague fee"
+    },
+    {
+      "name": "pipeline-review--anthropics",
+      "source": "./skills/pipeline-review--anthropics",
+      "description": "Stage-by-stage pipeline health check - coverage, aging, conversion, and at-risk deals - from CRM opportunity data. Use when the user asks \"review my pipeline\", \"pipeline health\", \"where's my pipeline stuck\", \"weekly pipeline review\", \"which deals should I focus on this week\", \"any stale or stuck dea"
+    },
+    {
+      "name": "planning-and-task-breakdown--addyosmani",
+      "source": "./skills/planning-and-task-breakdown--addyosmani",
+      "description": "Breaks work into ordered tasks. Use when you have a spec or clear requirements and need to break work into implementable tasks. Use when a task feels too large to start, when you need to estimate scope, or when parallel work is possible."
+    },
+    {
+      "name": "playwright--openai",
+      "source": "./skills/playwright--openai",
+      "description": "Use when the task requires automating a real browser from the terminal (navigation, form filling, snapshots, screenshots, data extraction, UI-flow debugging) via `playwright-cli` or the bundled wrapper script."
+    },
+    {
+      "name": "ponytail--dietrichgebert",
+      "source": "./skills/ponytail--dietrichgebert",
+      "description": "Lazy senior dev mode: the smallest change that fully solves the task, and a reply a busy human understands in one read. Use on any coding task (writing, fixing, refactoring, reviewing, choosing dependencies) and when the user says \"ponytail\", \"be lazy\", \"simplest solution\", \"yagni\", or complains abo"
+    },
+    {
+      "name": "portfolio-manager--tradermonty",
+      "source": "./skills/portfolio-manager--tradermonty",
+      "description": "Comprehensive portfolio analysis using Alpaca MCP Server integration to fetch holdings and positions, then analyze asset allocation, risk metrics, individual stock positions, diversification, and generate rebalancing recommendations. Use when user requests portfolio review, position analysis, risk a"
+    },
+    {
+      "name": "pr-writer--getsentry",
+      "source": "./skills/pr-writer--getsentry",
+      "description": "Create or refresh reviewer-facing PR titles and descriptions. Use when opening a PR, updating its title or body, or preparing branch changes for review."
+    },
+    {
+      "name": "prd--github",
+      "source": "./skills/prd--github",
+      "description": "Generate high-quality Product Requirements Documents (PRDs) for software systems and AI-powered features. Includes executive summaries, user stories, technical specifications, and risk analysis."
+    },
+    {
+      "name": "presentation-creator--getsentry",
+      "source": "./skills/presentation-creator--getsentry",
+      "description": "Create data-driven presentation slides using React, Vite, and Recharts with Sentry branding. Use when asked to \"create a presentation\", \"build slides\", \"make a deck\", \"create a data presentation\", \"build a Sentry presentation\". Scaffolds a complete slide-based app with charts, animations, and single"
+    },
+    {
+      "name": "pricing--coreyhaines31",
+      "source": "./skills/pricing--coreyhaines31",
+      "description": "When the user wants help with pricing decisions, packaging, or monetization strategy. Also use when the user mentions 'pricing,' 'pricing tiers,' 'freemium,' 'free trial,' 'packaging,' 'price increase,' 'value metric,' 'Van Westendorp,' 'willingness to pay,' 'monetization,' 'how much should I charge"
+    },
+    {
+      "name": "prisma-postgres--prisma",
+      "source": "./skills/prisma-postgres--prisma",
+      "description": "Deprecated compatibility name for prisma-postgres-setup. Use only when a user or existing integration explicitly invokes prisma-postgres; otherwise select prisma-postgres-setup."
+    },
+    {
+      "name": "process-optimization--anthropics",
+      "source": "./skills/process-optimization--anthropics",
+      "description": "Analyze and improve business processes. Trigger with \"this process is slow\", \"how can we improve\", \"streamline this workflow\", \"too many steps\", \"bottleneck\", or when the user describes an inefficient process they want to fix."
+    },
+    {
+      "name": "product-manager-toolkit--alirezarezvani",
+      "source": "./skills/product-manager-toolkit--alirezarezvani",
+      "description": "Comprehensive toolkit for product managers including RICE prioritization, customer interview analysis, PRD templates, discovery frameworks, and go-to-market strategies. Use when prioritizing features, synthesizing user research, writing requirement documentation, or developing product strategy."
+    },
+    {
+      "name": "programmatic-seo--coreyhaines31",
+      "source": "./skills/programmatic-seo--coreyhaines31",
+      "description": "When the user wants to create SEO-driven pages at scale using templates and data. Also use when the user mentions \"programmatic SEO,\" \"template pages,\" \"pages at scale,\" \"directory pages,\" \"location pages,\" \"[keyword] + [city] pages,\" \"comparison pages,\" \"integration pages,\" \"building many pages for"
+    },
+    {
+      "name": "prompt-optimizer--getsentry",
+      "source": "./skills/prompt-optimizer--getsentry",
+      "description": "Creates, optimizes, and iteratively refines agent prompts, system prompts, developer prompts, and reusable prompt templates. Use when asked to improve a prompt, optimize a system prompt, rewrite an agent prompt, tune prompt wording, make a prompt more reliable, port prompts between OpenAI, Claude, o"
+    },
+    {
+      "name": "prospecting--coreyhaines31",
+      "source": "./skills/prospecting--coreyhaines31",
+      "description": "When the user wants to find, qualify, and build a list of prospects to reach out to, across B2B SaaS, general B2B, or local small businesses. Also use when the user mentions \"prospecting,\" \"build a prospect list,\" \"find leads,\" \"lead list,\" \"outbound list,\" \"target account list,\" \"ICP-fit accounts,\""
+    },
+    {
+      "name": "pyhealth--aipoch",
+      "source": "./skills/pyhealth--aipoch",
+      "description": "Healthcare AI toolkit for clinical ML. EHR processing, clinical prediction (mortality, readmission, drug recommendation), medical coding (ICD/NDC/ATC), signals (EEG/ECG), datasets (MIMIC-III/IV, eICU, OMOP), and healthcare deep learning (RETAIN, SafeDrug, Transformer, GNN) via..."
+    },
+    {
+      "name": "r3f-scroll-scenes",
+      "source": "./skills/r3f-scroll-scenes",
+      "description": "Production patterns for scroll-driven 3D in React / Next.js with React Three Fiber and drei — ScrollControls vs. native-scroll + GSAP bridge, a zustand scroll store, per-section scenes, HTML overlays, suspense-loaded GLBs, adaptive performance, and SSR-safe setup. Use when building a 3D scroll exper"
+    },
+    {
+      "name": "react-native-best-practices--callstackincubator",
+      "source": "./skills/react-native-best-practices--callstackincubator",
+      "description": "Provides React Native performance optimization guidelines for FPS, TTI, bundle size, memory leaks, re-renders, and animations. Applies to tasks involving Hermes optimization, JS thread blocking, bridge overhead, FlashList, native modules, or debugging jank and frame drops."
+    },
+    {
+      "name": "react-three-fiber--freshtechbro",
+      "source": "./skills/react-three-fiber--freshtechbro",
+      "description": "Build declarative 3D scenes with React Three Fiber (R3F) - a React renderer for Three.js. Use when building interactive 3D experiences in React applications with component-based architecture, state management, and reusable abstractions. Ideal for product configurators, portfolios, games, data visual"
+    },
+    {
+      "name": "real-estate-deal-analyst",
+      "source": "./skills/real-estate-deal-analyst",
+      "description": "Analyze residential and small commercial real-estate deals like an investor — rental cash flow, cap rate, cash-on-cash return, DSCR, mortgage amortization, rent-vs-buy, BRRRR and flip math, sensitivity tables, comps checklist and due-diligence risks — producing a clear go / negotiate / pass memo. Us"
+    },
+    {
+      "name": "receiving-code-review--obra",
+      "source": "./skills/receiving-code-review--obra",
+      "description": "Use when receiving code review feedback, before implementing suggestions, especially if feedback seems unclear or technically questionable - requires technical rigor and verification, not performative agreement or blind implementation"
+    },
+    {
+      "name": "reconciliation--anthropics",
+      "source": "./skills/reconciliation--anthropics",
+      "description": "Reconcile accounts by comparing GL balances to subledgers, bank statements, or third-party data. Use when performing bank reconciliations, GL-to-subledger recs, intercompany reconciliations, or identifying and categorizing reconciling items."
+    },
+    {
+      "name": "recruiting-pipeline--anthropics",
+      "source": "./skills/recruiting-pipeline--anthropics",
+      "description": "Track and manage recruiting pipeline stages. Trigger with \"recruiting update\", \"candidate pipeline\", \"how many candidates\", \"hiring status\", or when the user discusses sourcing, screening, interviewing, or extending offers."
+    },
+    {
+      "name": "rerun-data-model--rerun-io",
+      "source": "./skills/rerun-data-model--rerun-io",
+      "description": "How raw multimodal robot data maps onto the Rerun data model. Read FIRST, before modeling or converting a dataset — and whenever you are about to convert/ingest/preprocess robot data into an .rrd or build a Rerun recording, even if not asked for the data model. Resolves the entity-vs-component, prop"
+    },
+    {
+      "name": "rerun-urdf--rerun-io",
+      "source": "./skills/rerun-urdf--rerun-io",
+      "description": "Drive the Rerun URDF API (rerun.urdf.UrdfTree) to ingest a URDF as a Transform3D layer on a robot recording. Read when logging a robot model, running forward kinematics from joint states, composing a fixed chain for sensor extrinsics, or when the transform tree will not connect from the data alone. "
+    },
+    {
+      "name": "review-contract--anthropics",
+      "source": "./skills/review-contract--anthropics",
+      "description": "Review a contract against your organization's negotiation playbook — flag deviations, generate redlines, provide business impact analysis. Use when reviewing vendor or customer agreements, when you need clause-by-clause analysis against standard positions, or when preparing a negotiation strategy wi"
+    },
+    {
+      "name": "rhino3d-scripts--github",
+      "source": "./skills/rhino3d-scripts--github",
+      "description": "Authoring and debugging scripts for Rhinoceros 3D (Rhino 8 and later). Use when asked to write RhinoScript (VBScript / .rvb / .vbs), RhinoPython, or RhinoCommon-based scripts; automate Rhino modeling tasks; build command macros; manipulate Rhino geometry, layers, blocks, or document objects; pick ob"
+    },
+    {
+      "name": "risk-assessment--anthropics",
+      "source": "./skills/risk-assessment--anthropics",
+      "description": "Identify, assess, and mitigate operational risks. Trigger with \"what are the risks\", \"risk assessment\", \"risk register\", \"what could go wrong\", or when the user is evaluating risks associated with a project, vendor, process, or decision."
+    },
+    {
+      "name": "roadmap-update--anthropics",
+      "source": "./skills/roadmap-update--anthropics",
+      "description": "Update, create, or reprioritize your product roadmap. Use when adding a new initiative and deciding what moves to make room, shifting priorities after new information comes in, moving timelines due to a dependency slip, or building a Now/Next/Later view from scratch."
+    },
+    {
+      "name": "robot-bringup--arpitg1304",
+      "source": "./skills/robot-bringup--arpitg1304",
+      "description": "Bringing up a complete ROS2 system on a robot's onboard computer: systemd services, launch file composition, ordered startup, and production monitoring. Use this skill when configuring a robot to start ROS2 nodes on boot, writing systemd unit files for ROS2 launch, composing layered launch files for"
+    },
+    {
+      "name": "robot-perception--arpitg1304",
+      "source": "./skills/robot-perception--arpitg1304",
+      "description": "Comprehensive best practices for robot perception systems covering cameras, LiDARs, depth sensors, IMUs, and multi-sensor setups. Use this skill when working with RGB image processing, depth maps, point clouds, sensor calibration (intrinsic, extrinsic, hand-eye), object detection, semantic segmentat"
+    },
+    {
+      "name": "robotics-software-principles--arpitg1304",
+      "source": "./skills/robotics-software-principles--arpitg1304",
+      "description": "Foundational software design principles applied specifically to robotics module development. Use this skill when designing robot software modules, structuring codebases, making architecture decisions, reviewing robotics code, or building reusable robotics libraries. Trigger whenever the user mention"
+    },
+    {
+      "name": "room-walkthrough-3d",
+      "source": "./skills/room-walkthrough-3d",
+      "description": "Create photoreal-feeling interior/room walkthroughs on the web — real-estate tours, showrooms, museums, virtual offices — with baked lighting GLBs, eye-height camera rails or click-to-move navigation, hotspots/annotations, portals between rooms, and mobile-safe performance. Use when the user asks fo"
+    },
+    {
+      "name": "ros-ros2--patrickjs",
+      "source": "./skills/ros-ros2--patrickjs",
+      "description": "ROS and ROS2 rules for packages, nodes, launch files, messages, services, actions, simulation, and testing"
+    },
+    {
+      "name": "ros2--arpitg1304",
+      "source": "./skills/ros2--arpitg1304",
+      "description": "Comprehensive best practices, design patterns, and common pitfalls for ROS2 (Robot Operating System 2) development. Use this skill when building ROS2 nodes, packages, launch files, components, or debugging ROS2 systems. Trigger whenever the user mentions ROS2, colcon, rclpy, rclcpp, DDS, QoS, lifecy"
+    },
+    {
+      "name": "sales-enablement--coreyhaines31",
+      "source": "./skills/sales-enablement--coreyhaines31",
+      "description": "When the user wants to create sales collateral, pitch decks, one-pagers, objection handling docs, or demo scripts. Also use when the user mentions 'sales deck,' 'pitch deck,' 'one-pager,' 'leave-behind,' 'objection handling,' 'deal-specific ROI analysis,' 'demo script,' 'talk track,' 'sales playbook"
+    },
+    {
+      "name": "scenes--phaserjs",
+      "source": "./skills/scenes--phaserjs",
+      "description": "Use this skill when working with Phaser 4 scenes. Covers scene lifecycle methods, scene transitions, parallel scenes, scene communication, sleeping, pausing, restarting, and the SceneManager. Triggers on: Scene, scene lifecycle, preload, create, update, scene transition, SceneManager."
+    },
+    {
+      "name": "scientific-problem-selection--anthropics",
+      "source": "./skills/scientific-problem-selection--anthropics",
+      "description": "This skill should be used when scientists need help with research problem selection, project ideation, troubleshooting stuck projects, or strategic scientific decisions. Use this skill when users ask to pitch a new research idea, work through a project problem, evaluate project risks, plan research "
+    },
+    {
+      "name": "scroll-storytelling-director",
+      "source": "./skills/scroll-storytelling-director",
+      "description": "Direct scroll-driven narratives (scrollytelling) like a film editor — story structure, chapter pacing, pinned scenes, text reveal choreography, sticky visuals, data/story transitions, and GSAP ScrollTrigger timelines. Use for brand stories, product launches, editorial/long-form journalism pieces, an"
+    },
+    {
+      "name": "scroll-world--oso95",
+      "source": "./skills/scroll-world--oso95",
+      "description": "Build an immersive scroll-scrubbed \"fly through the world\" landing page for any industry or brand using Higgsfield. As the visitor scrolls, a pre-rendered camera flies from outside each scene into its interior, then flows on to the next scene with NO cuts — one continuous connected flight (Emons-sty"
+    },
+    {
+      "name": "security-and-hardening--addyosmani",
+      "source": "./skills/security-and-hardening--addyosmani",
+      "description": "Hardens code against vulnerabilities. Use when auditing an input handler for vulnerabilities, when handling user input, authentication, data storage, or external integrations, or when checking a login flow is safe against the OWASP Top Ten. Use when building any feature that accepts untrusted data, "
+    },
+    {
+      "name": "security-review--getsentry",
+      "source": "./skills/security-review--getsentry",
+      "description": "Security code review for vulnerabilities. Use when asked to \"security review\", \"find vulnerabilities\", \"check for security issues\", \"audit security\", \"OWASP review\", or review code for injection, XSS, authentication, authorization, cryptography issues. Provides systematic review with confidence-base"
+    },
+    {
+      "name": "security-threat-model--openai",
+      "source": "./skills/security-threat-model--openai",
+      "description": "Repository-grounded threat modeling that enumerates trust boundaries, assets, attacker capabilities, abuse paths, and mitigations, and writes a concise Markdown threat model. Trigger only when the user explicitly asks to threat model a codebase or path, enumerate threats/abuse paths, or perform AppS"
+    },
+    {
+      "name": "semgrep--trailofbits",
+      "source": "./skills/semgrep--trailofbits",
+      "description": "Runs a Semgrep security scan over a codebase: detects languages, selects rulesets, presents the plan for explicit approval, then runs every approved ruleset through scripts/run-scans.sh, which batches the semgrep processes and writes scans.json, and merges the output to SARIF. Supports two scan mode"
+    },
+    {
+      "name": "seo--agricidaniel",
+      "source": "./skills/seo--agricidaniel",
+      "description": "Comprehensive SEO analysis for any website or business type. Full site audits, single-page analysis, technical SEO (crawlability, indexability, Core Web Vitals with INP), schema markup, content quality (E-E-A-T), image optimization, sitemap analysis, and GEO for AI Overviews/ChatGPT/Perplexity. Indu"
+    },
+    {
+      "name": "seo-audit--agricidaniel",
+      "source": "./skills/seo-audit--agricidaniel",
+      "description": "Run a full-site SEO audit and return a scored, prioritized report. Use only for site-wide checks; use seo-page for one URL or seo-technical for a technical-only review."
+    },
+    {
+      "name": "seo-ecommerce--agricidaniel",
+      "source": "./skills/seo-ecommerce--agricidaniel",
+      "description": "Analyze ecommerce SEO across product pages, product schema, Shopping visibility, marketplace signals, and keyword gaps. Use only for stores, catalogs, or product listings."
+    },
+    {
+      "name": "shadcn--shadcn-ui",
+      "source": "./skills/shadcn--shadcn-ui",
+      "description": "Manages shadcn components and projects — adding, searching, fixing, debugging, styling, and composing UI, including chat interfaces. Provides project context, component docs, and usage examples. Applies when working with shadcn/ui, component registries, presets, --preset codes, or any project with a"
+    },
+    {
+      "name": "sharp-edges--trailofbits",
+      "source": "./skills/sharp-edges--trailofbits",
+      "description": "Identifies error-prone APIs, dangerous configurations, and footgun designs that enable security mistakes. Use when reviewing API designs, configuration schemas, cryptographic library ergonomics, or evaluating whether code follows 'secure by default' and 'pit of success' principles. Triggers: footgun"
+    },
+    {
+      "name": "shopify-review-triage--github",
+      "source": "./skills/shopify-review-triage--github",
+      "description": "Use this skill when someone wants public Shopify App Store reviews, low-star reviews, or merchant feedback triaged, prioritized, clustered, or turned into a product or support brief. Trigger for prompts like \"triage these app store reviews\", \"what should we fix first from this feedback\", \"cluster ou"
+    },
+    {
+      "name": "single-cell-rna-qc--anthropics",
+      "source": "./skills/single-cell-rna-qc--anthropics",
+      "description": "Performs quality control on single-cell RNA-seq data (.h5ad or .h5 files) using scverse best practices with MAD-based filtering and comprehensive visualizations. Use when users request QC analysis, filtering low-quality cells, assessing data quality, or following scverse/scanpy best practices for si"
+    },
+    {
+      "name": "skill-creator--anthropics",
+      "source": "./skills/skill-creator--anthropics",
+      "description": "Create new skills, modify and improve existing skills, and measure skill performance. Use when users want to create a skill from scratch, edit, or optimize an existing skill, run evals to test a skill, benchmark skill performance with variance analysis, or optimize a skill's description for better t"
+    },
+    {
+      "name": "skill-loadout-router",
+      "source": "./skills/skill-loadout-router",
+      "description": "Meta-skill that helps an agent pick and combine the right skills from the Skill Loadout library for a task — maps task types to skill stacks (3D/immersive web, SaaS, mobile, data science, security, docs, media), explains how skills compose, and how to install them for Claude, Codex/ChatGPT, Gemini C"
+    },
+    {
+      "name": "slack-gif-creator--anthropics",
+      "source": "./skills/slack-gif-creator--anthropics",
+      "description": "Knowledge and utilities for creating animated GIFs optimized for Slack. Provides constraints, validation tools, and animation concepts. Use when users request animated GIFs for Slack like \"make me a GIF of X doing Y for Slack.\""
+    },
+    {
+      "name": "slides--nextlevelbuilder",
+      "source": "./skills/slides--nextlevelbuilder",
+      "description": "Create strategic HTML presentations with Chart.js, design tokens, responsive layouts, copywriting formulas, and contextual slide strategies."
+    },
+    {
+      "name": "socratic-tutor",
+      "source": "./skills/socratic-tutor",
+      "description": "Teach any subject so it sticks — diagnose what the learner already knows, guide with questions instead of answers, scaffold with worked examples, check understanding with retrieval practice and spaced review, adapt difficulty, and build study plans, flashcards and practice sets. Use when someone wan"
+    },
+    {
+      "name": "solana-vulnerability-scanner--trailofbits",
+      "source": "./skills/solana-vulnerability-scanner--trailofbits",
+      "description": "Scans Solana programs for 6 critical vulnerabilities including arbitrary CPI, improper PDA validation, missing signer/ownership checks, and sysvar spoofing. Use when auditing Solana/Anchor programs."
+    },
+    {
+      "name": "solidity-security--wshobson",
+      "source": "./skills/solidity-security--wshobson",
+      "description": "Master smart contract security best practices to prevent common vulnerabilities and implement secure Solidity patterns. Use when writing smart contracts, auditing existing contracts, or implementing security measures for blockchain applications."
+    },
+    {
+      "name": "spec-driven-development--addyosmani",
+      "source": "./skills/spec-driven-development--addyosmani",
+      "description": "Creates specs before coding. Use when starting a new project, feature, or significant change and no specification exists yet. Use when drafting a PRD or requirements document with objectives and scope, or when requirements are unclear, ambiguous, or only exist as a vague idea. Use when a single requ"
+    },
+    {
+      "name": "speech--openai",
+      "source": "./skills/speech--openai",
+      "description": "Use when the user asks for text-to-speech narration or voiceover, accessibility reads, audio prompts, or batch speech generation via the OpenAI Audio API; run the bundled CLI (`scripts/text_to_speech.py`) with built-in voices and require `OPENAI_API_KEY` for live calls. Custom voice creation is out "
+    },
+    {
+      "name": "sprint-planning--anthropics",
+      "source": "./skills/sprint-planning--anthropics",
+      "description": "Plan a sprint — scope work, estimate capacity, set goals, and draft a sprint plan. Use when kicking off a new sprint, sizing a backlog against team availability (accounting for PTO and meetings), deciding what's P0 vs. stretch, or handling carryover from the last sprint."
+    },
+    {
+      "name": "startup-analysis--himself65",
+      "source": "./skills/startup-analysis--himself65",
+      "description": "Analyze a startup from three perspectives — VC investor, job applicant, and CEO/founder — covering market, traction, unit economics, team, defensibility, runway, equity value, culture, and competitive position, with a verdict for each. Use this skill whenever the user wants to evaluate a startup or "
+    },
+    {
+      "name": "statistical-analysis--anthropics",
+      "source": "./skills/statistical-analysis--anthropics",
+      "description": "Apply statistical methods including descriptive stats, trend analysis, outlier detection, and hypothesis testing. Use when analyzing distributions, testing for significance, detecting anomalies, computing correlations, or interpreting statistical results."
+    },
+    {
+      "name": "suno-engineer--bitwize-music-studio",
+      "source": "./skills/suno-engineer--bitwize-music-studio",
+      "description": "Constructs technical Suno style prompts for the current model family (v6, v6-wild, v6-mini), selects models and generation settings, and optimizes prompts. Use when creating or refining Suno prompts for track generation."
+    },
+    {
+      "name": "supabase-postgres-best-practices--supabase",
+      "source": "./skills/supabase-postgres-best-practices--supabase",
+      "description": "Postgres best practices maintained by Supabase, for Postgres running anywhere. Load this skill BEFORE writing or changing anything that lives in a Postgres database: creating or altering tables and columns (including choosing column types), schema design, migrations and declarative schema files, RLS"
+    },
+    {
+      "name": "supply-chain-risk-auditor--trailofbits",
+      "source": "./skills/supply-chain-risk-auditor--trailofbits",
+      "description": "Audits a project's dependencies for supply-chain risk: version-matched advisories for direct dependencies and the full lockfile tree, abandoned or archived upstreams, npm publisher concentration, and install-time script execution. Use when asked to audit dependencies, assess supply-chain or third-pa"
+    },
+    {
+      "name": "swift-concurrency-expert--dimillian",
+      "source": "./skills/swift-concurrency-expert--dimillian",
+      "description": "Swift Concurrency review and remediation for Swift 6.2+. Use when asked to review Swift Concurrency usage, improve concurrency compliance, or fix Swift concurrency compiler errors in a feature or file. Concrete actions include adding Sendable conformance, applying @MainActor annotations, resolving a"
+    },
+    {
+      "name": "swiftui-performance-audit--dimillian",
+      "source": "./skills/swiftui-performance-audit--dimillian",
+      "description": "Audit and improve SwiftUI runtime performance from code review and architecture. Use for requests to diagnose slow rendering, janky scrolling, high CPU/memory usage, excessive view updates, or layout thrash in SwiftUI apps, and to provide guidance for user-run Instruments profiling when code review "
+    },
+    {
+      "name": "swiftui-ui-patterns--dimillian",
+      "source": "./skills/swiftui-ui-patterns--dimillian",
+      "description": "Best practices and example-driven guidance for building SwiftUI views and components, including navigation hierarchies, custom view modifiers, and responsive layouts with stacks and grids. Use when creating or refactoring SwiftUI UI, designing tab architecture with TabView, composing screens with VS"
+    },
+    {
+      "name": "syllabus--alirezarezvani",
+      "source": "./skills/syllabus--alirezarezvani",
+      "description": "Generates a curated supplementary reading list from any course syllabus using Consensus academic search. Grill-me intake (syllabus input format + course audience + year range) plus a grouping forcing-options checkpoint before any search runs — so the reading list matches the course's level and recen"
+    },
+    {
+      "name": "synthesize-research--anthropics",
+      "source": "./skills/synthesize-research--anthropics",
+      "description": "Synthesize user research from interviews, surveys, and feedback into structured insights. Use when you have a pile of interview notes, survey responses, or support tickets to make sense of, need to extract themes and rank findings by frequency and impact, or want to turn raw feedback into roadmap re"
+    },
+    {
+      "name": "systematic-debugging--obra",
+      "source": "./skills/systematic-debugging--obra",
+      "description": "Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes"
+    },
+    {
+      "name": "technical-job-search--github",
+      "source": "./skills/technical-job-search--github",
+      "description": "Use this skill when a software engineer asks for help with job search tasks: parsing or analyzing a job description, tailoring a CV/resume, writing a cover letter, evaluating a job offer, or drafting a post-interview follow-up email. Do not activate for general career advice unrelated to an active j"
+    },
+    {
+      "name": "terraform-style-guide--hashicorp",
+      "source": "./skills/terraform-style-guide--hashicorp",
+      "description": "Generate Terraform HCL code following HashiCorp's official style conventions and best practices. Use when writing, reviewing, or generating Terraform configurations."
+    },
+    {
+      "name": "terraform-test--hashicorp",
+      "source": "./skills/terraform-test--hashicorp",
+      "description": "Comprehensive guide for writing and running Terraform tests. Use when creating test files (.tftest.hcl), writing test scenarios with run blocks, validating infrastructure behavior with assertions, mocking providers and data sources, testing module outputs and resource configurations, or troubleshoot"
+    },
+    {
+      "name": "test-driven-development--obra",
+      "source": "./skills/test-driven-development--obra",
+      "description": "Use when implementing any feature or bugfix, before writing implementation code"
+    },
+    {
+      "name": "theme-factory--anthropics",
+      "source": "./skills/theme-factory--anthropics",
+      "description": "Toolkit for styling artifacts with a theme. These artifacts can be slides, docs, reportings, HTML landing pages, etc. There are 10 pre-set themes with colors/fonts that you can apply to any artifact that has been creating, or can generate a new theme on-the-fly."
+    },
+    {
+      "name": "threat-model-analyst--github",
+      "source": "./skills/threat-model-analyst--github",
+      "description": "Full STRIDE-A threat model analysis and incremental update skill for repositories and systems. Supports two modes: (1) Single analysis — full STRIDE-A threat model of a repository, producing architecture overviews, DFD diagrams, STRIDE-A analysis, prioritized findings, and executive assessments. (2)"
+    },
+    {
+      "name": "threejs-aaa-graphics-builder--majidmanzarpour",
+      "source": "./skills/threejs-aaa-graphics-builder--majidmanzarpour",
+      "description": "Upgrade Three.js games from prototype visuals to premium browser graphics: art-direction critique, procedural model building, material and texture libraries, world prop kits, shaders, VFX, lighting and render pipeline, LOD and instancing, render budgets, and a 10-category visual scorecard. Use when "
+    },
+    {
+      "name": "threejs-fundamentals--calesthio",
+      "source": "./skills/threejs-fundamentals--calesthio",
+      "description": "Three.js scene setup, cameras, renderer, Object3D hierarchy, coordinate systems. Use when setting up 3D scenes, creating cameras, configuring renderers, managing object hierarchies, or working with transforms."
+    },
+    {
+      "name": "threejs-game-director--majidmanzarpour",
+      "source": "./skills/threejs-game-director--majidmanzarpour",
+      "description": "Entrypoint for building, upgrading, and finishing Three.js browser games. Routes work across the sibling threejs-* skills for gameplay, graphics, UI, 3D/image/audio asset generation, debugging, and release. Use for any request to build, upgrade, polish, or ship a Three.js game as a whole, at any sco"
+    },
+    {
+      "name": "threejs-gameplay-systems--majidmanzarpour",
+      "source": "./skills/threejs-gameplay-systems--majidmanzarpour",
+      "description": "Build and iterate playable Three.js game systems: starter scaffold, architecture, design briefs, core loops, level and encounter design, entities, input, camera, collision and physics, scoring, objectives, and game feel. Use for first playable slices, new Vite/TypeScript/Three.js setups, level/arena"
+    },
+    {
+      "name": "ticket-triage--anthropics",
+      "source": "./skills/ticket-triage--anthropics",
+      "description": "Triage and prioritize a support ticket or customer issue. Use when a new ticket comes in and needs categorization, assigning P1-P4 priority, deciding which team should handle it, or checking whether it's a duplicate or known issue before routing."
+    },
+    {
+      "name": "transcribe--openai",
+      "source": "./skills/transcribe--openai",
+      "description": "Transcribe audio files to text with optional diarization and known-speaker hints. Use when a user asks to transcribe speech from audio/video, extract text from recordings, or label speakers in interviews or meetings."
+    },
+    {
+      "name": "travel-itinerary-planner",
+      "source": "./skills/travel-itinerary-planner",
+      "description": "Plan realistic, delightful trips — day-by-day itineraries with geographic clustering, travel times, opening hours, budget ranges, bookings checklist, packing list, local etiquette and backup plans for bad weather. Use when someone asks to plan a trip, vacation, honeymoon, business trip, weekend geta"
+    },
+    {
+      "name": "triage-nda--anthropics",
+      "source": "./skills/triage-nda--anthropics",
+      "description": "Rapidly triage an incoming NDA and classify it as GREEN (standard approval), YELLOW (counsel review), or RED (full legal review). Use when a new NDA arrives from sales or business development, when screening for embedded non-solicits, non-competes, or missing carveouts, or when deciding whether an N"
+    },
+    {
+      "name": "ui-styling--nextlevelbuilder",
+      "source": "./skills/ui-styling--nextlevelbuilder",
+      "description": "Create beautiful, accessible user interfaces with shadcn/ui components (built on Radix UI + Tailwind), Tailwind CSS utility-first styling, and canvas-based visual designs. Use when building user interfaces, implementing design systems, creating responsive layouts, adding accessible components (dialo"
+    },
+    {
+      "name": "ui-ux-pro-max--nextlevelbuilder",
+      "source": "./skills/ui-ux-pro-max--nextlevelbuilder",
+      "description": "UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation. Se"
+    },
+    {
+      "name": "understand--egonex-ai",
+      "source": "./skills/understand--egonex-ai",
+      "description": "Analyze a codebase to produce an interactive knowledge graph for understanding architecture, components, and relationships"
+    },
+    {
+      "name": "understand-explain--egonex-ai",
+      "source": "./skills/understand-explain--egonex-ai",
+      "description": "Use when you need a deep-dive explanation of a specific file, function, or module in the codebase"
+    },
+    {
+      "name": "unity-skills--besty0728",
+      "source": "./skills/unity-skills--besty0728",
+      "description": "Automate the Unity Editor through a local REST API — scripts, scenes, prefabs, assets, materials, lighting, tests and hundreds of other Editor operations. Use when the user wants to actually operate the Unity Editor from chat — create, modify or batch-edit GameObjects/scripts/scenes/assets, or run E"
+    },
+    {
+      "name": "upgrading-react-native--callstackincubator",
+      "source": "./skills/upgrading-react-native--callstackincubator",
+      "description": "Upgrades React Native apps to newer versions by applying rn-diff-purge template diffs, updating package.json dependencies, migrating native iOS and Android configuration, resolving CocoaPods and Gradle changes, and handling breaking API updates. Use when upgrading React Native, bumping RN version, u"
+    },
+    {
+      "name": "using-superpowers--obra",
+      "source": "./skills/using-superpowers--obra",
+      "description": "Use when starting any conversation - establishes how to find and use skills, requiring skill invocation before ANY response including clarifying questions"
+    },
+    {
+      "name": "variance-analysis--anthropics",
+      "source": "./skills/variance-analysis--anthropics",
+      "description": "Decompose financial variances into drivers with narrative explanations and waterfall analysis. Use when analyzing budget vs. actual, period-over-period changes, revenue or expense variances, or preparing variance commentary for leadership."
+    },
+    {
+      "name": "vendor-review--anthropics",
+      "source": "./skills/vendor-review--anthropics",
+      "description": "Evaluate a vendor — cost analysis, risk assessment, and recommendation. Use when reviewing a new vendor proposal, deciding whether to renew or replace a contract, comparing two vendors side-by-side, or building a TCO breakdown and negotiation points before procurement sign-off."
+    },
+    {
+      "name": "vercel-composition-patterns--vercel-labs",
+      "source": "./skills/vercel-composition-patterns--vercel-labs",
+      "description": "React composition patterns that scale. Use when refactoring components with boolean prop proliferation, building flexible component libraries, or designing reusable APIs. Triggers on tasks involving compound components, render props, context providers, or component architecture. Includes React 19 AP"
+    },
+    {
+      "name": "vercel-deploy--openai",
+      "source": "./skills/vercel-deploy--openai",
+      "description": "Deploy applications and websites to Vercel. Use when the user requests deployment actions like \"deploy my app\", \"deploy and give me the link\", \"push this live\", or \"create a preview deployment\"."
+    },
+    {
+      "name": "vercel-react-best-practices--vercel-labs",
+      "source": "./skills/vercel-react-best-practices--vercel-labs",
+      "description": "React and Next.js performance optimization guidelines from Vercel Engineering. This skill should be used when writing, reviewing, or refactoring React/Next.js code to ensure optimal performance patterns. Triggers on tasks involving React components, Next.js pages, data fetching, bundle optimization,"
+    },
+    {
+      "name": "vercel-react-native-skills--vercel-labs",
+      "source": "./skills/vercel-react-native-skills--vercel-labs",
+      "description": "React Native and Expo best practices for building performant mobile apps. Use when building React Native components, optimizing list performance, implementing animations, or working with native modules. Triggers on tasks involving React Native, Expo, mobile performance, or native platform APIs."
+    },
+    {
+      "name": "vercel-react-view-transitions--vercel-labs",
+      "source": "./skills/vercel-react-view-transitions--vercel-labs",
+      "description": "Guide for implementing smooth, native-feeling animations using React's View Transition API (`<ViewTransition>` component, `addTransitionType`, and CSS view transition pseudo-elements). Use this skill whenever the user wants to add page transitions, animate route changes, create shared element animat"
+    },
+    {
+      "name": "web-artifacts-builder--anthropics",
+      "source": "./skills/web-artifacts-builder--anthropics",
+      "description": "Suite of tools for creating elaborate, multi-component claude.ai HTML artifacts using modern frontend web technologies (React, Tailwind CSS, shadcn/ui). Use for complex artifacts requiring state management, routing, or shadcn/ui components - not for simple single-file HTML/JSX artifacts."
+    },
+    {
+      "name": "web3-testing--wshobson",
+      "source": "./skills/web3-testing--wshobson",
+      "description": "Test smart contracts comprehensively using Hardhat and Foundry with unit tests, integration tests, and mainnet forking. Use when testing Solidity contracts, setting up blockchain test suites, or validating DeFi protocols."
+    },
+    {
+      "name": "webapp-testing--anthropics",
+      "source": "./skills/webapp-testing--anthropics",
+      "description": "Toolkit for interacting with and testing local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing browser screenshots, and viewing browser logs."
+    },
+    {
+      "name": "webgl-shader-effects",
+      "source": "./skills/webgl-shader-effects",
+      "description": "Signature GLSL/TSL shader effects for award-style websites — noise gradients, image distortion/hover ripples, dissolve and noise-mask transitions, particle morphs, fresnel/iridescent materials, displacement on scroll, and post-processing (bloom, chromatic aberration, grain, vignette) in Three.js or "
+    },
+    {
+      "name": "webgpu-tsl-3d",
+      "source": "./skills/webgpu-tsl-3d",
+      "description": "Use Three.js WebGPURenderer and TSL (Three Shading Language) node materials to build next-generation web 3D — compute-shader particles (millions), GPU simulations, node-based materials that compile to WGSL and GLSL, post-processing with the node pipeline, and graceful WebGL fallback. Use when a 3D s"
+    },
+    {
+      "name": "workers-best-practices--cloudflare",
+      "source": "./skills/workers-best-practices--cloudflare",
+      "description": "Cloudflare Workers best practices for production applications. Use when writing, reviewing, or configuring Workers."
+    },
+    {
+      "name": "write-spec--anthropics",
+      "source": "./skills/write-spec--anthropics",
+      "description": "Write a feature spec or PRD from a problem statement or feature idea. Use when turning a vague idea or user request into a structured document, scoping a feature with goals and non-goals, defining success metrics and acceptance criteria, or breaking a big ask into a phased spec."
+    },
+    {
+      "name": "writing-plans--obra",
+      "source": "./skills/writing-plans--obra",
+      "description": "Use when you have a spec or requirements for a multi-step task, before touching code"
+    },
+    {
+      "name": "zoom-general--anthropics",
+      "source": "./skills/zoom-general--anthropics",
+      "description": "Cross-product Zoom reference skill. Use after the workflow is clear when you need shared platform guidance, app-model comparisons, authentication context, scopes, marketplace considerations, or API-vs-MCP routing."
+    }
+  ]
+}

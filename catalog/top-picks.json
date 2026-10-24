@@ -89,6 +89,8 @@
     "claude-api--anthropics",
     "mcp-builder--anthropics",
     "skill-creator--anthropics",
+    "ai-engineering",
+    "context-engineering",
     "context-fundamentals--muratcankoylan",
     "multi-agent-patterns--muratcankoylan",
     "context-engineering--addyosmani",
@@ -191,6 +193,7 @@
   ],
   "workflow-agents": [
     "skill-loadout-router",
+    "harness-engineering",
     "using-superpowers--obra",
     "brainstorming--obra",
     "writing-plans--obra",
