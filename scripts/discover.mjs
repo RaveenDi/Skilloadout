@@ -28,6 +28,8 @@ const QUERIES = [
   "teacher skills", "education skills", "seo skill", "marketing skills", "sales skills", "hr skills",
   "customer support skills", "product manager skills", "web3 skills", "solidity skills", "robotics skills",
   "unity skill", "blender skill", "cad skill", "music skill", "video skill", "shopify skill", "data science skills",
+  "harness engineering skill", "ai engineering skill", "context engineering skill", "agent harness skill",
+  "llmops skill", "prompt engineering skill",
 ];
 
 const Review = z.object({
