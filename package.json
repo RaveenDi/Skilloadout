@@ -2,11 +2,8 @@
   "name": "skillloadout",
   "version": "0.1.0",
   "private": true,
-  "description": "World Skills \u2014 a curated, auto-updating library of the best AI agent skills (Claude, Codex/ChatGPT, Gemini, Copilot, Cursor) with an AI-powered search site.",
+  "description": "World Skills \u2014 a curated, auto-updating library of the best AI agent skills (Claude, Codex/ChatGPT, Gemini, Copilot, Cursor), distributed as a Claude Code plugin marketplace and an MCP server, straight off this repo.",
   "type": "module",
-  "workspaces": [
-    "apps/*"
-  ],
   "scripts": {
     "sync": "node scripts/sync.mjs",
     "discover": "node scripts/discover.mjs",
@@ -14,17 +11,13 @@
     "validate": "node scripts/validate.mjs",
     "picks": "node scripts/resolve-picks.mjs",
     "candidates": "node scripts/curation-candidates.mjs",
-    "dev": "npm run dev --workspace apps/web",
-    "build": "node scripts/build-artifacts.mjs && npm run build --workspace apps/web",
-    "artifacts": "node scripts/build-artifacts.mjs",
-    "preview": "npx --yes serve apps/web/out -l 3000"
+    "marketplace": "node scripts/build-marketplace.mjs"
   },
   "engines": {
     "node": ">=20.9"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.125.0",
-    "fflate": "^0.8.3",
     "yaml": "^2.9.0",
     "zod": "^4.0.0"
   }
