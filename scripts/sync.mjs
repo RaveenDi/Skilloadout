@@ -557,6 +557,9 @@ async function main() {
     prevByRepo.get(k).push(s);
   }
 
+  // Sources a review rejected: their skills leave the catalog on purpose (validate.mjs needs to know).
+  const rejectedRepos = new Set((cfg.discovered || []).filter((d) => d.status === "rejected").map((d) => d.repo.toLowerCase()));
+
   const sources = await expandSources(cfg);
   log(`Syncing ${sources.length} sources${FORCE ? " (forced)" : ""}...`);
   const all = [];
@@ -595,7 +598,10 @@ async function main() {
   if (ONLY) {
     // Partial run: keep everything from repos we did not touch.
     const touched = new Set(sources.map((s) => s.repo.toLowerCase()));
-    for (const s of prevIndex.skills) if (!touched.has(s.source.repo.toLowerCase()) && s.source.tier !== 0) all.push({ ...s, _reused: true });
+    for (const s of prevIndex.skills) {
+      const k = s.source.repo.toLowerCase();
+      if (!touched.has(k) && !rejectedRepos.has(k) && s.source.tier !== 0) all.push({ ...s, _reused: true });
+    }
   }
   all.push(...syncOriginals());
 
@@ -658,9 +664,11 @@ async function main() {
   const added = entries.filter((e) => !prevMap.has(e.id)).map((e) => e.id);
   const updated = entries.filter((e) => prevMap.has(e.id) && prevMap.get(e.id) !== e.hash).map((e) => e.id);
   const removed = [...prevMap.keys()].filter((id) => !ids.has(id));
+  const prevRepoById = new Map(prevIndex.skills.map((s) => [s.id, s.source.repo.toLowerCase()]));
+  const removedByReview = removed.filter((id) => rejectedRepos.has(prevRepoById.get(id))).length;
   const changelogPath = path.join(CATALOG_DIR, "changelog.json");
   const changelog = readJson(changelogPath, []);
-  changelog.unshift({ date: now, total: entries.length, added: added.length, updated: updated.length, removed: removed.length, addedIds: added.slice(0, 100), updatedIds: updated.slice(0, 100), removedIds: removed.slice(0, 100), errors: report.filter((r) => r.error) });
+  changelog.unshift({ date: now, total: entries.length, added: added.length, updated: updated.length, removed: removed.length, removedByReview, addedIds: added.slice(0, 100), updatedIds: updated.slice(0, 100), removedIds: removed.slice(0, 100), errors: report.filter((r) => r.error) });
   writeJson(changelogPath, changelog.slice(0, 60));
 
   state.pipelineVersion = PIPELINE_VERSION;

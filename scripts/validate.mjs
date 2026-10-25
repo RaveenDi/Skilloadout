@@ -29,10 +29,15 @@ for (const st of stacks) for (const id of st.skills) if (!ids.has(id)) warnings.
 const changelog = readJson(path.join(CATALOG_DIR, "changelog.json"), []);
 const previousTotal = changelog[1]?.total ?? changelog[0]?.total ?? 0;
 const currentTotal = index?.skills?.length || 0;
-if (previousTotal && currentTotal < previousTotal * 0.9) {
+// Skills dropped because a review rejected their source are deliberate, not a failed sync.
+const removedByReview = changelog[0]?.removedByReview || 0;
+const expectedFloor = (previousTotal - removedByReview) * 0.9;
+if (previousTotal && currentTotal < expectedFloor) {
   errors.push(
-    `catalog shrank from ${previousTotal} to ${currentTotal} skills (>10%) — a source probably failed to sync; re-run before deploying`,
+    `catalog shrank from ${previousTotal} to ${currentTotal} skills (${removedByReview} removed by review; the rest >10%) — a source probably failed to sync; re-run before deploying`,
   );
+} else if (removedByReview) {
+  console.log(`note: ${removedByReview} skill(s) removed because a review rejected their source`);
 }
 
 const taxonomyIds = new Set(readJson(path.join(CATALOG_DIR, "taxonomy.json"), []).map((c) => c.id));

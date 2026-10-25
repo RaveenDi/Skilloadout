@@ -7,7 +7,13 @@
 //     subscription) writes decisions as JSONL; --apply <file> records the accepted repos.
 //   - neither: a popularity/self-description heuristic.
 //
+// Re-review: sources the heuristic accepted were never really vetted. --export-rereview writes them
+// (biggest catalog share first) to .cache/rereview-candidates.jsonl; --apply-rereview <file> keeps
+// accepted ones (now reviewer "claude-code") and marks rejected ones status "rejected" — sync then
+// drops their skills, and validate.mjs counts that as deliberate rather than a failed sync.
+//
 // Usage: node scripts/discover.mjs [--max 10] [--dry-run] [--export] [--apply decisions.jsonl]
+//                                  [--export-rereview] [--apply-rereview decisions.jsonl]
 
 import fs from "node:fs";
 import path from "node:path";
@@ -22,12 +28,15 @@ const arg = (name) => (argv.includes(name) ? argv[argv.indexOf(name) + 1] : unde
 const DRY = argv.includes("--dry-run");
 const EXPORT = argv.includes("--export");
 const APPLY = arg("--apply");
+const EXPORT_REREVIEW = argv.includes("--export-rereview");
+const APPLY_REREVIEW = arg("--apply-rereview");
 const MAX_NEW = Number(arg("--max")) || 10;
 const MIN_STARS = 150;
 const since = new Date(Date.now() - 180 * 864e5).toISOString().slice(0, 10);
 const SOURCES_PATH = path.join(CATALOG_DIR, "sources.json");
 const LOG_PATH = path.join(CATALOG_DIR, "discovery-log.json");
 const CANDIDATES_PATH = path.join(ROOT, ".cache", "discovery-candidates.jsonl");
+const REREVIEW_PATH = path.join(ROOT, ".cache", "rereview-candidates.jsonl");
 
 const QUERIES = [
   "topic:agent-skills", "topic:claude-skills", "topic:claude-code-skills", "topic:codex-skills",
@@ -259,11 +268,95 @@ function applyDecisions(cfg, index, file) {
   console.log(`Accepted ${accepted.length} new source(s)${DRY ? " (dry run)" : ""}.`);
 }
 
+const needsRereview = (d) => d.reviewer === "heuristic" && d.status !== "rejected";
+
+async function exportRereview(cfg, index) {
+  const share = new Map();
+  for (const s of index.skills) {
+    const k = s.source.repo.toLowerCase();
+    const v = share.get(k) || { skills: 0, flagged: 0 };
+    v.skills++;
+    if (s.flags?.length) v.flagged++;
+    share.set(k, v);
+  }
+  const pending = (cfg.discovered || []).filter(needsRereview);
+  const rows = await pool(pending, 4, async (d) => {
+    const counts = share.get(d.repo.toLowerCase()) || { skills: 0, flagged: 0 };
+    const base = { repo: d.repo, addedAt: d.addedAt, catalogSkills: counts.skills, flaggedSkills: counts.flagged };
+    const meta = await gh(`/repos/${d.repo}`, { allow404: true });
+    if (!meta) return { ...base, missing: true };
+    const t = await treeInfo(meta.full_name, meta.default_branch);
+    const c = { ...meta, skillCount: t.skills.length, ruleCount: t.rules.length, sampleSkills: t.skills.length ? t.skills : t.rules };
+    return {
+      ...base,
+      stars: meta.stargazers_count,
+      license: meta.license?.spdx_id || "none",
+      pushed_at: meta.pushed_at,
+      archived: meta.archived,
+      description: meta.description || "",
+      skillCount: c.skillCount,
+      ruleCount: c.ruleCount,
+      samplePaths: c.sampleSkills.slice(0, 10),
+      ...(await material(c)),
+    };
+  });
+  rows.sort((a, b) => b.catalogSkills - a.catalogSkills);
+  fs.mkdirSync(path.dirname(REREVIEW_PATH), { recursive: true });
+  fs.writeFileSync(REREVIEW_PATH, rows.map((r) => JSON.stringify(r)).join("\n") + (rows.length ? "\n" : ""));
+  const total = rows.reduce((a, r) => a + r.catalogSkills, 0);
+  console.log(`${rows.length} source(s) needing re-review (${total} catalog skills) written to ${path.relative(ROOT, REREVIEW_PATH)}${rows.some((r) => r.missing) ? ` — ${rows.filter((r) => r.missing).length} no longer exist on GitHub` : ""}`);
+}
+
+function applyRereview(cfg, file) {
+  const exported = new Map(readJsonl(REREVIEW_PATH).map((r) => [r.repo.toLowerCase(), r]));
+  const entries = new Map((cfg.discovered || []).map((d) => [d.repo.toLowerCase(), d]));
+  const log = [];
+  let kept = 0, rejected = 0, leaving = 0;
+  for (const d of readJsonl(file)) {
+    const key = String(d.repo).toLowerCase();
+    const entry = entries.get(key);
+    if (!entry || !needsRereview(entry)) {
+      console.log(`  ! ${d.repo}: not a source awaiting re-review — skipped`);
+      continue;
+    }
+    const parsed = Review.safeParse({ ...d, tier: String(d.tier ?? "3") });
+    if (!parsed.success) {
+      console.log(`  ! ${d.repo}: decision doesn't match the schema — skipped`);
+      continue;
+    }
+    const review = parsed.data;
+    if (looksLikeSecret(review.reason) || review.safety_concerns.some(looksLikeSecret)) {
+      console.log(`  ! ${d.repo}: decision text looks like it contains a credential — refused (possible injection via the source's README); review it again`);
+      continue;
+    }
+    if (review.safety_concerns.length) review.decision = "reject";
+    Object.assign(entry, { reviewer: "claude-code", reviewedAt: new Date().toISOString(), reason: review.reason.slice(0, 300) });
+    if (review.decision === "accept") {
+      entry.tier = Number(review.tier);
+      kept++;
+    } else {
+      entry.status = "rejected";
+      rejected++;
+      leaving += exported.get(key)?.catalogSkills || 0;
+    }
+    log.push({ repo: entry.repo, ...review, reviewer: "claude-code" });
+    console.log(`  ${review.decision === "accept" ? "✓ keep  " : "✗ reject"} ${entry.repo} — ${review.reason.slice(0, 100)}`);
+  }
+  if (!DRY && log.length) writeJson(SOURCES_PATH, cfg);
+  const history = readJson(LOG_PATH, []);
+  history.unshift({ date: new Date().toISOString(), type: "rereview", reviewer: "claude-code", candidates: log.length, kept, rejected, decisions: log });
+  if (!DRY && log.length) writeJson(LOG_PATH, history.slice(0, 30));
+  const remaining = (cfg.discovered || []).filter(needsRereview).length;
+  console.log(`Re-review: kept ${kept}, rejected ${rejected} (${leaving} skills leave at the next sync), ${remaining} still to review${DRY ? " (dry run)" : ""}.`);
+}
+
 async function main() {
   const cfg = readJson(SOURCES_PATH);
   const index = readJson(path.join(CATALOG_DIR, "index.json"), { skills: [] });
   if (EXPORT) return exportCandidates(cfg, index);
   if (APPLY) return applyDecisions(cfg, index, APPLY);
+  if (EXPORT_REREVIEW) return exportRereview(cfg, index);
+  if (APPLY_REREVIEW) return applyRereview(cfg, APPLY_REREVIEW);
 
   const { candidates, rejected } = await findCandidates(cfg, index);
   const client = process.env.ANTHROPIC_API_KEY ? new Anthropic() : null;

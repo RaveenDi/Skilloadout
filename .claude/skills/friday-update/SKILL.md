@@ -37,7 +37,7 @@ Hard limits for this whole run (the repo's permission settings enforce most of t
 2. `git pull --ff-only origin main` (the Friday-morning GitHub Action may have pushed).
 3. `npm ci --ignore-scripts` if `node_modules/` is missing; `gh auth status` must succeed (sync and
    discovery use the gh token for GitHub API limits).
-4. Delete last week's decisions: `rm -f .cache/discovery-decisions.jsonl .cache/safety-decisions-*.jsonl`.
+4. Delete last week's decisions: `rm -f .cache/discovery-decisions.jsonl .cache/rereview-decisions-*.jsonl .cache/safety-decisions-*.jsonl`.
 
 ## 2. Discover new sources
 
@@ -53,10 +53,34 @@ Hard limits for this whole run (the repo's permission settings enforce most of t
    `{"repo":"owner/name","decision":"accept"|"reject","tier":"2"|"3","quality":0-10,"reason":"one sentence","safety_concerns":[]}`
 5. `node scripts/discover.mjs --apply .cache/discovery-decisions.jsonl`
 
+## 2b. Re-review sources the old heuristic auto-accepted
+
+Before this routine existed, discovery accepted ~130 repos on popularity alone; nobody vetted them.
+Work through them a little each week, biggest first.
+
+1. `node scripts/discover.mjs --export-rereview` writes the ones still waiting to
+   `.cache/rereview-candidates.jsonl`, sorted by how many catalog skills each supplies. Each line has
+   the discovery fields plus `catalogSkills`, `flaggedSkills`, `archived`, and `missing: true` if the
+   repo no longer exists. If it reports 0, skip this section.
+2. Review **at most 25 sources this run**, in batches of ~8 lines (they're long). Same bar as
+   discovery, but the question is *keep or drop*:
+   - **Keep** a source with genuinely useful, original skills, even if a few are weak.
+   - **Reject** it if it's a mirror or aggregation of other people's skills, placeholder/spam/
+     auto-generated filler, low quality overall, has unsafe instructions, or is `missing`.
+   Rejecting removes all of that source's skills at the next sync (reversible: set its `status`
+   back to `"active"` in `catalog/sources.json`). Weigh that against `catalogSkills` — dropping a
+   large source needs a clear reason.
+3. Write each batch to `.cache/rereview-decisions-<n>.jsonl`, one line per source, same shape as
+   discovery decisions (`"decision":"accept"` means keep):
+   `{"repo":"owner/name","decision":"accept"|"reject","tier":"2"|"3","quality":0-10,"reason":"one sentence","safety_concerns":[]}`
+4. After each batch: `node scripts/discover.mjs --apply-rereview .cache/rereview-decisions-<n>.jsonl`.
+   Progress is saved per batch; the rest wait for next Friday.
+
 ## 3. Sync
 
 `node scripts/sync.mjs` — re-syncs every source: changed skills are updated, new skills added,
-deleted ones removed, and newly accepted sources mirrored. Usually a few minutes after a morning
+deleted ones removed, newly accepted sources mirrored, and rejected sources' skills dropped
+(validate counts those as deliberate, not as a failed sync). Usually a few minutes after a morning
 Action run; up to ~20 minutes when many sources changed. Run it in the background and wait for it.
 If it ends with the catalog shrinking or errors, stop and report.
 
@@ -92,11 +116,12 @@ If it ends with the catalog shrinking or errors, stop and report.
 4. Stage only generated output: `git add catalog skills .claude-plugin`, then confirm with
    `git status --short` that nothing else is staged.
 5. Commit, using the summary from `catalog/changelog.json[0]`:
-   `chore(skills): weekly update +<added> ~<updated> -<removed> (total <total>), <k> new sources, <v> safety verdicts`
+   `chore(skills): weekly update +<added> ~<updated> -<removed> (total <total>), <k> new sources, <r> sources re-reviewed, <v> safety verdicts`
 6. `git push origin main`. If it's rejected, don't force anything — report it to the user.
 
 ## 6. Report
 
 Tell the user in a few lines: skills added / updated / removed, new sources accepted (and the
-notable rejections), safety verdicts by type, anything marked `caution` or `malicious` by name, and
+notable rejections), re-review progress (kept / rejected this run, by name for rejections, and how
+many sources are still waiting), safety verdicts by type, anything marked `caution` or `malicious` by name, and
 how many flagged skills are still unverified.

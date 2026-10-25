@@ -113,7 +113,10 @@ on your Claude subscription. Claude Code does the review work in the session:
 1. **Discovery** — `discover.mjs --export` searches GitHub for new skill repos and drops known ones
    and likely mirrors; Claude Code reviews each candidate's README and sample skills;
    `--apply` adds the accepted repos to `sources.json`.
-2. **Sync** — mirrors the newly accepted sources (and anything changed since the morning).
+   **Re-review** — sources an old popularity heuristic auto-accepted are vetted 25 a week, biggest
+   first (`--export-rereview` / `--apply-rereview`); rejected ones get `status: "rejected"`.
+2. **Sync** — mirrors the newly accepted sources (and anything changed since the morning) and drops
+   rejected sources' skills; `validate.mjs` counts those removals as deliberate, not a failed sync.
 3. **Safety review** — `verify-safety.mjs --evidence-only` exports flagged skills that still need a
    verdict; Claude Code reviews them in batches; `--apply` stores each batch.
 4. Validate, rebuild the marketplace, commit and push.
