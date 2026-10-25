@@ -15,6 +15,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import { z } from "zod";
 import { ROOT, CATALOG_DIR, readJson, writeJson, gh, pool } from "./lib/common.mjs";
+import { looksLikeSecret } from "./lib/safety.mjs";
 
 const argv = process.argv.slice(2);
 const arg = (name) => (argv.includes(name) ? argv[argv.indexOf(name) + 1] : undefined);
@@ -241,6 +242,10 @@ function applyDecisions(cfg, index, file) {
       continue;
     }
     const review = parsed.data;
+    if (looksLikeSecret(review.reason) || review.safety_concerns.some(looksLikeSecret)) {
+      console.log(`  ! ${d.repo}: decision text looks like it contains a credential — refused (possible injection via the candidate's README); review it again`);
+      continue;
+    }
     if (review.safety_concerns.length) review.decision = "reject";
     if (review.decision === "accept" && (known.has(c.repo.toLowerCase()) || accepted.length >= MAX_NEW)) review.decision = "reject";
     log.push({ repo: c.repo, stars: c.stars, skills: c.skillCount, rules: c.ruleCount, ...review, reviewer: "claude-code" });

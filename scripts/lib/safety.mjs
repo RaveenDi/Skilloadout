@@ -13,6 +13,24 @@ export const RULES = [
   { id: "disable-safety", severity: "medium", re: /--dangerously-skip-permissions|--no-verify\b|--yolo\b/i, label: "Disables agent/tool safety checks" },
 ];
 
+// Reviewer output (reasons, concerns) gets committed publicly. A prompt-injected reviewer could be
+// told to paste a secret into it, so reject anything shaped like a credential or a long opaque token.
+const SECRET_RE = [
+  /-----BEGIN [A-Z ]*PRIVATE KEY-----/,
+  /\bsk-ant-[A-Za-z0-9_-]{8,}/,
+  /\bgh[pousr]_[A-Za-z0-9]{20,}/,
+  /\bgithub_pat_[A-Za-z0-9_]{20,}/,
+  /\bAKIA[0-9A-Z]{16}\b/,
+  /\bxox[abprs]-[A-Za-z0-9-]{10,}/,
+  /\bAIza[0-9A-Za-z_-]{30,}/,
+  /\beyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\./, // JWT
+  // any long token-shaped run (letters AND digits, no hyphens — so skill ids like foo-bar--owner pass)
+  /(?=[A-Za-z0-9+/=_]*\d)(?=[A-Za-z0-9+/=_]*[A-Za-z])[A-Za-z0-9+/=_]{40,}/,
+];
+export function looksLikeSecret(text) {
+  return SECRET_RE.some((re) => re.test(String(text)));
+}
+
 export function scanSafety(text) {
   const findings = [];
   for (const r of RULES) {

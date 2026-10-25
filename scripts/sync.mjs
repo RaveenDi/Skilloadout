@@ -13,7 +13,7 @@ import path from "node:path";
 import {
   ROOT, SKILLS_DIR, CATALOG_DIR, ORIGINALS_DIR, CACHE_DIR,
   readJson, writeJson, sha1, slugify, humanize, git, gh, parseFrontmatter, asText,
-  firstParagraph, walk, toPosix, pool, writeIndexFile,
+  firstParagraph, walk, toPosix, pool, writeIndexFile, safeFileIn,
 } from "./lib/common.mjs";
 import { detectLicenseText, normalizeLicense, isRedistributable } from "./lib/license.mjs";
 import { classify, CATEGORY_BY_ID } from "./lib/taxonomy.mjs";
@@ -256,8 +256,11 @@ async function syncRepo(src, state, prevByRepo) {
   const repoDir = path.join(CACHE_DIR, `${owner}__${repoName}`);
   fs.rmSync(repoDir, { recursive: true, force: true });
   fs.mkdirSync(path.dirname(repoDir), { recursive: true });
-  git(["-c", "core.longpaths=true", "clone", "--depth", "1", "--filter=blob:none", "--no-checkout", "--quiet", url, repoDir]);
+  // Untrusted content: never materialize symlinks, never follow file:// or recurse into submodules.
+  const SAFE_GIT = ["-c", "core.longpaths=true", "-c", "core.symlinks=false", "-c", "protocol.file.allow=never", "-c", "submodule.recurse=false"];
+  git([...SAFE_GIT, "clone", "--depth", "1", "--filter=blob:none", "--no-checkout", "--no-recurse-submodules", "--quiet", url, repoDir]);
   git(["config", "core.longpaths", "true"], repoDir);
+  git(["config", "core.symlinks", "false"], repoDir);
   const allFiles = git(["ls-tree", "-r", "--name-only", "-z", "HEAD"], repoDir).split("\0").filter(Boolean);
   let items = findItems(allFiles, src);
   if (process.platform === "win32") {
@@ -267,8 +270,8 @@ async function syncRepo(src, state, prevByRepo) {
   if (!items.length) return { meta, sha: remoteSha, items: [] };
 
   git(["sparse-checkout", "set", "--no-cone", "--stdin"], repoDir, buildSparsePatterns(items).join("\n") + "\n");
-  git(["-c", "core.longpaths=true", "checkout", "--quiet", meta.default_branch], repoDir);
-  const files = allFiles.filter((f) => fs.existsSync(path.join(repoDir, f)));
+  git([...SAFE_GIT, "checkout", "--quiet", meta.default_branch], repoDir);
+  const files = allFiles.filter((f) => safeFileIn(repoDir, f));
 
   const skillDirs = items.filter((i) => i.kind === "skill" && i.dir).map((i) => i.dir);
   const out = [];
@@ -284,8 +287,8 @@ async function syncRepo(src, state, prevByRepo) {
 }
 
 function buildRecord({ src, meta, sha, repoDir, files, item, skillDirs }) {
-  const mainPath = path.join(repoDir, item.file);
-  if (!fs.existsSync(mainPath)) return null;
+  const mainPath = safeFileIn(repoDir, item.file);
+  if (!mainPath) return null;
   const raw = fs.readFileSync(mainPath, "utf8");
   let fm = {}, body = raw, name, description, extJson = null;
 
@@ -294,8 +297,9 @@ function buildRecord({ src, meta, sha, repoDir, files, item, skillDirs }) {
     name = extJson.name || meta.name;
     description = extJson.description || meta.description || "";
     const ctx = extJson.contextFileName || "GEMINI.md";
-    const ctxPath = path.join(repoDir, Array.isArray(ctx) ? ctx[0] : ctx);
-    body = fs.existsSync(ctxPath) ? fs.readFileSync(ctxPath, "utf8") : "";
+    // contextFileName comes from the repo's own JSON — it must resolve to a regular file inside the repo.
+    const ctxPath = safeFileIn(repoDir, String(Array.isArray(ctx) ? ctx[0] : ctx));
+    body = ctxPath ? fs.readFileSync(ctxPath, "utf8") : "";
   } else {
     ({ data: fm, body } = parseFrontmatter(raw));
     if (item.kind === "rule") {
@@ -499,9 +503,12 @@ function writeMirror(e) {
   fs.rmSync(dest, { recursive: true, force: true });
   fs.mkdirSync(dest, { recursive: true });
   for (const f of c.files) {
-    const target = path.join(dest, f.path === ".cursorrules" ? ".cursorrules" : f.path);
+    const target = path.resolve(dest, f.path === ".cursorrules" ? ".cursorrules" : f.path);
+    const src = safeFileIn(c.repoDir, f.rel);
+    const inside = path.relative(dest, target);
+    if (!src || !inside || inside.startsWith("..") || path.isAbsolute(inside)) continue;
     fs.mkdirSync(path.dirname(target), { recursive: true });
-    fs.copyFileSync(path.join(c.repoDir, f.rel), target);
+    fs.copyFileSync(src, target);
   }
   if (c.rule) {
     const fmLines = ["---", `name: ${JSON.stringify(slugify(e.name))}`, `description: ${JSON.stringify(`${e.description}`.slice(0, 900))}`, `license: ${e.license}`, "---", ""];
@@ -511,7 +518,9 @@ function writeMirror(e) {
   if (c.licenseFile && !c.files.some((f) => LICENSE_RE.test(path.posix.basename(f.path)))) {
     const name = fs.existsSync(path.join(dest, "LICENSE")) ? "LICENSE.upstream" : "LICENSE";
     try {
-      fs.copyFileSync(path.join(c.repoDir, c.licenseFile), path.join(dest, name));
+      const licSrc = safeFileIn(c.repoDir, c.licenseFile);
+      if (!licSrc) throw new Error("unsafe license path");
+      fs.copyFileSync(licSrc, path.join(dest, name));
       e.files.push({ path: name, size: fs.statSync(path.join(dest, name)).size });
     } catch {}
   }

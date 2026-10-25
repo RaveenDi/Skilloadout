@@ -184,6 +184,33 @@ export function walk(dir, { skip = new Set() } = {}) {
 
 export const toPosix = (p) => p.split(path.sep).join("/");
 
+// Untrusted repos can ship symlinks (e.g. notes.md -> /proc/self/environ or ~/.ssh/id_rsa) or
+// attacker-chosen relative paths ("../../.."). Anything read or copied from a cloned repo must be a
+// regular file that really lives inside it — otherwise its contents could end up committed publicly.
+// Returns the absolute path, or null if the file is unsafe or missing.
+const realRoots = new Map();
+export function safeFileIn(root, rel) {
+  if (typeof rel !== "string" || !rel || path.isAbsolute(rel)) return null;
+  const abs = path.resolve(root, rel);
+  const fromRoot = path.relative(root, abs);
+  if (!fromRoot || fromRoot.startsWith("..") || path.isAbsolute(fromRoot)) return null;
+  let st;
+  try {
+    st = fs.lstatSync(abs);
+  } catch {
+    return null;
+  }
+  if (!st.isFile()) return null; // symlinks report isSymbolicLink(), not isFile()
+  try {
+    if (!realRoots.has(root)) realRoots.set(root, fs.realpathSync(root));
+    const fromRealRoot = path.relative(realRoots.get(root), fs.realpathSync(abs));
+    if (!fromRealRoot || fromRealRoot.startsWith("..") || path.isAbsolute(fromRealRoot)) return null; // reached via a symlinked directory
+  } catch {
+    return null;
+  }
+  return abs;
+}
+
 export async function pool(items, limit, fn) {
   const results = new Array(items.length);
   let i = 0;

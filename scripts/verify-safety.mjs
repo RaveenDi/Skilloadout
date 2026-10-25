@@ -24,7 +24,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import { z } from "zod";
 import { ROOT, SKILLS_DIR, CATALOG_DIR, readJson, writeJson, writeIndexFile, sha1, walk, pool } from "./lib/common.mjs";
-import { RULES } from "./lib/safety.mjs";
+import { RULES, looksLikeSecret } from "./lib/safety.mjs";
 
 const argv = process.argv.slice(2);
 const arg = (name) => (argv.includes(name) ? argv[argv.indexOf(name) + 1] : undefined);
@@ -173,6 +173,7 @@ async function main() {
       if (!w) console.log(`  ! ${d.id}: not a flagged skill — skipped`);
       else if (!w.hash || w.hash !== d.hash) console.log(`  ! ${d.id}: content changed since export — re-export and review again`);
       else if (!v.success) console.log(`  ! ${d.id}: verdict must be benign/caution/malicious with a reason — skipped`);
+      else if (looksLikeSecret(v.data.reason)) console.log(`  ! ${d.id}: reason looks like it contains a credential — refused (possible injection via the skill's evidence); review it again`);
       else {
         cache[d.id] = { hash: w.hash, verdict: v.data.verdict, reason: v.data.reason.slice(0, 300), reviewer: "claude-code", reviewedAt: new Date().toISOString() };
         stored++;
@@ -207,6 +208,7 @@ async function main() {
   if (authFailed) console.log("authentication failed — stopped reviewing; remaining skills stay unverified");
 
   const tally = { benign: 0, caution: 0, malicious: 0, unverified: 0 };
+  const quarantined = [];
   const byId = new Map(work.map((w) => [w.s.id, w]));
   for (const s of index.skills) {
     if (!s.flags?.length) {
@@ -215,11 +217,27 @@ async function main() {
     }
     const w = byId.get(s.id);
     if (!w) continue; // outside --only: leave as-is
+    if (s.quarantined && !w.hash) {
+      tally.malicious++; // already quarantined on an earlier run and the source hasn't changed: keep it
+      continue;
+    }
     const hit = w.hash && overrides[s.id]?.hash === w.hash ? overrides[s.id] : w.hash && cache[s.id]?.hash === w.hash ? cache[s.id] : null;
     s.safety = hit
       ? { verdict: hit.verdict, reason: hit.reason, reviewer: hit.reviewer, reviewedAt: hit.reviewedAt }
       : { verdict: "unverified", reason: s.mirrored ? (w.evidence ? "not reviewed yet" : "matched text not found in the mirrored files") : "link-only skill — not mirrored here, review it at its source" };
+    if (s.safety.verdict === "malicious") quarantined.push(s);
+    else delete s.quarantined;
     tally[s.safety.verdict]++;
+  }
+
+  // Never redistribute a skill reviewed as malicious: drop its mirrored files so it can't be committed,
+  // installed or listed. Sync re-mirrors it next run, and this step removes it again before commit.
+  for (const s of quarantined) {
+    if (!DRY) fs.rmSync(path.join(SKILLS_DIR, s.id), { recursive: true, force: true });
+    s.mirrored = false;
+    s.quarantined = true;
+    s.files = [];
+    console.log(`  ⛔ quarantined ${s.id}: ${s.safety.reason.slice(0, 120)}`);
   }
 
   const live = new Set(index.skills.filter((s) => s.flags?.length).map((s) => s.id));

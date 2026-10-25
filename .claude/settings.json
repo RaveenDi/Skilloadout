@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.azure/**)",
+      "Read(~/.config/gh/**)",
+      "Read(~/.config/gcloud/**)",
+      "Read(~/.gnupg/**)",
+      "Read(~/.docker/config.json)",
+      "Read(~/.git-credentials)",
+      "Read(~/.netrc)",
+      "Read(~/.npmrc)",
+      "Read(~/.claude/.credentials.json)",
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Bash(gh auth token *)",
+      "Bash(gh auth status -t *)",
+      "Bash(gh auth status --show-token *)"
+    ]
+  }
+}

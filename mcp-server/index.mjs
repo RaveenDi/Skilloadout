@@ -145,6 +145,9 @@ server.registerTool(
       `works with: ${(skill.worksWith || []).join(", ")}`,
       safetyLine(skill),
     ].join("\n");
+    if (skill.quarantined) {
+      return text(`${meta}\n\nThis skill is quarantined: a safety review found it malicious, so its files are not distributed here. Do not install it from its source either.`);
+    }
     if (!skill.mirrored) {
       return text(`${meta}\n\nThis skill is link-only — its license doesn't allow redistribution, so it isn't bundled in this repo.\nGet it directly from: ${skill.source?.url || `https://github.com/${skill.source?.repo}`}`);
     }
@@ -175,15 +178,16 @@ server.registerTool(
     const skills = loadIndex();
     const skill = skills.find((s) => s.id === id);
     if (!skill) return errorText(`No skill with id "${id}". Use search_skills to find valid ids.`);
+    if (skill.quarantined || verdictOf(skill) === "malicious") return errorText(`Refusing to install "${id}": a safety review found it malicious — ${skill.safety?.reason || "quarantined"}`);
     if (!skill.mirrored) return errorText(`"${id}" is link-only (license doesn't allow redistribution) — fetch it yourself from ${skill.source?.url || skill.source?.repo}.`);
-    if (verdictOf(skill) === "malicious") return errorText(`Refusing to install "${id}": a safety review found it malicious — ${skill.safety.reason}`);
     const srcDir = path.join(SKILLS_DIR, id);
     if (!fs.existsSync(path.join(srcDir, "SKILL.md"))) return errorText(`Catalog says "${id}" is mirrored, but ${srcDir} is missing on disk — try \`git pull\`.`);
     const base = path.resolve(cwd || process.cwd());
     const destParent = targetDir ? path.resolve(base, targetDir) : path.resolve(base, INSTALL_DIRS[client || "claude"]);
     const dest = path.join(destParent, id);
     fs.mkdirSync(dest, { recursive: true });
-    fs.cpSync(srcDir, dest, { recursive: true });
+    // Copy real files only — a symlink in a skill folder must never point an agent at files outside it.
+    fs.cpSync(srcDir, dest, { recursive: true, filter: (p) => !fs.lstatSync(p).isSymbolicLink() });
     const note = ["caution", "unverified"].includes(verdictOf(skill)) ? `\n${safetyLine(skill)}` : "";
     return text(`Installed "${id}" into ${dest}${note}`);
   },
