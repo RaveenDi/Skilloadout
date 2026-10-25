@@ -10,9 +10,14 @@
 // Verdicts are cached in catalog/safety-verdicts.json, keyed by a hash of the matched evidence, so a
 // skill is only re-reviewed when its flagged content changes. catalog/safety-overrides.json holds
 // human verdicts and wins over the cache while its hash still matches. Run after every sync — sync
-// rebuilds index.json, and this re-applies verdicts to it.
+// rebuilds index.json, and this re-applies verdicts to it. Without an API key it makes no calls.
 //
-// Usage: node scripts/verify-safety.mjs [--max 300] [--only id,id] [--force] [--evidence-only] [--dry-run]
+// No-API review (the /friday-update Claude Code skill): --evidence-only writes the skills that still
+// need a verdict to .cache/safety-evidence.jsonl; the reviewer writes {id, hash, verdict, reason}
+// lines; --apply <file> stores them (only where the hash still matches) and updates index.json.
+//
+// Usage: node scripts/verify-safety.mjs [--max 300] [--only id,id] [--force] [--dry-run]
+//                                       [--evidence-only [--all]] [--apply decisions.jsonl]
 import fs from "node:fs";
 import path from "node:path";
 import Anthropic from "@anthropic-ai/sdk";
@@ -27,7 +32,10 @@ const MAX_REVIEWS = Number(arg("--max")) || 300;
 const ONLY = arg("--only") ? new Set(arg("--only").split(",")) : null;
 const FORCE = argv.includes("--force");
 const EVIDENCE_ONLY = argv.includes("--evidence-only");
+const ALL = argv.includes("--all");
+const APPLY = arg("--apply");
 const DRY = argv.includes("--dry-run");
+const EVIDENCE_PATH = path.join(ROOT, ".cache", "safety-evidence.jsonl");
 
 const MODEL = "claude-opus-5-5";
 const PROMPT_VERSION = 1; // bump to re-review everything after a prompt change
@@ -130,17 +138,53 @@ async function main() {
     return { s, evidence, hash: evidence ? evidenceHash(s, evidence) : null };
   });
 
+  const pending = work.filter(({ s, hash }) => hash && !(overrides[s.id]?.hash === hash) && (FORCE || cache[s.id]?.hash !== hash));
+
   if (EVIDENCE_ONLY) {
-    const out = path.join(ROOT, ".cache", "safety-evidence.json");
-    writeJson(out, work.map(({ s, evidence, hash }) => ({ id: s.id, hash, flags: s.flags.map((f) => f.id), evidence })));
-    console.log(`evidence for ${work.length} flagged skills written to ${path.relative(ROOT, out)}`);
+    const rows = (ALL ? work.filter((w) => w.hash) : pending).map(({ s, evidence, hash }) => ({
+      id: s.id,
+      hash,
+      title: s.title,
+      description: s.description,
+      source: `${s.source?.repo || "world-skills/originals"} (${s.source?.stars ?? 0} stars)`,
+      flags: s.flags.map((f) => `${f.id} — ${f.label}`),
+      evidence,
+    }));
+    fs.mkdirSync(path.dirname(EVIDENCE_PATH), { recursive: true });
+    fs.writeFileSync(EVIDENCE_PATH, rows.map((r) => JSON.stringify(r)).join("\n") + (rows.length ? "\n" : ""));
+    console.log(`${rows.length} skill(s) ${ALL ? "with evidence" : "needing review"} written to ${path.relative(ROOT, EVIDENCE_PATH)}`);
     return;
   }
 
+  if (APPLY) {
+    const byWork = new Map(work.map((w) => [w.s.id, w]));
+    const lines = fs.readFileSync(APPLY, "utf8").split(/\r?\n/).filter((l) => l.trim());
+    let stored = 0;
+    for (const [i, line] of lines.entries()) {
+      let d;
+      try {
+        d = JSON.parse(line);
+      } catch {
+        console.log(`  ! line ${i + 1}: not valid JSON — skipped`);
+        continue;
+      }
+      const w = byWork.get(d.id);
+      const v = Verdict.safeParse(d);
+      if (!w) console.log(`  ! ${d.id}: not a flagged skill — skipped`);
+      else if (!w.hash || w.hash !== d.hash) console.log(`  ! ${d.id}: content changed since export — re-export and review again`);
+      else if (!v.success) console.log(`  ! ${d.id}: verdict must be benign/caution/malicious with a reason — skipped`);
+      else {
+        cache[d.id] = { hash: w.hash, verdict: v.data.verdict, reason: v.data.reason.slice(0, 300), reviewer: "claude-code", reviewedAt: new Date().toISOString() };
+        stored++;
+      }
+    }
+    console.log(`applied ${stored} of ${lines.length} verdict(s)`);
+  }
+
   const client = process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_AUTH_TOKEN ? new Anthropic() : null;
-  const pending = work.filter(({ s, hash }) => hash && !(overrides[s.id]?.hash === hash) && (FORCE || cache[s.id]?.hash !== hash));
-  const toReview = client ? pending.slice(0, MAX_REVIEWS) : [];
-  if (!client && pending.length) console.log(`no ANTHROPIC_API_KEY — ${pending.length} flagged skill(s) stay unverified`);
+  const unreviewed = APPLY ? pending.filter(({ s, hash }) => cache[s.id]?.hash !== hash) : pending;
+  const toReview = client ? unreviewed.slice(0, MAX_REVIEWS) : [];
+  if (!client && unreviewed.length) console.log(`no API key — ${unreviewed.length} flagged skill(s) still unverified (review them with /friday-update)`);
 
   let authFailed = false;
   let reviewed = 0;

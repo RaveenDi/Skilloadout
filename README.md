@@ -38,8 +38,8 @@ Then just ask your agent: *"find me a skill for scroll-driven 3D camera moves an
   malicious are refused at install. See [Safety](#safety).
 - **License-respecting.** Only redistributable licenses are mirrored, each with an `ATTRIBUTION.md`
   and the upstream license. Everything else is a link to its source.
-- **Always fresh.** A GitHub Actions agent finds new skill repos (Claude reviews each one), re-syncs
-  every source, dedupes, scores, safety-reviews and commits, every Friday.
+- **Always fresh.** Every Friday a GitHub Action re-syncs every source (updated skills refreshed, new
+  ones added), and a Claude Code routine finds and reviews new skill repos and safety flags.
 - **Works everywhere.** Skills follow the open **Agent Skills** format (`SKILL.md` + optional
   scripts/references) used by **Claude** (Code, Desktop, claude.ai), **OpenAI Codex**, **Gemini CLI**,
   **GitHub Copilot** and **Cursor**. Cursor rules are auto-converted to `SKILL.md`.
@@ -77,8 +77,8 @@ npm run sync            # download/refresh all sources (~10–20 min first time;
 Useful flags: `node scripts/sync.mjs --only owner/repo`, `--force`, `--keep-cache`.
 `npm run discover` runs the discovery agent, `npm run picks` re-points the ⚡ Superpower list,
 `npm run validate` checks catalog integrity, `npm run marketplace` rebuilds the plugin marketplace,
-`npm run verify-safety` reviews flagged skills (needs `ANTHROPIC_API_KEY`; `-- --evidence-only` dumps
-the matched lines to `.cache/` without calling the API).
+`npm run verify-safety` applies safety verdicts (and reviews new flags via the API if
+`ANTHROPIC_API_KEY` is set).
 
 To actually use the skills from an agent, see
 [Connecting an agent directly](#connecting-an-agent-directly-no-website) below.
@@ -99,17 +99,28 @@ To actually use the skills from an agent, see
    name+description, and scores quality (tier, stars, richness, freshness, safety).
 6. Writes `catalog/index.json`, `stats.json`, and a `changelog.json` entry.
 
-### Update agent (every Friday)
-`.github/workflows/update-skills.yml` runs Fridays at 00:23 UTC (`23 0 * * 5`) or manually:
-1. **Discovery** — GitHub search across skill topics/keywords → filters known/aggregator repos →
-   **Claude (claude-opus-5) reviews** each candidate's README + sample skills for quality, originality
-   and safety (heuristic fallback without a key) → accepted repos are appended to `sources.json`.
-2. **Sync** — incremental re-sync of every source.
-3. **Safety review** — Claude reviews newly flagged or changed skills (cached; see [Safety](#safety)).
-4. **Validate** — integrity checks (no non-redistributable content mirrored, no missing files).
-5. **Marketplace** — regenerates `.claude-plugin/marketplace.json`.
-6. **Commit** — pushes the refreshed catalog. Add an `ANTHROPIC_API_KEY` repository secret to enable
-   both Claude reviews (without it, discovery uses a heuristic and flagged skills stay *unverified*).
+### Weekly update (every Friday) — no API spend required
+
+**Friday morning — GitHub Action** (`.github/workflows/update-skills.yml`, 00:23 UTC / 05:53 Sri
+Lanka, or run it manually). Free on a public repo, no keys needed:
+1. **Sync** — incremental re-sync of every source: changed skills updated, new skills added, deleted
+   ones removed.
+2. **Safety verdicts** — re-applies saved verdicts to the rebuilt catalog.
+3. **Validate**, rebuild the **marketplace**, **commit** and push.
+
+**Friday evening — `/friday-update` in Claude Code** ([skill](.claude/skills/friday-update/SKILL.md)),
+on your Claude subscription. Claude Code does the review work in the session:
+1. **Discovery** — `discover.mjs --export` searches GitHub for new skill repos and drops known ones
+   and likely mirrors; Claude Code reviews each candidate's README and sample skills;
+   `--apply` adds the accepted repos to `sources.json`.
+2. **Sync** — mirrors the newly accepted sources (and anything changed since the morning).
+3. **Safety review** — `verify-safety.mjs --evidence-only` exports flagged skills that still need a
+   verdict; Claude Code reviews them in batches; `--apply` stores each batch.
+4. Validate, rebuild the marketplace, commit and push.
+
+Optional: add an `ANTHROPIC_API_KEY` repository secret and the Action does both reviews itself via
+the API (roughly $12–25/month). Without it, the Action skips discovery and leaves new flags
+*unverified* until the Friday-evening run.
 
 ## Categories & Superpowers
 
@@ -148,7 +159,8 @@ Two passes protect you:
    prompt-injection text, credential-file access, obfuscated execution, crypto-miners, destructive
    commands, pipe-to-shell installs and disabled safety checks.
 2. **Review** (`scripts/verify-safety.mjs`) — a regex can't tell a skill that *detects* an attack from
-   one that *performs* it, so each flagged skill's matched lines go to Claude for a verdict:
+   one that *performs* it, so each flagged skill's matched lines go to Claude (in the `/friday-update`
+   Claude Code routine, or via the API if a key is set) for a verdict:
    **benign**, **caution** (legitimate but read it before running) or **malicious**. Verdicts are
    cached in `catalog/safety-verdicts.json` by a hash of the matched content, so a skill is
    re-reviewed only when that content changes.
