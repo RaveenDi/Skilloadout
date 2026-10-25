@@ -41,7 +41,7 @@ Claude Code offers to connect automatically):
 Or from elsewhere on disk:
 
 ```bash
-claude mcp add skill-loadout -- node /path/to/Skilloadout/mcp-server/index.mjs
+claude mcp add --scope user skill-loadout -- node /path/to/Skilloadout/mcp-server/index.mjs
 ```
 
 **Claude Desktop / Cursor / other MCP clients** — add the same `command`/`args` pair to that

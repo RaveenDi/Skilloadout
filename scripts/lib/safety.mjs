@@ -1,8 +1,9 @@
 // Lightweight static safety scan for skill content. Skills are instructions + scripts an agent
 // will execute, so we surface risky patterns on the site instead of silently shipping them.
-// Findings are advisory: many legitimate skills install tools with `curl | sh`.
+// Findings are advisory: many legitimate skills install tools with `curl | sh`, and security skills
+// *describe* attacks they detect. scripts/verify-safety.mjs gives each flagged skill a reviewed verdict.
 
-const RULES = [
+export const RULES = [
   { id: "prompt-injection", severity: "high", re: /ignore (all |any )?(previous|prior|above) (instructions|prompts)|disregard (your|the) (system|previous) (prompt|instructions)/i, label: "Contains prompt-injection style text" },
   { id: "secret-exfil", severity: "high", re: /(~|\$HOME|%USERPROFILE%)[\\/](\.ssh[\\/]id_|\.aws[\\/]credentials|\.config[\\/]gh[\\/]hosts)/i, label: "References credential files (ssh keys / cloud credentials)" },
   { id: "obfuscated-exec", severity: "high", re: /(base64\s+(-d|--decode)[^\n]{0,80}\|\s*(ba|z)?sh)|eval\s*\(\s*atob\s*\(|exec\(\s*base64\.b64decode/i, label: "Executes obfuscated / base64-encoded code" },

@@ -28,6 +28,10 @@ for (const id of pickedIds) {
     missing.push(id);
     continue;
   }
+  if (s.safety?.verdict === "malicious") {
+    missing.push(`${id} (reviewed malicious)`);
+    continue;
+  }
   plugins.push({
     name: id,
     source: `./skills/${id}`,
@@ -36,12 +40,12 @@ for (const id of pickedIds) {
 }
 
 const marketplace = {
-  name: "world-skills",
-  description: "Skill Loadout — curated, license-checked, auto-updated AI agent skills (the ⚡ top picks across 36 categories).",
+  name: "skill-loadout",
+  description: "Skill Loadout — curated, license-checked, safety-scanned AI agent skills (the ⚡ top picks across 36 categories), auto-updated every 3 days.",
   owner: { name: "Skill Loadout", url: "https://github.com/RaveenDi/Skilloadout" },
   plugins,
 };
 
 writeJson(path.join(ROOT, ".claude-plugin", "marketplace.json"), marketplace);
 console.log(`marketplace: ${plugins.length} plugins written to .claude-plugin/marketplace.json`);
-if (missing.length) console.log(`  skipped (id not in catalog or missing SKILL.md): ${missing.join(", ")}`);
+if (missing.length) console.log(`  skipped (not in catalog, not mirrored, or reviewed malicious): ${missing.join(", ")}`);

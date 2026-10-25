@@ -2,7 +2,7 @@
   "name": "skillloadout",
   "version": "0.1.0",
   "private": true,
-  "description": "World Skills \u2014 a curated, auto-updating library of the best AI agent skills (Claude, Codex/ChatGPT, Gemini, Copilot, Cursor), distributed as a Claude Code plugin marketplace and an MCP server, straight off this repo.",
+  "description": "Skill Loadout \u2014 a curated, auto-updating library of the best AI agent skills (Claude, Codex/ChatGPT, Gemini, Copilot, Cursor), distributed as a Claude Code plugin marketplace and an MCP server, straight off this repo.",
   "type": "module",
   "scripts": {
     "sync": "node scripts/sync.mjs",
@@ -11,7 +11,8 @@
     "validate": "node scripts/validate.mjs",
     "picks": "node scripts/resolve-picks.mjs",
     "candidates": "node scripts/curation-candidates.mjs",
-    "marketplace": "node scripts/build-marketplace.mjs"
+    "marketplace": "node scripts/build-marketplace.mjs",
+    "verify-safety": "node scripts/verify-safety.mjs"
   },
   "engines": {
     "node": ">=20.9"

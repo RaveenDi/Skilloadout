@@ -68,14 +68,33 @@ function scoreMatch(skill, terms) {
   return score;
 }
 
-function formatFlags(flags) {
-  if (!flags?.length) return "";
-  return ` [⚠ ${flags.map((f) => `${f.label} (${f.severity})`).join("; ")}]`;
+// The regex scan over-matches (security skills *describe* attacks), so only reviewed verdicts get a
+// warning; unreviewed matches are reported as unverified, never as findings.
+function verdictOf(skill) {
+  if (!skill.flags?.length) return null;
+  return skill.safety?.verdict || "unverified";
+}
+
+function safetyTag(skill) {
+  const v = verdictOf(skill);
+  const labels = (skill.flags || []).map((f) => f.label).join("; ");
+  if (v === "malicious") return ` [⛔ reviewed: malicious — ${skill.safety.reason}]`;
+  if (v === "caution") return ` [⚠ review before running — ${skill.safety.reason}]`;
+  if (v === "unverified") return ` [ℹ unverified scan match: ${labels}]`;
+  return "";
+}
+
+function safetyLine(skill) {
+  const v = verdictOf(skill);
+  if (!v) return "safety: no scan matches";
+  const labels = skill.flags.map((f) => f.label).join("; ");
+  if (v === "unverified") return `safety: automated scan matched (${labels}) — not yet reviewed; read the matched parts before running scripts`;
+  return `safety: scan matched (${labels}); reviewed by ${skill.safety.reviewer}: ${v} — ${skill.safety.reason}`;
 }
 
 function summarize(skill) {
   const avail = skill.mirrored ? "installable" : "link-only (license not redistributable)";
-  return `${skill.id} — ${skill.title} (${skill.category}, ${avail})${formatFlags(skill.flags)}\n  ${skill.description}`;
+  return `${skill.id} — ${skill.title} (${skill.category}, ${avail})${safetyTag(skill)}\n  ${skill.description}`;
 }
 
 const server = new McpServer({ name: "skill-loadout", version: "0.1.0" });
@@ -124,7 +143,7 @@ server.registerTool(
       `license: ${skill.license || "unknown"}`,
       `source: ${skill.source?.repo || "world-skills/originals"}${skill.source?.url ? ` (${skill.source.url})` : ""}`,
       `works with: ${(skill.worksWith || []).join(", ")}`,
-      `safety flags: ${skill.flags?.length ? skill.flags.map((f) => `${f.label} (${f.severity})`).join("; ") : "none"}`,
+      safetyLine(skill),
     ].join("\n");
     if (!skill.mirrored) {
       return text(`${meta}\n\nThis skill is link-only — its license doesn't allow redistribution, so it isn't bundled in this repo.\nGet it directly from: ${skill.source?.url || `https://github.com/${skill.source?.repo}`}`);
@@ -157,6 +176,7 @@ server.registerTool(
     const skill = skills.find((s) => s.id === id);
     if (!skill) return errorText(`No skill with id "${id}". Use search_skills to find valid ids.`);
     if (!skill.mirrored) return errorText(`"${id}" is link-only (license doesn't allow redistribution) — fetch it yourself from ${skill.source?.url || skill.source?.repo}.`);
+    if (verdictOf(skill) === "malicious") return errorText(`Refusing to install "${id}": a safety review found it malicious — ${skill.safety.reason}`);
     const srcDir = path.join(SKILLS_DIR, id);
     if (!fs.existsSync(path.join(srcDir, "SKILL.md"))) return errorText(`Catalog says "${id}" is mirrored, but ${srcDir} is missing on disk — try \`git pull\`.`);
     const base = path.resolve(cwd || process.cwd());
@@ -164,7 +184,8 @@ server.registerTool(
     const dest = path.join(destParent, id);
     fs.mkdirSync(dest, { recursive: true });
     fs.cpSync(srcDir, dest, { recursive: true });
-    return text(`Installed "${id}" into ${dest}`);
+    const note = ["caution", "unverified"].includes(verdictOf(skill)) ? `\n${safetyLine(skill)}` : "";
+    return text(`Installed "${id}" into ${dest}${note}`);
   },
 );
 

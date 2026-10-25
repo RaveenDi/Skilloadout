@@ -30,6 +30,13 @@ console.log("\n[install_skill ai-engineering] ->", install.content[0].text);
 console.log("installed file exists:", fs.existsSync(path.join(tmp, ".claude", "skills", "ai-engineering", "SKILL.md")));
 fs.rmSync(tmp, { recursive: true, force: true });
 
+const reviewed = await client.callTool({ name: "get_skill", arguments: { id: "yara-rule-authoring--trailofbits" } });
+console.log("\n[get_skill reviewed-benign] " + reviewed.content[0].text.split("\n").find((l) => l.startsWith("safety")));
+const benignSearch = await client.callTool({ name: "search_skills", arguments: { query: "yara rule authoring", limit: 1 } });
+console.log("[search reviewed-benign] no warning tag:", !/\[(⛔|⚠|ℹ)/.test(benignSearch.content[0].text.split("\n")[0]));
+const unverified = await client.callTool({ name: "search_skills", arguments: { query: "aspire", limit: 1 } });
+console.log("[search unverified] " + unverified.content[0].text.split("\n")[0]);
+
 const badId = await client.callTool({ name: "get_skill", arguments: { id: "not-a-real-skill-xyz" } });
 console.log("\n[get_skill bad id] isError:", !!badId.isError, "-", badId.content[0].text);
 

@@ -13,7 +13,7 @@ import path from "node:path";
 import {
   ROOT, SKILLS_DIR, CATALOG_DIR, ORIGINALS_DIR, CACHE_DIR,
   readJson, writeJson, sha1, slugify, humanize, git, gh, parseFrontmatter, asText,
-  firstParagraph, walk, toPosix, pool,
+  firstParagraph, walk, toPosix, pool, writeIndexFile,
 } from "./lib/common.mjs";
 import { detectLicenseText, normalizeLicense, isRedistributable } from "./lib/license.mjs";
 import { classify, CATEGORY_BY_ID } from "./lib/taxonomy.mjs";
@@ -530,12 +530,6 @@ function writeMirror(e) {
     fs.writeFileSync(path.join(dest, "ATTRIBUTION.md"), attr + "\n");
     e.files.push({ path: "ATTRIBUTION.md", size: Buffer.byteLength(attr) + 1 });
   }
-}
-
-function writeIndexFile(p, skills, extra) {
-  fs.mkdirSync(path.dirname(p), { recursive: true });
-  const head = JSON.stringify({ ...extra, count: skills.length }).slice(0, -1);
-  fs.writeFileSync(p, `${head},"skills":[\n${skills.map((s) => JSON.stringify(s)).join(",\n")}\n]}\n`);
 }
 
 // ---------------------------------------------------------------------------------------------

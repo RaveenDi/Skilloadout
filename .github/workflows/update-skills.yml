@@ -44,6 +44,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node scripts/sync.mjs ${{ inputs.force && '--force' || '' }}
 
+      - name: Safety review of flagged skills (Claude, cached)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node scripts/verify-safety.mjs
+
       - name: Keep ⚡ Superpower picks valid
         run: node scripts/resolve-picks.mjs
 

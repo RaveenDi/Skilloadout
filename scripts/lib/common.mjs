@@ -26,6 +26,13 @@ export const writeJson = (p, data, pretty = true) => {
 
 export const sha1 = (s) => crypto.createHash("sha1").update(s).digest("hex");
 
+// index.json is one skill per line so diffs between syncs stay readable.
+export function writeIndexFile(p, skills, extra) {
+  fs.mkdirSync(path.dirname(p), { recursive: true });
+  const head = JSON.stringify({ ...extra, count: skills.length }).slice(0, -1);
+  fs.writeFileSync(p, `${head},"skills":[\n${skills.map((s) => JSON.stringify(s)).join(",\n")}\n]}\n`);
+}
+
 export function slugify(s) {
   return String(s)
     .toLowerCase()

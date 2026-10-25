@@ -1,13 +1,48 @@
 # Skill Loadout 🎒
 
-**A curated library of the best AI agent skills in the world** — license-checked, safety-scanned,
-and refreshed every 3 days by a GitHub Actions agent. No website, no server: this GitHub repo *is*
-the product, connected to directly as a **Claude Code plugin marketplace** and an **MCP server**.
+**12,000+ AI agent skills — license-checked, safety-scanned, and refreshed every 3 days.**
 
-Skills follow the open **Agent Skills** format (`SKILL.md` + optional scripts/references), which
-works across **Claude** (Code, Desktop, claude.ai), **OpenAI Codex / ChatGPT**, **Gemini CLI**,
-**GitHub Copilot** and **Cursor**. The library also includes Cursor rules (auto-converted to
-SKILL.md) and Gemini CLI extensions.
+Plug the whole catalog into Claude Code, Cursor, Codex CLI or Gemini CLI as a **plugin marketplace**
+or an **MCP server**. No website, no account, no backend: this repo is the product.
+
+[![Skills](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FRaveenDi%2FSkilloadout%2Fmain%2Fcatalog%2Fstats.json&query=%24.total&label=skills&color=blue)](catalog/index.json)
+[![Sources](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FRaveenDi%2FSkilloadout%2Fmain%2Fcatalog%2Fstats.json&query=%24.sources&label=sources&color=blue)](catalog/sources.json)
+[![Auto-update](https://img.shields.io/github/actions/workflow/status/RaveenDi/Skilloadout/update-skills.yml?label=auto-update)](.github/workflows/update-skills.yml)
+[![Last update](https://img.shields.io/github/last-commit/RaveenDi/Skilloadout?label=last%20sync)](https://github.com/RaveenDi/Skilloadout/commits/main)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
+## Get started in 30 seconds
+
+**Claude Code** — add the curated top picks as plugins:
+
+```bash
+claude plugin marketplace add RaveenDi/Skilloadout
+claude plugin install harness-engineering@skill-loadout
+```
+
+**Any MCP client** (Claude Code, Claude Desktop, Cursor, Codex CLI, Gemini CLI) — search and install
+from all 12,000+ skills on demand:
+
+```bash
+git clone --depth 1 https://github.com/RaveenDi/Skilloadout && cd Skilloadout/mcp-server && npm install
+claude mcp add --scope user skill-loadout -- node "$(pwd)/index.mjs"
+```
+
+Then just ask your agent: *"find me a skill for scroll-driven 3D camera moves and install it."*
+
+## Why this one
+
+- **Safety first.** Every skill is scanned for prompt injection, credential access, obfuscated
+  code, miners and destructive commands. Flagged skills get a **reviewed verdict**, not just a regex
+  match, so a YARA tutorial that mentions `xmrig` isn't treated like malware. Skills reviewed as
+  malicious are refused at install. See [Safety](#safety).
+- **License-respecting.** Only redistributable licenses are mirrored, each with an `ATTRIBUTION.md`
+  and the upstream license. Everything else is a link to its source.
+- **Always fresh.** A GitHub Actions agent finds new skill repos (Claude reviews each one), re-syncs
+  every source, dedupes, scores, safety-reviews and commits, every 3 days.
+- **Works everywhere.** Skills follow the open **Agent Skills** format (`SKILL.md` + optional
+  scripts/references) used by **Claude** (Code, Desktop, claude.ai), **OpenAI Codex**, **Gemini CLI**,
+  **GitHub Copilot** and **Cursor**. Cursor rules are auto-converted to `SKILL.md`.
 
 ```
 .
@@ -18,10 +53,12 @@ SKILL.md) and Gemini CLI extensions.
 │   ├── index.json          # generated catalog (one skill per line)
 │   ├── top-picks.json      # ⚡ curated picks — also what the plugin marketplace lists
 │   ├── stacks.json         # curated multi-skill bundles
+│   ├── safety-verdicts.json, safety-overrides.json   # reviewed safety verdicts (cached) + human overrides
 │   ├── stats.json, changelog.json, discovery-log.json, state.json
 ├── scripts/
 │   ├── sync.mjs            # clone → find → license check → mirror/link → classify → dedupe → score → index
 │   ├── discover.mjs        # discovery agent (GitHub search + Claude review)
+│   ├── verify-safety.mjs   # Claude review of scan-flagged skills → benign / caution / malicious
 │   ├── validate.mjs        # catalog integrity checks
 │   ├── build-marketplace.mjs  # generates .claude-plugin/marketplace.json from top-picks.json
 │   └── lib/                # taxonomy, license detection, safety scan, helpers
@@ -39,7 +76,9 @@ npm run sync            # download/refresh all sources (~10–20 min first time;
 
 Useful flags: `node scripts/sync.mjs --only owner/repo`, `--force`, `--keep-cache`.
 `npm run discover` runs the discovery agent, `npm run picks` re-points the ⚡ Superpower list,
-`npm run validate` checks catalog integrity, `npm run marketplace` rebuilds the plugin marketplace.
+`npm run validate` checks catalog integrity, `npm run marketplace` rebuilds the plugin marketplace,
+`npm run verify-safety` reviews flagged skills (needs `ANTHROPIC_API_KEY`; `-- --evidence-only` dumps
+the matched lines to `.cache/` without calling the API).
 
 To actually use the skills from an agent, see
 [Connecting an agent directly](#connecting-an-agent-directly-no-website) below.
@@ -66,9 +105,11 @@ To actually use the skills from an agent, see
    **Claude (claude-opus-5) reviews** each candidate's README + sample skills for quality, originality
    and safety (heuristic fallback without a key) → accepted repos are appended to `sources.json`.
 2. **Sync** — incremental re-sync of every source.
-3. **Validate** — integrity checks (no non-redistributable content mirrored, no missing files).
-4. **Commit** — pushes the refreshed catalog. Add an `ANTHROPIC_API_KEY` repository secret to enable
-   Claude reviews.
+3. **Safety review** — Claude reviews newly flagged or changed skills (cached; see [Safety](#safety)).
+4. **Validate** — integrity checks (no non-redistributable content mirrored, no missing files).
+5. **Marketplace** — regenerates `.claude-plugin/marketplace.json`.
+6. **Commit** — pushes the refreshed catalog. Add an `ANTHROPIC_API_KEY` repository secret to enable
+   both Claude reviews (without it, discovery uses a heuristic and flagged skills stay *unverified*).
 
 ## Categories & Superpowers
 
@@ -88,7 +129,7 @@ no server to run or host:
   folder (a root `SKILL.md` already loads as one skill, no wrapping needed):
   ```bash
   claude plugin marketplace add RaveenDi/Skilloadout
-  claude plugin install <skill-id>@world-skills
+  claude plugin install <skill-id>@skill-loadout
   ```
   Regenerate manually with `node scripts/build-marketplace.mjs` (the scheduler does this every run).
 
@@ -97,6 +138,28 @@ no server to run or host:
   Desktop, Cursor, Codex CLI, or Gemini CLI. Reads `catalog/index.json` and `skills/` directly off
   disk — no network, no key. This repo's own `.mcp.json` wires it in for anyone who opens the repo
   in Claude Code; see [`mcp-server/README.md`](mcp-server/README.md) for other clients.
+
+## Safety
+
+Skills are instructions plus scripts that an agent will run, so a bad one is a real supply-chain risk.
+Two passes protect you:
+
+1. **Scan** (`scripts/lib/safety.mjs`) — on every sync, each skill's files are checked for
+   prompt-injection text, credential-file access, obfuscated execution, crypto-miners, destructive
+   commands, pipe-to-shell installs and disabled safety checks.
+2. **Review** (`scripts/verify-safety.mjs`) — a regex can't tell a skill that *detects* an attack from
+   one that *performs* it, so each flagged skill's matched lines go to Claude for a verdict:
+   **benign**, **caution** (legitimate but read it before running) or **malicious**. Verdicts are
+   cached in `catalog/safety-verdicts.json` by a hash of the matched content, so a skill is
+   re-reviewed only when that content changes.
+
+The MCP server shows only reviewed warnings. Unreviewed matches are labelled *unverified*, never as
+findings. `install_skill` refuses anything reviewed as malicious, and the plugin marketplace leaves
+it out.
+
+**Maintainers:** if your skill got a wrong verdict, open an issue. Human verdicts live in
+`catalog/safety-overrides.json` and take priority over the automated review while the matched
+content stays unchanged.
 
 ## Installing downloaded skills
 

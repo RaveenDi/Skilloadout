@@ -41,6 +41,10 @@ for (const [cat, list] of Object.entries(picks)) {
   if (!taxonomyIds.has(cat)) errors.push(`top-picks: unknown category ${cat}`);
   for (const id of list) if (!ids.has(id)) warnings.push(`top-picks ${cat}: unknown skill ${id}`);
 }
+const byId = new Map((index?.skills || []).map((s) => [s.id, s]));
+for (const [cat, list] of Object.entries(picks)) {
+  for (const id of list) if (byId.get(id)?.safety?.verdict === "malicious") warnings.push(`top-picks ${cat}: ${id} was reviewed malicious — remove it`);
+}
 
 for (const w of warnings.slice(0, 50)) console.log(`warn: ${w}`);
 if (warnings.length > 50) console.log(`… ${warnings.length - 50} more warnings`);

@@ -1,0 +1,86 @@
+{
+  "yara-rule-authoring--trailofbits": {
+    "hash": "87c5dd639e59cf62a4a15d4c2c3650a876aced89",
+    "verdict": "benign",
+    "reason": "YARA detection rules that match miner strings (CoinHive, cryptonight) so defenders can find them; nothing is mined.",
+    "reviewer": "manual",
+    "reviewedAt": "2026-10-25T06:34:54.044Z"
+  },
+  "analyzing-linux-elf-malware--mukul975": {
+    "hash": "c4a03a41c8754dc1de78e291cf4097b9184e5af6",
+    "verdict": "benign",
+    "reason": "Malware-analysis walkthrough; the XMRig mention is an example classification in an analysis report.",
+    "reviewer": "manual",
+    "reviewedAt": "2026-10-25T06:34:54.044Z"
+  },
+  "detecting-cloud-threats-with-guardduty--mukul975": {
+    "hash": "762b7e2f0d74e01be9c94d0ef1903fdc57057530",
+    "verdict": "benign",
+    "reason": "GuardDuty detection guide; the xmrig process appears in a sample threat finding.",
+    "reviewer": "manual",
+    "reviewedAt": "2026-10-25T06:34:54.044Z"
+  },
+  "detecting-cryptomining-in-cloud--mukul975": {
+    "hash": "7ac89fc9e4bea29d095c48b2b2df1b2d8bd9fa11",
+    "verdict": "benign",
+    "reason": "Cryptojacking detection guide; lists miner binaries and Stratum ports to watch for.",
+    "reviewer": "manual",
+    "reviewedAt": "2026-10-25T06:34:54.044Z"
+  },
+  "implementing-cloud-workload-protection--mukul975": {
+    "hash": "63033d351c9645014254d3b65b2641701ef5a9b7",
+    "verdict": "benign",
+    "reason": "Workload-protection skill that greps running processes for miners in order to detect them.",
+    "reviewer": "manual",
+    "reviewedAt": "2026-10-25T06:34:54.044Z"
+  },
+  "implementing-ebpf-security-monitoring--mukul975": {
+    "hash": "0897ec2b941c8f1a7fbbefa8b27ebfc5468bb4fc",
+    "verdict": "benign",
+    "reason": "eBPF/Tetragon monitoring policy that alerts on miner binary names.",
+    "reviewer": "manual",
+    "reviewedAt": "2026-10-25T06:34:54.044Z"
+  },
+  "implementing-runtime-security-with-tetragon--mukul975": {
+    "hash": "f1bc837c69dea1b02be846c2bcef53702a2c3d2d",
+    "verdict": "benign",
+    "reason": "Tetragon runtime policy that matches and blocks miner binaries.",
+    "reviewer": "manual",
+    "reviewedAt": "2026-10-25T06:34:54.044Z"
+  },
+  "securing-kubernetes-on-cloud--mukul975": {
+    "hash": "ae3ba8bd897061139350416fccc728c47fb5584f",
+    "verdict": "benign",
+    "reason": "Incident-response scenario for removing a cryptominer from a compromised container image.",
+    "reviewer": "manual",
+    "reviewedAt": "2026-10-25T06:34:54.044Z"
+  },
+  "browser-testing-with-devtools--addyosmani": {
+    "hash": "2a619f1a5614e95c35b90aa4ee4da993f8b682af",
+    "verdict": "benign",
+    "reason": "Tells the agent to treat browser content as untrusted data and ignore injected instructions — a defense, not an injection.",
+    "reviewer": "manual",
+    "reviewedAt": "2026-10-25T06:34:54.044Z"
+  },
+  "nextflow-development--anthropics": {
+    "hash": "07931b9ecf3a7ff6c7df9eb7ae38eadc1ed391c9",
+    "verdict": "benign",
+    "reason": "Installs Nextflow with its official installer from get.nextflow.io, as the Nextflow docs instruct.",
+    "reviewer": "manual",
+    "reviewedAt": "2026-10-25T06:34:54.044Z"
+  },
+  "security-review--getsentry": {
+    "hash": "cd9803e39448cfd12d3ec10818de0036c9192168",
+    "verdict": "benign",
+    "reason": "Security-review references showing prompt-injection, obfuscated-exec and malicious install-script examples to look for in code.",
+    "reviewer": "manual",
+    "reviewedAt": "2026-10-25T06:34:54.044Z"
+  },
+  "sharp-edges--trailofbits": {
+    "hash": "1bebb5627b3860f8739d096227aecfbfe444d832",
+    "verdict": "benign",
+    "reason": "Shows vulnerable patterns (command injection leading to rm -rf, disabled SSL verification) as examples to avoid.",
+    "reviewer": "manual",
+    "reviewedAt": "2026-10-25T06:34:54.044Z"
+  }
+}
