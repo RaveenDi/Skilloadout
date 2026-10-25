@@ -41,7 +41,7 @@ for (const id of pickedIds) {
 
 const marketplace = {
   name: "skill-loadout",
-  description: "Skill Loadout — curated, license-checked, safety-scanned AI agent skills (the ⚡ top picks across 36 categories), auto-updated every 3 days.",
+  description: "Skill Loadout — curated, license-checked, safety-scanned AI agent skills (the ⚡ top picks across 36 categories), auto-updated every Friday.",
   owner: { name: "Skill Loadout", url: "https://github.com/RaveenDi/Skilloadout" },
   plugins,
 };

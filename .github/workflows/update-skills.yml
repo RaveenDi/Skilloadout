@@ -1,9 +1,10 @@
-name: Update skills (every 3 days)
+name: Update skills (weekly, Fridays)
 
 on:
   schedule:
-    # 05:23 UTC on days 1,4,7,...,31 of each month (≈ every 3 days).
-    - cron: "23 5 */3 * *"
+    # Fridays 00:23 UTC (05:53 Sri Lanka) so new skills are live before the weekend.
+    # Off-the-hour minute: GitHub delays top-of-hour schedules under load.
+    - cron: "23 0 * * 5"
   workflow_dispatch:
     inputs:
       force:

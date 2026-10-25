@@ -4,7 +4,7 @@ Search, inspect, and install skills from the [Skill Loadout](https://github.com/
 catalog — 12,000+ license-checked, safety-scanned AI agent skills — from any MCP-compatible client
 (Claude Code, Claude Desktop, Cursor, Codex CLI, Gemini CLI). No backend, no API key, no network
 calls: it reads `catalog/index.json` and `skills/` straight off the git checkout it runs in. The
-repo's scheduler (`update-skills.yml`) refreshes that data every 3 days — `git pull` is all this
+repo's scheduler (`update-skills.yml`) refreshes that data every Friday — `git pull` is all this
 server ever needs to stay current.
 
 ## Tools

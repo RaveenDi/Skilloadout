@@ -1,6 +1,6 @@
 # Skill Loadout 🎒
 
-**12,000+ AI agent skills — license-checked, safety-scanned, and refreshed every 3 days.**
+**12,000+ AI agent skills — license-checked, safety-scanned, and refreshed every Friday.**
 
 Plug the whole catalog into Claude Code, Cursor, Codex CLI or Gemini CLI as a **plugin marketplace**
 or an **MCP server**. No website, no account, no backend: this repo is the product.
@@ -39,7 +39,7 @@ Then just ask your agent: *"find me a skill for scroll-driven 3D camera moves an
 - **License-respecting.** Only redistributable licenses are mirrored, each with an `ATTRIBUTION.md`
   and the upstream license. Everything else is a link to its source.
 - **Always fresh.** A GitHub Actions agent finds new skill repos (Claude reviews each one), re-syncs
-  every source, dedupes, scores, safety-reviews and commits, every 3 days.
+  every source, dedupes, scores, safety-reviews and commits, every Friday.
 - **Works everywhere.** Skills follow the open **Agent Skills** format (`SKILL.md` + optional
   scripts/references) used by **Claude** (Code, Desktop, claude.ai), **OpenAI Codex**, **Gemini CLI**,
   **GitHub Copilot** and **Cursor**. Cursor rules are auto-converted to `SKILL.md`.
@@ -64,7 +64,7 @@ Then just ask your agent: *"find me a skill for scroll-driven 3D camera moves an
 │   └── lib/                # taxonomy, license detection, safety scan, helpers
 ├── .claude-plugin/marketplace.json   # Claude Code plugin marketplace (generated)
 ├── mcp-server/              # MCP server: search_skills, get_skill, install_skill, list_categories
-└── .github/workflows/update-skills.yml   # every-3-days update agent
+└── .github/workflows/update-skills.yml   # weekly (Friday) update agent
 ```
 
 ## Quick start
@@ -99,8 +99,8 @@ To actually use the skills from an agent, see
    name+description, and scores quality (tier, stars, richness, freshness, safety).
 6. Writes `catalog/index.json`, `stats.json`, and a `changelog.json` entry.
 
-### Update agent (every 3 days)
-`.github/workflows/update-skills.yml` runs on a cron (`23 5 */3 * *`) or manually:
+### Update agent (every Friday)
+`.github/workflows/update-skills.yml` runs Fridays at 00:23 UTC (`23 0 * * 5`) or manually:
 1. **Discovery** — GitHub search across skill topics/keywords → filters known/aggregator repos →
    **Claude (claude-opus-5) reviews** each candidate's README + sample skills for quality, originality
    and safety (heuristic fallback without a key) → accepted repos are appended to `sources.json`.
