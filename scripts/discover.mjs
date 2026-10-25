@@ -163,7 +163,7 @@ async function findCandidates(cfg, index) {
   const found = new Map();
   for (const q of QUERIES) {
     try {
-      const r = await gh(`/search/repositories?q=${encodeURIComponent(`${q} stars:>=${MIN_STARS} pushed:>=${since} fork:false archived:false`)}&sort=stars&order=desc&per_page=30`);
+      const r = await gh(`/search/repositories?q=${encodeURIComponent(`${q} is:public stars:>=${MIN_STARS} pushed:>=${since} fork:false archived:false`)}&sort=stars&order=desc&per_page=30`);
       for (const repo of r.items || []) {
         const k = repo.full_name.toLowerCase();
         if (known.has(k) || orgs.has(repo.owner.login.toLowerCase())) continue;
