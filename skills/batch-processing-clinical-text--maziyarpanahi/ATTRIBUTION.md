@@ -2,7 +2,7 @@
 
 - **Item:** Batch Processing Clinical Text (`batch-processing-clinical-text`)
 - **Original source:** https://github.com/maziyarpanahi/openmed/tree/master/skills/batch-processing-clinical-text
-- **Repository:** https://github.com/maziyarpanahi/openmed @ `2900e6fbb44c`
+- **Repository:** https://github.com/maziyarpanahi/openmed @ `f81095ab840c`
 - **License:** Apache-2.0 (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

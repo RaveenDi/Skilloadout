@@ -4,7 +4,7 @@ name: doca-spcx-cc
 description: >
   Use this skill when the user is invoking `doca_spcx_cc` (the host-side
   CLI under /opt/mellanox/doca/tools/) to load, parameterize, start,
-  observe, or stop a Programmable Congestion Control (SPCX) algorithm on
+  observe, or stop an SPC-X congestion-control algorithm on
   a BlueField with a DPA processor against a live RDMA / RoCE fabric, or
   picking SPCX vs the established `doca-pcc` surface. Trigger even when
   the user does not say "DOCA SPCX" or "doca_spcx_cc" — typical implicit
@@ -19,8 +19,9 @@ description: >
   library programming, or general DOCA install — those belong to other
   skills.
 metadata:
-  author: NVIDIA <doca@nvidia.com>
+  author: NVIDIA <doca-feedback@nvidia.com>
   kind: tool
+  doca_version: "3.5"
   tags:
     - doca
     - pcc
@@ -53,8 +54,8 @@ SPCX-vs-PCC tradeoff and safety. Do not open every companion
 file.
 
 **Where to start:** This is a tool skill for invoking
-`doca_spcx_cc` — the documented host-side CLI that exercises
-an SPCX-class Programmable Congestion Control algorithm on a
+`doca_spcx_cc` — the host-side CLI that exercises
+an SPC-X congestion-control algorithm on a
 live RDMA / RoCE fabric driven by a BlueField with a DPA
 processor. Open the tasks companion and start at
 `## configure` for the
@@ -68,15 +69,14 @@ the capabilities companion when the question is
 does the tool surface*, or *what is the safety posture for
 loading a custom CC algorithm on a production fabric*. If
 DOCA is not installed yet, route to
-[`doca-setup`](../../doca-setup/SKILL.md) first.
+`doca-setup/SKILL.md` first.
 
-This skill is the **next-gen programmable-CC surface**.
-[`doca-pcc`](../../libs/doca-pcc/SKILL.md) is the established
+This skill covers the **SPC-X CC tool**.
+`doca-pcc/SKILL.md` is the established
 PCC story; SPCX is the documented extension that authors
 SPCX-class algorithms on the same DPA hardware substrate.
-[`doca-pcc-ztr-rttcc-algo`](../../libs/doca-pcc-ztr-rttcc-algo/SKILL.md)
-is one shipped reference algorithm (zero-touch RTT-based
-CC) that can be loaded through either the PCC or SPCX path
+The zero-touch RTT-based CC algorithm (ZTR-RTT) is one
+NVIDIA reference algorithm that can be loaded through either the PCC or SPCX path
 depending on the install and the user's algorithm choice;
 the agent surfaces this decision tree explicitly per
 the capabilities companion.
@@ -137,7 +137,7 @@ load-bearing piece; the worked example is one instance.
   fleet?"*. Answered by the safety overlay in
   the capabilities companion
   (heavily cross-linked to
-  [`doca-hardware-safety`](../../doca-hardware-safety/SKILL.md)):
+  `doca-hardware-safety/SKILL.md`):
   blast-radius bounded, observability gate proven, OOB
   reachable, factory-PCC rollback rehearsed, escalation
   path documented before any production cutover.
@@ -148,7 +148,7 @@ load-bearing piece; the worked example is one instance.
   version-overlay in
   the capabilities companion,
   which redirects to the canonical
-  [`doca-version`](../../doca-version/SKILL.md) chain
+  `doca-version/SKILL.md` chain
   and adds the *tool ↔ `doca-pcc` library ↔ DPACC
   compiler ↔ firmware custom-PCC slot* match rule.
 - **"My SPCX session errored — is it the tool, the
@@ -164,7 +164,7 @@ load-bearing piece; the worked example is one instance.
 
 This skill serves **external developers, platform
 operators, and AI agents authoring, loading, and
-evaluating an SPCX-class Programmable Congestion Control
+evaluating an SPC-X congestion-control
 algorithm on a BlueField with a DPA processor, against a
 live RDMA / RoCE fabric**. Concretely:
 
@@ -172,7 +172,7 @@ live RDMA / RoCE fabric**. Concretely:
   SPCX-class DPA-side algorithm (or who is consuming a
   documented shipped reference such as the zero-touch
   RTT-based algorithm via
-  [`doca-pcc-ztr-rttcc-algo`](../../libs/doca-pcc-ztr-rttcc-algo/SKILL.md)
+  the ZTR-RTT CC documentation via `doca-public-knowledge-map`
   on the SPCX path when the install + algorithm support
   it) and needs the operator-side harness to load,
   parameterize, start, observe, and stop the algorithm.
@@ -190,33 +190,30 @@ It is **not** for users debugging the `doca_spcx_cc`
 binary itself, **not** a substitute for the live public
 DOCA SPCX / DOCA PCC programming guides, **not** the
 right place for the DPA-side algorithm authoring detail
-(that path goes through the public DOCA SPCX programming
-guide and the
-[`doca-pcc`](../../libs/doca-pcc/SKILL.md) +
-[`doca-dpa`](../../libs/doca-dpa/SKILL.md) skills), and
+(that path goes through the public DOCA PCC programming guide and the
+`doca-pcc/SKILL.md` +
+`doca-dpa/SKILL.md` skills), and
 **not** the right place for default factory PCC
 configuration (no host-side library or SPCX tool needed;
 route via
-[`doca-public-knowledge-map`](../../doca-public-knowledge-map/SKILL.md)).
+`doca-public-knowledge-map/SKILL.md`).
 
 The tool is shipped as a **CLI binary** under
 `/opt/mellanox/doca/tools/`, not a library you link
-against. The skill uses the same `kind: tool`
-three-file shape as the rest of the bundle so the
-agent's task-verb contract is uniform across libraries,
-services, and tools.
+against; it uses the same `kind: tool` three-file
+shape as the rest of the bundle.
 
 ## Language scope
 
 `doca_spcx_cc` is a C host-side CLI that links the
-host-side [`doca-pcc`](../../libs/doca-pcc/SKILL.md)
+host-side `doca-pcc/SKILL.md`
 library and loads a DPA-side SPCX algorithm image built
 by the DPACC compiler. The algorithm body is a separate
 DPA-side translation unit written in the language DPACC
 accepts. The skill keeps workflow guidance
 language-neutral and routes per-language questions to
-the public DOCA SPCX / DOCA PCC / DPACC guides via
-[`doca-public-knowledge-map`](../../doca-public-knowledge-map/SKILL.md).
+the public DOCA PCC / DPACC guides via
+`doca-public-knowledge-map/SKILL.md`.
 
 ## When to load this skill
 
@@ -249,10 +246,10 @@ Do **not** load this skill for general DOCA orientation,
 DPA-side algorithm authoring detail, raw cycle profiling
 of the DPA, the factory PCC algorithm shipped in the
 firmware, or DOCA install. For those, route to
-[`doca-public-knowledge-map`](../../doca-public-knowledge-map/SKILL.md),
-[`doca-pcc`](../../libs/doca-pcc/SKILL.md),
-[`doca-dpa`](../../libs/doca-dpa/SKILL.md), or
-[`doca-setup`](../../doca-setup/SKILL.md).
+`doca-public-knowledge-map/SKILL.md`,
+`doca-pcc/SKILL.md`,
+`doca-dpa/SKILL.md`, or
+`doca-setup/SKILL.md`.
 
 ## What this skill provides
 
@@ -270,7 +267,7 @@ in two companion files:
   observability surface (per-port / per-flow trace
   formats + the host-side status surface), the
   triple-axis precondition rule
-  ([`doca-pcc`](../../libs/doca-pcc/SKILL.md): DPA-capable
+  (`doca-pcc/SKILL.md`: DPA-capable
   BlueField + firmware custom-PCC slot enabled +
   `doca_pcc_cap_*` agreement) extended with SPCX-specific
   availability, the version overlay (tool ↔ library ↔
@@ -318,7 +315,7 @@ should not add:
   *loads* an algorithm the user supplies; the skill
   refuses to invent algorithm bodies and routes any
   *"what algorithm should I write"* question to the
-  public DOCA SPCX / DOCA PCC programming guides and
+  public DOCA PCC programming guide and
   to the user's own domain expertise.
 - **Pre-baked example output** (throughput / latency
   curves, per-flow counter snapshots). Output is
@@ -326,12 +323,12 @@ should not add:
   workload-specific; pinning one would mislead
   operators elsewhere.
 - **Flag strings, subcommand names, probe-packet format tokens,
-  or metric names beyond the public DOCA SPCX page and `--help`.**
+  or metric names beyond the DOCA release notes and `--help`.**
   This surface still evolves; the installed `--help` is the
   authoritative inventory.
 - **Wrappers, parsers, or scripts** consuming the tool's output.
   The format is documented; script against your installed
-  version using the live guide.
+  version using the release notes.
 - **A tuning recommendation derived from a single observation.**
   CC tuning on a live fabric is high-stakes: the skill prescribes
   how to *capture evidence and compare against the factory PCC
@@ -339,10 +336,10 @@ should not add:
   parameter change without the user's own domain analysis.
 - **A `samples/` or `reference/` subtree.** This is
   a thin loader for a shipped CLI; substantive
-  material lives on the public page, in `--help`,
+  material lives in the release notes, in `--help`,
   and in
-  [`doca-pcc`](../../libs/doca-pcc/SKILL.md) +
-  [`doca-dpa`](../../libs/doca-dpa/SKILL.md).
+  `doca-pcc/SKILL.md` +
+  `doca-dpa/SKILL.md`.
 
 ## Loading order
 
@@ -363,51 +360,47 @@ should not add:
 
 ## Related skills
 
-- [`doca-pcc`](../../libs/doca-pcc/SKILL.md) — the host-side
+- `doca-pcc/SKILL.md` — the host-side
   Programmable Congestion Control library SPCX builds on and links.
   The SPCX-vs-PCC decision tree in
   the capabilities companion
   is the load-bearing routing rule; conflating the two is the most
   common programmable-CC first-touch error.
-- [`doca-pcc-ztr-rttcc-algo`](../../libs/doca-pcc-ztr-rttcc-algo/SKILL.md)
-  — the shipped reference zero-touch RTT-based CC algorithm; the
-  algorithm-side pair to this tool's operator-side workflow when
-  deploying a reference algorithm rather than authoring one.
-- [`doca-dpa`](../../libs/doca-dpa/SKILL.md) — the DPA control
+- `doca-dpa/SKILL.md` — the DPA control
   library the algorithm's DPA-side body builds on: kernel-launch
   model, DPACC build flags, DPA-side comms / verbs.
-- [`doca-rdma`](../../libs/doca-rdma/SKILL.md) — the RDMA / RoCE
+- `doca-rdma/SKILL.md` — the RDMA / RoCE
   flows being controlled. Without traffic in flight *and contention
   on the fabric* the algorithm has no signal; surface this
   precondition before any evaluation.
-- [`doca-pcc-counters`](../doca-pcc-counters/SKILL.md) — read-only
+- `doca-pcc-counters/SKILL.md` — read-only
   PCC counter inspection; the cheaper *"is anything happening on
   this port"* step before or during an SPCX evaluation.
-- [`doca-hardware-safety`](../../doca-hardware-safety/SKILL.md) —
+- `doca-hardware-safety/SKILL.md` —
   the bundle-wide hardware-safety meta-policy this skill's
   `## Safety policy` layers on. Deploying a wrong CC algorithm on a
   production fabric is a *meta-policy STOP* case.
-- [`doca-public-knowledge-map`](../../doca-public-knowledge-map/SKILL.md)
+- `doca-public-knowledge-map/SKILL.md`
   — routing to the public SPCX, PCC, and DPA / DPACC guides.
-- [`doca-version`](../../doca-version/SKILL.md) — canonical DOCA
+- `doca-version/SKILL.md` — canonical DOCA
   version handling. `## Version compatibility` in
   the capabilities companion adds the *tool ↔ `doca-pcc`
   ↔ DPACC ↔ firmware custom-PCC slot* matching rule.
-- [`doca-setup`](../../doca-setup/SKILL.md) — env preparation,
+- `doca-setup/SKILL.md` — env preparation,
   install and DPACC compiler verification, BlueField firmware
   configuration (the custom-PCC slot is a firmware-level setting),
   and the *no install yet* path via the public NGC DOCA container.
-- [`doca-debug`](../../doca-debug/SKILL.md) — the cross-cutting
+- `doca-debug/SKILL.md` — the cross-cutting
   debug ladder. Cross-link runtime evidence and counter snapshots
   into a `doca-debug` session when the cause sits below DOCA.
-- [`doca-structured-tools-contract`](../../doca-structured-tools-contract/SKILL.md)
+- `doca-structured-tools-contract/SKILL.md`
   — the detect → prefer → fall back → report contract the command
   appendix in the tasks companion honors.
-- [`doca-programming-guide`](../../doca-programming-guide/SKILL.md)
+- `doca-programming-guide/SKILL.md`
   — shared DOCA programming patterns, including the cross-library
   `DOCA_ERROR_*` taxonomy this tool's error layer overlays.
 
 The factory PCC algorithms inside ConnectX firmware are **not in
 scope**: they work without `doca_spcx_cc` and are configured through
 firmware knobs, not a host-side API. Route via
-[`doca-public-knowledge-map`](../../doca-public-knowledge-map/SKILL.md).
+`doca-public-knowledge-map/SKILL.md`.

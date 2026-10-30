@@ -1,5 +1,5 @@
 ## Description: <br>
-Guides use of the doca_telemetry_utils command line on a host with DOCA to discover the diagnostic-counter schema, translate counter names to binary Data IDs and back, and check per-device counter support before committing a DOCA Telemetry exporter config. <br>
+Guides agents to use the doca_telemetry_utils command line on a host with DOCA to discover the diagnostic-counter schema, translate counter names to binary Data IDs and back, and check per-device counter support before committing a DOCA Telemetry exporter config, while routing exporter or collector code, DTS deployment, and DOCA install or repair questions to the appropriate sibling skills. <br>
 
 This skill is ready for commercial/non-commercial use. <br>
 
@@ -9,7 +9,7 @@ NVIDIA <br>
 ### License/Terms of Use: <br>
 Apache 2.0 AND CC-BY-4.0 <br>
 ## Use Case: <br>
-Developers, operators, and AI agents standing up or debugging a DOCA Telemetry exporter/collector pipeline who need to enumerate the counter schema, validate per-device counter support, or translate between counter names and binary Data IDs. <br>
+Platform operators, DOCA Telemetry exporter and collector developers, and AI agents use this skill to enumerate the counters a BlueField exposes, resolve and reverse-resolve Data IDs, validate per-device counter support before writing an exporter config, and triage reports where the exporter ships but the collector receives nothing. <br>
 
 ### Deployment Geography for Use: <br>
 Global <br>
@@ -25,56 +25,57 @@ Risk: Review before execution as proposals could introduce incorrect or misleadi
 Mitigation: Review and scan skill before deployment. <br>
 
 ## Reference(s): <br>
-- [DOCA SDK Documentation](https://docs.nvidia.com/doca/sdk/index.html) <br>
 - [CAPABILITIES.md](CAPABILITIES.md) <br>
 - [TASKS.md](TASKS.md) <br>
+- [DOCA SDK Documentation](https://docs.nvidia.com/doca/sdk/index.html) <br>
 
 
 ## Skill Output: <br>
 **Output Type(s):** [Analysis, Shell commands, Configuration instructions] <br>
-**Output Format:** [Markdown with inline bash code blocks] <br>
+**Output Format:** [Markdown with inline shell command citations] <br>
 **Output Parameters:** [1D] <br>
 **Other Properties Related to Output:** [None] <br>
 
 ## Evaluation Agents Used: <br>
-- Claude Code (`aws/anthropic/bedrock-claude-opus-4-8`) <br>
-- Codex (`openai/openai/gpt-5.5`) <br>
+- Claude Code (`aws/anthropic/bedrock-claude-opus-5-5`) <br>
+- Codex (`openai/openai/gpt-6.1-sol`) <br>
 
 
 
 ## Evaluation Tasks: <br>
-Evaluated against 4 evaluation tasks (3 positive, 1 negative), one attempt per task, each in an isolated k8s-sandbox pod. <br>
+4 evaluation tasks (3 positive, 1 negative); each task attempt ran in its own isolated k8s-sandbox pod with one attempt per task. <br>
 
 ## Evaluation Metrics Used: <br>
 Reported benchmark dimensions: <br>
-- Security: Whether the skill is safe to use: checks for unsafe operations, secret leakage, and unauthorized access. <br>
-- Correctness: Whether the final answer is correct against the reference answer. <br>
-- Discoverability: Whether the right skill was loaded and activated when needed. <br>
-- Effectiveness: Whether the skill helped complete the user's goal and follow the expected workflow (equal-weight goal accuracy and behavior check). <br>
-- Efficiency: Whether the skill avoided wasted tool calls and token usage (equal-weight tool productivity and token efficiency). <br>
+- Security: Is it safe to use? Checks for unsafe operations, secret leakage, and unauthorized access. <br>
+- Correctness: Is the answer correct against the reference answer? <br>
+- Discoverability: Was the right skill loaded when needed, with decoys avoided? <br>
+- Effectiveness: Did the skill help complete the task, measured as the equal-weight mean of goal completion and expected workflow adherence? <br>
+- Efficiency: Did it avoid wasted tool calls and token usage, measured as equal-weight tool-call productivity and token efficiency? <br>
 
 Underlying evaluation signals used in this run: <br>
 - `security`: Unsafe operations, secret leakage, and unauthorized access. <br>
 - `skill_execution`: Whether the expected skill was selected, decoys were avoided, and the workflow executed. <br>
-- `skill_efficiency`: Tool-call productivity. <br>
+- `skill_efficiency`: Tool-call productivity (legacy wire id; routing is scored under Discoverability). <br>
 - `accuracy`: Final-answer correctness against the reference answer. <br>
 - `goal_accuracy`: Whether the user's goal was achieved. <br>
 - `behavior_check`: Whether the expected workflow behavior was followed. <br>
+- `token_efficiency`: Actual uncached prompt plus completion token usage (50% of Efficiency). <br>
 
 
 
 ## Evaluation Results: <br>
 | Measure | Claude Code (Baseline → Skill Uplift) | Codex (Baseline → Skill Uplift) |
 |---|---:|---:|
-| Overall | 94.2% | 99.0% |
+| Overall | 97.2% (uplift unavailable) | 93.8% (uplift unavailable) |
 | Security | 100.0% → 100.0% (±0.0 points) | 100.0% → 100.0% (±0.0 points) |
-| Correctness | 55.0% → 100.0% (+45.0 points) | 70.0% → 100.0% (+30.0 points) |
-| Discoverability | 100.0% | 95.0% |
-| Effectiveness | 43.8% → 92.5% (+48.7 points) | 43.8% → 100.0% (+56.2 points) |
-| Efficiency | 78.3% | 100.0% |
+| Correctness | 55.0% → 100.0% (+45.0 points) | 50.0% → 100.0% (+50.0 points) |
+| Discoverability | 100.0% (uplift unavailable) | 95.0% (uplift unavailable) |
+| Effectiveness | 50.0% → 100.0% (+50.0 points) | 43.8% → 93.8% (+50.0 points) |
+| Efficiency | 86.2% (uplift unavailable) | 80.0% (uplift unavailable) |
 
 ## Skill Version(s): <br>
-c259c64 (source: git SHA, committed 2026-10-12) <br>
+c98e456 (source: git SHA, committed 2026-10-28) <br>
 
 ## Ethical Considerations: <br>
 NVIDIA believes Trustworthy AI is a shared responsibility and we have established policies and practices to enable development for a wide array of AI applications. When downloaded or used in accordance with our terms of service, developers should work with their internal team to ensure this skill meets requirements for the relevant industry and use case and addresses unforeseen product misuse. <br>

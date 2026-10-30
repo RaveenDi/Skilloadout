@@ -2,7 +2,7 @@
 
 - **Item:** Rhino3d Scripts (`rhino3d-scripts`)
 - **Original source:** https://github.com/github/awesome-copilot/tree/main/skills/rhino3d-scripts
-- **Repository:** https://github.com/github/awesome-copilot @ `2d4b998d2df2`
+- **Repository:** https://github.com/github/awesome-copilot @ `5269f7ea2d6c`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

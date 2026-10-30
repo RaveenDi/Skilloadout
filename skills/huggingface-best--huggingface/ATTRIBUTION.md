@@ -2,7 +2,7 @@
 
 - **Item:** Huggingface Best (`huggingface-best`)
 - **Original source:** https://github.com/huggingface/skills/tree/main/skills/huggingface-best
-- **Repository:** https://github.com/huggingface/skills @ `c3ff942be3e0`
+- **Repository:** https://github.com/huggingface/skills @ `25910b3d0ba3`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

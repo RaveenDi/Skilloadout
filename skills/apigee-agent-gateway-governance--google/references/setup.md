@@ -22,7 +22,7 @@ The skill drives `gcloud` throughout and several steps have no `gcloud`
 equivalent, so it also calls the Apigee REST API with a token minted by
 `gcloud`.
 
--   [Install the gcloud CLI](https://docs.cloud.google.com/sdk/docs/install.md.txt)
+-   [Install the gcloud CLI](https://docs.cloud.google.com/sdk/docs/install-sdk.md.txt)
 
 Version **588.0.0 or later** is required: `gcloud apigee apis import
 --from-template` is GA only from 588. `assess_integration.sh` checks this and
@@ -59,7 +59,7 @@ gcloud billing projects describe PROJECT_ID
 
 -   [Enable, disable or change billing for a project](https://docs.cloud.google.com/billing/docs/how-to/modify-project.md.txt)
 -   For what each component costs, see the published pricing pages rather than
-    any figure quoted in a skill: [Google Cloud pricing](https://docs.cloud.google.com/pricing.md.txt)
+    any figure quoted in a skill: [Google Cloud pricing](https://cloud.google.com/pricing)
 
 Only one resource in this skill bills **continuously whether or not traffic
 flows**: a deployed Vector Search index, used by the semantic cache. It is

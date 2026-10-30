@@ -2,7 +2,7 @@
 
 - **Item:** Inventory Demand Planning (`inventory-demand-planning`)
 - **Original source:** https://github.com/affaan-m/ECC/tree/main/docs/ja-JP/skills/inventory-demand-planning
-- **Repository:** https://github.com/affaan-m/ECC @ `90606c8315ee`
+- **Repository:** https://github.com/affaan-m/ECC @ `b38be6a7f635`
 - **License:** Apache-2.0 (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

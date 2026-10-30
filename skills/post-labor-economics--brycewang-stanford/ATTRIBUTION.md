@@ -2,7 +2,7 @@
 
 - **Item:** Post Labor Economics (`post-labor-economics`)
 - **Original source:** https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills/tree/main/skills/43-wentorai-research-plugins/skills/domains/economics/post-labor-economics
-- **Repository:** https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills @ `7a2437b8fc97`
+- **Repository:** https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills @ `8dd077b5410c`
 - **License:** CC-BY-SA-4.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

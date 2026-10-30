@@ -9,9 +9,10 @@ Recommended for publication based on the completed evaluation evidence in this r
 ## Evaluation Metadata
 
 - Skill: `doca-public-knowledge-map`
-- Evaluation date: 2026-10-14
-- Evaluator version: `1.5.6`
-- Agents: Claude Code (`aws/anthropic/bedrock-claude-opus-4-8`), Codex (`openai/openai/gpt-5.5`)
+- Validation status: `passed`
+- Evaluation date: 2026-10-28
+- Evaluator version: `1.6.3`
+- Agents: Claude Code (`aws/anthropic/bedrock-claude-opus-5-5`), Codex (`openai/openai/gpt-6.1-sol`)
 - Tasks: 3 evaluation tasks (2 positive, 1 negative)
 - Dataset digest: `sha256:a1265eeb43d3a168a96388bb2d6c5639db424404a5f08cc4a61296448d61bcc4` (skill-evaluator-dataset-snapshot/1)
 - Attempts per task: 1
@@ -20,6 +21,20 @@ Recommended for publication based on the completed evaluation evidence in this r
 - Tier 3 evidence: required for publication
 
 Each task attempt ran in its own isolated sandbox pod.
+
+## Tier 1 LLM Provenance
+
+SkillSpector provider, model, analyzer revision, and determinism evidence retained for this scan.
+
+| Skill | Provider | Adapter | Analyzer | Model | Revision | Determinism |
+| --- | --- | --- | --- | --- | --- | --- |
+| doca-public-knowledge-map | nv_inference | openai | mcp_tool_poisoning | `aws/anthropic/bedrock-claude-opus-5-5` | `2.13.1` | nondeterministic / provider_defaults |
+| doca-public-knowledge-map | nv_inference | openai | semantic_developer_intent | `aws/anthropic/bedrock-claude-opus-5-5` | `2.13.1` | nondeterministic / provider_defaults |
+| doca-public-knowledge-map | nv_inference | openai | semantic_quality_policy | `aws/anthropic/bedrock-claude-opus-5-5` | `2.13.1` | nondeterministic / provider_defaults |
+| doca-public-knowledge-map | nv_inference | openai | semantic_security_discovery | `aws/anthropic/bedrock-claude-opus-5-5` | `2.13.1` | nondeterministic / provider_defaults |
+| doca-public-knowledge-map | nv_inference | openai | meta_analyzer | `aws/anthropic/bedrock-claude-opus-5-5` | `2.13.1` | nondeterministic / provider_defaults |
+
+- Controls for `doca-public-knowledge-map`: temperature=not set (source=provider_default, forwarded=no); seed=not set (source=unset, forwarded=no); reasoning_effort=not set (source=provider_default, forwarded=no)
 
 ## What This Report Answers
 
@@ -35,12 +50,12 @@ The three-tier evaluation checks whether the skill:
 
 | Measure | Claude Code (Baseline → Skill Uplift) | Codex (Baseline → Skill Uplift) |
 |---|---:|---:|
-| Overall | 93.9% — baseline ran, but no comparable score was available; uplift unavailable | 92.6% — baseline ran, but no comparable score was available; uplift unavailable |
+| Overall | 90.1% — baseline ran, but no comparable score was available; uplift unavailable | 83.7% — baseline ran, but no comparable score was available; uplift unavailable |
 | Security | 100.0% → 100.0% (±0.0 points) | 100.0% → 100.0% (±0.0 points) |
-| Correctness | 46.7% → 93.3% (+46.6 points) | 66.7% → 93.3% (+26.6 points) |
-| Discoverability | 100.0% — baseline ran, but no comparable score was available; uplift unavailable | 92.5% — baseline ran, but no comparable score was available; uplift unavailable |
-| Effectiveness | 43.9% → 78.9% (+35.0 points) | 46.1% → 80.0% (+33.9 points) |
-| Efficiency | 97.4% — baseline ran, but no comparable score was available; uplift unavailable | 97.2% — baseline ran, but no comparable score was available; uplift unavailable |
+| Correctness | 40.0% → 86.7% (+46.7 points) | 86.7% → 86.7% (±0.0 points) |
+| Discoverability | 100.0% — baseline ran, but no comparable score was available; uplift unavailable | 95.0% — baseline ran, but no comparable score was available; uplift unavailable |
+| Effectiveness | 27.8% → 66.7% (+38.9 points) | 50.0% → 66.7% (+16.7 points) |
+| Efficiency | 97.4% — baseline ran, but no comparable score was available; uplift unavailable | 70.0% — baseline ran, but no comparable score was available; uplift unavailable |
 
 **How to read this table:** baseline is the same task attempted without the target skill. Scores are rounded to one decimal; threshold-adjacent values use additional precision so their displayed band matches the verdict. Uplift is derived from those displayed scores and shown in percentage points.
 
@@ -48,30 +63,41 @@ Example: `47.0% → 92.0% (+45.0 points)` means the skill-assisted run scored 92
 
 A partial dimension was calculated from only the available configured signals; review the detailed report before relying on it.
 
+### Comparison details
+
+Shared-source comparisons use the same signals and weights on both conditions. They do not replace the full dimension scores above or change the publication verdict.
+
+| Agent | Dimension | Basis | Baseline → With skill (uplift) | Explanation |
+| --- | --- | --- | --- | --- |
+| claude-code | Discoverability | Dimension comparison | N/A | Discoverability is not applicable to the no-skill baseline; there is no installed skill to discover. |
+| claude-code | Efficiency | Token-only comparison | 93.8% → 94.8% (+1.0 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
+| codex | Discoverability | Dimension comparison | N/A | Discoverability is not applicable to the no-skill baseline; there is no installed skill to discover. |
+| codex | Efficiency | Token-only comparison | 86.4% → 88.5% (+2.1 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
+
 ## Token Usage
 
 Actual Tier 3 execution usage is reported for every observed agent/case pair and both conditions.
 
 | Agent | Dataset case | With skill | Without skill | Delta | Change | Coverage |
 |---|---|---:|---:|---:|---:|---|
-| claude-code | All cases | 246,396 | 764,919 | -518,523 | -67.79% | skill 3/3; base 3/3 |
-| claude-code | doca-public-knowledge-map.explicit-positive.v1 | 107,721 | 643,540 | -535,819 | -83.26% | skill 1/1; base 1/1 |
-| claude-code | doca-public-knowledge-map.implicit-positive.v1 | 107,097 | 90,913 | +16,184 | +17.80% | skill 1/1; base 1/1 |
-| claude-code | doca-public-knowledge-map.negative.v1 | 31,578 | 30,466 | +1,112 | +3.65% | skill 1/1; base 1/1 |
-| codex | All cases | 202,525 | 88,662 | +113,863 | +128.42% | skill 3/3; base 3/3 |
-| codex | doca-public-knowledge-map.explicit-positive.v1 | 96,802 | 41,261 | +55,541 | +134.61% | skill 1/1; base 1/1 |
-| codex | doca-public-knowledge-map.implicit-positive.v1 | 91,588 | 33,349 | +58,239 | +174.63% | skill 1/1; base 1/1 |
-| codex | doca-public-knowledge-map.negative.v1 | 14,135 | 14,052 | +83 | +0.59% | skill 1/1; base 1/1 |
-| ALL AGENTS | Dataset aggregate | 448,921 | 853,581 | -404,660 | -47.41% | skill 6/6; base 6/6 |
+| claude-code | All cases | 321,713 | 286,785 | +34,928 | +12.18% | skill 3/3; base 3/3 |
+| claude-code | doca-public-knowledge-map.explicit-positive.v1 | 124,808 | 71,518 | +53,290 | +74.51% | skill 1/1; base 1/1 |
+| claude-code | doca-public-knowledge-map.implicit-positive.v1 | 124,434 | 143,812 | -19,378 | -13.47% | skill 1/1; base 1/1 |
+| claude-code | doca-public-knowledge-map.negative.v1 | 72,471 | 71,455 | +1,016 | +1.42% | skill 1/1; base 1/1 |
+| codex | All cases | 177,094 | 110,123 | +66,971 | +60.81% | skill 3/3; base 3/3 |
+| codex | doca-public-knowledge-map.explicit-positive.v1 | 78,978 | 61,638 | +17,340 | +28.13% | skill 1/1; base 1/1 |
+| codex | doca-public-knowledge-map.implicit-positive.v1 | 84,408 | 34,958 | +49,450 | +141.46% | skill 1/1; base 1/1 |
+| codex | doca-public-knowledge-map.negative.v1 | 13,708 | 13,527 | +181 | +1.34% | skill 1/1; base 1/1 |
+| ALL AGENTS | Dataset aggregate | 498,807 | 396,908 | +101,899 | +25.67% | skill 6/6; base 6/6 |
 
-Prompt tokens include cached reads, so total tokens are `prompt + completion` (cached is not added twice). The Efficiency score uses `(prompt - cached) + completion`. N/A means the relevant trajectory counters were not available; coverage is never estimated.
+Prompt tokens include cached reads, so total tokens are `prompt + completion` (cached is not added twice). The Efficiency score uses `(prompt - cached) + completion`. Change is `100 * (with - without) / without`; negative means fewer tokens. N/A comparisons include their reason in the coverage column; coverage is never estimated.
 
 ## Tier Status
 
 | Tier | Purpose | Status | Evidence |
 |---|---|---|---|
-| Tier 1 | Static validation | **PASSED WITH OBSERVATIONS** | 11 validator(s); 8 finding(s) |
-| Tier 2 | Semantic deduplication | **PASSED WITH OBSERVATIONS** | 2 validator(s); 1 finding(s) |
+| Tier 1 | Static validation | **PASSED WITH OBSERVATIONS** | 11 validator(s); 9 finding(s) |
+| Tier 2 | Semantic deduplication | **PASSED** | 2 validator(s); 0 finding(s) |
 | Tier 3 | Live agent evaluation | **PASS** | 2 agent(s); 3 task(s) |
 
 ## Findings and Observations
@@ -79,9 +105,9 @@ Prompt tokens include cached reads, so total tokens are `prompt + completion` (c
 <details>
 <summary>Show detailed findings and successful checks</summary>
 
-- **CRITICAL** CONTENT_DEDUP/llm_prompt_size_limit: A Tier 2 cluster exceeds the LLM prompt character limit. (`skills/doca-public-knowledge-map`)
 - **MEDIUM** QUALITY/quality_efficiency: Instructions lack clear action verbs (`skills/doca-public-knowledge-map/SKILL.md`)
 - **MEDIUM** QUALITY/quality_efficiency: Deeply nested references in external-dpu.md (`skills/doca-public-knowledge-map/SKILL.md`)
+- **MEDIUM** SCHEMA/metadata_key_style: Metadata key 'doca_version' is not kebab-case (`skills/doca-public-knowledge-map/SKILL.md`)
 - **LOW** QUALITY/quality_discoverability: Description very long (732 chars, recommend 50-150) (`skills/doca-public-knowledge-map/SKILL.md`)
 - **LOW** QUALITY/quality_discoverability: No '## Purpose' section (`skills/doca-public-knowledge-map/SKILL.md`)
 - 4 additional finding(s) are available in the full evaluation artifacts.

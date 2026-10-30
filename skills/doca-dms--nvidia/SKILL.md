@@ -6,18 +6,19 @@ description: >
   or Kubernetes pod: from DOCA 3.5 the local `dms-cli` (one command per
   YANG path, no server), and the `dmsd` + `dmspe` service: choose deployment and
   authentication, configure `-allowed_users` and `dmsgroup`, use gNMI
-  Get/Set/Subscribe, run supported gNOI workflows, and debug
+  Get/Set, run supported gNOI workflows, and debug
   frontend/backend failures. Trigger even without "DMS" for "manage a
   remote BlueField over gRPC", "gNOI reboot from orchestrator", or
   fleet-management requests. SAFETY: reboot, OS install, factory-reset,
   and managed-file deletion are destructive and require target-bound
   explicit confirmation; never invoke them speculatively. Route
   installation and library/API build questions elsewhere, and route
-  turnkey aggregation to the externally-productized DOCA Telemetry
-  Service.
+  telemetry streaming and aggregation to doca-dts (DOCA Telemetry
+  Service).
 metadata:
-  author: NVIDIA <doca@nvidia.com>
+  author: NVIDIA <doca-feedback@nvidia.com>
   kind: service
+  doca_version: "3.5"
   tags:
     - doca
     - dms
@@ -71,7 +72,7 @@ the daemon, open the tasks companion and start at
 of service is DMS and what protocols does it speak*, start at
 the capabilities companion. If DOCA is not installed on the
 management endpoint yet, route to
-[`doca-setup`](../../doca-setup/SKILL.md) first.
+`doca-setup/SKILL.md` first.
 
 **How to use this skill.** Read this file, then search the companion file
 for the `## <name>` heading the question needs and read that whole section.
@@ -87,7 +88,7 @@ BlueField Arm with no server or daemon. One syntax per YANG path:
 path plus a value sets it, and action paths run operations. Explore before
 writing: `--tree /nvidia`, `--describe <path>` and `list-xpaths <path>`;
 script with `--json`; validate with `--dry-run`. VFs and SFs take
-`-t pci/<BDF>,pf<N>vf<M>` or `pf<N>sf<M>`. Observed on DOCA 3.5: as a normal
+`-t pci/<BDF>,pf<N>vf<M>` or `pf<N>sf<M>`. On DOCA 3.5: as a normal
 user it fails with `backend fork/exec .../dmspe: permission denied` — run it
 with `sudo` or add the user to `dmsgroup`; some example paths do not exist on
 every device (for example congestion-control slots are under
@@ -191,8 +192,8 @@ on the management endpoint (host, DPU, or pod). Concretely:
 
 Do **not** load this skill for general DOCA orientation, install of
 DOCA itself, or library-API questions. For those, route via
-[`doca-public-knowledge-map`](../../doca-public-knowledge-map/SKILL.md),
-[`doca-setup`](../../doca-setup/SKILL.md), or the matching
+`doca-public-knowledge-map/SKILL.md`,
+`doca-setup/SKILL.md`, or the matching
 `libs/<library>` skill.
 
 ## What this skill provides
@@ -212,7 +213,7 @@ files:
 The skill assumes a host where DOCA is already installed and the
 operator has root / `sudo` access where the public guide says it is
 required. It does not cover installing DOCA — that path goes through
-[`doca-setup`](../../doca-setup/SKILL.md).
+`doca-setup/SKILL.md`.
 
 ## What this skill deliberately does not ship
 
@@ -257,15 +258,15 @@ and pull requests should not add:
 
 ## Related skills
 
-- [`doca-public-knowledge-map`](../../doca-public-knowledge-map/SKILL.md)
+- `doca-public-knowledge-map/SKILL.md`
   — the routing table to the public DMS guide and the rest of the
   public DOCA documentation set.
-- [`doca-setup`](../../doca-setup/SKILL.md) — env preparation and
+- `doca-setup/SKILL.md` — env preparation and
   install verification on the host where `dmsd` will run, including
   the *I have no install yet* path via the public NGC DOCA container.
   This skill assumes its preconditions are satisfied at the management
   endpoint.
-- [`doca-programming-guide`](../../doca-programming-guide/SKILL.md) —
+- `doca-programming-guide/SKILL.md` —
   general DOCA patterns. DMS is service-shaped not library-shaped, so
   the build / modify / first-app pattern there does not apply directly,
   but the cross-library `DOCA_ERROR_*` taxonomy and the

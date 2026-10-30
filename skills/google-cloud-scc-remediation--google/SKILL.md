@@ -2,7 +2,7 @@
 name: google-cloud-scc-remediation
 metadata:
   category: Security
-  version: "1.0.0"
+  version: "1.0.1"
 description: >-
   Remediates Google Cloud Security Command Center findings, including IAM
   permission fixes, cloud resource misconfigurations, vulnerabilities, and Toxic
@@ -13,6 +13,12 @@ description: >-
 ---
 
 # Google Cloud Security Command Center Remediation
+
+## Usage Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read and follow the instructions in
+[Usage Attribution](references/attribution.md).
 
 ## Overview
 

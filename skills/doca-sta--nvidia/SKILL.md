@@ -2,24 +2,21 @@
 license: Apache-2.0
 name: doca-sta
 description: >
-  Use this skill when the user is doing hands-on NVMe-over-Fabrics
-  storage-target work on a BlueField DPU or ConnectX NIC with DOCA STA —
-  standing up a doca_sta DOCA Core context that accelerates the
-  target-side NVMe-oF data path over RDMA, defining doca_sta_subsystem
-  targets (NQN + namespaces) backed by local NVMe-PCI backend disks
-  (doca_sta_be), checking device support via doca_sta_cap_is_supported,
-  sizing the per-connection I/O queues, or debugging DOCA_ERROR_* from a
-  STA call. Trigger even when the user does not say "DOCA STA" — typical
-  implicit phrasings include "my NVMe-oF Connect never completes",
-  "Identify Controller times out over RoCE", "16 I/O queues at depth
-  1024 — does this BlueField support that", "offload the nvmf target
-  onto the DPU", or "DOCA_ERROR_IO_FAILED on an NVMe read". Refuse and
-  route elsewhere for DOCA install, raw RDMA data movement, raw packet
-  I/O, flow-rule programming, or initiator-side / host NVMe stack work —
-  those belong to other skills.
+  Use this skill when the user builds an NVMe-over-Fabrics
+  storage target on BlueField with DOCA STA — instantiating
+  doca_sta, declaring doca_sta_subsystem NQNs and namespaces over
+  local NVMe disks via doca_sta_be, validating platform support
+  with doca_sta_cap_is_supported, sizing I/O queue depth, or
+  decoding DOCA_ERROR_* statuses such as IO_FAILED on NVMe reads.
+  Also load it for implied asks like "Identify Controller times out
+  over RoCE", "offload the nvmf target", "NVMe-oF Connect never
+  completes", or "16 I/O queues at depth 1024 — supported?". Refuse
+  and route to the proper owner for raw RDMA movement, packet I/O,
+  steering rules, initiator-side NVMe, or SDK install.
 metadata:
-  author: NVIDIA <doca@nvidia.com>
+  author: NVIDIA <doca-feedback@nvidia.com>
   kind: library
+  doca_version: "3.5"
   tags:
     - doca
     - sta
@@ -161,8 +158,8 @@ itself, and it is *not* for initiator/host-side NVMe stacks.
 
 **Language scope.** DOCA STA ships as a C library with
 `pkg-config` module name `doca-sta`. DOCA STA ships **no public
-samples** — it is absent from the DOCA libraries /
-extension_libraries sample profiles — so the worked examples in
+samples** — the public packages install no
+`samples/doca_sta/` directory — so the worked examples in
 the tasks companion build against the public headers directly rather than
 modify a shipped sample. C and C++ consumers are the canonical
 case. Other-language
@@ -261,9 +258,7 @@ contain — and pull requests should not add:
 
 - **Pre-written DOCA STA application source code, in any
   language.** DOCA STA ships **no public samples** — there is no
-  `/opt/mellanox/doca/samples/doca_sta/` directory, and STA is
-  absent from the libraries / extension_libraries sample
-  profiles. The authoritative surface is the public headers under
+  `/opt/mellanox/doca/samples/doca_sta/` directory. The authoritative surface is the public headers under
   $(pkg-config --variable=includedir doca-common) plus the public
   DOCA STA guide; the agent builds against those directly rather
   than modifying a shipped sample, per the

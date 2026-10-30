@@ -2,7 +2,7 @@
 
 - **Item:** Looker Conversational Analytics (`looker-conversational-analytics`)
 - **Original source:** https://github.com/gemini-cli-extensions/looker-conversational-analytics/tree/main
-- **Repository:** https://github.com/gemini-cli-extensions/looker-conversational-analytics @ `b94376ad8986`
+- **Repository:** https://github.com/gemini-cli-extensions/looker-conversational-analytics @ `70c4cc695e07`
 - **License:** Apache-2.0 (resolved via skill)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

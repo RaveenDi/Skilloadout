@@ -32,7 +32,7 @@ example shown.
 | 2. Gate on device capability before quoting any feature | Run `doca_*_cap_*` against the active `doca_devinfo` BEFORE assuming a feature is available; the runtime cap-query is the authority, the docs are the promise | [`## dev`](#dev) cap-query rule + [TASKS.md ## use](TASKS.md#use) |
 | 3. Wire zero-copy buffers across libraries | `doca_mmap` registers user memory with one or more `doca_dev`s; `doca_buf_inventory` carves the registered range into `doca_buf` handles that flow across DOCA libraries (eth → dma → rdma → …) on the same memory | [`## buf`](#buf) + [TASKS.md ## configure](TASKS.md#configure), [TASKS.md ## use](TASKS.md#use) |
 | 4. Drive the progress engine on every loop iteration | `doca_pe_progress` is the universal task-completion drain. Submitting tasks without driving the PE is the canonical "my program does nothing" failure mode for every DOCA Core context | [`## progress engine`](#progress-engine) + [TASKS.md ## run](TASKS.md#run) |
-| 5. Get the two-tier log model right | SDK tier controls DOCA library internals (`--sdk-log-level` / `DOCA_LOG_LEVEL_SDK`); app tier controls user emissions (app-side registry). Independent setters, independent defaults; confusing them is the number-one first-app debug failure | [`## log`](#log) + [TASKS.md ## log](TASKS.md#log) |
+| 5. Get the two-tier log model right | SDK tier controls DOCA library internals (`--sdk-log-level` / `doca_log_level_set_global_sdk_limit()`); app tier controls user emissions (app-side registry). Independent setters, independent defaults; confusing them is the number-one first-app debug failure | [`## log`](#log) + [TASKS.md ## log](TASKS.md#log) |
 | 6. Diagnose a `DOCA_ERROR_*` from any Common call | Map family (`BAD_STATE` / `INVALID_VALUE` / `NOT_SUPPORTED` / `NOT_PERMITTED` / `NO_MEMORY` / `DRIVER`) to layer (lifecycle / configuration / capability / permission / resource / driver) | [`## Error taxonomy`](#error-taxonomy) + [TASKS.md ## debug](TASKS.md#debug) |
 
 Two cross-cutting rules that apply to *every* pattern above:
@@ -58,17 +58,31 @@ application touches before specializing into any higher-level
 library. The `pkg-config` module name is `doca-common`; it is
 always present on any healthy DOCA install.
 
+DOCA 3.5 added public capability families for buffer initialization,
+device-as-context conversion, device link-state query, event
+notification, PCIe link information, DPN PCI-address mapping, and
+mmap creation from a memory region. The table below names each family
+and points to the public header that owns the exact names and
+signatures; constants and prototypes are not recited here.
+
 | Subsystem | Header family | Owning H2 in this file | Owning verb in TASKS.md |
 | --- | --- | --- | --- |
 | Logging (two-tier SDK / app level model, source registration, `DOCA_LOG_*` emission, backends) | `doca_log.h` (under the installed infrastructure include tree) | [`## log`](#log) | [`## log`](TASKS.md#log) |
 | Zero-copy data buffers (memory-mapping, inventory, per-buffer handles, buf pools, buf arrays) | `doca_mmap.h`, `doca_buf.h`, `doca_buf_inventory.h`, `doca_buf_pool.h`, `doca_buf_array.h` | [`## buf`](#buf) | [`## configure`](TASKS.md#configure), [`## use`](TASKS.md#use) |
+| Buffer initialization | `doca_buf.h` | [`## buf`](#buf) | [`## configure`](TASKS.md#configure), [`## use`](TASKS.md#use) |
 | Context lifecycle (the universal `cfg-create → start → use → stop → destroy` shape every `doca_*_create` returns) | `doca_ctx.h` | [`## ctx`](#ctx) | [`## configure`](TASKS.md#configure), [`## run`](TASKS.md#run) |
+| Device-as-context conversion | `doca_dev.h` | [`## dev`](#dev) | [`## configure`](TASKS.md#configure) |
 | Device discovery (devinfo enumeration, opening, representor discovery, capability queries) | `doca_dev.h` | [`## dev`](#dev) | [`## configure`](TASKS.md#configure), [`## use`](TASKS.md#use) |
+| Device link-state query | `doca_dev.h` | [`## dev`](#dev) | [`## use`](TASKS.md#use) |
+| Event notification | `doca_dev.h` | [`## dev`](#dev) | [`## run`](TASKS.md#run) |
+| PCIe link information | `doca_dev.h` | [`## dev`](#dev) | [`## configure`](TASKS.md#configure) |
+| DPN PCI-address mapping | `doca_dpn.h` | [`## dev`](#dev) | [`## configure`](TASKS.md#configure) |
+| mmap creation from a memory region | `doca_mmap.h` | [`## buf`](#buf) | [`## configure`](TASKS.md#configure) |
 | Progress engine (universal task-completion drain) | `doca_pe.h` | [`## progress engine`](#progress-engine) | [`## run`](TASKS.md#run) |
 
 Adjacent Common surfaces (sync events, graphs, clocks, UAR / umem,
 buf arrays, mmap advise) are mentioned where they touch one of the
-five primary subsystems. The agent's rule: when the user's question
+primary subsystems. The agent's rule: when the user's question
 lands on one of those adjacent surfaces, route to the *header on the
 user's install* and to the public [DOCA Core Programming Guide](https://docs.nvidia.com/doca/sdk/DOCA+Programming+Guide.md)
 for the per-surface detail rather than reciting it here.
@@ -79,7 +93,7 @@ DOCA Log is **DOCA's standardized logging primitive**. Every DOCA
 library (and every shipped DOCA sample and reference application)
 emits its own log lines through DOCA Log, so log output from a DOCA
 app interoperates with DOCA's centralized level controls and
-downstream consumers (DOCA Log Service, DOCA Telemetry Service).
+downstream consumers such as the DOCA Telemetry Service.
 
 **The two-tier log-level model — the single most load-bearing
 rule.** DOCA Log carries two *independent* verbosity tiers, each
@@ -88,7 +102,7 @@ table BEFORE writing any code:
 
 | Tier | What it controls | How to set at runtime | Typical default | Symptom when confused |
 | --- | --- | --- | --- | --- |
-| **SDK log level** | Verbosity of DOCA *library internals* — log lines emitted from inside the DOCA libraries themselves as they call into hardware, manage state, validate inputs, … | `--sdk-log-level <level>` CLI flag on any DOCA sample / reference app; `DOCA_LOG_LEVEL_SDK` env var; programmatic SDK setter equivalent | `WARNING` | User sets `--sdk-log-level DEBUG` to see their own DEBUG lines and is flooded with internal DOCA spam instead, or *"my own DEBUG lines do not appear"* despite the flag |
+| **SDK log level** | Verbosity of DOCA *library internals* — log lines emitted from inside the DOCA libraries themselves as they call into hardware, manage state, validate inputs, … | `--sdk-log-level <N>` CLI flag on any DOCA sample / reference app (numeric: 10=DISABLE, 20=CRITICAL, 30=ERROR, 40=WARNING, 50=INFO, 60=DEBUG, 70=TRACE); programmatic SDK setter `doca_log_level_set_global_sdk_limit()` | `WARNING` | User sets `--sdk-log-level 60` (DEBUG) to see their own DEBUG lines and is flooded with internal DOCA spam instead, or *"my own DEBUG lines do not appear"* despite the flag |
 | **App log level** | Verbosity of *user code* — log lines the user emits via `DOCA_LOG_*` macros from their own source files | App-side global lower-limit setter (`doca_log_level_set_global_lower_limit`); per-source via `doca_logger_set_level` once the source ID is in hand | `INFO` at steady state (per release; quote the observed default). A first diagnostic run may explicitly override it to `DEBUG`, then restore `INFO`. | User sets app level to `INFO`, then wonders why their `DOCA_LOG_DBG`-shaped lines never print; or user expects `--sdk-log-level` to reach their own lines and it does not |
 
 The agent's diagnostic rule: when the user reports *"my log levels
@@ -124,7 +138,7 @@ is not the only logging framework available; the agent must walk
 this rule before recommending DOCA Log setup. In a DOCA-app context
 (any codebase that calls `doca_*`), DOCA Log is the right primitive
 because its output interoperates with `--sdk-log-level` and with the
-downstream DOCA Log Service / DOCA Telemetry Service consumers. In a
+downstream consumers such as the DOCA Telemetry Service. In a
 non-DOCA codebase with no DOCA-side context, language-native logging
 (`printf`, `fprintf(stderr, …)`, `syslog`, `spdlog`, Python
 `logging`, Rust `tracing`, …) is fine. The anti-pattern alert:
@@ -142,9 +156,11 @@ DOCA's zero-copy data plane rests on three objects layered together:
 
 | Object | What it is | Lifecycle call |
 | --- | --- | --- |
-| `doca_mmap` | A user-space memory range registered with one or more `doca_dev`s for device-side access. Holds memory permissions and exports for cross-process / cross-device sharing | `doca_mmap_create` → `doca_mmap_set_memrange` (or `_set_dmabuf_memrange`) → `doca_mmap_add_dev` (one or more devices) → `doca_mmap_set_permissions` → `doca_mmap_start` → use → `doca_mmap_stop` → `doca_mmap_destroy` |
+| `doca_mmap` | A user-space memory range registered with one or more `doca_dev`s for device-side access. Holds memory permissions and exports for cross-process / cross-device sharing | `doca_mmap_create` → `doca_mmap_set_memrange` (or `_set_dmabuf_memrange`) → `doca_mmap_add_dev` (one or more devices) → `doca_mmap_set_permissions` → `doca_mmap_start` → use → `doca_mmap_stop` → `doca_mmap_destroy`; or `doca_mmap_create_from_mr` for an existing memory region |
 | `doca_buf_inventory` | A pool of `doca_buf` handles over one or more started `doca_mmap` ranges. Hands out `doca_buf` handles via `doca_buf_inventory_buf_get_by_args` | `doca_buf_inventory_create` → `doca_buf_inventory_start` → use → `doca_buf_inventory_stop` → `doca_buf_inventory_destroy` |
-| `doca_buf` | A per-operation handle into a registered memory range. Carries head pointer, length, refcount, chain-list linkage. The unit that flows between DOCA libraries on the same memory | Allocated by the inventory; reference-counted via `doca_buf_inc_refcount` / `doca_buf_dec_refcount`; never created standalone |
+| `doca_buf` | A per-operation handle into a registered memory range. Carries head pointer, length, refcount, chain-list linkage. The unit that flows between DOCA libraries on the same memory | Allocated by the inventory; reference-counted via `doca_buf_inc_refcount` / `doca_buf_dec_refcount`; direct initialization via `doca_buf_get_struct_size` + `doca_buf_init` |
+
+DOCA 3.5 adds direct buffer initialization: `doca_buf_get_struct_size` returns the size to allocate for a `struct doca_buf`, and `doca_buf_init` initializes that memory over a head pointer and size. It also adds `doca_mmap_create_from_mr` to create a `doca_mmap` from an existing memory region (`remote_addr`, `length`, `rkey`, `access_flags`) on a device. Developers must use these constructors instead of assuming struct layout or manual initialization; see the public header for exact signatures.
 
 The `doca_buf_pool` surface (allocate-by-pool variant) and the
 `doca_buf_array` surface (DPA / GPU-targetable buffer arrays) are
@@ -198,7 +214,11 @@ The lifecycle every DOCA Core context follows:
    a handle from which `doca_<library>_as_ctx()` (where exposed) or
    the library's own ctx accessor surfaces the underlying
    `doca_ctx *`. Some libraries expose the `doca_ctx *` directly; the
-   shape is the same.
+   shape is the same. For a `doca_dev`, use the DOCA 3.5
+   device-to-context conversion function `doca_dev_as_ctx(dev)` to
+   obtain the underlying `doca_ctx *`; do not cast or assume a
+   `doca_dev` is a `doca_ctx`. See the public header for the exact
+   signature.
 2. **Configure.** Library-specific `*_set_*` setters apply BEFORE
    `doca_ctx_start`. Once started, most setters return
    `DOCA_ERROR_BAD_STATE`.
@@ -277,18 +297,58 @@ host program passes to `doca_flow` actions, `doca_eth` queues, etc.,
 when steering traffic to a specific DPU-side function. The
 representor-side capability queries
 (`doca_devinfo_rep_cap_is_filter_*_supported`,
-`doca_devinfo_rep_get_is_uplink_representor`,
-`doca_devinfo_rep_get_is_host_representor`) tell the agent what kind
+`doca_devinfo_rep_get_is_uplink_representor`) tell the agent what kind
 of representor it is and what filters can apply.
 
 **Device-class properties.** `doca_devinfo_get_pci_addr_str`,
 `_get_ibdev_name`, `_get_iface_name`, `_get_mac_addr`, `_get_ipv4_addr`,
-`_get_ipv6_addr`, `_get_lid`, `_get_active_mtu` (experimental),
-`_get_active_speed` (experimental), `_get_pci_func_type`
+`_get_ipv6_addr`, `_get_lid`, `_get_active_rate` (experimental), `_get_pci_func_type`
 (experimental) are the load-bearing identifiers when the user is
 disambiguating among multiple devices on the host. The agent should
 quote these from the user's running `doca_devinfo_create_list`,
 never from memory.
+
+**Link up/down events (DOCA 3.5).** A device can deliver asynchronous
+link-up/link-down notifications from the `DOCA_DEV_EVENT_TYPE_*`
+family, surfaced through `doca_pe_progress`; gate on
+`doca_devinfo_cap_is_event_notification_supported` rather than
+polling link state.
+
+DOCA 3.5 adds `doca_dev_get_link_state` for polling the current link
+state, with the `DOCA_DEV_LINK_STATE_*` family. Asynchronous
+notifications use `doca_dev_register_event_notification` and
+`doca_dev_unregister_event_notification`; supported event types are
+the `DOCA_DEV_EVENT_TYPE_*` family, and the capability query is
+`doca_devinfo_cap_is_event_notification_supported`. Notifications
+surface through `doca_pe_progress`.
+
+**PCIe link properties (DOCA 3.5).** `doca_devinfo_pcie_link_get_num`,
+`doca_devinfo_pcie_link_get_indices`,
+`doca_devinfo_pcie_link_get_controller`,
+`doca_devinfo_pcie_link_get_speed`,
+`doca_devinfo_pcie_link_get_width`,
+`doca_devinfo_pcie_link_is_dpu`, and
+`doca_devinfo_pcie_link_is_socket_direct` query PCIe link attributes
+by `pcie_index`. Speed values use the `DOCA_DEVINFO_PCIE_LINK_SPEED_*`
+family; width values use the `DOCA_DEVINFO_PCIE_LINK_WIDTH_*` family.
+See the public header for exact names and signatures.
+
+**DPN mapping (DOCA 3.5).** `doca_dpn_cap_is_map_pci_addr_to_dpn_supported`
+checks whether a `doca_devinfo` supports mapping a PCI address to a
+DPN ID; `doca_dpn_map_pci_addr_to_dpn_id` performs the mapping.
+
+**Buffer and memory-region helpers (DOCA 3.5).**
+`doca_buf_get_struct_size` and `doca_buf_init` initialize a
+`doca_buf`; `doca_mmap_create_from_mr` creates a `doca_mmap` from a
+memory region. `doca_dev_as_ctx` returns the device's
+`struct doca_ctx *`.
+
+**DOCA 3.5 developer guidance.** Developers must use the new getter
+functions with the corresponding constant families
+(`DOCA_DEV_LINK_STATE_*`, `DOCA_DEV_EVENT_TYPE_*`,
+`DOCA_DEVINFO_PCIE_LINK_SPEED_*`, `DOCA_DEVINFO_PCIE_LINK_WIDTH_*`)
+instead of hard-coded values; see the public header for exact names
+and signatures.
 
 For the verb-side device-discovery walk, see
 [TASKS.md ## configure](TASKS.md#configure) and
@@ -364,18 +424,18 @@ there; this skill does not duplicate it.
   concern.
 - **The set of `doca_*` symbols available is observable from the
   Common header set.** Per the headers-win-over-docs rule in
-  `doca-version/SKILL.md`, the headers under
-  $(pkg-config --variable=includedir doca-common) (`doca_buf.h`,
-  `doca_ctx.h`, `doca_dev.h`, `doca_pe.h`, `doca_log.h`,
-  `doca_mmap.h`, …) are the authoritative truth for what the built
-  library exposes. When the user reports an `undefined reference`
-  for a Common symbol, the first hypothesis is wrong-version
-  documentation — confirm the installed version, then verify the
-  symbol exists in the installed headers, then read the matching
-  release notes.
+  `doca-version/SKILL.md`, the headers under the include directory
+  reported by `pkg-config --variable=includedir doca-common`
+  (`doca_buf.h`, `doca_ctx.h`, `doca_dev.h`, `doca_pe.h`,
+  `doca_log.h`, `doca_mmap.h`, …) are the authoritative truth for
+  what the built library exposes. When the user reports an
+  `undefined reference` for a Common symbol, the first hypothesis
+  is wrong-version documentation — confirm the installed version,
+  then verify the symbol exists in the installed headers, then read
+  the matching release notes.
 - **Common-side experimental markers.** The Common ABI splits into
-  a stable set (the `DOCA_2` global block in the library's
-  version.map — `doca_buf_*`, `doca_ctx_*`, `doca_dev_*`,
+  a stable set (symbols exported under the `DOCA_2` version node,
+  see `readelf -V` — `doca_buf_*`, `doca_ctx_*`, `doca_dev_*`,
   `doca_pe_*`, `doca_mmap_*`, `doca_devinfo_*`) and an experimental
   set (`doca_log_*`, `doca_graph_*`, `doca_sync_event_*`,
   `doca_clock_*`, `doca_uar_*`, `doca_umem_*`, `doca_buf_arr_*`,
@@ -384,8 +444,8 @@ there; this skill does not duplicate it.
   release-specific; the agent must read the installed
   `doca_common.h` family on the user's install before claiming
   experimental-tier surface is available.
-- **No standalone `doca-log.pc` in this contract.** Per the source
-  tree on this DOCA version, the log subsystem is exposed through
+- **No standalone `doca-log.pc` in this contract.** On this DOCA
+  version the log subsystem is exposed through
   the `doca-common` `pkg-config` module (its public headers live
   under the same include root as the rest of the Common surface,
   resolved via `pkg-config --variable=includedir doca-common`).
@@ -393,11 +453,45 @@ there; this skill does not duplicate it.
   --exists doca-common` first; if a release exposes a standalone
   `doca-log.pc`, probe that too and report which is present. The
   build line is whichever the probe found.
+- **DOCA 3.5 public API additions.** DOCA 3.5 added the following
+  Common functions and constants. On a DOCA 3.5 install these are
+  part of the public surface; on older installs they are absent, so
+  an `undefined reference` to one of them is expected unless the
+  installed version is 3.5 or newer. Functions:
+  `doca_buf_get_struct_size`, `doca_buf_init`, `doca_dev_as_ctx`,
+  `doca_dev_get_link_state`, `doca_dev_register_event_notification`,
+  `doca_dev_unregister_event_notification`,
+  `doca_devinfo_cap_is_event_notification_supported`,
+  `doca_devinfo_pcie_link_get_controller`,
+  `doca_devinfo_pcie_link_get_indices`,
+  `doca_devinfo_pcie_link_get_num`,
+  `doca_devinfo_pcie_link_get_speed`,
+  `doca_devinfo_pcie_link_get_width`,
+  `doca_devinfo_pcie_link_is_dpu`,
+  `doca_devinfo_pcie_link_is_socket_direct`,
+  `doca_dpn_cap_is_map_pci_addr_to_dpn_supported`,
+  `doca_dpn_map_pci_addr_to_dpn_id`, `doca_mmap_create_from_mr`.
+  Constants: `DOCA_DEVINFO_PCIE_LINK_SPEED_16_GT`,
+  `DOCA_DEVINFO_PCIE_LINK_SPEED_2_5_GT`,
+  `DOCA_DEVINFO_PCIE_LINK_SPEED_32_GT`,
+  `DOCA_DEVINFO_PCIE_LINK_SPEED_5_GT`,
+  `DOCA_DEVINFO_PCIE_LINK_SPEED_64_GT`,
+  `DOCA_DEVINFO_PCIE_LINK_SPEED_8_GT`,
+  `DOCA_DEVINFO_PCIE_LINK_SPEED_UNKNOWN`,
+  `DOCA_DEVINFO_PCIE_LINK_WIDTH_UNKNOWN`,
+  `DOCA_DEVINFO_PCIE_LINK_WIDTH_X1`,
+  `DOCA_DEVINFO_PCIE_LINK_WIDTH_X16`,
+  `DOCA_DEVINFO_PCIE_LINK_WIDTH_X2`,
+  `DOCA_DEVINFO_PCIE_LINK_WIDTH_X4`,
+  `DOCA_DEVINFO_PCIE_LINK_WIDTH_X8`,
+  `DOCA_DEV_EVENT_TYPE_LINK_DOWN`, `DOCA_DEV_EVENT_TYPE_LINK_UP`,
+  `DOCA_DEV_LINK_STATE_DOWN`, `DOCA_DEV_LINK_STATE_UP`.
 
 Version-specific tables of symbol availability are deliberately not
-maintained in this file — they would drift out of date silently. The
-discipline is "read the headers and the matching release notes", not
-"trust this file's table".
+maintained in this file except for the DOCA 3.5 additions recorded
+above — they would drift out of date silently. The discipline is
+"read the headers and the matching release notes", not "trust this
+file's table".
 
 ## Error taxonomy
 
@@ -444,10 +538,10 @@ consumers can read them.
 | Inflight-task counts | `doca_pe_get_num_inflight_tasks` and `doca_ctx_get_num_inflight_tasks` make the drain state explicit on shutdown | [`## ctx`](#ctx), [`## progress engine`](#progress-engine) |
 | Capability snapshot | The output of every `doca_*_cap_*` query at configure time is the *baseline* the agent compares against when a later call returns `DOCA_ERROR_NOT_SUPPORTED` | [`## dev`](#dev) |
 | Context state | `doca_ctx_get_state` (and the `_set_state_changed_cb` callback) tells the user where in the lifecycle the context currently is — the load-bearing input when a call returns `DOCA_ERROR_BAD_STATE` | [`## ctx`](#ctx) |
-| Device-info fields | `doca_devinfo_get_pci_addr_str`, `_get_ibdev_name`, `_get_iface_name`, `_get_mac_addr`, `_get_active_mtu`, `_get_active_speed` give the operator-readable identity of every candidate device | [`## dev`](#dev) |
+| Device-info fields | `doca_devinfo_get_pci_addr_str`, `_get_ibdev_name`, `_get_iface_name`, `_get_mac_addr`, `_get_active_rate` give the operator-readable identity of every candidate device | [`## dev`](#dev) |
 
-**Downstream consumers.** DOCA Log output is the input to the DOCA
-Log Service and the DOCA Telemetry Service (per
+**Downstream consumers.** DOCA Log output can be consumed downstream,
+for example by the DOCA Telemetry Service (per
 `doca-public-knowledge-map/SKILL.md`):
 when the user pipes / forwards their app's `stderr` (or routes
 through a custom backend), those services can consume the lines
@@ -501,8 +595,8 @@ log-side guardrails the rest of the bundle relies on.
 - **Do not log secrets through `DOCA_LOG_*`.** Format strings
   passed to `DOCA_LOG_*` macros take printf-style varargs; there is
   no automatic redaction. Anything the user passes becomes part of
-  the line and may be forwarded to the DOCA Log Service or DOCA
-  Telemetry Service downstream. Treat `DOCA_LOG_*` as a
+  the line and may be forwarded downstream, for example to the DOCA
+  Telemetry Service. Treat `DOCA_LOG_*` as a
   public-equivalent emission surface and apply the user's normal
   redaction discipline at the call site, not inside the library.
 - **One PE per thread is the default; cross-thread PE sharing

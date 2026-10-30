@@ -2,7 +2,7 @@
 
 - **Item:** Plan Zoom Integration (`plan-zoom-integration`)
 - **Original source:** https://github.com/anthropics/knowledge-work-plugins/tree/main/partner-built/zoom-plugin/skills/plan-zoom-integration
-- **Repository:** https://github.com/anthropics/knowledge-work-plugins @ `33d3dea41a34`
+- **Repository:** https://github.com/anthropics/knowledge-work-plugins @ `2574e29377c7`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

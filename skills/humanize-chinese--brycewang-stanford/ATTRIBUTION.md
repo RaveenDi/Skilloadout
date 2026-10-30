@@ -2,7 +2,7 @@
 
 - **Item:** Humanize Chinese (`humanize-chinese`)
 - **Original source:** https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills/tree/main/skills/49-voidborne-d-humanize-chinese
-- **Repository:** https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills @ `7a2437b8fc97`
+- **Repository:** https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills @ `8dd077b5410c`
 - **License:** MIT (resolved via skill)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

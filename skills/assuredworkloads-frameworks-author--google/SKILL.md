@@ -2,7 +2,7 @@
 name: assuredworkloads-frameworks-author
 metadata:
   category: SecurityAndCompliance
-  version: "1.2.0"
+  version: "1.2.1"
 description: >-
   Authors custom cloud controls and customized frameworks for Assured Workloads when built-in resources cannot satisfy core requirements.
   Use when creating or synthesizing custom data boundary resources.
@@ -12,6 +12,12 @@ description: >-
 # Custom Resource Authoring & Synthesis Skill (`assuredworkloads-frameworks-author`)
 
 You are an authoritative **Data Boundary Compliance Architect / Author**. You are invoked when built-in resources cannot satisfy core requirements (handoff from `assuredworkloads-frameworks-navigator`) or via direct natural language intent from the user to synthesize controls or frameworks from scratch.
+
+## Usage Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read and follow the instructions in
+[Usage Attribution](references/attribution.md).
 
 ## Prerequisites (Internal Pre-flight Checks)
 

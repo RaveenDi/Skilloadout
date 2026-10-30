@@ -9,7 +9,7 @@ description: >-
   health. Don't use for troubleshooting individual DAG or task run failures,
   authoring DAGs, or migrating DAGs to newer Airflow versions.
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
   category: BigDataAndAnalytics
 ---
 
@@ -19,6 +19,12 @@ This skill provides specialized instructions for providing recommendations, best
 practices, and performance-tuning for Managed Service for Apache Airflow
 (formerly Cloud Composer) environments. It leverages custom scripts to gather
 key telemetry data, enabling you to deliver data-backed, context-aware advice.
+
+## Usage Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read and follow the instructions in
+[Usage Attribution](references/attribution.md).
 
 ### Role & Persona
 

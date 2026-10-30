@@ -1,5 +1,5 @@
 ## Description: <br>
-DOCA version handling: detect the installed release and validate the four-way match across pkg-config doca-common, applications/VERSION, doca_caps --version, and bfver/mlnx-release on BlueField; reason about NGC tags; look up whether a capability exists on this release; diagnose build-vs-runtime drift. <br>
+DOCA version-handling overlay that detects the installed release and validates the four-way version match across pkg-config doca-common, applications/VERSION, doca_caps --version, and bfver/mlnx-release on BlueField, reasons about NGC tags, looks up whether a capability exists on the installed release, and diagnoses build-vs-runtime drift. <br>
 
 This skill is ready for commercial/non-commercial use. <br>
 
@@ -7,9 +7,9 @@ This skill is ready for commercial/non-commercial use. <br>
 NVIDIA <br>
 
 ### License/Terms of Use: <br>
-Apache-2.0 <br>
+Apache 2.0 <br>
 ## Use Case: <br>
-Developers and engineers use this skill to detect installed DOCA versions, validate four-way version consistency across host and BlueField components, reason about NGC container tags, check capability availability per release, and diagnose build-vs-runtime drift. <br>
+Developers and engineers working with NVIDIA DOCA use this skill to detect the installed DOCA release, validate version consistency across build-time and runtime sources, reason about NGC container tags and host/BFB compatibility, and diagnose version-skew failures such as build-vs-runtime drift and partial installs. <br>
 
 ### Deployment Geography for Use: <br>
 Global <br>
@@ -33,49 +33,50 @@ Mitigation: Review and scan skill before deployment. <br>
 
 ## Skill Output: <br>
 **Output Type(s):** [Analysis, Shell commands, Configuration instructions] <br>
-**Output Format:** [Markdown with inline bash code blocks] <br>
+**Output Format:** [Markdown with inline shell command citations] <br>
 **Output Parameters:** [1D] <br>
 **Other Properties Related to Output:** [None] <br>
 
 ## Evaluation Agents Used: <br>
-- Claude Code (`aws/anthropic/bedrock-claude-opus-4-8`) <br>
-- Codex (`openai/openai/gpt-5.5`) <br>
+- Claude Code (`aws/anthropic/bedrock-claude-opus-5-5`) <br>
+- Codex (`openai/openai/gpt-6.1-sol`) <br>
 
 
 
 ## Evaluation Tasks: <br>
-4 evaluation tasks (3 positive, 1 negative), one attempt per task, each run in an isolated sandbox pod. <br>
+4 evaluation tasks (3 positive, 1 negative); each task attempt ran in its own isolated k8s-sandbox pod with one attempt per task. <br>
 
 ## Evaluation Metrics Used: <br>
 Reported benchmark dimensions: <br>
 - Security: Is it safe to use? Checks for unsafe operations, secret leakage, and unauthorized access. <br>
-- Correctness: Is the answer correct? Measures final-answer accuracy against the reference answer. <br>
-- Discoverability: Was the right skill loaded when needed? Measures whether the expected skill was selected and decoys were avoided. <br>
-- Effectiveness: Did the skill help complete the task? Equal-weight mean of goal completion and expected workflow adherence. <br>
-- Efficiency: Did it avoid wasted tool calls and token usage? Combines tool-call productivity and token efficiency. <br>
+- Correctness: Is the answer correct against the reference answer? <br>
+- Discoverability: Was the right skill loaded when needed, with decoys avoided? <br>
+- Effectiveness: Did the skill help complete the task, measured as the equal-weight mean of goal completion and expected workflow adherence? <br>
+- Efficiency: Did it avoid wasted tool calls and token usage, measured as equal-weight tool-call productivity and token efficiency? <br>
 
 Underlying evaluation signals used in this run: <br>
 - `security`: Unsafe operations, secret leakage, and unauthorized access. <br>
 - `skill_execution`: Whether the expected skill was selected, decoys were avoided, and the workflow executed. <br>
-- `skill_efficiency`: Tool-call productivity; routing is scored under Discoverability. <br>
+- `skill_efficiency`: Tool-call productivity (legacy wire id; routing is scored under Discoverability). <br>
 - `accuracy`: Final-answer correctness against the reference answer. <br>
 - `goal_accuracy`: Whether the user's goal was achieved. <br>
 - `behavior_check`: Whether the expected workflow behavior was followed. <br>
+- `token_efficiency`: Actual uncached prompt plus completion token usage (50% of Efficiency). <br>
 
 
 
 ## Evaluation Results: <br>
 | Measure | Claude Code (Baseline → Skill Uplift) | Codex (Baseline → Skill Uplift) |
 |---|---:|---:|
-| Overall | 91.1% — baseline ran, but no comparable score was available; uplift unavailable | 91.7% — baseline ran, but no comparable score was available; uplift unavailable |
+| Overall | 94.1% (uplift unavailable) | 89.8% (uplift unavailable) |
 | Security | 100.0% → 100.0% (±0.0 points) | 100.0% → 100.0% (±0.0 points) |
-| Correctness | 75.0% → 100.0% (+25.0 points) | 60.0% → 100.0% (+40.0 points) |
-| Discoverability | 100.0% — baseline ran, but no comparable score was available; uplift unavailable | 81.7% — baseline ran, but no comparable score was available; uplift unavailable |
-| Effectiveness | 60.4% → 85.4% (+25.0 points) | 60.4% → 82.5% (+22.1 points) |
-| Efficiency | 70.0% — baseline ran, but no comparable score was available; uplift unavailable | 94.4% — baseline ran, but no comparable score was available; uplift unavailable |
+| Correctness | 55.0% → 100.0% (+45.0 points) | 65.0% → 90.0% (+25.0 points) |
+| Discoverability | 100.0% (uplift unavailable) | 93.3% (uplift unavailable) |
+| Effectiveness | 31.3% → 87.5% (+56.2 points) | 60.4% → 87.5% (+27.1 points) |
+| Efficiency | 83.2% (uplift unavailable) | 78.2% (uplift unavailable) |
 
 ## Skill Version(s): <br>
-7e143d8 (source: git SHA, committed 2026-10-12) <br>
+c98e456 (source: git SHA, committed 2026-10-28) <br>
 
 ## Ethical Considerations: <br>
 NVIDIA believes Trustworthy AI is a shared responsibility and we have established policies and practices to enable development for a wide array of AI applications. When downloaded or used in accordance with our terms of service, developers should work with their internal team to ensure this skill meets requirements for the relevant industry and use case and addresses unforeseen product misuse. <br>

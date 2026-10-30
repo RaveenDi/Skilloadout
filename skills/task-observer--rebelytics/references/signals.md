@@ -2,13 +2,8 @@
 
 Load triggers: unsure whether something is worth logging or generalises; sorting many candidate observations; deciding in a review what a skill should lose; a defect that is not the deliverable takes a second hypothesis; the same rule broken a second time, before proposing a fix; before writing any "later" into a recommendation
 
-The core skill carries the short trigger list. This file is the full
-catalogue with examples. Load it when you are unsure whether something is
-worth logging, when a session is producing many candidate observations and
-you want to sort them, and during a review when deciding what a skill
-should lose as well as gain.
-Also load it when a defect that is not the deliverable is consuming the
-session, and before writing any "later" into a recommendation.
+The core skill carries the short trigger list; this file is the full
+catalogue with examples, loaded on the triggers above.
 
 ## Contents
 
@@ -49,6 +44,11 @@ problems, positive signals, or neutral gaps. Examples:
 - an undocumented use case;
 - feedback that generalises;
 - a wrong assumption;
+- the skill states something the session's own evidence — tool output, a
+  live page, a file — contradicts: log it even when the user never
+  notices; this is the runtime counterpart of the Timelessness rule
+  (`skill-authoring.md`), catching the current-state claim that slipped
+  through at authoring time;
 - new tooling obsoletes a step;
 - corrections forming a pattern;
 - a principle that applies to other skills too;

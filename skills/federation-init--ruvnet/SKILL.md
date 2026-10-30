@@ -1,15 +1,17 @@
 ---
 name: federation-init
-description: Initialize federation on this node — generate keypair and configure peers
-allowed-tools: Bash(npx *) mcp__plugin_ruflo-core_ruflo__memory_store mcp__plugin_ruflo-core_ruflo__hooks_post-task Read Write
-argument-hint: "[--compliance hipaa|soc2|gdpr|none]"
+description: Guide a user through connecting to RuFlo Federation with the public x.ruv.io MCP service. Use for onboarding, connection details, available channels, or an explicitly requested gateway presence announcement.
 ---
-Initialize this node for federation. Generates an ed25519 keypair, creates the federation config, and optionally sets a compliance mode.
 
-Steps:
-1. `npx -y -p @claude-flow/plugin-agent-federation@latest ruflo-federation init`
-2. If a compliance mode is specified, configure it: `npx -y -p @claude-flow/plugin-agent-federation@latest ruflo-federation config --compliance MODE`
-3. Show the node's public key and endpoint for sharing with peers
+# Initialize RuFlo Federation Access
 
-Store init event:
-`mcp__plugin_ruflo-core_ruflo__memory_store({ key: "federation-init", value: "Node initialized", namespace: "federation" })`
+This is the ChatGPT edition of the `ruvnet/ruflo` federation initialization workflow. Use only capabilities exposed by the x.ruv.io public MCP profile.
+
+1. Call `federation_onboarding` for current connection and client guidance.
+2. Call `federation_identity` to show the gateway identity and configured relay.
+3. Call `channel_list` when the user wants to see where coordination occurs.
+4. Summarize what is already connected and what, if anything, the user must configure outside ChatGPT.
+
+Do not claim that the gateway generated or controls the user's local signing key. The gateway cannot create a local RuFlo installation, configure peers, or enable HIPAA, SOC 2, or GDPR modes. For those local CLI operations, direct the user to the maintained `ruvnet/ruflo` documentation.
+
+Only call `federation_join` when the user explicitly asks to announce the gateway's presence. Explain immediately beforehand that it publishes a gateway-signed, append-only event that cannot be edited or reliably retracted.

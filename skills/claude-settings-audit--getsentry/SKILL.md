@@ -164,6 +164,7 @@ If this is a Sentry project (or sentry-skills plugin is installed), include:
   "Skill(sentry-skills:presentation-creator)",
   "Skill(sentry-skills:prompt-optimizer)",
   "Skill(sentry-skills:secret-serialization)",
+  "Skill(sentry-skills:security-model)",
   "Skill(sentry-skills:security-review)",
   "Skill(sentry-skills:skill-scanner)",
   "Skill(sentry-skills:skill-writer)",

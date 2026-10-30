@@ -16,7 +16,7 @@ Controls what connected accounts see when they log in.
 | --- | --- | --- |
 | `express` | Lightweight dashboard showing earnings, payouts, and basic tax information. Stripe-branded with platform name. | Marketplace sellers, gig workers, or any connected account that needs visibility but not full Stripe control. |
 | `full` | Full, independent Stripe Dashboard. Connected accounts can manage their own settings, view all transactions, and install apps. | SaaS platforms where connected accounts are established businesses that want to operate independently. |
-| `none` | No Stripe dashboard. The platform owns the connected-account UI — use **[Embedded Components](https://docs.stripe.com/connect/supported-embedded-components.md)** (`@stripe/connect-js`) for pre-built widgets (account management, payouts, tax forms, and more) or build fully custom. | White-label platforms where connected accounts must never see Stripe branding. Use embedded components for pre-built functionality with white-label feel. **Fully custom (no embedded components)** adds significant complexity — the platform must build and maintain all connected account UX including onboarding remediation, refund and dispute flows, and ongoing requirement collection. |
+| `none` | No Stripe dashboard. The platform owns the connected-account UI — use **[Embedded Components](https://docs.stripe.com/connect/supported-embedded-components.md)** (`@stripe/connect-js`) for prebuilt widgets (account management, payouts, tax forms, and more) or build fully custom. | White-label platforms where connected accounts must never see Stripe branding. Use embedded components for prebuilt functionality with white-label feel. **Fully custom (no embedded components)** adds significant complexity — the platform must build and maintain all connected account UX including onboarding remediation, refund and dispute flows, and ongoing requirement collection. |
 
 #### 2. Fee collection (defaults.responsibilities.fees_collector)
 
@@ -99,7 +99,7 @@ const account = await stripe.v2.core.accounts.create({
 
 **Self-serve SaaS connected account (direct charges, Stripe-managed pricing — public preview):**
 
-> **Requires the current Connect preview API version.** `dashboard: 'express'` combined with `losses_collector: 'stripe'` (Stripe-managed pricing or platform-managed pricing) is only available on the current Connect preview API version, not on a pinned GA API version. Check the [preview changelog](https://docs.stripe.com/changelog.md?preview=true) for the exact version string, and pass it explicitly (for example, using the `apiVersion` request option) rather than relying on the platform’s account-level pinned version — otherwise account creation is rejected.
+> **Requires the `2026-06-24.preview` API version (or a later preview version that supports it).** `dashboard: 'express'` combined with `losses_collector: 'stripe'` (Stripe-managed pricing or platform-managed pricing) is only available on a Connect preview API version, not on a pinned GA API version. Pass the version explicitly (for example, using the `apiVersion` request option) rather than relying on the platform’s account-level pinned version — otherwise account creation is rejected. Never output a placeholder in place of the version; if you need a newer version, verify it in the [preview changelog](https://docs.stripe.com/changelog.md?preview=true) before writing code.
 
 ```javascript
 const account = await stripe.v2.core.accounts.create(
@@ -125,16 +125,15 @@ const account = await stripe.v2.core.accounts.create(
   },
   {
     // Required: dashboard: 'express' + losses_collector: 'stripe' (Stripe-managed
-    // pricing or platform-managed pricing) is only available on the current Connect
-    // preview API version. Look up the exact version at
-    // https://docs.stripe.com/changelog?preview=true — this call fails on a pinned
-    // GA API version.
-    apiVersion: '<current-connect-preview-api-version>',
+    // pricing or platform-managed pricing) is only available on a Connect preview
+    // API version that supports it (introduced in 2026-06-24.preview). This call
+    // fails on a pinned GA API version.
+    apiVersion: '2026-06-24.preview',
   },
 );
 ```
 
-This Stripe-managed-pricing configuration (Express dashboard + Stripe-managed pricing + Stripe-managed negative balance liability, with direct charges) is the low-operations default for self-serve SaaS platforms and is currently in public preview, requiring the current Connect preview API version shown above. For a self-serve SaaS platform that wants pricing control instead, use the platform-managed-pricing variant: same `dashboard: 'express'`, `losses_collector: 'stripe'`, and preview API version requirement, but set `fees_collector: 'application'` and configure pricing with the [Platform Pricing Tool](https://dashboard.stripe.com/settings/connect/platform_pricing).
+This Stripe-managed-pricing configuration (Express dashboard + Stripe-managed pricing + Stripe-managed negative balance liability, with direct charges) is the low-operations default for self-serve SaaS platforms and is currently in public preview, requiring the `2026-06-24.preview` API version shown above. For a self-serve SaaS platform that wants pricing control instead, use the platform-managed-pricing variant: same `dashboard: 'express'`, `losses_collector: 'stripe'`, and preview API version requirement, but set `fees_collector: 'application'` and configure pricing with the [Platform Pricing Tool](https://dashboard.stripe.com/settings/connect/platform_pricing).
 
 **SaaS connected account for established merchants needing independent Stripe operations (direct charges, full dashboard):**
 

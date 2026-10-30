@@ -49,13 +49,11 @@ knowingly; do not assume any of the middle ones is a guarantee.
 1. **Description matching** (weakest). The skill's frontmatter description
    competes with every other skill's for relevance to the opening message.
    It loses most often on short, tool-using requests that read like
-   questions ("list the files in this repo"), on sessions that open with a
-   small well-scoped request and grow, and whenever a domain skill matches
-   the opening message strongly — topically matched skills have loaded in
-   the same turn that the always-load ones were skipped. On platforms with
-   no hook mechanism this is the only tier that survives an unmounted or
-   unreachable config file, which is why the description itself carries a
-   session-start trigger.
+   questions ("list the files in this repo"), on sessions that open small
+   and grow, and whenever a domain skill matches the opening message
+   strongly. On platforms with no hook mechanism this is the only tier
+   that survives an unmounted or unreachable config file, which is why the
+   description itself carries a session-start trigger.
 2. **User-level preferences** (folder-independent, still probabilistic).
    Agent settings the user controls that are injected into every session's
    system prompt regardless of which folder, if any, is connected (in
@@ -96,6 +94,18 @@ knowingly; do not assume any of the middle ones is a guarantee.
    prompt; choosing to invoke a skill remains a model decision. Cowork has
    no hook mechanism; there, tiers 1 to 3 are all there is.
 
+**Porting this skill to another host asks the inverse question first:
+what is the destination's activation model, and can it express an
+always-on artefact?** This skill is ambient — present before the failure
+it watches for, with no moment at which a user asks for it — and a pack
+that routes purely on description cannot express that: there is no
+occasion to request a skill whose job is to notice that the skill in use
+was wrong, and a description written for one collides with the router's
+own. The artefact is then carried by whatever is already ambient there —
+a hook, an injected meta-document, a config file — or not carried at all;
+a port that sends the content and leaves the activation to the host has
+sent half of it, and the half left behind is the half that made it work.
+
 **Word the trigger mechanically, not judgementally.** "Task-oriented
 session" asks the agent to classify the session at its first turn, before
 it knows how the session will develop, and short factual-looking requests
@@ -127,16 +137,14 @@ against that ("the deliverable is advice about X" → load the skill whose
 description names X), even though the request arrived as a document to
 review. The high-risk shape is an attachment plus an open question — "here
 are two files, what do you think?" — which presents as a reading task and
-hides its own domain while the session-start skills load correctly.
-That is what makes this distinct from an
-activation-config failure: the mechanism works and still selects the
-wrong set. The failure is silent by construction, because a skill that
-never loads cannot announce that it was relevant, so the check belongs in
-the checklist rather than in a disposition.
+hides its own domain while the session-start skills load correctly: the
+mechanism works and still selects the wrong set, silently, because a
+skill that never loads cannot announce that it was relevant.
 
 ### The activation block
 
 ```text
+(task-observer activation block — template of v3.8.1)
 Before the first tool call of any session — and before writing or
 proposing a plan, not merely before executing one — invoke the
 task-observer skill AND execute its Session Start Protocol (storage
@@ -166,15 +174,14 @@ first task boundary instead of never.
 Loading a skill is not complete until you have queried the observation
 log for OPEN observations naming it and read their bodies:
   find "[ABSOLUTE PATH]/skill-observations/observation-log" -maxdepth 1 \
-    -name '*.md' -exec grep -l "skill:.*<skill-name>" {} +
+    -name '*.md' -exec grep -l -E "^(skill|target_file):.*<skill-name>" {} +
 (<skill-name> is the bare name: drop a plugin: prefix, up to the last
 colon. A qualified pattern misses every entry filed under the bare name
-and reports a clean zero; the bare one matches both spellings.)
-(Use find, not a bare *.md glob. Under zsh an unmatched glob is an error,
-so on an empty log the command never runs and the enclosing block aborts —
-and 2>/dev/null does not help, because the redirection belongs to a
-command that never starts. This is the first thing that fires on a fresh
-install, in every session, for as long as the log is empty.)
+and reports a clean zero; the bare one matches both spellings. For an
+agent definition or instructions file it is the file name, which the
+target_file: field carries by any path.)
+(Use find, not a bare *.md glob: under zsh an unmatched glob aborts the
+whole block, and on an empty log it is unmatched in every session.)
 Apply their insights to the current work — meaning: let them change what
 you do in THIS task. Editing the skill file, or writing the rule into any
 other file a later session reads, is acting on the observation and waits
@@ -195,10 +202,17 @@ substitute for the skill that owns it.
 Where scripts run, the lookup and its checkpoint line are one command:
   bash "<skill directory>/scripts/skill-load.sh" "[ABSOLUTE PATH]" <skill-name>
 The Skill invocation and that call are ONE batch — emit them together,
-one call per skill loaded, never the call in a later batch.
+one call per skill loaded, never the call in a later batch. On a first
+run the log does not exist yet (step 1 creates it): the call says so and
+exits 0 with no checkpoint line; re-run it once per skill loaded in that
+batch after the Workspace creation command.
 
 The task-observer workspace for this project is:
   [ABSOLUTE PATH]
+It does not exist until the first session creates it: a failed probe whose
+parent resolves and is writable is a first run — run Workspace creation,
+then re-run the lookup above once per skill loaded in that batch (on the
+first batch it finds no log and writes no checkpoint line; that is expected).
 Every path the skill uses derives from that root and nothing else:
   [ABSOLUTE PATH]/skill-observations/observation-log/   (the log)
   [ABSOLUTE PATH]/skill-observations/cross-cutting-principles.md
@@ -222,7 +236,22 @@ not run it again and does not write to the log. The controller observes,
 because only it sees the whole task and its review; a subagent that
 notices something worth logging says so in its final report, and the
 controller writes it, running the id snippet per write. A start-up rule
-in a project file reaches every agent the project ever dispatches.
+in a project file reaches every agent whose working folder is inside the
+project — a subagent, or a session started there. When this session starts
+another session (not a subagent), pass it a working folder inside the
+project, or the workspace root, so the block is in context from its first
+turn; a folder named only in the brief does not load it.
+Before briefing a delegate under an agent definition or instructions
+file, run the lookup for that file's name; its open entries shape the
+brief.
+
+A run of this block that cannot write here or get an approval answered —
+a child run with no protocol-running caller, a job with a narrow tool
+allowlist, a scheduled task in default permission mode — skips the write
+steps, never stalls on them, and ends its final message with a
+`## Task-observer notes` section (environments.md, "Sessions whose
+output channel is owned by a caller"). Such runs write their output to:
+  [RUN OUTPUT PATHS, one per line, or "none"]
 
 An observation file comes into being only through
   bash "<skill directory>/scripts/new-observation.sh" <slug> "[ABSOLUTE PATH]"
@@ -237,6 +266,36 @@ holding `SKILL.md`), substituted at install exactly like
 script paragraphs and keep the rest — the inline id snippet in SKILL.md is
 then the write path, and the `find … grep` above is the lookup, with its
 checkpoint line written by hand in the same batch.
+
+**The first line is the template's stamp, and an upgrade does not move
+it.** The block lives in the user's instruction file, outside the bundle,
+so upgrading the bundle in place leaves it on whatever template it was
+copied from, and a presence check cannot tell a current block from an old
+one: every paragraph added since is missing from that install without any
+signal. The stamp is bumped whenever the block's text changes, with the
+version at release: text edited on a test branch ships under the stamp of
+the version that releases it, never under the released one, since two
+texts under one stamp read as the same block to step 4. Session Start
+step 4 compares the stamp with this version's: a block whose stamp
+is older, or has none, is reported in one line with the paragraphs it
+lacks, and the current block is offered whole — the file is never
+rewritten unasked. On every upgrade, list every config home that holds a
+copy of the skill and upgrade them together, then diff each installed
+block against this template; a block copied without its stamp line is read
+as unstamped.
+
+**Before writing a user-scope block, list its non-interactive consumers.**
+A block in a user-level instruction file reaches every run that file
+loads, not only the sessions a person watches: scripts calling the CLI
+(`claude -p …`), LaunchAgent, cron and Task Scheduler jobs, the desktop
+app's scheduled tasks. A run with a narrow tool allowlist can write no
+file; one in default permission mode stops at the protocol's first
+command and waits for an approval nobody reads. So list every such
+consumer with its permission mode and tool allowlist first, and for each
+that cannot write or get an approval answered, put its run-output path
+into the block's `[RUN OUTPUT PATHS]` line, so the review knows where to
+harvest. A consumer the list missed shows up later as a job that stalls
+at the protocol's first call — a missing entry here, not a defect in the block.
 
 On Windows, pin the drive-letter form (`C:/Users/<user>/...`): PowerShell,
 cmd and Git Bash all accept it ("Paths handed across a boundary are
@@ -258,7 +317,11 @@ chance to get it wrong. Pin the ROOT, and list the derived paths: a pin
 that names only the observation-log directory — the place split-brain was
 first noticed — leaves the staging root, the manifest and the principles
 file to be re-derived by every session, and parallel sessions resolve
-them plausibly and differently. Where the environment provides a managed persistence directory
+them plausibly and differently. Where Claude Code runs with more than one
+config home (`CLAUDE_CONFIG_DIR`), the default `~/.claude/…` resolves per
+profile: choose one absolute workspace path at install, pin it in every
+profile's activation text and hook, and install the activation in every
+profile that holds the skill. Where the environment provides a managed persistence directory
 under the project identity (a memory directory it loads every session),
 that directory and the identity root are both "stable"; anchor inside the
 managed directory when one exists, otherwise on the identity root — never
@@ -485,13 +548,12 @@ chain silences all observation activity.
 
 Capture is hard-enforced by checkpoints hooked onto tool calls; the review
 trigger in the Session Start Protocol is a soft step — read a file, compare
-a date — and it is skipped the same way activation is. The failure is
-self-concealing: capture keeps producing, the log looks healthy and
-growing, and the only artefact recording the miss is a file reading
-`never` that nobody reads. Treat "is the review trigger structurally
-enforced?" as an install-completeness check, and where the harness offers
-a session-start hook, have it compute the state and inject it rather than
-asking the agent to go and look:
+a date — and it is skipped the same way activation is, self-concealingly:
+the log looks healthy and growing, and the only artefact recording the
+miss is a file reading `never` that nobody reads. Treat "is the review
+trigger structurally enforced?" as an install-completeness check, and
+where the harness offers a session-start hook, have it compute the state
+and inject it rather than asking the agent to go and look:
 
 ```bash
 #!/bin/sh
@@ -500,8 +562,8 @@ d="$OBS_WORKSPACE/skill-observations"      # the pinned absolute path
 open=$(find "$d/observation-log" -maxdepth 1 -name '*.md' -exec grep -l '^status: open$' {} + 2>/dev/null | wc -l | tr -d ' ')
 last=$(tr -d '\r' 2>/dev/null < "$d/last-review-date.txt"); last=${last:-never}   # a CRLF file must not carry \r into the JSON
 msg="Make the first tool call of this session one batched call that both lists the task-observer workspace ($OBS_WORKSPACE) and invokes the task-observer skill; then run its Session Start Protocol. Observation files are created only by scripts/new-observation.sh in the skill directory, never by copying a header."
+msg="$msg $open open observations in $d; last review: $last."   # always, zero included: a mispinned path reads 0 too
 if [ "$open" -gt 0 ]; then
-  msg="$msg $open open observations; last review: $last."
   cutoff=$(date -d '7 days ago' +%F 2>/dev/null || date -v-7d +%F)   # GNU, then BSD/macOS
   case "$last" in
     (never) msg="$msg Offer the review." ;;
@@ -516,13 +578,16 @@ The message names the resolved workspace and the whole first batch,
 because it is the one pre-skill text the harness delivers on turn 1
 ("The probe rides inside the first batched call", below): a message that
 only says "invoke the skill" leaves the probe to a skill not yet read,
-and a tool whose sessions resolve the root another way (a pin in an
-instruction file only some of its sessions load) keeps writing to its
-own log while the injected count, read from the shared one, looks
-healthy. The path is interpolated into a JSON string, so the last step
-escapes the whole message: a Windows path's backslashes and a `"` in a
-folder name otherwise produce output that does not parse, and a hook
-whose output does not parse injects nothing.
+and a tool whose sessions resolve the root another way keeps writing to
+its own log while the injected count, read from the shared one, looks
+healthy. A count of zero is printed, never suppressed, with the path it
+was read from: the hook is an instrument over the log and gets the same
+guard as every scan, and a message that drops the count at zero makes a
+mispinned workspace and a clean backlog read the same. Only the offer is
+gated on the count. The path is interpolated into a JSON string, so the
+last step escapes the whole message: a Windows path's backslashes or a
+`"` in a folder name otherwise produce output that does not parse, and a
+hook whose output does not parse injects nothing.
 
 On native Windows, Claude Code runs hook commands through Git Bash, where
 a bare `bash` or `python` can resolve to WSL's `System32\bash.exe` or the
@@ -544,16 +609,15 @@ Two details that matter when building one: `grep -c` exits 1
 on zero matches while still printing `0`, so `$(grep -c … || echo 0)`
 yields two values — capture the output and ignore the exit code; and prove
 the reminder branch fires by running the hook against fixtures at `never`,
-30 days stale and 2 days stale, confirming the third stays silent. A nag
-that never fires and a nag that is correctly silent look identical from a
-passing run.
+30 days stale, 2 days stale and an empty log, confirming the third stays
+silent and the fourth still prints "0 open observations in <path>" — a
+nag that never fires and one correctly silent look identical otherwise.
 
 ### A stop hook — the per-task backstop as a harness event
 
-The per-task backstop in the activation block is prose in the same file as
-the rule it guards, so it fails together with it: a session that skipped
-the protocol skipped the backstop at every task boundary too. Where the
-harness has a stop event, run the check there instead: *has this session
+The per-task backstop fails with the block it lives in (above): a session
+that skipped the protocol skipped the backstop at every task boundary too.
+Where the harness has a stop event, run the check there instead: *has this session
 used tools, and has anything under `observation-log/` or `checkpoints.log`
 been written since it started?* If not, block the stop once per session
 with a one-line instruction; stay silent for conversation, for a session
@@ -633,11 +697,11 @@ one), before trusting either outcome.
 path" is a rule, and a rule broken twice needs a barrier (SKILL.md, the
 second-violation rule): a direct create with the editing tool skips the
 id derivation and the prefix collision guard, and two ids each used twice
-are what that looks like afterwards. The helper creates the file with a
-`noclobber` create before any body is written, so a pre-tool hook can
-refuse every editing-tool write that would CREATE a Markdown file in the
-log, and the helper's own two-step write (create, then fill) passes
-untouched. Node, no dependencies; substitute `[ABSOLUTE PATH]` as
+are what that looks like afterwards. The helper creates the file — a
+frontmatter skeleton carrying the id — with a `noclobber` create before
+any body is written, so a pre-tool hook can refuse every editing-tool
+write that would CREATE a Markdown file in the log, and the fill of the
+skeleton the helper made passes untouched. Node, no dependencies; substitute `[ABSOLUTE PATH]` as
 elsewhere, and register it for the editing tool's write call (in Claude
 Code, matcher `Write`) with the interpreter in the command, as above:
 
@@ -838,19 +902,20 @@ and the probe rides in the second. The failure is detectable only in the
 sessions where it costs nothing, and it costs everything in the session
 where the folder is not there and the agent asserts that it is.
 
-The cause is a contest for one slot. Loading the session-start skills is
+The cause is a contest for one slot: loading the session-start skills is
 the one action that genuinely *is* prior to the work, so it recruits the
-same "before anything else" position the probe needs, and it arrives as an
-activation of the agent's own setup rather than as an instruction — which
-feels like preparation, not action, and wins. Stating the precedence more
-firmly does not change that: an agent that loads the skill carrying the
-rule in that same first batch still does not register the rule as
-violated, because the load discharges the felt obligation.
+"before anything else" position the probe needs, and feels like
+preparation rather than action. Stating the precedence more firmly does
+not change that, because the load discharges the felt obligation.
 
 So the rule is about the **content of the first call, not its order**: the
-session's first tool call is a single batched call that contains the probe,
-and any session-start skill loads ride in that same batch — never in an
-earlier one. That removes the contest instead of adjudicating it, the
+session's first tool call is a single batched call that contains the probe
+— a listing of the pinned workspace path through the tool that reaches
+that filesystem, a device call in a bridged session; if that tool's server
+is still connecting, a tool search for it in batch 1 and the listing as
+the first call of batch 2 — the target is the test, not the command's
+success — and any session-start skill loads ride in that same batch,
+never in an earlier one. That removes the contest instead of adjudicating it, the
 harness's parallel-call guidance already permits it, and it is checkable
 after the fact from the transcript (an ordering rule between two "first"
 actions is not). SKILL.md step 1 states it that way; the tier-2 preferences
@@ -877,7 +942,11 @@ the session-start scan and one `skill-load.sh` call per skill loaded in
 batch 1 — the one recorded exception to the lookup riding in its load's
 batch, because the script runs through the same deferred tool (scripts
 absent from the device: "Environment mappings", "Where the scripts are not
-on the device"). Record the split in the start-up lines ("probe in batch 2: device
+on the device"). Where the device shell is the only channel to the log,
+the per-skill lookup and its checkpoint line therefore ride in the batch
+that carries the probe, and that is not a batch-split finding: the rule
+that the lookup rides in its load's batch assumes a channel the load's
+batch has. Record the split in the start-up lines ("probe in batch 2: device
 tool deferred"), so a review reading the transcript sees an environmental
 order, not a skipped rule. The failure shape: a rule that names batch 1's
 content cannot be met when one of its tools does not exist yet, and an
@@ -893,6 +962,22 @@ connecting"). Never put a placeholder command in the probe's slot — an
 `echo`, or an `ls` of the cloud container: it probes nothing and reads in
 the transcript like a probe that passed. In a session with two filesystems
 a container `ls` never counts as the workspace probe.
+
+**A failed probe has three readings, and the parent tells them apart.**
+The pinned path is absent on the first run of every install, because
+nothing creates `skill-observations/` before the first session does; a
+probe read as "not mounted" sends that run to the folder picker, which
+grants the path it already had, or in a harness without a picker to
+handoff-doc mode, where the log is never created at all. So a failed probe
+is split before any branch is chosen, by one `ls` of the pinned path's
+parent: it resolves and is writable → a first run: run "Workspace
+creation" (`observation-log.md`) and continue; it resolves read-only → the
+grant precondition above ("A grant names a path; it does not create
+one"); it does not resolve → a missing mount, and the folder picker is
+the first response. The per-skill lookups that rode in the probe's batch
+ran against no log: after a first-run creation, re-run the lookup once
+per skill loaded in that batch, so `checkpoints.log` holds the
+`workspace: created=…` line followed by one `loaded` line per skill.
 
 ### Install-layout hazards — three ways a skill silently stops existing
 
@@ -921,7 +1006,10 @@ version's trigger, including its session-start instruction. That defeats the
 upgrade at the one activation tier that survives an unreachable config:
 description matching now has two candidates competing for the same trigger,
 one of them the file the upgrade just replaced. Back up **outside** the
-skills directory.
+skills directory. The same holds for any second copy the host loads — a
+user-owned copy beside an account-synced one: the older copy is a second
+writer in the old format (the scan's SPLIT STORE line is how it shows),
+so name each copy's version when more than one resolves.
 
 **A hook registered by script path dies when the exec bit goes.** The
 docs' example reads most naturally as naming the script directly:
@@ -1130,14 +1218,10 @@ session, and report the result:
 - for a hook, confirm the harness lists it, not merely that the file exists.
 
 "The user says they pasted it" is a claim about the world. An install can
-check it, cheaply, and should before declaring itself configured.
-
-**The principle.** When a setup step is delegated to a human because the
-agent is not permitted to perform it, the delegation is not complete when
-the instructions are handed over — it is complete when the agent has
-independently observed the resulting state. An unverified handoff and a
-silently skipped step produce the same artefact: a setup both parties
-believe is done.
+check it, cheaply, and should before declaring itself configured: a
+delegated setup step is complete when the agent has independently observed
+the resulting state, and an unverified handoff and a silently skipped step
+produce the same artefact — a setup both parties believe is done.
 
 ### Paths handed across a boundary are resolved from the far side
 
@@ -1271,12 +1355,11 @@ here rather than guessing a tool name.
 
 **Cowork execution mode — cloud vs local is a user setting.** Cowork can
 run a session in two modes with materially different tool surfaces, and
-the platform's default moved to cloud (so installs upgraded from earlier
-versions may silently change mode — users experience that as the tool
-losing abilities). The switch: Settings → Cowork → "Run new tasks in the
-cloud" (plus a "Beta" button at session start). The tell: the
-local-filesystem permission tool (`allow_cowork_file_delete`) present in
-the tool surface ⇒ local session; absent ⇒ cloud. What differs:
+the platform's default moved to cloud, so an upgraded install may silently
+change mode. The switch: Settings → Cowork → "Run new tasks in the cloud"
+(plus a "Beta" button at session start). The tell: the local-filesystem
+permission tool (`allow_cowork_file_delete`) present in the tool surface
+⇒ local session; absent ⇒ cloud. What differs:
 
 | Capability | Local session | Cloud session |
 |---|---|---|
@@ -1301,8 +1384,11 @@ remote shell (`device_bash`) and a file-commit tool
 shell running the id snippet (SKILL.md, How to Log) — or
 `scripts/new-observation.sh`, where the script is reachable on the device
 — at the moment of writing, and its body goes into the created path
-through the same shell with a quoted heredoc. It is never composed in the
-container and committed afterwards. The failure shape: a committed file
+through the same shell with a quoted heredoc: into a scratch file first,
+with `__ID__` and `__DATE__` as placeholders, handed to the helper's
+`--body` so the id reaches the body without an unquoted expansion
+(`observation-log.md`, "Editing an existing observation"). It is never
+composed in the container and committed afterwards. The failure shape: a committed file
 carries an id derived from a listing taken earlier, and the prefix guard
 never ran because it lives in the command the commit bypassed; the lagging
 `.id-floor` appears first and the duplicate id at the next review.
@@ -1329,7 +1415,7 @@ snippet through the device shell. Never a hand-derived id.
 | Persistent workspace | the shared folder | pinned absolute path (see activation block) | none — handoff-doc mode below |
 | Live skill files | `.claude/skills/{skill}/` on a read-only mount (writes fail with EROFS) | `~/.claude/skills/{skill}/`, ordinary writable files — no guard | n/a |
 | Present a staged file for install | the file-presentation tool (`present_files`) with its upload button | none — report the staged path and a change summary in chat | paste into the handoff doc |
-| Scheduled review | the app's scheduled tasks (cloud-default: run remotely; legacy local mode: run on the user's machine, only while it is on — see the execution-mode note above) | cron / a harness `SessionStart` hook / an account-level scheduler that can reach the workspace — headless invocations carry the workspace grant (`--add-dir`) in the task definition | calendar reminder + manual trigger |
+| Scheduled review | the app's scheduled tasks (cloud-default: run remotely; legacy local mode: run on the user's machine, only while it is on — see the execution-mode note above) | cron / an account-level scheduler that can reach the workspace — headless invocations carry the workspace grant (`--add-dir`) in the task definition; a `SessionStart` hook reports the review state, it does not run the review | calendar reminder + manual trigger |
 | Session-start hook | none | `SessionStart` hook (`hookSpecificOutput.additionalContext`) | none |
 | Local-vs-cloud tell | `allow_cowork_file_delete` present ⇒ local session | n/a | n/a |
 
@@ -1342,6 +1428,9 @@ here). Register it as any local scheduler: the workspace grant goes into
 the task definition, and the first "Run now" of the task itself is the
 grant check (the access-grant paragraph below). The tell is a
 scheduled-task tool on the tool surface; absent, the CLI column applies.
+Where scheduled sessions already run for other jobs, register a dedicated
+`weekly-skill-review` task all the same: none of them reviews unprompted
+("Sessions whose output channel is owned by a caller").
 
 Grow the table when a new environment appears; do not scatter its tool
 names through the procedure files.
@@ -1357,7 +1446,7 @@ and keep the probe's procedure and failure handling in the skill.
 
 **The second listed action leaves a started marker.** After the probe,
 every scheduled review prompt writes the date and time to
-`skill-observations/review-started.txt`, and the review's Step 7
+`skill-observations/review-started.txt`, and the review's Step 8
 overwrites it with `completed <date>`:
 
 ```bash
@@ -1370,7 +1459,7 @@ it got. At the next session start, a marker that does not read
 than `last-review-date.txt` with the marker untouched is a run that fired
 and never reached its second action — two different defects, and neither
 is a review that happened. The marker is judged by its content, never by
-its mtime: Step 7 writes it after the date file, so a completed run's
+its mtime: Step 8 writes it after the date file, so a completed run's
 marker is always the newer of the two.
 
 **The access grant is part of the task definition, not of the path.** A
@@ -1384,9 +1473,17 @@ review therefore includes whatever allowed-directory configuration the
 harness needs for the workspace root — for Claude Code headless,
 `--add-dir "[ABSOLUTE PATH]"` on the invocation, or the equivalent
 permissions rule — and the setup is not done until one firing has
-reached the workspace **from inside the task's own execution context**:
+reached the workspace **and left one write there** (the review record or
+`last-review-date.txt`) **from inside the task's own execution context**:
 an interactive test proves nothing about the sandbox the scheduler
-creates, and a task the scheduler lists is not a run that succeeded.
+creates, a task the scheduler lists is not a run that succeeded, and a
+firing whose report says a write was refused is a failed setup, not a
+review that ran. Claude Code headless (`claude -p`) can refuse writes
+under `~/.claude/` through the Edit and Write tools as a sensitive file,
+with nobody present to approve, while Bash writes pass (reported on one
+install; whether a settings allow-rule lifts it is untested): for a
+scheduled review, anchor the workspace outside `~/.claude/` or prove the
+write on the first firing.
 (The run-time skip note: `references/weekly-review.md`, offline-workspace
 policy.)
 
@@ -1418,8 +1515,7 @@ multi-device setup that syncs skills through a private repository. It is
 an option, not a change to the default: the review still writes the
 staging manifest, still never edits the live install, and still presents
 the change for a decision. Treat the version-control commands as a
-mutation surface for the observation log (see
-`references/observation-log.md`).
+mutation surface for the observation log (`references/observation-log.md`).
 
 ## Claude Code Projects
 
@@ -1457,12 +1553,10 @@ step they take. That breaks three install assumptions at once:
   Per-observation files still prevent write collisions between parallel
   threads; the problem here is survival, not concurrency.
 
-The Session Start guard warns and re-anchors when the resolved workspace
-is ephemeral; in a thread there is nothing stable to re-anchor on, so the
-branch is **report-back mode** ("Anchoring the workspace" above): the
-durable route is the channel the surface guarantees survives — the
-worker's report to its coordinator, a merged commit — not a location the
-worker can reach and hope outlives it.
+A thread has nothing stable to re-anchor on, so this is **report-back
+mode** ("Anchoring the workspace" above): the durable route is the
+channel the surface guarantees survives, never a location the worker can
+reach and hope outlives it.
 
 The characteristic failure is silent: a never-activated install and
 observations stranded on an unmerged branch both produce no error, so
@@ -1492,14 +1586,46 @@ is itself a session running this protocol, the activation block's
 subagent rule applies: the worker writes nothing, and a finding worth
 logging goes into its result, in whatever field the schema leaves for
 notes, for the controller to write. Where the caller runs no protocol —
-a script, a CI job, another tool — logging stays fully in force, because
-the write is the only report there is: anything that would have been
-surfaced becomes an observation file naming the condition that fired, so
-the next interactive session inherits it; name the caller in
-`session_context`, and log only what the caller cannot see. Handoff-doc
-mode is the opposite case (a reader, nowhere to write); report-back mode
-("Anchoring the workspace") is the case with neither a stable path nor a
-reader.
+a script, a CI job, another tool — and the run can write, logging stays
+fully in force, because the write is the only report there is: anything
+that would have been surfaced becomes an observation file naming the
+condition that fired, so the next interactive session inherits it; name
+the caller in `session_context`, and log only what the caller cannot see.
+An overdue review is review state (`last-review-date.txt` already carries
+it), not a new finding per run: log it at most once per review interval,
+only when no open entry names it, as "review overdue since <date>, N
+unattended runs".
+
+**A run that cannot write, or cannot get an approval answered, skips the
+write steps and reports back instead.** Three shapes: a child run with
+no protocol-running caller (`claude -p` from a script); a job whose tool
+allowlist holds no write tool (a LaunchAgent with narrow
+`--allowedTools`); a scheduled task in default permission mode, where
+the protocol's first command raises an approval card nobody answers. In
+each, a declined or unanswered protocol call must not abort the caller's
+task: the run reads the shape from its own contract — the allowlist, the
+permission mode, the absent caller — skips the probe's write branch, the
+id claim and the observation write, says so in one line, and carries its
+observations in the final message under a fixed heading, last:
+
+```markdown
+## Task-observer notes
+- skill: <target skill> — <title>. Issue: <what happened>. Improvement:
+  <what should change>. Principle: <generalisation, or none>. Context:
+  <caller or job name>, <date>.
+```
+
+One bullet per observation, no id (only a session with the log derives
+one), and the literal line `none` when nothing was observed — the
+section is never omitted, since a missing section and a run that never
+ran the protocol read the same. The review's Step 1 harvests these
+sections from the run-output paths the activation block's `[RUN OUTPUT
+PATHS]` line or the task definition names (`weekly-review.md`, Step 1,
+"Harvest the run-output notes"); a run whose output goes nowhere durable
+has no route, and the install step above ("Before writing a user-scope
+block") is what gives it one. Handoff-doc mode is the opposite case (a
+reader, nowhere to write); report-back mode ("Anchoring the workspace")
+is the case with neither a stable path nor a reader.
 
 ## First-run backfill
 
@@ -1507,7 +1633,9 @@ The skill is least valuable at the moment it is adopted: the log is empty,
 a review correctly reports nothing to do, and the largest pile of
 uncaptured insight — the project's own history — is never touched because
 no procedure says to touch it. Session Start step 7 offers a one-off
-mining pass over handover, architecture and decision docs, commit history
+mining pass — first over the harness's own per-project memory folders
+(Claude Code's `memory/`), whose `feedback` files are corrections already
+saved once — then over handover, architecture and decision docs, commit history
 since the last release, test and verification scripts (which encode
 hard-won discipline densely), and existing agent-instruction files, which
 are largely a record of corrections the user already had to make.
@@ -1546,9 +1674,8 @@ regimes:
    checkpoint but suppress *empty* markers: enforce the check by hanging
    it on writes that were going to happen anyway — deliverable events and
    task completions — and write only when there is an observation to
-   record. An enforcement mechanism has to be priced against its
-   environment; a rule that makes writes mandatory-even-when-empty is
-   only free where writes are free.
+   record: a rule that makes writes mandatory-even-when-empty is only
+   free where writes are free.
 3. **No persistence** — handoff-doc mode, below.
 
 ## Bundle manifest
@@ -1591,21 +1718,19 @@ the channel that arrives first.
 **The compaction summary's list of previously invoked skills is a lower
 bound, never the session's skill set.** A summary preserves what it judged
 salient about the *work*; skill loads are infrastructure, not work, so they
-are exactly what a summary drops. The block's own framing — "shown here for
-context only so you remain aware of their guidelines" — describes what the
-block contains and is easily read as what the session has. Re-derive the
+are exactly what a summary drops, and the block's "shown here for context
+only" describes what it contains, not what the session has. Re-derive the
 skill set from the task (name the decision, name the artefact type, match
 the installed descriptions — "Select on the decision, not on the artefact"
 above), and treat any skill the summary lists as loaded-then-forgotten
 rather than as the whole set.
 
-Observations before and after compaction are written as separate files
-under the same `observation-log/` directory, each with its own id (the id
-counter is derived from existing filenames, so it continues seamlessly
-across the compaction boundary). A resumed session's opening message may
-not match the description triggers, which is one reason the structural
-trigger exists — and one reason the protocol re-runs by rule rather than
-by whichever trigger happens to fire.
+Observations before and after compaction are separate files under the
+same `observation-log/`, each with its own id (the counter is derived
+from existing filenames, so it continues across the boundary). A resumed
+session's opening message may not match the description triggers, which
+is one reason the protocol re-runs by rule rather than by whichever
+trigger happens to fire.
 
 ## User-facing documentation
 

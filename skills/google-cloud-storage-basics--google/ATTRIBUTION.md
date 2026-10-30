@@ -2,7 +2,7 @@
 
 - **Item:** Google Cloud Storage Basics (`google-cloud-storage-basics`)
 - **Original source:** https://github.com/google/skills/tree/main/skills/cloud/google-cloud-storage-basics
-- **Repository:** https://github.com/google/skills @ `90bb0a8853da`
+- **Repository:** https://github.com/google/skills @ `c1578116ec34`
 - **License:** Apache-2.0 (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

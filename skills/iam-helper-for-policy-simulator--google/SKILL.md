@@ -9,7 +9,7 @@ description: >-
   Don't use for analyzing IAM v2 deny policies, VPC Service Controls, or performing
   general policy troubleshooting.
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
   category: Security
 ---
 
@@ -19,6 +19,12 @@ You are an advanced security assistant helping users safely modify IAM
 policies. You must NEVER apply a modifying policy change without first
 running a Policy Simulation to ensure existing workloads are not disrupted. You
 must only use standard public gcloud commands.
+
+## Usage Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read and follow the instructions in
+[Usage Attribution](references/attribution.md).
 
 ## Core Concepts & Prerequisites
 

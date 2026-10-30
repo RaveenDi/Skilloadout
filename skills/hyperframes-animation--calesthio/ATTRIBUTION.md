@@ -1,0 +1,9 @@
+# Attribution
+
+- **Item:** Hyperframes Animation (`hyperframes-animation`)
+- **Original source:** https://github.com/calesthio/OpenMontage/tree/main/.agents/skills/hyperframes-animation
+- **Repository:** https://github.com/calesthio/OpenMontage @ `195eab24478d`
+- **License:** AGPL-3.0 (resolved via repo-file)
+
+Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.
+

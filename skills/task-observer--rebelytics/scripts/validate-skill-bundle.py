@@ -104,6 +104,9 @@ PATH_RE = re.compile(r"`((?:references|scripts|assets)/[^`\s*?]+\.[A-Za-z0-9]+)`
 # skills: 28 hits, 0 missing, no normalisation needed.
 CMD_PATH_RE = re.compile(r"(?:references|scripts|assets)/[^\s`'\"*?<>;|&]+\.[A-Za-z0-9]+")
 CMD_INTERP = {"python3", "python", "py", "bash", "sh", "zsh", "node", "swift", "ruby", "perl", "run", "source"}
+# A placeholder segment in a cited path — `<study>` or `{study}`, never
+# spanning a `/` — marks a naming pattern, checked as a glob (check_dir).
+SLOT_SEG_RE = re.compile(r"<[^<>/\s]+>|\{[^{}/\s]+\}")
 # An interpreter's own options sit between it and the script: `py -3 x.py`
 # (the Windows launcher, which migration.md recommends where `python3` is the
 # Store alias), `python3 -X utf8 x.py`, `bash -eu x.sh`. Reading only the
@@ -463,18 +466,28 @@ def index_misses(body):
     # match a heading as a PREFIX of an entry, not by equality. Requiring
     # equality reported a correctly-indexed section as missing — the
     # check's own first finding was its own defect.
-    entries, cur = [], None
+    entries, cur, num = [], None, ""
     # A bullet is `-`, `*` or `+`: all three are Markdown lists, and an
-    # index written with `*` otherwise had no entries at all.
+    # index written with `*` otherwise had no entries at all. A numbered
+    # list (`1. Alpha`, `1) Alpha`) is a list too; its entry is kept both
+    # whole and without the marker, so it indexes `## 1. Alpha` and
+    # `## Alpha` alike — reading it as no entry reported every heading
+    # of a correct numbered index as missing.
+    def flush():
+        entries.append(plain(cur))
+        if num:
+            entries.append(plain(num + cur))
     for line in m.group(1).splitlines():
-        if re.match(r"^\s*[-*+]\s+", line):
+        mk = re.match(r"^\s*([-*+]|\d+[.)])\s+", line)
+        if mk:
             if cur is not None:
-                entries.append(plain(cur))
-            cur = re.sub(r"^\s*[-*+]\s+", "", line)
+                flush()
+            cur = line[mk.end():]
+            num = mk.group(1) + " " if mk.group(1)[0].isdigit() else ""
         elif cur is not None and line.strip():
             cur += " " + line.strip()
     if cur is not None:
-        entries.append(plain(cur))
+        flush()
     # Headings below the index, excluding the index itself
     missing = []
     for h in re.findall(r"(?m)^#{2,3}\s+(.+?)\s*$", body[m.end():]):
@@ -499,6 +512,10 @@ INDEX_FIXTURES = [
      "# R\n\n## Contents\n\n- [Alpha](#alpha)\n\n## Alpha\n\n## Beta\n", ["Beta"]),
     ("`*` bullets are entries too",
      "# R\n\n## Contents\n\n* [Alpha](#alpha)\n* Beta\n\n## Alpha\n\n## Beta\n", []),
+    ("a numbered list indexes numbered headings",
+     "# R\n\n## Contents\n\n1. Alpha\n2. Beta\n\n## 1. Alpha\n\n## 2. Beta\n", []),
+    ("a numbered list indexes unnumbered headings too",
+     "# R\n\n## Contents\n\n1. Alpha\n2) Beta two\n\n## Alpha\n\n## Beta two\n\n## Gamma\n", ["Gamma"]),
 ]
 
 
@@ -855,7 +872,11 @@ def check_dir(skill_dir, fails):
         print(f"warn: SKILL.md:{ln}: {tok!r} is rewritten when the skill is invoked with "
               f"arguments — write an awk field as `$ 2`, or move the text to a reference or script")
     # Every cited bundled path exists (backticked, real extension — globs in
-    # prose are skipped). Ownership is inferred from the shape of the span, so
+    # prose are skipped, and a naming pattern with a `<slot>` or `{slot}`
+    # segment is matched as a glob against the staged set, not looked up:
+    # `references/studies/<study>.md` documents a family of files, and it
+    # passes when at least one staged file fits the pattern, fails when
+    # none does). Ownership is inferred from the shape of the span, so
     # the convention has to make the two cases distinguishable: PATH_RE requires
     # the reserved prefix IMMEDIATELY after the backtick, which means a path
     # qualified with its owning skill's name — `<skill-name>/references/x.md` —
@@ -871,6 +892,12 @@ def check_dir(skill_dir, fails):
     # The failure message names both conventions, because a false FAIL here is
     # otherwise indistinguishable from a genuinely missing file.
     for rel in sorted(set(PATH_RE.findall(text)) | command_paths(text)):
+        if SLOT_SEG_RE.search(rel):
+            pat = SLOT_SEG_RE.sub("*", rel)
+            if not any(q.is_file() for q in skill_dir.glob(pat)):
+                fails.append(f"cited path pattern has no staged instance: {rel} "
+                             f"(no file matches {pat})")
+            continue
         if not (skill_dir / rel).is_file():
             fails.append(
                 f"cited path missing from staged set: {rel} "
@@ -1111,8 +1138,10 @@ COMMAND_PATH_FIXTURES = [
 
 # The cited-path check end to end, over a minimal staged skill with no
 # scripts/: (name, SKILL.md body, substring every failure must carry, or None
-# when the body must pass). The `./` and `<skill-name>/` spellings are the two
-# exemptions the failure message names.
+# when the body must pass; an optional fourth element lists files to stage
+# beside SKILL.md). The `./` and `<skill-name>/` spellings are the two
+# exemptions the failure message names; a `<slot>`/`{slot}` segment makes
+# the span a naming pattern, matched as a glob.
 CITED_PATH_FIXTURES = [
     ("unqualified prose path fails, naming both conventions",
      "The `scripts/report.py` vs `pkg/` collision fails partial runs.\n",
@@ -1125,6 +1154,11 @@ CITED_PATH_FIXTURES = [
      "Run `python3 ./scripts/report.py --check` first.\n", None),
     ("another skill's qualified path passes",
      "See `other-skill/references/x.md`.\n", None),
+    ("a `<slot>` naming pattern passes when a staged file fits it",
+     "One file per study: `references/studies/<study>.md`.\n", None, ["references/studies/alpha.md"]),
+    ("a `{slot}` naming pattern with no staged instance fails, naming the glob",
+     "One file per study: `references/studies/{study}.md`.\n",
+     "cited path pattern has no staged instance: references/studies/{study}.md (no file matches references/studies/*.md)"),
 ]
 
 
@@ -1159,6 +1193,14 @@ SCAN_FIXTURES = [
     ("previous scan 2 days old: no GAP line", "recent", True, 0, "files: 2", 2, "GAP:"),
     ("MOVED.md at the root: NOTE names it and its first line", "moved", True, 0,
      'NOTE: pointer at this root (skill-observations/MOVED.md): "Moved to /new/root', 1, ""),
+    ("the helper's skeleton (empty title) is UNFILLED, not LOST", "skeleton", True, 0,
+     "UNFILLED — a header with an empty title", 1, "LOST ENTRIES —"),
+    ("id: below the filename prefix is named with its value", "idmis", True, 0,
+     "NOTE: id: does not read as the filename prefix", 1, ""),
+    ("a zero-padded id reads as its prefix; only the wrong number is named", "padded", True, 0,
+     "after reading the body: 0004-d.md (id: 5)", 1, "0002-b.md (id"),
+    ("a pre-3.0 log.md beside the directory: SPLIT STORE with its count", "split", True, 0,
+     "SPLIT STORE — log.md holds 2 observations not in observation-log/", 1, ""),
 ]
 
 
@@ -1178,14 +1220,24 @@ def scan_case(scenario, pass_root):
             day = datetime.date.today() - datetime.timedelta(days=21 if scenario == "gap" else 2)
             ck.write_text(f"{day} 09:00 [w] session-start scan: files=2 parsed=2 principles=absent\n",
                           encoding="utf-8")
-        if scenario != "broken":
-            (log / "0001-a.md").write_text('---\nid: 1\ntitle: "ok"\n---\nbody\n', encoding="utf-8")
-            (log / "0002-b.md").write_text("---\nid: 2\ntitle: Fix: unquoted\n---\n", encoding="utf-8")
-        else:
+        if scenario == "broken":
             (log / "0001-a.md").write_text('---\nid: 1\ntitle: "never closed"\n', encoding="utf-8")
+        else:
+            (log / "0001-a.md").write_text('---\nid: 1\ntitle: "ok"\n---\nbody\n', encoding="utf-8")
+            rest = {"skeleton": [("0002-b.md", '---\nid: 2\ntitle: ""\nstatus: open\nskill: []\n---\n')],
+                    "idmis": [("0002-b.md", '---\nid: 1\ntitle: "retyped"\n---\n')],
+                    # both id forms exist in live logs: padded and unpadded read as the prefix
+                    "padded": [("0002-b.md", '---\nid: 0002\ntitle: "padded"\n---\n'),
+                               ("0003-c.md", '---\nid: 3\ntitle: "plain"\n---\n'),
+                               ("0004-d.md", '---\nid: 5\ntitle: "wrong"\n---\n')]}
+            for f, text in rest.get(scenario, [("0002-b.md", "---\nid: 2\ntitle: Fix: unquoted\n---\n")]):
+                (log / f).write_text(text, encoding="utf-8")
         if scenario == "moved":
             (root / "skill-observations" / "MOVED.md").write_text(
                 "Moved to /new/root on 2026-01-01\r\n", encoding="utf-8")
+        if scenario == "split":
+            (root / "skill-observations" / "log.md").write_text(
+                "### Observation 1: A\n\n### Observation 2: B\n", encoding="utf-8")
         env = {k: v for k, v in os.environ.items() if k != "TASK_OBSERVER_WORKSPACE"}
         args = ["bash", str(SCAN_SCRIPT)] + ([str(root)] if pass_root else [])
         r = subprocess.run(args, cwd=tmp, env=env, capture_output=True, text=True,
@@ -1195,35 +1247,49 @@ def scan_case(scenario, pass_root):
 
 # scripts/skill-load.sh, the per-skill lookup run beside each Skill
 # invocation: (name, skill argument, absolute root?, exit status, stdout
-# substring, checkpoint lines written). The fixture holds one match, one
-# prefix-only name, one closed entry and one body-only mention.
+# substring, checkpoint lines written[, "nolog"]). The fixture holds one
+# match, one prefix-only name, one closed entry, one body-only mention and
+# two target_file entries; "nolog" runs it against a root with no
+# skill-observations/ at all (the first run, before step 1).
 LOAD_SCRIPT = pathlib.Path(__file__).resolve().parent / "skill-load.sh"
 LOAD_FIXTURES = [
     ("exact name, open only, frontmatter only", "foo", True, 0, "foo: 1 open observations\n0001-a.md", 1),
     ("plugin-qualified listing finds the bare-name entry", "plug:foo", True, 0,
      "plug:foo: 1 open observations\n0001-a.md", 1),
     ("relative root: refused, nothing written", "foo", False, 2, "", 0),
+    ("a file name finds the target_file entry by its last segment", "reviewer.md", True, 0,
+     "reviewer.md: 1 open observations\n0005-e.md", 1),
+    ("the bare skill name does not match the file name", "reviewer", True, 0,
+     "reviewer: 1 open observations\n0006-f.md", 1),
+    ("no log yet: one NOTE line, exit 0, nothing written", "foo", True, 0,
+     "NOTE: foo: no observation log yet at ", 0, "nolog"),
 ]
 
 
-def load_case(skill, absolute):
+def load_case(skill, absolute, scenario=""):
     import os
     import subprocess
     with tempfile.TemporaryDirectory() as tmp:
         root = pathlib.Path(tmp) / "work space"
         log = root / "skill-observations" / "observation-log"
-        log.mkdir(parents=True)
         ck = root / "skill-observations" / "checkpoints.log"
-        ck.write_text("", encoding="utf-8")
-        for f, head, body in [("0001-a.md", "skill: [foo, bar]\nstatus: open", ""),
-                              ("0002-b.md", "skill: [foo-extras]\nstatus: open", ""),
-                              ("0003-c.md", "skill: foo\nstatus: actioned", ""),
-                              ("0004-d.md", "skill: [bar]\nstatus: open", "skill: foo\n")]:
-            (log / f).write_text(f"---\nid: 1\n{head}\n---\n{body}", encoding="utf-8")
+        if scenario == "nolog":
+            root.mkdir(parents=True)
+        else:
+            log.mkdir(parents=True)
+            ck.write_text("", encoding="utf-8")
+            for f, head, body in [("0001-a.md", "skill: [foo, bar]\nstatus: open", ""),
+                                  ("0002-b.md", "skill: [foo-extras]\nstatus: open", ""),
+                                  ("0003-c.md", "skill: foo\nstatus: actioned", ""),
+                                  ("0004-d.md", "skill: [bar]\nstatus: open", "skill: foo\n"),
+                                  ("0005-e.md", "skill: []\ntarget_file: [.claude/agents/reviewer.md]\nstatus: open", ""),
+                                  ("0006-f.md", "skill: [reviewer]\nstatus: open", "")]:
+                (log / f).write_text(f"---\nid: 1\n{head}\n---\n{body}", encoding="utf-8")
         arg = str(root) if absolute else os.path.relpath(root, tmp)
         r = subprocess.run(["bash", str(LOAD_SCRIPT), arg, skill], cwd=tmp, capture_output=True,
                            text=True, encoding="utf-8", errors="replace")
-        return r.returncode, r.stdout, len(ck.read_text(encoding="utf-8").splitlines())
+        written = len(ck.read_text(encoding="utf-8").splitlines()) if ck.is_file() else 0
+        return r.returncode, r.stdout, written
 
 
 # scripts/migrate-log.py, the pre-3.0 log converter: (name, legacy entry's
@@ -1401,18 +1467,21 @@ def selftest():
         ok = command_paths(text) == want
         bad += not ok; total += 1
         print(f"{'ok  ' if ok else 'FAIL'} command path: {name}")
-    for name, body, want in CITED_PATH_FIXTURES:
+    for name, body, want, *staged in CITED_PATH_FIXTURES:
         with tempfile.TemporaryDirectory() as td:
             sk = pathlib.Path(td) / "cp"
             sk.mkdir()
             (sk / "SKILL.md").write_text('---\nname: cp\ndescription: "D."\n---\n' + body,
                                          encoding="utf-8")
+            for rel in (staged[0] if staged else []):
+                (sk / rel).parent.mkdir(parents=True, exist_ok=True)
+                (sk / rel).write_text("x\n", encoding="utf-8")
             import contextlib
             import io
             fails = []
             with contextlib.redirect_stdout(io.StringIO()):
                 check_dir(sk, fails)
-        cited = [f for f in fails if f.startswith("cited path missing")]
+        cited = [f for f in fails if f.startswith("cited path ")]
         ok = (not fails) if want is None else (len(cited) == 1 and want in cited[0])
         bad += not ok; total += 1
         print(f"{'ok  ' if ok else 'FAIL'} cited path: {name}"
@@ -1452,8 +1521,8 @@ def selftest():
         ok = subprocess.run(["bash", "-n", str(LOAD_SCRIPT)]).returncode == 0
         bad += not ok; total += 1
         print(f"{'ok  ' if ok else 'FAIL'} skill-load script: bash -n passes")
-        for name, skill, absolute, want_rc, want_out, want_ck in LOAD_FIXTURES:
-            rc, out, ck = load_case(skill, absolute)
+        for name, skill, absolute, want_rc, want_out, want_ck, *scenario in LOAD_FIXTURES:
+            rc, out, ck = load_case(skill, absolute, *scenario)
             ok = rc == want_rc and want_out in out and ck == want_ck
             bad += not ok; total += 1
             print(f"{'ok  ' if ok else 'FAIL'} skill-load script: {name}"

@@ -2,7 +2,7 @@
 
 - **Item:** Video (`video`)
 - **Original source:** https://github.com/coreyhaines31/marketingskills/tree/main/skills/video
-- **Repository:** https://github.com/coreyhaines31/marketingskills @ `e85f3cbc2e4a`
+- **Repository:** https://github.com/coreyhaines31/marketingskills @ `820ad2c1c0ac`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

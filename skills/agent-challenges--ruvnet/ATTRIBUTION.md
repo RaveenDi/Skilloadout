@@ -2,7 +2,7 @@
 
 - **Item:** Agent Challenges (`agent-challenges`)
 - **Original source:** https://github.com/ruvnet/ruflo/tree/main/.agents/skills/agent-challenges
-- **Repository:** https://github.com/ruvnet/ruflo @ `732e9f07c021`
+- **Repository:** https://github.com/ruvnet/ruflo @ `d000e27e82c7`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

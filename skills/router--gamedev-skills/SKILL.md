@@ -2,7 +2,7 @@
 name: router
 description: >
   Routes any game-development request to the right specialized skill(s): it detects the engine
-  (Godot, Unity, Unreal, Bevy, Phaser, PixiJS, three.js, LÖVE, pygame, Roblox) and the task, then
+  (Godot, Unity, Unreal, Ebitengine, Bevy, Phaser, PixiJS, three.js, Defold, LÖVE, pygame, Roblox) and the task, then
   reads the chosen skill before acting. Use to make a game or to decide which skill applies — for
   players, levels, enemies, shaders, art direction, sprites, tiles, textures, 3D assets, UI/UX,
   cameras, game feel, physics, input, audio, saving, multiplayer, AI, dialogue, procedural
@@ -38,34 +38,40 @@ new engine or concern (router step 6).
 3. **Resolve** — the minimal set: engine skill(s) + discipline(s) + genre + workflow(s). §3.
 4. **Read (disclosure)** — open only the chosen `SKILL.md` bodies; `references/` only on demand. §4.
 5. **Compose** — order: engine fundamentals → discipline concept → genre glue → workflow. §5.
-6. **Fallback** — engine unknown or no skill fits → ask or default to Godot; state any gap. §6.
+6. **Fallback** — preserve existing engines, including custom/proprietary ones; bind missing APIs
+   from project evidence and state any gap. For a new project with no engine preference, see §6.
 
 ---
 
 ## 1. Engine detection (project fingerprint)
 
-Scan for the highest-confidence signal; **choose exactly one** engine. Stop at the first match.
+Scan for the highest-confidence signal; **choose exactly one** engine for the target project.
+An explicitly identified custom/proprietary engine is a valid result even without a catalog skill.
+Check the target's build and runtime entry point before treating a bundled library/tool as its engine.
 
 | # | Engine | Primary signal | Skill set root |
 |:-:|--------|----------------|----------------|
 | 1 | Godot | `project.godot` | `skills/godot/` |
 | 2 | Unreal | `*.uproject` | `skills/unreal/` |
 | 3 | Unity | `Assets/` **and** `ProjectSettings/ProjectVersion.txt` | `skills/unity/` |
-| 4 | Bevy | `Cargo.toml` with a `bevy` dependency | `skills/other-engines/bevy-ecs/` |
-| 5 | Phaser | `package.json` dep `phaser` | `skills/web-engines/phaser-*` |
-| 6 | PixiJS | `package.json` dep `pixi.js` | `skills/web-engines/pixijs-rendering/` |
-| 7 | three.js | `package.json` dep `three` | `skills/web-engines/threejs-*` |
-| 8 | LÖVE | `conf.lua` / `main.lua` calling `love.*` | `skills/other-engines/love2d-core/` |
-| 9 | pygame | `*.py` with `import pygame` | `skills/other-engines/pygame-core/` |
-| 10 | Roblox | `*.rbxl(x)` / `*.project.json` (Rojo) | `skills/other-engines/roblox-*` |
+| 4 | Ebitengine | `go.mod` requiring `github.com/hajimehoshi/ebiten/v2` | `skills/ebitengine/` |
+| 5 | Bevy | `Cargo.toml` with a `bevy` dependency | `skills/other-engines/bevy-ecs/` |
+| 6 | Phaser | `package.json` dep `phaser` | `skills/web-engines/phaser-*` |
+| 7 | PixiJS | `package.json` dep `pixi.js` | `skills/web-engines/pixijs-rendering/` |
+| 8 | three.js | `package.json` dep `three` | `skills/web-engines/threejs-*` |
+| 9 | Defold | `game.project` | `skills/other-engines/defold-core/` |
+| 10 | LÖVE | `conf.lua` / `main.lua` calling `love.*` | `skills/other-engines/love2d-core/` |
+| 11 | pygame | `*.py` with `import pygame` | `skills/other-engines/pygame-core/` |
+| 12 | Roblox | `*.rbxl(x)` / `*.project.json` (Rojo) | `skills/other-engines/roblox-*` |
 
-For secondary signals, the Godot-C#/Unity/Bevy and multi-web disambiguation rules, monorepos,
-and plain-text engine mentions, read `references/engine-detection.md`.
+For secondary signals, the Godot-C#/Unity/Bevy, Defold/LÖVE/Lua and multi-web disambiguation
+rules, monorepos, and plain-text engine mentions, read `references/engine-detection.md`.
 
 After identifying the engine, read its version from project metadata or dependency locks before
 choosing APIs. Existing projects keep their pinned version unless migration is requested; the
-catalog baseline is only for new projects. The exact version sources are in the detection reference
-and `../docs/VERSION-SUPPORT.md`.
+catalog baseline is only for new projects. The exact version sources are in the detection reference;
+each engine skill states its new-project baseline, and the catalog-wide table is
+`docs/VERSION-SUPPORT.md` in the source repository (it is not installed with the router).
 
 ## 2. Task classification (phrasing → category)
 
@@ -102,12 +108,18 @@ File signals sharpen this: `*.yarn`/`*.ink` → `dialogue-systems`/`visual-novel
 - **Unreal** (`skills/unreal/`): visual scripting `unreal-blueprints`; C++ gameplay
   `unreal-cpp-gameplay`; input `unreal-enhanced-input`; AI `unreal-behavior-trees`; VFX
   `unreal-niagara`; ship `unreal-packaging`.
+- **Ebitengine** (`skills/ebitengine/`): `ebitengine-game` for Go 2D games and focused
+  input, rendering, text, audio, state/testing and build work. Select only its relevant
+  references; generating the starter is optional for an existing project.
 - **Web** (`skills/web-engines/`): `phaser-core`, `phaser-arcade-physics`; `pixijs-rendering`;
   `threejs-scene-setup`, `threejs-gltf-loading`, `threejs-materials-lighting`.
-- **Other** (`skills/other-engines/`): `bevy-ecs`, `pygame-core`, `love2d-core`; Roblox foundation
+- **Other** (`skills/other-engines/`): `bevy-ecs`, `pygame-core`, `love2d-core`; Defold
+  `defold-core` (collections, game objects, scripts, input, messages, factories, proxies,
+  Bob builds); Roblox foundation
   `roblox-luau`, persistence `roblox-datastores`, UI `roblox-ui`, remotes/security
   `roblox-networking`, character lifecycle `roblox-characters`, simulation/queries
-  `roblox-physics`, and in-Studio operation `roblox-studio-workflow`.
+  `roblox-physics`, in-Studio operation `roblox-studio-workflow`, and simulator/tycoon/idle
+  economy balancing `roblox-simulator-economy`.
 
 ### 3b. Disciplines — load **with** the engine skill (concept ↔ engine API)
 
@@ -116,7 +128,7 @@ File signals sharpen this: `*.yarn`/`*.ink` → `dialogue-systems`/`visual-novel
 | art direction, game assets, sprites, tilesets, textures, icons, 3D props | `create-game-assets` | engine importer/rendering skill; `imagegen` when available |
 | enemy AI, behavior tree, pathfinding, steering | `game-ai` | `unity-navmesh` / `unreal-behavior-trees` / Godot nav |
 | BT runtime, blackboard, decorator, selector/sequence, utility AI, response curve, consideration | `ai-behavior-trees-utility-ai` | `game-ai` (model choice) / `unreal-behavior-trees` (engine assets) |
-| procedural, noise, seed, dungeon generator | `procedural-gen` | engine tilemap/grid skill |
+| procedural, noise, seed, dungeon generator, WFC | `procedural-gen` | engine tilemap/grid skill |
 | dialogue, Yarn, Ink, conversation tree | `dialogue-systems` | engine UI skill |
 | save/load, slots, persistence | `save-systems` | `roblox-datastores` / engine IO |
 | adaptive music, mixer, ducking, SFX | `audio-design` | `godot-audio` / Unity AudioMixer |
@@ -133,7 +145,21 @@ For Roblox, compose cross-engine concepts with the focused engine skill: HUD/men
 `roblox-ui` + `game-ui-ux` (+ `input-systems` for gameplay bindings); remote exploit or
 replication requests use `roblox-networking` + `roblox-luau`; respawn/rig requests use
 `roblox-characters`; physical simulation/query requests use `roblox-physics` (+
-`physics-tuning` for stability); direct place editing also uses `roblox-studio-workflow`.
+`physics-tuning` for stability); simulator, tycoon, clicker or idle economy requests (upgrade
+costs, rebirths, offline earnings, big numbers, paid eggs/crates odds) use
+`roblox-simulator-economy` + `roblox-networking` (+ `roblox-datastores` for saving); direct place
+editing also uses `roblox-studio-workflow`.
+
+For Ebitengine, bind engine-specific slots to `ebitengine-game` and its relevant reference
+(input, rendering, text/UI, audio, gameplay, tilemaps or state/testing). Add only the needed
+disciplines; do not load Godot or Unity APIs from a genre's example bindings. Native 3D and a
+ready-made network backend are not supplied by this 2D skill; state those gaps when relevant.
+
+For Defold, bind engine-specific slots (movement, input, spawning, level loading, build) to
+`defold-core` and add only the needed disciplines, e.g. "add player movement to my Defold
+game" → `defold-core` + `input-systems` (+ `platformer` for a platformer). Defold has no
+dedicated GUI, tilemap or physics skill yet; use `defold-core` and its build reference's
+pointers, and state the gap.
 
 ### 3c. Genres — **compose** engine + disciplines (bind `*` to the detected engine)
 
@@ -175,7 +201,8 @@ skill's `feel-tuning.md` reference if you want coyote-time/buffering."*
 
 ## 5. Composition rules
 
-- **One engine set, additive concepts.** Exactly one engine skill set; add the disciplines the
+- **One engine, additive concepts.** Use its engine skill set when available; for an unsupported
+  engine, use project evidence as the API binding instead. Add the disciplines the
   task needs and usually **at most one** genre. Workflows attach independently.
 - **Order:** engine fundamentals → discipline concept → genre orchestration → workflow. For asset
   production, approve the visual target before generating a family, then finish with the engine
@@ -194,12 +221,17 @@ skill's `feel-tuning.md` reference if you want coyote-time/buffering."*
 1. Check the request for a plain-text engine name ("in Unity", "using Phaser"). If found, adopt it.
 2. If the task is a pure concept/genre/workflow question, route straight to the engine-agnostic
    discipline/genre/workflow skill — no engine needed ("what's a good save format?" → `save-systems`).
-3. Only if engine choice actually blocks the answer, ask **one** targeted question ("Which engine —
-   Godot, Unity, Unreal, or a web/other engine?"). If the user has no preference and one is needed,
-   **default to Godot** (the most fully covered engine here) and say so.
+3. Only if engine choice actually blocks the answer, ask **one** targeted question about the
+   engine or project entry point. For a **new project** with no existing engine and no user
+   preference, **default to Godot** (the most fully covered engine here) and say so.
 4. Never invent an engine or load an engine skill on a guess.
 
-**Engine known but no skill covers the subtask:** load the closest engine skill plus the relevant
+**Custom, proprietary, in-house, or unsupported engine:** keep that engine and its toolchain.
+Read `references/custom-engines.md` to map the relevant discipline/genre concepts onto verified
+project APIs, using local documentation, headers/source, examples, and build/test commands.
+No catalog engine skill is required. Do not switch engines or invent a compatible API.
+
+**Catalog engine known but no skill covers the subtask:** load the closest skill for that same engine plus the relevant
 discipline and **state the gap** plainly (e.g. "no dedicated Unity 2D-movement skill; using
 `unity-csharp-scripting` + `unity-physics`"). Never fabricate a skill name.
 
@@ -212,6 +244,11 @@ and offer to load it if the user confirms.
 |---------|-----------------|--------------------------|
 | "add a double jump to my Godot player" | Godot (`project.godot`) | `godot-2d-movement` → `platformer` |
 | "make an inventory for my Unity RPG" | Unity (`Assets/`+`ProjectSettings/`) | `unity-scriptableobjects` → `rpg` → `save-systems` |
+| "add an inventory to my proprietary C++ RPG" | existing custom engine | custom-engine reference → `rpg` + `save-systems`; bind data/UI to verified project APIs |
+| "build a 2D puzzle in Go with Ebitengine" | Ebitengine (named; later `go.mod`) | `ebitengine-game` → `puzzle` |
+| "fix a stale HUD in my Go game" | Ebitengine (`go.mod` + game imports) | `ebitengine-game` → `game-ui-ux`; read text/UI, no new scaffold |
+| "add player movement to my Defold game" | Defold (`game.project`) | `defold-core` → `input-systems` |
+| "rebirths in my Roblox simulator take forever" | Roblox (`*.project.json` / place file) | `roblox-luau` → `roblox-simulator-economy` → `roblox-networking` |
 | "procedural dungeon roguelike in Godot" | Godot | `godot-tilemap` → `procedural-gen` → `roguelike` |
 | "branching dialogue from a `.yarn` file" | (none required) | `dialogue-systems` (+ engine UI skill if an engine is detected) |
 | "how do I design save slots with migration?" | (none) | `save-systems` only |
@@ -226,3 +263,4 @@ and offer to load it if the user confirms.
 
 - Full engine fingerprints, secondary signals, and disambiguation: `references/engine-detection.md`.
 - Exhaustive per-skill trigger words, engine bindings, and binding gaps: `references/routing-table.md`.
+- Custom/proprietary or unsupported engine integration: `references/custom-engines.md`.

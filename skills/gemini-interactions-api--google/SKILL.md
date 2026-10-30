@@ -1,7 +1,7 @@
 ---
 name: gemini-interactions-api
 metadata:
-  version: "2.0.0"
+  version: "2.0.1"
   category: AiAndMachineLearning
 description: Guides the usage of Gemini Interactions API on Gemini Enterprise Agent Platform. Use when the user wants to use the stateful, server-managed Interactions API for multi-turn conversations, background execution, streaming, structured output, and function calling on the Agent Platform.
 ---
@@ -43,6 +43,17 @@ The Interactions API is the modern, recommended way to execute Generative AI age
 > `environment="remote"` to provision a sandbox. * **Turn-Scoped Parameters**:
 > Parameters like `tools`, `system_instruction`, and `generation_config` are
 > turn-scoped. They **MUST** be passed with each interaction request.
+
+## Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read [Usage Attribution](references/attribution.md). For commands executed
+directly in the terminal (never in generated scripts, Terraform, or user code),
+prefix `gcloud` with
+`CLOUDSDK_METRICS_REQUEST_ATTRIBUTION="agent-skills/1.0 (skill:gemini-interactions-api)"`
+and append
+`agent-skills/1.0 (skill:gemini-interactions-api)`
+to `User-Agent` headers.
 
 ## 1. Authentication
 

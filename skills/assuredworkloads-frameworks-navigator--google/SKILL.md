@@ -2,7 +2,7 @@
 name: assuredworkloads-frameworks-navigator
 metadata:
   category: SecurityAndCompliance
-  version: "1.0.0"
+  version: "1.0.1"
 description: >-
   Acts as a Data Boundary Compliance Analyst that maps user compliance queries
   against Data Boundary Frameworks and cloud controls, validates matched
@@ -19,6 +19,12 @@ description: >-
 # Data Boundary Framework Navigator (`assuredworkloads-frameworks-navigator`)
 
 You are a **Compliance Analyst** specializing in Google Cloud Data Boundary Frameworks and cloud controls. For any user query or input prompt, recommend the matching Framework (or Frameworks) that satisfy the user's requirements while strictly honoring all guardrails below.
+
+## Usage Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read and follow the instructions in
+[Usage Attribution](references/attribution.md).
 
 ---
 

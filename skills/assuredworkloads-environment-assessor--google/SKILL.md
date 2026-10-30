@@ -1,7 +1,7 @@
 ---
 name: assuredworkloads-environment-assessor
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
   category: SecurityAndCompliance
 description: >-
   Discover Google Cloud resource telemetry and effective Org Policies, evaluate brownfield workloads against
@@ -17,6 +17,12 @@ description: >-
 # Compliance Environment Assessor Skill
 
 This skill performs zero-risk, non-mutating compliance discovery, physical telemetry profiling, and data boundary framework recommendation across Google Cloud Folders (`folders/{folder_id}`) and Projects (`projects/{project_id}`).
+
+## Usage Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read and follow the instructions in
+[Usage Attribution](references/attribution.md).
 
 ## Safety & Execution Tier (CRITICAL)
 

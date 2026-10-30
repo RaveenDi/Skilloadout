@@ -1,7 +1,7 @@
 ---
 name: cloud-run-alert-configuration
 metadata:
-  version: "1.0.2"
+  version: "1.0.3"
   category: Serverless
 description: >-
   Configures best-practice, high-signal alerting policies for Cloud Run
@@ -12,9 +12,7 @@ description: >-
   saturation (warning/critical), container CPU/memory utilization and allocation, billable
   instance time, job execution status, and worker pool queue backlog. Don't use for
   GKE workloads (use gke-alert-configuration) or Compute Engine VMs.
-allowed-tools:
-  - terraform
-  - gcloud
+allowed-tools: terraform gcloud
 ---
 
 # Cloud Run Alert Configuration

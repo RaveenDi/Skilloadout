@@ -2,7 +2,7 @@
 
 - **Item:** Horizontal Scroll Scenes (`horizontal-scroll-scenes`)
 - **Original source:** https://github.com/MengTo/Skills/tree/main/agent-skills/web-design/horizontal-scroll-scenes
-- **Repository:** https://github.com/MengTo/Skills @ `398cd41c86ba`
+- **Repository:** https://github.com/MengTo/Skills @ `a45892d2fdad`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

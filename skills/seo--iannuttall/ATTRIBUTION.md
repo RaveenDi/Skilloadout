@@ -2,7 +2,7 @@
 
 - **Item:** Seo (`seo`)
 - **Original source:** https://github.com/iannuttall/seo/tree/main/skills/seo
-- **Repository:** https://github.com/iannuttall/seo @ `8d40f53f7a28`
+- **Repository:** https://github.com/iannuttall/seo @ `1de89cfd6686`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

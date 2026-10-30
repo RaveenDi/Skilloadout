@@ -2,7 +2,7 @@
 
 - **Item:** Microsoft Azure Webjobs Extensions Authentication Events Dotnet (`microsoft-azure-webjobs-extensions-authentication-events-dotnet`)
 - **Original source:** https://github.com/microsoft/skills/tree/main/.github/plugins/azure-sdk-dotnet/skills/microsoft-azure-webjobs-extensions-authentication-events-dotnet
-- **Repository:** https://github.com/microsoft/skills @ `bd924c165294`
+- **Repository:** https://github.com/microsoft/skills @ `41138f3cb482`
 - **License:** MIT (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

@@ -1,7 +1,7 @@
 ---
 name: iam-helper-for-troubleshooting
 metadata:
-  version: "1.0.2"
+  version: "1.0.3"
   category: Security
 description: >-
   Diagnoses, remediates, and manages Identity and Access Management (IAM)
@@ -16,6 +16,12 @@ description: >-
 # IAM Access Troubleshooter & Remediation Orchestrator on Google Cloud
 
 You are an expert Google Cloud Security and IAM assistant. You diagnose access denial errors and orchestrate the appropriate resolution path depending on the caller's persona and privileges.
+
+## Usage Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read and follow the instructions in
+[Usage Attribution](references/attribution.md).
 
 ## Mode Selection Guide
 

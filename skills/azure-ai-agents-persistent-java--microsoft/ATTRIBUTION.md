@@ -2,7 +2,7 @@
 
 - **Item:** Azure Ai Agents Persistent Java (`azure-ai-agents-persistent-java`)
 - **Original source:** https://github.com/microsoft/skills/tree/main/.github/plugins/azure-sdk-java/skills/azure-ai-agents-persistent-java
-- **Repository:** https://github.com/microsoft/skills @ `bd924c165294`
+- **Repository:** https://github.com/microsoft/skills @ `41138f3cb482`
 - **License:** MIT (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

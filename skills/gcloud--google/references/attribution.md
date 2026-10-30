@@ -5,6 +5,15 @@ this skill, follow these usage attribution instructions. Tag every command you
 execute directly in the terminal so usage can be attributed. The tag identifies
 only the skill and its version; it carries no user data.
 
+-   **Skill Precedence (Multi-Skill Sessions)**: `gcloud` is a foundational
+    CLI skill frequently pre-bundled or co-loaded alongside product-specific
+    skills. If a more specific product, service, or domain skill (for example,
+    `cloud-run-basics`, `cloud-build-basics`, `bigquery-basics`, or
+    `gke-basics`) is also loaded or active for the current task, **ALWAYS** use
+    that specific skill's `skill:<name>` attribution tag instead of
+    `skill:gcloud`. Only use `skill:gcloud` when no product-specific skill
+    applies to the command being executed.
+
 -   **`gcloud` CLI Commands**: Prefix every `gcloud` invocation, whatever the
     subcommand, with the metrics environment variable. Set it inline on each
     command because shell state may not persist between commands:

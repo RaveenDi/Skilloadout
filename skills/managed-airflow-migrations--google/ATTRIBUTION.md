@@ -2,7 +2,7 @@
 
 - **Item:** Managed Airflow Migrations (`managed-airflow-migrations`)
 - **Original source:** https://github.com/google/skills/tree/main/skills/cloud/managed-airflow-migrations
-- **Repository:** https://github.com/google/skills @ `90bb0a8853da`
+- **Repository:** https://github.com/google/skills @ `c1578116ec34`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

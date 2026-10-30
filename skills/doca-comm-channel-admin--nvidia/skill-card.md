@@ -1,5 +1,5 @@
 ## Description: <br>
-Enumerates host↔DPU DOCA comch (formerly Comm Channel) servers and connections via the shipped doca_comm_channel_admin binary, listing comch-capable devices and decoding the per-device server and connection tables. <br>
+Guides agents to enumerate host-to-DPU DOCA comch (formerly Comm Channel) servers and connections with the shipped doca_comm_channel_admin binary, a single-shot, read-only scan-and-print tool that lists comch-capable devices and decodes the per-device server and connection tables (server name, PID, in-use / max, PCIe address), while routing channel reset, drain, restart, programming-API, and install questions to the appropriate sibling skills. <br>
 
 This skill is ready for commercial/non-commercial use. <br>
 
@@ -9,7 +9,7 @@ NVIDIA <br>
 ### License/Terms of Use: <br>
 Apache 2.0 AND CC-BY-4.0 <br>
 ## Use Case: <br>
-Developers, platform operators, and AI agents who need to inventory host-DPU comch channels from the outside, verify channel health before declaring services ready, or cross-check admin tool output against program-side connection state. <br>
+Platform operators, developers of DOCA comch consumers, and AI agents use this skill to inventory active host-DPU comch servers and connections from outside the program, cross-check the admin tool's view against program-side connection state, and interpret empty or mismatched output before recommending program-side or driver-level changes. <br>
 
 ### Deployment Geography for Use: <br>
 Global <br>
@@ -25,58 +25,57 @@ Risk: Review before execution as proposals could introduce incorrect or misleadi
 Mitigation: Review and scan skill before deployment. <br>
 
 ## Reference(s): <br>
+- [CAPABILITIES.md](CAPABILITIES.md) <br>
+- [TASKS.md](TASKS.md) <br>
 - [DOCA SDK Documentation](https://docs.nvidia.com/doca/sdk/index.html) <br>
-- [DOCA Samples](https://github.com/NVIDIA-DOCA/doca-samples) <br>
-- [DOCA Platform Framework](https://github.com/NVIDIA/doca-platform) <br>
-- [DOCA Developer Forum](https://forums.developer.nvidia.com/c/infrastructure/doca/370) <br>
 
 
 ## Skill Output: <br>
-**Output Type(s):** [Shell commands, Configuration instructions, Analysis] <br>
-**Output Format:** [Markdown with inline bash code blocks] <br>
+**Output Type(s):** [Analysis, Shell commands, Configuration instructions] <br>
+**Output Format:** [Markdown with inline shell command citations] <br>
 **Output Parameters:** [1D] <br>
 **Other Properties Related to Output:** [None] <br>
 
 ## Evaluation Agents Used: <br>
-- Claude Code (`aws/anthropic/bedrock-claude-opus-4-8`) <br>
-- Codex (`openai/openai/gpt-5.5`) <br>
+- Claude Code (`aws/anthropic/bedrock-claude-opus-5-5`) <br>
+- Codex (`openai/openai/gpt-6.1-sol`) <br>
 
 
 
 ## Evaluation Tasks: <br>
-4 evaluation tasks (3 positive, 1 negative), each with 3 attempts per task in isolated sandbox pods. <br>
+4 evaluation tasks (3 positive, 1 negative); each task attempt ran in its own isolated k8s-sandbox pod with one attempt per task. <br>
 
 ## Evaluation Metrics Used: <br>
 Reported benchmark dimensions: <br>
-- Security: Whether the skill is safe to use: checks for unsafe operations, secret leakage, and unauthorized access. <br>
-- Correctness: Whether the final answer is correct against the reference answer. <br>
-- Discoverability: Whether the right skill was selected when needed and decoys were avoided. <br>
-- Effectiveness: Whether the skill helped complete the user's goal (50% goal completion + 50% expected workflow adherence). <br>
-- Efficiency: Whether the skill avoided wasted tool calls and token usage (50% tool-call productivity + 50% token efficiency). <br>
+- Security: Is it safe to use? Checks for unsafe operations, secret leakage, and unauthorized access. <br>
+- Correctness: Is the answer correct against the reference answer? <br>
+- Discoverability: Was the right skill loaded when needed, with decoys avoided? <br>
+- Effectiveness: Did the skill help complete the task, measured as the equal-weight mean of goal completion and expected workflow adherence? <br>
+- Efficiency: Did it avoid wasted tool calls and token usage, measured as equal-weight tool-call productivity and token efficiency? <br>
 
 Underlying evaluation signals used in this run: <br>
-- `security`: Checks for unsafe operations, secret leakage, and unauthorized access. <br>
+- `security`: Unsafe operations, secret leakage, and unauthorized access. <br>
 - `skill_execution`: Whether the expected skill was selected, decoys were avoided, and the workflow executed. <br>
+- `skill_efficiency`: Tool-call productivity (legacy wire id; routing is scored under Discoverability). <br>
 - `accuracy`: Final-answer correctness against the reference answer. <br>
 - `goal_accuracy`: Whether the user's goal was achieved. <br>
 - `behavior_check`: Whether the expected workflow behavior was followed. <br>
-- `skill_efficiency`: Tool-call productivity (routing scored under Discoverability). <br>
-- `token_efficiency`: Actual uncached prompt plus completion token usage. <br>
+- `token_efficiency`: Actual uncached prompt plus completion token usage (50% of Efficiency). <br>
 
 
 
 ## Evaluation Results: <br>
 | Measure | Claude Code (Baseline → Skill Uplift) | Codex (Baseline → Skill Uplift) |
 |---|---:|---:|
-| Overall | 97.6% | 92.5% |
+| Overall | 92.2% (uplift unavailable) | 93.5% (uplift unavailable) |
 | Security | 100.0% → 100.0% (±0.0 points) | 100.0% → 100.0% (±0.0 points) |
-| Correctness | 20.0% → 100.0% (+80.0 points) | 60.0% → 100.0% (+40.0 points) |
-| Discoverability | 100.0% | 91.7% |
-| Effectiveness | 26.9% → 100.0% (+73.1 points) | 24.1% → 75.0% (+50.9 points) |
-| Efficiency | 88.1% | 95.6% |
+| Correctness | 25.0% → 95.0% (+70.0 points) | 55.0% → 100.0% (+45.0 points) |
+| Discoverability | 100.0% (uplift unavailable) | 95.0% (uplift unavailable) |
+| Effectiveness | 12.5% → 75.0% (+62.5 points) | 37.5% → 93.8% (+56.3 points) |
+| Efficiency | 91.0% (uplift unavailable) | 78.8% (uplift unavailable) |
 
 ## Skill Version(s): <br>
-e562475 (source: git SHA, committed 2026-09-14) <br>
+c98e456 (source: git SHA, committed 2026-10-28) <br>
 
 ## Ethical Considerations: <br>
 NVIDIA believes Trustworthy AI is a shared responsibility and we have established policies and practices to enable development for a wide array of AI applications. When downloaded or used in accordance with our terms of service, developers should work with their internal team to ensure this skill meets requirements for the relevant industry and use case and addresses unforeseen product misuse. <br>

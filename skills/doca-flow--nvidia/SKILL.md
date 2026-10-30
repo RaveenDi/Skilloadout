@@ -6,8 +6,7 @@ description: >
   application: match/action pipes, ports, representors, forwarding,
   hairpin, counters. Trigger on packet steering, classifier,
   rule-matching, representor, hairpin or 5-tuple-to-queue questions even
-  when "DOCA Flow" is not named. Remote or non-C++ control over gRPC
-  belongs to doca-flow-grpc-server. Also covers pipe validation before
+  when "DOCA Flow" is not named. Also covers pipe validation before
   hardware programming, Flow/DOCA version match, and Flow API errors.
   First app: follow the local bundle (doca-setup, doca-programming-guide,
   doca-flow, doca-public-knowledge-map). Stage 1 pull
@@ -18,8 +17,9 @@ description: >
   installation elsewhere. DPU OS installation is destructive and always
   requires explicit confirmation.
 metadata:
-  author: NVIDIA <doca@nvidia.com>
+  author: NVIDIA <doca-feedback@nvidia.com>
   kind: library
+  doca_version: "3.5"
   tags:
     - doca
     - flow
@@ -36,17 +36,17 @@ compatibility: >
 
 ## Examples
 
-- **"How do I bring up a Flow port on a representor?"** — this is in
+- **“How do I bring up a Flow port on a representor?”** — this is in
   scope. Use the installed header and a shipped sample; do not author
   a first-app `main.c`.
-- **"Match 5-tuple and send to a queue."** — express it as a Flow
+- **“Match 5-tuple and send to a queue.”** — express it as a Flow
   pipe. Do not fall back to kernel tc or iptables.
 
 ## Instructions
 
 Follow Loading order below. Open the tasks companion for configure /
 modify / debug. Open the capabilities companion for the pipe-spec
-schema and safety policy. Do not open every companion file.
+schema and safety policy.
 For connection tracking, read the tasks companion's `flow-ct` section
 before starting ports: CT initialization is process-global and must precede
 port start. Adding CT to running ports requires an approved interruption
@@ -60,10 +60,10 @@ for a first Flow app, do this **before host `pkg-config` and before
 any source listing**:
 
 1. **Bundle first.** This answer follows the local doca-skills
-   bundle: [`doca-setup`](../../doca-setup/SKILL.md) (Stage 1 vs
-   Stage 2), [`doca-programming-guide`](../../doca-programming-guide/SKILL.md)
+   bundle: `doca-setup/SKILL.md` (Stage 1 vs
+   Stage 2), `doca-programming-guide/SKILL.md`
    (modify a shipped sample), this `doca-flow` skill, and
-   [`doca-public-knowledge-map`](../../doca-public-knowledge-map/SKILL.md).
+   `doca-public-knowledge-map/SKILL.md`.
    Name those skills. Do not invent other skill names.
 2. **Stage 1 vs Stage 2 before any command.** Stage 1 = NGC container
    on a laptop (compile / learn; no real packets). Stage 2 = a real
@@ -71,10 +71,10 @@ any source listing**:
    not say the app works entirely inside docker.
 3. **Path 0 (Stage 1).** Copy a tag from
    https://catalog.ngc.nvidia.com/orgs/nvidia/teams/doca/containers/doca/tags
-   using *How to pick an NGC tag without guessing* — never invent one.
-   Then `docker pull nvcr.io/nvidia/doca/doca:<tag>` and
-   `docker run -it --rm -v $HOME/dev:/work nvcr.io/nvidia/doca/doca:<tag> bash`.
-   Do not invent a `Dockerfile`. Do not build DOCA from source.
+   using *How to pick an NGC tag without guessing* — never invent one or
+   use `latest`. Then `docker pull nvcr.io/nvidia/doca/doca:<tag>` and
+   `docker run -it --rm -v $HOME/dev/doca-work:/work nvcr.io/nvidia/doca/doca:<tag> bash`
+   (an empty dir, never `$HOME`). No invented `Dockerfile`, no source build.
 4. **Resume inside the container (MUST, after `docker run`):** quote this
    hand-off — do not skip it for a full tutorial: "Paste back the output
    of `pkg-config --modversion doca-flow` and
@@ -134,8 +134,8 @@ the capabilities companion when the question is *what can
 Flow express* on this version. **You MUST open
 ## configure before writing or running
 any port code** — its bring-up gate decides whether the binary launches
-at all, so reading this loader alone is never enough. If DOCA is not
-installed yet, route to [`doca-setup`](../../doca-setup/SKILL.md) first.
+at all. If DOCA is not
+installed yet, route to `doca-setup/SKILL.md` first.
 
 ## Ground rule: verify every API name against the installed header
 
@@ -214,41 +214,38 @@ costs the user more than an honest refusal plus the legal alternative.
 The CLASSES of Flow questions this skill answers (the *class* is the
 load-bearing piece; the example is one instance):
 
-- **"How do I bring up a Flow port on a representor?"** →
+- **“How do I bring up a Flow port on a representor?”** →
   ## configure +
   ## Capabilities and modes.
-- **"How do I express *<match X, do Y>* as a pipe?"** →
+- **“How do I express *<match X, do Y>* as a pipe?”** →
   ## Capabilities and modes
   + ## modify.
-- **"Will this pipe spec program the HW, or will commit fail?"** →
+- **“Will this pipe spec program the HW, or will commit fail?”** →
   ## Safety policy
   + ## test.
-- **"How do I read Flow counters to investigate observed traffic?"** →
+- **“How do I read Flow counters to investigate observed traffic?”** →
   ## Observability
   + ## debug.
-- **"My Flow port won't start — `Failed to get hws cap` / `dest action
+- **“My Flow port won't start — `Failed to get hws cap` / `dest action
   ROOT … err -121`."** → device-placement signature (not a pipe bug);
   the steering plane belongs to the DPU Arm on a `SEPARATED_HOST` /
   NIC-mode BlueField. See the device-placement bullet in
   ## Capabilities and modes
   + ## configure step 2 + Step 0 of
   ## debug.
-- **"How do I add hardware-accelerated stateful 5-tuple connection
-  tracking (aging, NAT) on top of my existing doca-flow setup?"** →
+- **“How do I add hardware-accelerated stateful 5-tuple connection
+  tracking (aging, NAT) on top of my existing doca-flow setup?”** →
   ## flow-ct +
   ## flow-ct.
 
 ## Audience
 
-External developers writing applications that consume the DOCA Flow
-library — code that calls `doca_flow_*` (in C/C++, or via FFI from another
-language) to program packet steering on a supported NVIDIA NIC/DPU with DOCA
-installed at `/opt/mellanox/doca`. Flow ships as a C library (`pkg-config`
-module `doca-flow`, package `doca-sdk-flow` on Ubuntu / RHEL / SLES) and the
-samples are C, so C/C++ is the canonical path the the tasks companion examples assume;
-other-language consumers reach the same `*.so` through FFI, and the skill
-keeps its API-surface, lifecycle, capability-discovery, error-taxonomy, and
-safety guidance language-neutral.
+External developers writing code that calls `doca_flow_*` (in C/C++, or
+via FFI) to program packet steering on a supported NVIDIA NIC/DPU with
+DOCA installed at `/opt/mellanox/doca`. Flow ships as a C library
+(`pkg-config` module `doca-flow`, package `doca-sdk-flow`) and the
+samples are C; other-language consumers reach the same `*.so` through
+FFI and the skill stays language-neutral.
 
 ## When to load this skill
 
@@ -270,7 +267,7 @@ any language:
 
 Do **not** load for general DOCA orientation, "where do I find docs",
 install-layout, or non-Flow library questions — use
-[`doca-public-knowledge-map`](../../doca-public-knowledge-map/SKILL.md).
+`doca-public-knowledge-map/SKILL.md`.
 
 ## What this skill provides
 
@@ -292,7 +289,7 @@ files:
 
 The skill assumes DOCA is installed at `/opt/mellanox/doca` and the user can
 open a `doca_dev`. Installing DOCA, hugepages setup, and the EAL `dv_flow_en`
-devargs prep go through [`doca-setup`](../../doca-setup/SKILL.md); the
+devargs prep go through `doca-setup/SKILL.md`; the
 hugepages / devargs runtime prerequisites a binary needs *before* a Flow port
 starts are pinned in ## configure step 5.
 
@@ -305,7 +302,7 @@ source is the shipped C sample at
 `/opt/mellanox/doca/samples/doca_flow/<name>/` — the agent routes the
 user there and prescribes a minimum-diff edit via the modify-a-sample
 workflow in
-[`doca-programming-guide`](../../doca-programming-guide/SKILL.md) plus
+`doca-programming-guide/SKILL.md` plus
 the Flow overrides in ## build, and builds
 any manifest *in the user's project* against the user's install, where
 `pkg-config --modversion doca-flow` is the source of truth.
@@ -320,23 +317,23 @@ any manifest *in the user's project* against the user's install, where
 
 ## Related skills
 
-- [`doca-public-knowledge-map`](../../doca-public-knowledge-map/SKILL.md) —
+- `doca-public-knowledge-map/SKILL.md` —
   routing table for public DOCA docs and the on-disk layout of an
   installed package.
-- [`doca-setup`](../../doca-setup/SKILL.md) — env prep, install
+- `doca-setup/SKILL.md` — env prep, install
   verification, and the *no install yet* path via the NGC DOCA
   container.
-- [`doca-programming-guide`](../../doca-programming-guide/SKILL.md) —
+- `doca-programming-guide/SKILL.md` —
   general DOCA patterns shared by every library: the `pkg-config` +
   meson build pattern, the modify-a-shipped-sample first-app workflow,
   the universal lifecycle, the cross-library `DOCA_ERROR_*` taxonomy,
   and the program-side debug order. This skill layers Flow specifics
   on top.
-- [`doca-flow-tune`](../../tools/doca-flow-tune/SKILL.md) —
+- `doca-flow-tune/SKILL.md` —
   programmed-state inspection (read-only).
-- [`doca-hardware-safety`](../../doca-hardware-safety/SKILL.md) —
+- `doca-hardware-safety/SKILL.md` —
   required overlay for card-mode flips (e.g. `mlxconfig` change from
   `SEPARATED_HOST` to `EMBEDDED_CPU`).
-- [`doca-debug`](../../doca-debug/SKILL.md) — the cross-cutting debug
+- `doca-debug/SKILL.md` — the cross-cutting debug
   ladder (install / version / build / link / runtime / program /
   driver).

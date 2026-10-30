@@ -1,5 +1,5 @@
 ## Description: <br>
-Defines the detect, prefer, fall back, and report contract plus locked JSON schemas (doca-env, version-matrix, capability-snapshot, validate-before-commit, and host/DPU collect-state) that other DOCA skills use to consolidate multi-command answers about DOCA environment, versions, devices, capabilities, and validation state, with manual command fallbacks when the structured helpers are absent. <br>
+Defines a locked JSON schema contract that other DOCA skills use to prefer a structured helper tool for DOCA environment, version, device, capability, validate-before-commit, and host-vs-DPU state queries, with an ordered manual fallback chain and mandatory reporting of which path was taken when the helper is absent. <br>
 
 This skill is ready for commercial/non-commercial use. <br>
 
@@ -9,7 +9,7 @@ NVIDIA <br>
 ### License/Terms of Use: <br>
 Apache 2.0 AND CC-BY-4.0 <br>
 ## Use Case: <br>
-Developers and engineers working with NVIDIA DOCA use this skill to get one-shot, consolidated answers about a host or BlueField DOCA install (environment, versions, devices, capabilities, pre-commit validation, host vs DPU state), preferring structured helper output when present and otherwise walking the documented manual command chains. <br>
+Developers and engineers working with NVIDIA DOCA use this skill, loaded as an overlay by other DOCA skills, to get a single consolidated answer about DOCA install state, versions, devices, capabilities, spec validation, and host-vs-DPU state by preferring a structured helper tool when present and walking a documented manual command chain when it is not. <br>
 
 ### Deployment Geography for Use: <br>
 Global <br>
@@ -25,32 +25,32 @@ Risk: Review before execution as proposals could introduce incorrect or misleadi
 Mitigation: Review and scan skill before deployment. <br>
 
 ## Reference(s): <br>
-- [Worked routing examples](references/examples.md) <br>
+- [Structured-tools routing examples](references/examples.md) <br>
 - [NVIDIA DOCA SDK documentation](https://docs.nvidia.com/doca/sdk/index.html) <br>
 
 
 ## Skill Output: <br>
-**Output Type(s):** [Analysis, Shell commands, Configuration instructions] <br>
-**Output Format:** [Markdown with inline JSON schema fields and bash code blocks] <br>
+**Output Type(s):** [Analysis, Shell commands] <br>
+**Output Format:** [Markdown with inline JSON and shell code blocks] <br>
 **Output Parameters:** [1D] <br>
-**Other Properties Related to Output:** [Answers open with a report of whether the structured helper or the manual fallback chain was used] <br>
+**Other Properties Related to Output:** [None] <br>
 
 ## Evaluation Agents Used: <br>
-- Claude Code (`aws/anthropic/bedrock-claude-opus-4-8`) <br>
-- Codex (`openai/openai/gpt-5.5`) <br>
+- Claude Code (`aws/anthropic/bedrock-claude-opus-5-5`) <br>
+- Codex (`openai/openai/gpt-6.1-sol`) <br>
 
 
 
 ## Evaluation Tasks: <br>
-4 evaluation tasks (3 positive, 1 negative) from skill-evaluator-dataset-snapshot/1, one attempt per task, each in an isolated sandbox pod. <br>
+4 evaluation tasks (3 positive, 1 negative), one attempt per task, each run in its own isolated k8s-sandbox pod. <br>
 
 ## Evaluation Metrics Used: <br>
 Reported benchmark dimensions: <br>
-- Security: Checks for unsafe operations, secret leakage, and unauthorized access. <br>
-- Correctness: Checks final-answer correctness against the reference answer. <br>
-- Discoverability: Checks whether the right skill was loaded when needed. <br>
-- Effectiveness: Checks whether the skill helped complete the task, via goal completion (50%) and expected workflow adherence (50%). <br>
-- Efficiency: Checks for wasted tool calls and token usage, via tool-call productivity (50%) and token efficiency (50%). <br>
+- Security: Is it safe to use? Checks for unsafe operations, secret leakage, and unauthorized access. <br>
+- Correctness: Is the answer correct against the reference answer? <br>
+- Discoverability: Was the right skill loaded when needed? <br>
+- Effectiveness: Did the skill help complete the task? Equal-weight mean of goal completion and expected workflow adherence. <br>
+- Efficiency: Did it avoid wasted tool calls and token usage? Equal-weight tool-call productivity and token efficiency. <br>
 
 Underlying evaluation signals used in this run: <br>
 - `security`: Unsafe operations, secret leakage, and unauthorized access. <br>
@@ -59,21 +59,22 @@ Underlying evaluation signals used in this run: <br>
 - `accuracy`: Final-answer correctness against the reference answer. <br>
 - `goal_accuracy`: Whether the user's goal was achieved. <br>
 - `behavior_check`: Whether the expected workflow behavior was followed. <br>
+- `token_efficiency`: Actual uncached prompt plus completion token usage (50% of Efficiency). <br>
 
 
 
 ## Evaluation Results: <br>
 | Measure | Claude Code (Baseline → Skill Uplift) | Codex (Baseline → Skill Uplift) |
 |---|---:|---:|
-| Overall | 97.8% | 94.2% |
-| Security | 100.0% → 100.0% (±0.0 points) | 75.0% → 100.0% (+25.0 points) |
-| Correctness | 75.0% → 100.0% (+25.0 points) | 85.0% → 90.0% (+5.0 points) |
-| Discoverability | 100.0% | 95.0% |
-| Effectiveness | 64.6% → 89.0% (+24.4 points) | 67.1% → 85.8% (+18.7 points) |
-| Efficiency | 100.0% | 100.0% |
+| Overall | 94.9% — baseline ran, but no comparable score was available; uplift unavailable | 89.1% — baseline ran, but no comparable score was available; uplift unavailable |
+| Security | 100.0% → 100.0% (±0.0 points) | 87.5% → 100.0% (+12.5 points) |
+| Correctness | 60.0% → 95.0% (+35.0 points) | 75.0% → 95.0% (+20.0 points) |
+| Discoverability | 100.0% — baseline ran, but no comparable score was available; uplift unavailable | 91.7% — baseline ran, but no comparable score was available; uplift unavailable |
+| Effectiveness | 52.1% → 81.3% (+29.2 points) | 50.0% → 87.5% (+37.5 points) |
+| Efficiency | 98.0% — baseline ran, but no comparable score was available; uplift unavailable | 71.5% — baseline ran, but no comparable score was available; uplift unavailable |
 
 ## Skill Version(s): <br>
-e6f852f (source: git SHA, committed 2026-10-13) <br>
+c98e456 (source: git SHA, committed 2026-10-28); DOCA 3.5 (source: frontmatter doca_version) <br>
 
 ## Ethical Considerations: <br>
 NVIDIA believes Trustworthy AI is a shared responsibility and we have established policies and practices to enable development for a wide array of AI applications. When downloaded or used in accordance with our terms of service, developers should work with their internal team to ensure this skill meets requirements for the relevant industry and use case and addresses unforeseen product misuse. <br>

@@ -1,7 +1,7 @@
 ---
 name: gke-alert-configuration
 metadata:
-  version: "1.0.2"
+  version: "1.0.3"
   category: CloudInfrastructure
   canonical_source: https://github.com/google/skills/tree/main/skills/cloud/gke-alert-configuration
 description: >-
@@ -409,6 +409,6 @@ configurations when working in a repository:
 *   [Google Cloud Managed Service for Prometheus Documentation](https://docs.cloud.google.com/stackdriver/docs/managed-prometheus.md.txt)
 *   [GKE Observability and Monitoring Concepts](https://docs.cloud.google.com/kubernetes-engine/docs/concepts/observability.md.txt)
 *   [Google Cloud Alerting Policies in Terraform](https://docs.cloud.google.com/monitoring/alerts/terraform.md.txt)
-*   [Google Cloud Monitoring Pricing](https://docs.cloud.google.com/monitoring/pricing.md.txt
+*   [Google Cloud Monitoring Pricing](https://cloud.google.com/products/observability/pricing)
 *   [Google SRE Workbook: Alerting on SLOs](https://sre.google/workbook/alerting-on-slos/)
 *   [Awesome Prometheus Alerts Repository](https://github.com/samber/awesome-prometheus-alerts)

@@ -52,6 +52,12 @@ a real folder at `skills/<category>/<name>/SKILL.md`. Trigger words (`says:`) an
 | `unreal-niagara` | "Niagara", "VFX", "particle system"; `NS_`/`NE_` |
 | `unreal-packaging` | "package Unreal", "cook content", "shipping build" |
 
+### Ebitengine (`skills/ebitengine/`, target v2.10.5 / Go 1.25+)
+
+| Skill | Pick it when |
+|-------|--------------|
+| `ebitengine-game` | "Ebitengine", "Ebiten", "2D game in Go", `Update`/`Draw`/`Layout`, action input, sprites, text, audio, scenes, testing or builds in an Ebitengine game; `go.mod` requiring `github.com/hajimehoshi/ebiten/v2` plus game imports |
+
 ### Web engines (`skills/web-engines/`) — detected from `package.json` + imports
 
 | Skill | Pick it when |
@@ -70,6 +76,7 @@ a real folder at `skills/<category>/<name>/SKILL.md`. Trigger words (`says:`) an
 | `bevy-ecs` | "Bevy", "ECS system/query", `Commands`, "Bevy plugin"; `Cargo.toml` dep `bevy` |
 | `pygame-core` | "pygame", "blit", "sprite group", game loop; `import pygame` |
 | `love2d-core` | "LÖVE", "love2d", `love.draw`, `love.update(dt)`; `main.lua`/`conf.lua`/`*.love` |
+| `defold-core` | "Defold", collection/game object/component, `msg.post`, `on_message`, `on_input`, `acquire_input_focus`, `go.property`, `factory.create`, collection proxy, `bob.jar`, Defold build error; `game.project` + `*.collection`/`*.go`/`*.script` (target Defold 1.14.0) |
 | `roblox-luau` | "Roblox", "Luau", `RemoteEvent`, services; `*.luau` + `*.rbxl(x)` / Rojo |
 | `roblox-datastores` | "DataStore", "save player data", `GetDataStore`; `DataStoreService` |
 | `roblox-ui` | Roblox HUD/menu/inventory/shop, `ScreenGui`, `PlayerGui`, `UDim2`, `AutomaticSize`, `GuiService`, UI clipping/respawn, touch/gamepad focus, generic generated UI |
@@ -77,6 +84,7 @@ a real folder at `skills/<category>/<name>/SKILL.md`. Trigger words (`says:`) an
 | `roblox-characters` | Roblox character/respawn/rig/movement/animation, `CharacterAdded`, `Humanoid`, `Animator`, R6/R15, Tool, stale character reference |
 | `roblox-physics` | Roblox assembly/constraint/collision/query/ownership, `RaycastParams`, overlap, `CanQuery`, impulse, BodyMover, projectile/vehicle/knockback |
 | `roblox-studio-workflow` | edit/inspect/test a Roblox place in Studio, Explorer, Script/LocalScript/ModuleScript placement, tags/Attributes, duplicate remotes/systems, Server & Clients, Output |
+| `roblox-simulator-economy` | Roblox simulator/tycoon/clicker/idle economy, upgrade cost curve, `costGrowth`, buy max, income per second, rebirth/prestige requirement or multiplier, offline earnings, big-number suffixes (K/M/B/Qa), "1000K" display bug, currency exploit, save repair, paid eggs/crates/spins odds, `PolicyService` paid random items; pairs with `roblox-networking` + `roblox-datastores` |
 
 ## Disciplines (`skills/disciplines/`) — cross-engine concepts, load **with** the engine skill
 
@@ -85,7 +93,7 @@ a real folder at `skills/<category>/<name>/SKILL.md`. Trigger words (`says:`) an
 | `create-game-assets` | art direction, game assets, sprite/sprite sheet, tileset, texture, icon, concept art, 3D prop, consistent style | engine importer/rendering skill; installed `imagegen` for raster generation when available |
 | `game-ai` | enemy AI, behavior tree, state machine, steering, pathfinding | `unity-navmesh` / `unreal-behavior-trees` / Godot nav (`godot-nodes-scenes` + `godot-physics`) |
 | `ai-behavior-trees-utility-ai` | behavior tree runtime, blackboard, action/condition node, selector/sequence/parallel, decorator, utility AI, scoring/response curve, consideration, hybrid AI | `game-ai` (FSM/BT/steering choice) / `unreal-behavior-trees` (engine BT/Blackboard assets) |
-| `procedural-gen` | procedural generation, perlin/simplex noise, random seed, dungeon generator | engine tilemap/grid: `godot-tilemap` / `unity-tilemap-2d` / `godot-3d-essentials` |
+| `procedural-gen` | procedural generation, perlin/simplex noise, random seed, dungeon generator, wave function collapse (WFC) | engine tilemap/grid: `godot-tilemap` / `unity-tilemap-2d` / `godot-3d-essentials` |
 | `dialogue-systems` | dialogue system, branching dialogue, Yarn Spinner, Ink, conversation tree; `*.yarn`/`*.ink` | engine UI: `godot-ui-control` / Unity UI |
 | `save-systems` | save system, save/load, persistence, save slots; `save*.json`/`*.sav` | `roblox-datastores` / Godot IO / engine serialization |
 | `audio-design` | audio design, adaptive music, audio mixer, ducking, SFX | `godot-audio` / Unity AudioMixer |
@@ -102,13 +110,13 @@ a real folder at `skills/<category>/<name>/SKILL.md`. Trigger words (`says:`) an
 
 | Genre skill | `says:` triggers | composes (bind `*` to the detected engine) |
 |-------------|------------------|---------------------------------------------|
-| `platformer` | platformer, jump mechanic, double jump, Mario-like | `godot-2d-movement` (or engine physics) + `godot-tilemap`/`unity-tilemap-2d` + `level-design` + `camera-systems` + `game-feel` |
+| `platformer` | platformer, jump mechanic, double jump, wall jump, wall slide, Mario-like | `godot-2d-movement` (or engine physics) + `godot-tilemap`/`unity-tilemap-2d` + `level-design` + `camera-systems` + `game-feel` |
 | `roguelike` | roguelike, procedural dungeon, permadeath, turn-based grid | `procedural-gen` + `godot-tilemap`/`unity-tilemap-2d` + `game-ai` + `save-systems` + `game-feel` |
 | `rpg` | RPG, stats/leveling, inventory, quest system | `godot-resources`/`unity-scriptableobjects` + `dialogue-systems` + `save-systems` + `game-ui-ux` |
 | `fps-shooter` | FPS, first-person shooter, hitscan, aim/shoot | `godot-3d-essentials`/`unreal-cpp-gameplay` + `input-systems` + `game-ai` + `camera-systems` + `game-feel` |
 | `tower-defense` | tower defense, wave spawner, enemy path, tower targeting | `game-ai` + `godot-2d-movement`/engine movement + `level-design` + `game-ui-ux` |
 | `card-game` | card game, deckbuilder, hand/deck/discard, TCG | `godot-resources`/`unity-scriptableobjects` + `game-ui-ux` + `godot-ui-control` (engine UI) |
-| `visual-novel` | visual novel, VN, branching story, choice menu; `*.ink`/`*.yarn` | `dialogue-systems` + `save-systems` + `game-ui-ux` |
+| `visual-novel` | visual novel, VN, branching story, choice menu, Ren'Py; `*.ink`/`*.yarn`/`*.rpy` | `dialogue-systems` + `save-systems` + `game-ui-ux` |
 | `survival-crafting` | survival game, crafting system, inventory, resource gathering | `save-systems` + `godot-resources`/`unity-scriptableobjects` + `procedural-gen` + `game-ui-ux` |
 | `puzzle` | puzzle game, match-3, grid logic, tile-matching | `godot-tilemap`/`unity-tilemap-2d` + `level-design` + `game-feel` |
 
@@ -118,10 +126,15 @@ a real folder at `skills/<category>/<name>/SKILL.md`. Trigger words (`says:`) an
 |----------------|------------------------------|
 | `game-jam` | game jam, 48-hour game, Ludum Dare / GMTK, jam submission |
 | `prototype-fast` | prototype fast, vertical slice, MVP game, greybox |
-| `steam-publish` | publish on Steam, Steamworks, store page, depot/build upload; `steam_appid.txt` |
+| `steam-publish` | publish on Steam, Steamworks, store page, depot/build upload, Steam Deck compatibility review; `steam_appid.txt` |
 | `itch-publish` | publish on itch, itch.io page, `butler push`, upload build; `.itch.toml` |
 
 ## Binding gaps (be honest; do not fabricate a skill)
+
+For a **custom, proprietary, in-house, or unsupported engine**, keep the engine and use the
+router's `custom-engines.md` reference. Load the relevant genre/discipline skills; replace
+catalog engine bindings with verified project APIs. Engine-specific names in composition
+tables are examples, not mandatory dependencies for portable genre systems.
 
 The collection does not yet have a skill for every engine × concept. Several cross-cutting
 concerns are now covered **engine-neutrally** by disciplines that pair with any detected engine —
@@ -136,7 +149,17 @@ the detected engine lacks, load the closest skill(s) and **state the gap** plain
 - **No dedicated 3D-essentials for Unity.** For a Unity FPS, use `unity-csharp-scripting` +
   `unity-physics` + `unity-navmesh`; only Godot has `godot-3d-essentials` and Unreal has
   `unreal-cpp-gameplay`.
-- **No `*-tilemap` for web / Bevy / pygame / Roblox / LÖVE.** Use `level-design` for the concept
+- **No `*-tilemap` for web / Bevy / pygame / Roblox / LÖVE / Defold.** Use `level-design` for the concept
   and the engine's rendering skill for drawing; note the missing engine tilemap skill.
 - **No engine-specific save skill except Roblox.** `save-systems` owns the concept and cites
   Godot IO; `roblox-datastores` is the one engine-specific persistence skill.
+- **Ebitengine uses one engine skill with focused references.** Bind engine movement,
+  collision, rendering/camera, UI, audio, data/save and build slots to `ebitengine-game`;
+  open only the matching reference. A puzzle/card request does not require a platformer
+  scaffold. The Tiled loader is deliberately constrained, not a complete editor importer.
+  Networking guidance does not supply transport/matchmaking; native 3D is outside this
+  2D skill. Never substitute another engine's API to hide one of these gaps.
+- **Defold has one core skill.** Bind movement, input, spawning, level loading and build slots
+  to `defold-core`. There is no Defold GUI, sprite/tilemap or collision skill yet: use
+  `defold-core` (its build reference links the official manuals for those subsystems) plus
+  `game-ui-ux` / `level-design` / `physics-tuning`, and state the gap.

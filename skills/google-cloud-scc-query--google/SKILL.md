@@ -1,7 +1,7 @@
 ---
 name: google-cloud-scc-query
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
   category: Security
 description: >-
   Queries and retrieves active security findings, external exposures, toxic
@@ -23,6 +23,12 @@ on Google Cloud.
 > [!IMPORTANT] There is NO `gcloud scc findings describe` command (`Invalid
 > choice: 'describe'`). To retrieve details for a specific finding by its name,
 > always use `gcloud scc findings list` with a filter on `name`.
+
+## Usage Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read and follow the instructions in
+[Usage Attribution](references/attribution.md).
 
 --------------------------------------------------------------------------------
 

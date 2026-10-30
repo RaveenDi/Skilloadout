@@ -1,6 +1,6 @@
 # doca-public-knowledge-map — routing tables
 
-Full enumerated routing tables moved out of `SKILL.md` to keep the loader within the per-file size budget. The agent opens this file when it needs the concrete docs.nvidia.com / on-disk / GitHub entries.
+Full enumerated routing tables moved out of `SKILL.md` to keep the loader within the per-file size budget. The agent opens this file when it needs the concrete docs.nvidia.com / on-disk / GitHub entries. The version-pinned DOCA 3.5 docs are under `docs.nvidia.com/doca/archive/3-5-0/` (they redirect to NVIDIA's networking docs site).
 
 Companion routing tables (open only the file that matches the question; do not load every file):
 
@@ -26,7 +26,7 @@ the literal wording.
   Answered by combining `## Layout of an installed DOCA package` and
   `## Where to find the version`, with cross-link to the layered
   version-detection rules in
-  [doca-setup ## Capabilities and modes](../../doca-setup/CAPABILITIES.md).
+  doca-setup ## Capabilities and modes (`doca-setup/CAPABILITIES.md`).
 - **"Where is sample &lt;X&gt; on disk and where is its source on GitHub?"** —
   worked example: *"Where is the doca_flow sample that exercises ACL pipes?"*
   Answered by combining `## Layout of an installed DOCA package` (local)
@@ -47,7 +47,7 @@ the literal wording.
 
 If the question fits a different shape (how to write code, how to set up an
 env, how to debug a crash), route to the matching skill instead — see
-[`AGENTS.md`](../../../AGENTS.md) for the routing table.
+bundle `AGENTS.md` for the routing table.
 
 ## Public source code: GitHub
 
@@ -94,19 +94,23 @@ To build against DOCA from a user-owned directory, the canonical environment
 hint is to expose the DOCA `pkg-config` directory before running `meson setup`:
 
 ```bash
-PCDIR="$(dirname "$(find /opt/mellanox/doca -name doca-common.pc -print -quit 2>/dev/null)")"
-export PKG_CONFIG_PATH="${PCDIR}:${PKG_CONFIG_PATH}"  # commonly /opt/mellanox/doca/lib/<arch>-linux-gnu/pkgconfig on DOCA 3.3+; or /opt/mellanox/doca/infrastructure/lib/pkgconfig on legacy / split-profile installs
+PC=$(find /opt/mellanox/doca -name doca-common.pc -print -quit 2>/dev/null)
+if [ -n "$PC" ]; then
+  export PKG_CONFIG_PATH="${PC%/*}:$PKG_CONFIG_PATH"  # commonly /opt/mellanox/doca/lib/<arch>-linux-gnu/pkgconfig on DOCA 3.3+; or /opt/mellanox/doca/infrastructure/lib/pkgconfig on legacy / split-profile installs
+else
+  echo "doca-common.pc not found: partial install, see doca-setup" >&2
+fi
 ```
 
 If `pkg-config --modversion doca-common` fails after that, treat it as a real
 environment problem (wrong package, wrong arch, missing dev package) and stop;
 do not silently change the user's environment. Load
-[`doca-setup`](../../doca-setup/SKILL.md) with the captured command output to
+`doca-setup/SKILL.md` with the captured command output to
 diagnose, repair, and prepare the environment.
 
 ## Where to find the version
 
-Load [`doca-version`](../../doca-version/SKILL.md) and run its
+Load `doca-version/SKILL.md` and run its
 canonical four-source detection chain; do not pick one convenient
 source and stop:
 
@@ -115,12 +119,12 @@ source and stop:
 3. `doca_caps --version`.
 4. On BlueField, the BFB-image version from the documented
    BlueField-side sources in
-   [`doca-version TASKS.md ## configure`](../../doca-version/TASKS.md#configure)
+   `doca-version TASKS.md ## configure` (`doca-version/TASKS.md#configure`)
    (including `bfver` / `/etc/mlnx-release` where available).
 
 Run every source available on the target and compare all observed
 values. If any available source disagrees, stop and route to
-[`doca-version TASKS.md ## debug`](../../doca-version/TASKS.md#debug);
+`doca-version TASKS.md ## debug` (`doca-version/TASKS.md#debug`);
 do not select a preferred value. If none of the canonical sources is
 available, stop and report that the version cannot be established.
 Always quote the versions actually observed; never assume "latest"
@@ -151,12 +155,10 @@ Libraries / Services / Tools umbrella pages) and search from there.
    library names, or sample names.** If you do not see it in this map, in the
    user's local install, or in the official docs you fetched, say so and ask.
 4. **Public sources only.** Reference NVIDIA documentation only on the
-   public hosts listed in [`AGENTS.md` ground rule #1](../../../AGENTS.md).
-   Anything else is not available to a customer agent and is rejected
-   by an internal CI pipeline before the bundle ships.
-5. **No source-tree paths.** Do not reference `devtools/...`, `docs/ai/...`,
-   or any path that only exists inside the DOCA repository. Customers do not
-   have those.
+   public hosts listed in `AGENTS.md` ground rule #1 (bundle `AGENTS.md`).
+   Anything else is not available to a customer agent.
+5. **No source-tree paths.** Cite installed paths (under `/opt/mellanox/doca/`
+   or standard system paths) or public URLs only.
 
 > **Hardware-safety meta-policy.** Every per-artifact `## Safety policy`
 > in this bundle overlays the cross-cutting hardware-safety
@@ -164,7 +166,7 @@ Libraries / Services / Tools umbrella pages) and search from there.
 > NIC hardware state (`mlxconfig` writes, firmware burn, BlueField
 > mode flip, BAR window change, IOMMU / hugepages kernel boot
 > parameter, BFB reflash), load
-> [`doca-hardware-safety`](../../doca-hardware-safety/SKILL.md) alongside
+> `doca-hardware-safety/SKILL.md` alongside
 > the per-artifact skill. Cross-cutting meta-policy lives there
 > (pre-flight inventory, out-of-band access requirement, maintenance
 > window, replica-first validation, rollback discipline,
@@ -175,12 +177,12 @@ Libraries / Services / Tools umbrella pages) and search from there.
 > or recovering a DOCA upgrade or downgrade — moving a host to the
 > next release, refreshing the BFB, bumping an NGC container tag,
 > rolling back, or reacting to an accidental `apt upgrade` drift —
-> load [`doca-upgrade`](../../doca-upgrade/SKILL.md). Its headline
+> load `doca-upgrade/SKILL.md`. Its headline
 > contract is **detect → report → ASK → only-then guided upgrade;
 > never auto-upgrade.** It routes version detection to
-> [`doca-version`](../../doca-version/SKILL.md), every hardware /
+> `doca-version/SKILL.md`, every hardware /
 > firmware / reboot step to
-> [`doca-hardware-safety`](../../doca-hardware-safety/SKILL.md), and
+> `doca-hardware-safety/SKILL.md`, and
 > sunset / deprecation lifecycle lookups back to this map's
 > Release Notes entry below. It does not redefine version detection
 > or the hardware-touching discipline.
@@ -209,7 +211,7 @@ documents.
 | DOCA Overview | <https://docs.nvidia.com/doca/sdk/doca-overview/index.html> | High-level architecture: what DOCA is, what runs on the BlueField DPU vs. the host, libraries vs. applications vs. services vs. tools. |
 | DOCA Installation Guide for Linux | <https://docs.nvidia.com/doca/sdk/NVIDIA+DOCA+Installation+Guide+for+Linux> | Install steps, supported OSes, package layout, post-install verification. Read this whenever the user is setting DOCA up for the first time. |
 | DOCA Programming Guide (index) | <https://docs.nvidia.com/doca/sdk/doca-programming-guide/index.html> | SDK architecture, common patterns, how libraries connect, how to wire up a sample. Read this before drilling into a specific library guide. |
-| DOCA Developer Quick Start Guide | <https://docs.nvidia.com/doca/sdk/doca-developer-quick-start-guide/index.html> | NVIDIA's official "how do I bring DOCA up and run my first reference application" walkthrough. Cite this for any beginner asking "how do I start?" *once they have BlueField + host hardware*. For users **without** hardware (macOS / Windows / Linux without a NIC), route via [`doca-setup ## no-install`](../../doca-setup/TASKS.md#no-install) (NGC container) instead — the Quick Start assumes hardware is already present. |
+| DOCA Developer Quick Start Guide | <https://docs.nvidia.com/doca/sdk/doca-developer-quick-start-guide/index.html> | NVIDIA's official "how do I bring DOCA up and run my first reference application" walkthrough. Cite this for any beginner asking "how do I start?" *once they have BlueField + host hardware*. For users **without** hardware (macOS / Windows / Linux without a NIC), route via `doca-setup ## no-install` (`doca-setup/TASKS.md#no-install`) (NGC container) instead — the Quick Start assumes hardware is already present. |
 | DOCA Release Notes | <https://docs.nvidia.com/doca/sdk/doca-release-notes/index.html> | What changed in a release, supported hardware, supported OSes, known issues. Read whenever the user's symptom could be a known issue. |
 | DOCA Compatibility Policy | <https://docs.nvidia.com/doca/sdk/doca-compatibility-policy/index.html> | NVIDIA's authoritative statement of DOCA version semantics — quarterly GA cadence, October LTS designation (3-year support, 7-update LTS train), the semantic-versioning scheme (X.Y.Z), the three compatibility types (source / binary / behavioral), and the two compatibility directions (backward / forward). Cite this whenever the user asks "what does the version string mean?", "is this LTS release still supported?", or any host ↔ DPU compatibility question. |
 | Developer Zone — DOCA landing | <https://developer.nvidia.com/networking/doca> | Marketing-and-onboarding view (videos, tutorials, blog posts). Use only as a fallback when the official SDK docs do not have the topic yet. |

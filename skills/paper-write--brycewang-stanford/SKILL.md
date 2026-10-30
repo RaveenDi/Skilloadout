@@ -1,9 +1,16 @@
 ---
-name: paper-write
+name: "paper-write"
 description: "Draft LaTeX paper section by section from an outline. Use when user says \"写论文\", \"write paper\", \"draft LaTeX\", \"开始写\", or wants to generate LaTeX content from a paper plan."
-argument-hint: "[venue-or-section]"
-allowed-tools: Bash(*), Read, Write, Edit, Grep, Glob, Agent, WebSearch, WebFetch, mcp__codex__codex, mcp__codex__codex-reply
 ---
+
+> Override for Codex users who want **Claude Code**, not a second Codex agent, to act as the reviewer. Install this package **after** `skills/skills-codex/*`.
+>
+> This reviewer is a different model family from the Codex executor. Every overlay trace/audit records:
+>
+> ```yaml
+> review_independence: cross-family
+> acceptance_status: accepted
+> ```
 
 # Paper Write: Section-by-Section LaTeX Generation
 
@@ -11,7 +18,7 @@ Draft a LaTeX paper based on: **$ARGUMENTS**
 
 ## Constants
 
-- **REVIEWER_MODEL = `gpt-5.4`** — Model used via Codex MCP for section review. Must be an OpenAI model.
+- **REVIEWER_MODEL = `claude-review`** — Claude reviewer invoked through the local `claude-review` MCP bridge. Set `CLAUDE_REVIEW_MODEL` if you need a specific Claude model override.
 - **TARGET_VENUE = `ICLR`** — Default venue. Supported: `ICLR`, `NeurIPS`, `ICML`, `CVPR` (also ICCV/ECCV), `ACL` (also EMNLP/NAACL), `AAAI`, `ACM` (ACM MM, SIGIR, KDD, CHI, etc.), `IEEE_JOURNAL` (IEEE Transactions / Letters, e.g., T-PAMI, JSAC, TWC, TCOM, TSP, TIP), `IEEE_CONF` (IEEE conferences, e.g., ICC, GLOBECOM, INFOCOM, ICASSP). Determines style file and formatting.
 - **ANONYMOUS = true** — If true, use anonymous author block. Set `false` for camera-ready. Note: most IEEE venues do NOT use anonymous submission — set `false` for IEEE.
 - **MAX_PAGES = 9** — Main body page limit. For ML conferences: counts from first page to end of Conclusion section, references and appendix NOT counted. **For IEEE venues: references ARE counted toward the page limit.** Typical limits: IEEE journal = no strict limit (but 12-14 pages typical for Transactions, 4-5 for Letters), IEEE conference = 5-8 pages including references.
@@ -29,11 +36,11 @@ If no PAPER_PLAN.md exists, ask the user to run `/paper-plan` first or provide a
 
 ## Orchestra-Guided Writing Overlay
 
-Keep the existing `insleep` workflow, file layout, and defaults. Use the shared references below only when they improve writing quality:
+Keep the existing workflow, file layout, and defaults. Use the shared references below only when they improve writing quality:
 
-- Read `../shared-references/writing-principles.md` before drafting the Abstract, Introduction, Related Work, or when prose feels generic.
-- Read `../shared-references/venue-checklists.md` during the final write-up and submission-readiness pass.
-- Read `../shared-references/citation-discipline.md` only when the built-in DBLP/CrossRef workflow is insufficient.
+- Read `../shared-references/writing-principles.md` before drafting the Abstract, Introduction, Related Work, or when prose feels generic
+- Read `../shared-references/venue-checklists.md` during the final write-up and submission-readiness pass
+- Read `../shared-references/citation-discipline.md` only when the built-in DBLP/CrossRef workflow is insufficient
 
 These references are support material, not extra workflow phases.
 
@@ -153,7 +160,7 @@ Before drafting the front matter, re-read the one-sentence contribution from `PA
 **§0 Abstract:**
 - Use the 5-part flow from `../shared-references/writing-principles.md`: what, why hard, how, evidence, strongest result
 - Must be self-contained (understandable without reading the paper)
-- Start with the paper's specific contribution, not generic field-level background
+- Structure: problem → approach → key result → implication
 - Include one concrete quantitative result
 - 150-250 words (check venue limit)
 - No citations, no undefined acronyms
@@ -162,18 +169,14 @@ Before drafting the front matter, re-read the one-sentence contribution from `PA
 **§1 Introduction:**
 - Open with a compelling hook (1-2 sentences, problem motivation)
 - State the gap clearly ("However, ...")
-- Give a brief approach overview before the reader gets lost in details
-- List 2-4 specific, falsifiable contributions as a numbered or bulleted list
-- Preview the strongest result early instead of saving it for the experiments section
+- List contributions as a numbered or bulleted list
 - End with a brief roadmap ("The rest of this paper is organized as...")
 - Include the main result figure if space allows
-- Target: 1-1.5 pages
-- Methods should begin by page 2-3 at the latest
+- Target: 1.5 pages
 
 **§2 Related Work:**
 - **MINIMUM 1 full page** (3-4 substantive paragraphs). Short related work sections are a common reviewer complaint.
 - Organize by category using `\paragraph{Category Name.}`
-- Organize methodologically, by assumption class, or by research question; do not write paper-by-paper mini-summaries
 - Each category: 1 paragraph summarizing the line of work + 1-2 sentences positioning this paper
 - Do NOT just list papers — synthesize and compare
 - End each paragraph with how this paper relates/differs
@@ -191,12 +194,11 @@ Before drafting the front matter, re-read the one-sentence contribution from `PA
 - Main results table/figure first
 - Then ablations and analysis
 - Every claim from the introduction must have supporting evidence here
-- For each major experiment, make explicit what claim it supports and what the reader should notice
 - Target: 2.5-3 pages
 
 **§5 Conclusion:**
 - Summarize contributions (NOT copy-paste from intro — rephrase)
-- Limitations (be honest — reviewers appreciate this)
+- Limitations (2-4 material, specific limits — dataset scale, compute regime, assumption X; real ones only, never invented to fill a count. This section is the ONLY home for generic caveats)
 - Future work (1-2 concrete directions)
 - Ethics statement and reproducibility statement (if venue requires)
 - Target: 0.5 pages
@@ -207,11 +209,31 @@ Before drafting the front matter, re-read the one-sentence contribution from `PA
 - Implementation details, hyperparameter tables
 - Additional visualizations
 
+### Step 3.5: Theory Paper Consistency Pass (theory papers only)
+
+Run this pass after drafting all sections and before building the bibliography.
+
+Trigger it when `PAPER_PLAN.md` labels the paper as theory/analysis, or when the drafted sections contain five or more formal result environments (`theorem`, `lemma`, `proposition`, or `corollary`).
+
+**Proof source search:** search the workspace for standalone full-proof sources whose names or contents indicate a canonical proof version (`proof`, `appendix`, `full`, `complete`, `supplement`, `supplementary`). If one exists, ask:
+
+`Inline full proofs from {file}? [Y/n]`
+
+Default to `Y`. If accepted:
+
+- import the full theorem/lemma statement plus proof block into the appendix source;
+- use the main-body theorem statement as the canonical public statement;
+- do not leave placeholders such as "see supplementary proof document" or "proof omitted for brevity";
+- preserve theorem labels, equation labels, and proof structure exactly;
+- keep main-body proof sketches short, but never let the appendix be sketch-only when a full proof source exists.
+
+**Restatement audit:** compare every theorem/lemma/proposition statement restated in the appendix against the main-body version. Audit statements, hypotheses, case splits, quantifiers, domains, notation, variable names, and terminology for defined objects. Resolve all mismatches before Step 4.
+
 ### Step 4: Build Bibliography
 
 **CRITICAL: Only include entries that are actually cited in the paper.**
 
-1. Scan all citation references in the drafted sections (`\citep{}`/`\citet{}` for ML conferences, `\cite{}` for IEEE venues)
+1. Scan all `\citep{}` and `\citet{}` references in the drafted sections
 2. Build a citation key list
 3. For each citation key:
    - Check existing `.bib` files in the project/narrative docs
@@ -265,20 +287,31 @@ This prevents bib bloat (e.g., 948 lines → 215 lines in testing).
 4. Double-check year and venue for every entry
 5. Remove duplicate entries (same paper with different keys)
 
-### Step 5: De-AI Polish and Clarity Pass
+### Step 5: Scientific Writing Quality Pass (5 audit passes)
+
+After drafting all sections, run five sequential audit passes. De-AI polish is included as one part of this quality pass, not a replacement for it.
+
+**Pass 1: Clutter Extraction** — strip sentences to their cleanest components, remove filler, and remove AI-isms.
+
+**Pass 2: Active Voice and Verb Vitality** — identify who did what, convert unnecessary passive voice, and resurrect smothered verbs.
+
+**Pass 3: Sentence Architecture** — flag sentences over 40 words, keep subject and verb close, put familiar context first and new information later, and ensure each paragraph does one job.
+
+**Pass 4: Keyword Consistency** — apply the Banana Rule: do not rename defined technical terms just to avoid repetition. If Methods defines a group, variable, or technique name, Results, Discussion, tables, and captions must use the same term.
+
+**Pass 5: Numerical and Citation Integrity** — check sample sizes, percentages, significant figures, figure/table values, and whether citations support the claims they are attached to.
 
 After drafting all sections, scan for common AI writing patterns and fix them:
 
 First apply the sentence-level clarity rules from `../shared-references/writing-principles.md`:
 
-- keep subject and verb close together,
-- put familiar context first and new information later,
-- place the most important information near the end of the sentence,
-- let each paragraph do one job,
-- use verbs for actions instead of nominalized nouns.
+- keep subject and verb close together
+- put familiar context first and new information later
+- place the most important information near the end of the sentence
+- let each paragraph do one job
+- use verbs for actions instead of nominalized nouns
 
-Then fix the common content patterns below:
-
+**Content patterns to fix:**
 - Significance inflation ("groundbreaking", "revolutionary" → use measured language)
 - Formulaic transitions ("In this section, we..." → remove or vary)
 - Generic conclusions ("This work opens exciting new avenues" → be specific)
@@ -288,18 +321,22 @@ Then fix the common content patterns below:
 - Remove filler: "It is worth noting that", "Importantly,", "Notably,"
 - Avoid rule-of-three lists ("X, Y, and Z" appearing repeatedly)
 - Don't start consecutive sentences with "This" or "We"
-- Replace vague nouns with concrete ones when ambiguity is possible ("this result", "this ablation", "this theorem")
 
 ### Step 6: Cross-Review with REVIEWER_MODEL
 
-Send the complete draft to GPT-5.4 xhigh:
+Send the complete draft to Claude review:
 
 ```
-mcp__codex__codex:
-  model: gpt-5.4
-  config: {"model_reasoning_effort": "xhigh"}
+mcp__claude-review__review_start:
   prompt: |
     Review this [VENUE] paper draft (main body, excluding appendix).
+
+    Judge claim calibration in BOTH directions. Recommend narrowing only when the
+    current scope or modality exceeds the evidence; do not ask for extra hedges
+    around a supported result. Flag stacked hedges, self-defence ("we do not
+    claim"), instruction confessions ("we do not address X"), and generic caveats
+    outside Limitations as writing defects to remove. Tone fixes must never alter
+    facts, negation, modality, scope, comparison direction, or numbers.
 
     Focus on:
     1. Does each claim from the intro have supporting evidence?
@@ -309,12 +346,13 @@ mcp__codex__codex:
     5. Is related work sufficiently comprehensive (≥1 page)?
     6. For theory papers: are proof sketches adequate?
     7. Are figures/tables clearly described and properly referenced?
-    8. Would a skim reader understand the contribution from the title, abstract, introduction, and Figure 1?
 
     For each issue, specify: severity (CRITICAL/MAJOR/MINOR), location, and fix.
 
     [paste full draft text]
 ```
+
+After this start call, immediately save the returned `jobId` and poll `mcp__claude-review__review_status` with a bounded `waitSeconds` until `done=true`. Treat the completed status payload's `response` as the reviewer output, and save the completed `threadId` for any follow-up round.
 
 Apply CRITICAL and MAJOR fixes. Document MINOR issues for the user.
 
@@ -350,19 +388,89 @@ Before declaring done:
 
 ## Key Rules
 
+=== CONFIDENT PROSE, HONEST LIMITS (never upgrades claims) ===
+1. Calibrate each claim to the evidence's actual scope and modality, then state
+   that calibrated claim directly. Necessary assumptions, uncertainty, and
+   scope are part of the claim; stacked hedges and defensive throat-clearing
+   are not.
+2. If the current claim is unsupported, narrow it to a version the evidence
+   supports or cut it. Do not substitute a softer-sounding synonym for fixing
+   scope, modality, comparison, or aggregation.
+3. Put generic caveats and broader boundary discussion in one Limitations
+   section. Outside it, remove generic disclaimers such as "further research
+   is needed", "may not generalize", and "should be interpreted with caution".
+   Claim-defining scope, assumptions, and statistical qualifications stay
+   attached to the claims they make true.
+4. Aim for 2-4 material, specific limitations (dataset scale, compute regime,
+   assumption X). Real ones only — never invent one to meet a count, never
+   apologize generically, never repeat the same limitation through the paper.
+5. Writing instructions are not manuscript content. "Do not mention X" means
+   omit X, not write "we do not address/claim/discuss X". Never expose
+   drafting instructions, requested omissions, reviewer feedback, or revision
+   history in manuscript prose.
+6. Replace self-defence ("we do not claim", "our goal is merely") with a
+   positive, evidence-matched statement of what the paper does establish. If
+   the defensive sentence carries a real boundary, keep that boundary in the
+   claim or Limitations; do not delete truth-conditional content.
+7. Tone-only edits never alter facts, negation, modality, scope, assumptions,
+   comparison direction, aggregation, numbers, formulas, or citations. Genuine
+   overclaims must still be narrowed; supported claims wrapped in redundant
+   caution must be stated directly.
+8. One causal spine: gap -> question -> insight -> consequence -> evidence ->
+   implication. Every section advances it. Make the method feel inevitable:
+   the gap creates a concrete question, the key insight answers it, the method
+   follows from the insight, each major experiment tests a consequence of it,
+   and the conclusion states exactly what the evidence establishes.
+   Front-load the contribution; never narrate the drafting or revision process.
+9. The paper is a launch, not a progress report. Organize the narrative
+   around the work's strongest genuine advantage — a new capability, problem,
+   mechanism or viewpoint, wider applicability, lower cost, a better tradeoff.
+   Material that does not form an advantage stays out of the main line. If the
+   results cannot carry the original story, rebuild the story around the
+   strongest evidence instead of defending the original one.
+10. Pick the contest the paper wins. Do not build the narrative on a metric
+    where the method is not ahead; frame the comparison around the task
+    definition, evaluation dimension or constraint that reflects what the
+    method is for, and say explicitly which contest it wins. Unfavorable
+    numbers still appear — tables stay complete. Where the evidence supports
+    it, explain them as a goal difference or a deliberate tradeoff rather
+    than narrating a defeat ("underperforms", "fails to surpass"); where it
+    does not, state the underperformance neutrally, narrow the claim, and
+    keep it in Limitations if it is material. Never elevate a local
+    observation into a verdict on the whole method, and never invent a
+    tradeoff to cover a weakness.
+11. Every experiment has an argumentative duty: it shows the method works,
+    shows the gain comes from the key mechanism, shows value in the target
+    scenario, or rules out the most likely alternative explanation. An
+    experiment carrying none of these is cut, shortened, moved to the
+    appendix, or redesigned. The experiments section is an argument, not a
+    results warehouse.
+12. State the advantage yourself — under which condition it appears, why it
+    appears, what it solves — rather than expecting the reviewer to find it
+    in a table. Abstract and introduction open like a launch: an important
+    unsolved problem, the gap in existing methods, this paper's distinct
+    idea, the heaviest result. The conclusion reinforces what was solved,
+    proposed and proven and why it matters; no new self-negation or widened
+    limitations in the last paragraph.
+
+
 - **Large file handling**: If the Write tool fails due to file size, immediately retry using Bash (`cat << 'EOF' > file`) to write in chunks. Do NOT ask the user for permission — just do it silently.
+
 - **Do NOT generate author names, emails, or affiliations** — use anonymous block or placeholder
 - **Write complete sections, not outlines** — the output should be compilable LaTeX
 - **One file per section** — modular structure for easy editing
 - **Every claim must cite evidence** — cross-reference the Claims-Evidence Matrix
 - **Compile-ready** — the output should compile with `latexmk` without errors (modulo missing figures)
-- **No over-claiming** — use hedging language ("suggests", "indicates") for weak evidence
+- **Calibrate, don't hedge** — match each claim to its evidence's actual scope and modality, then state it directly; generic caveats live in Limitations only (the CONFIDENT PROSE, HONEST LIMITS block above is the contract)
+- **Launch, not progress report** — organize around the strongest genuine advantage, pick the contest the paper wins, give every experiment an argumentative duty; unfavorable numbers stay in the tables, explained as tradeoffs where the evidence supports that and stated neutrally where it does not — never narrated as defeats, never dressed as a tradeoff they are not (rules 9-12 above)
 - **Venue style matters** — ML conferences (ICLR/NeurIPS/ICML) use `natbib` (`\citep`/`\citet`); **IEEE venues use `cite` package (`\cite{}`, numeric)**. Never mix.
 - **Page limit rules differ by venue** — ML conferences: main body to Conclusion, references/appendix NOT counted. **IEEE: references ARE counted toward the page limit.**
 - **Clean bib** — references.bib must only contain entries that are actually `\cite`d
 - **Section count is flexible** — match PAPER_PLAN structure, don't force into 5 sections
 - **Backup before overwrite** — never destroy existing `paper/` directory without backing up
 - **Front-load the contribution** — do not hide the payoff until the experiments or appendix
+- **Order results by argument, not by lab notebook** — present experiments in the sequence that best builds the case, never in the order they happened to run
+- **Controls and ablations sit next to the claim they test** — not pooled in a distant subsection where the reader has forgotten what was at stake
 
 ## Writing Quality Reference
 
@@ -370,8 +478,19 @@ Before declaring done:
 - `../shared-references/venue-checklists.md` — ICLR/NeurIPS/ICML/IEEE submission requirements to check before declaring done
 - `../shared-references/citation-discipline.md` — stricter fallback for ambiguous citations
 
-Keep using the reverse-outline test and anti-inflation polish from the main workflow above; the shared references are there to improve quality without adding a new phase.
+Principles from [Research-Paper-Writing-Skills](https://github.com/Master-cai/Research-Paper-Writing-Skills):
+
+1. **One message per paragraph** — each paragraph makes exactly one point
+2. **Topic sentence first** — the first sentence states the paragraph's message
+3. **Explicit transitions** — connect paragraphs with logical connectors
+4. **Reverse outline test** — extract topic sentences; they should form a coherent narrative
+
+De-AI patterns from [kgraph57/paper-writer-skill](https://github.com/kgraph57/paper-writer-skill):
+
+5. **No AI watch words** — delve, pivotal, landscape, tapestry, underscore
+6. **No significance inflation** — groundbreaking, revolutionary, paradigm shift
+7. **No formulaic structures** — vary sentence openings and transitions
 
 ## Acknowledgements
 
-Writing methodology adapted from [Research-Paper-Writing-Skills](https://github.com/Master-cai/Research-Paper-Writing-Skills) (CCF award-winning methodology). Citation verification from [claude-scholar](https://github.com/Galaxy-Dawn/claude-scholar) and [Imbad0202/academic-research-skills](https://github.com/Imbad0202/academic-research-skills). This hybrid pack's writing-guidance overlay is adapted from Orchestra Research's paper-writing materials.
+Writing methodology adapted from [Research-Paper-Writing-Skills](https://github.com/Master-cai/Research-Paper-Writing-Skills) (CCF award-winning methodology). Citation verification from [claude-scholar](https://github.com/Galaxy-Dawn/claude-scholar) and [Imbad0202/academic-research-skills](https://github.com/Imbad0202/academic-research-skills). De-AI polish from [kgraph57/paper-writer-skill](https://github.com/kgraph57/paper-writer-skill). Backup mechanism from [baoyu-skills](https://github.com/jimliu/baoyu-skills).

@@ -2,7 +2,7 @@
 
 - **Item:** Officecli Word Form (`officecli-word-form`)
 - **Original source:** https://github.com/iOfficeAI/OfficeCLI/tree/main/skills/officecli-word-form
-- **Repository:** https://github.com/iOfficeAI/OfficeCLI @ `06ab520135a5`
+- **Repository:** https://github.com/iOfficeAI/OfficeCLI @ `89905744ed6d`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

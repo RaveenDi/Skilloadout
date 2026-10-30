@@ -1,7 +1,7 @@
 ---
 name: apigee-agent-gateway-governance
 metadata:
-  version: "1.0.0"
+  version: "1.0.2"
   category: AiAndMachineLearning
 description: >-
   Stands up an Apigee API proxy that a Google Cloud Agent Gateway calls as an
@@ -24,6 +24,12 @@ description: >-
 Wires an Apigee proxy in as an **ext-proc callout** on a GCP Agent Gateway. The
 proxy is a **processor, not an API proxy**: it has no backend, inspects the LLM
 request and response the gateway hands it, and returns a verdict.
+
+## Usage Attribution
+
+**MUST READ**: Before executing any `gcloud`, REST API, or MCP command, you
+MUST read and follow the instructions in
+[Usage Attribution](references/attribution.md).
 
 You build the proxy; the user does not.
 

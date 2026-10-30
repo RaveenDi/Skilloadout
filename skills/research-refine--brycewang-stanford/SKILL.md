@@ -1,8 +1,16 @@
 ---
-name: research-refine
-description: 'Turn a vague research direction into a problem-anchored, elegant, frontier-aware, implementation-oriented method plan via iterative GPT-5.4 review. Use when the user says "refine my approach", "帮我细化方案", "decompose this problem", "打磨idea", "refine research plan", "细化研究方案", or wants a concrete research method that stays simple, focused, and top-venue ready instead of a vague or overbuilt idea.'
-allowed-tools: Bash(*), Read, Write, Edit, Grep, Glob, WebSearch, WebFetch, Agent, mcp__codex__codex, mcp__codex__codex-reply
+name: "research-refine"
+description: "Turn a vague research direction into a problem-anchored, elegant, frontier-aware, implementation-oriented method plan via iterative Claude review. Use when the user says \"refine my approach\", \"帮我细化方案\", \"decompose this problem\", \"打磨idea\", \"refine research plan\", \"细化研究方案\", or wants a concrete research method that stays simple, focused, and top-venue ready instead of a vague or overbuilt idea."
 ---
+
+> Override for Codex users who want **Claude Code**, not a second Codex agent, to act as the reviewer. Install this package **after** `skills/skills-codex/*`.
+>
+> This reviewer is a different model family from the Codex executor. Every overlay trace/audit records:
+>
+> ```yaml
+> review_independence: cross-family
+> acceptance_status: accepted
+> ```
 
 # Research Refine: Problem-Anchored, Elegant, Frontier-Aware Plan Refinement
 
@@ -21,11 +29,11 @@ Four principles dominate this skill:
 
 ```
 User input (PROBLEM + vague APPROACH)
-  -> Phase 0 (Claude): Freeze Problem Anchor
-  -> Phase 1 (Claude): Scan grounding papers -> identify technical gap -> choose the sharpest route -> write focused proposal
-  -> Phase 2 (Codex/GPT-5.4): Review for fidelity, specificity, contribution quality, and frontier leverage
-  -> Phase 3 (Claude): Anchor check + simplicity check -> revise method -> rewrite full proposal
-  -> Phase 4 (Codex, same thread): Re-evaluate revised proposal
+  -> Phase 0 (Local step): Freeze Problem Anchor
+  -> Phase 1 (Local step): Scan grounding papers -> identify technical gap -> choose the sharpest route -> write focused proposal
+  -> Phase 2 (Codex/Claude): Review for fidelity, specificity, contribution quality, and frontier leverage
+  -> Phase 3 (Local step): Anchor check + simplicity check -> revise method -> rewrite full proposal
+  -> Phase 4 (Codex, same completed threadId): Re-evaluate revised proposal
   -> Repeat Phase 3-4 until OVERALL SCORE >= 9 or MAX_ROUNDS reached
   -> Phase 5: Save full history to refine-logs/
   -> Optional handoff: /experiment-plan for a detailed execution-ready experiment roadmap
@@ -33,7 +41,7 @@ User input (PROBLEM + vague APPROACH)
 
 ## Constants
 
-- **REVIEWER_MODEL = `gpt-5.4`** — Reviewer model used via Codex MCP.
+- **REVIEWER_MODEL = `claude-review`** — Claude reviewer invoked through the local `claude-review` MCP bridge. Set `CLAUDE_REVIEW_MODEL` if you need a specific Claude model override.
 - **MAX_ROUNDS = 5** — Maximum review-revise rounds.
 - **SCORE_THRESHOLD = 9** — Minimum overall score to stop.
 - **OUTPUT_DIR = `refine-logs/`** — Directory for round files and final report.
@@ -46,7 +54,7 @@ User input (PROBLEM + vague APPROACH)
 
 ## State Persistence (Checkpoint Recovery)
 
-Long-running refinement sessions may fail mid-way (e.g., API timeout, context compaction, or session interruption). To avoid losing completed work, persist state to `refine-logs/REFINE_STATE.json` after each phase boundary:
+Long-running refinement sessions may fail mid-way (API timeout, context compaction, or session interruption). To avoid losing completed work, persist state to `refine-logs/REFINE_STATE.json` after each phase boundary:
 
 ```json
 {
@@ -60,21 +68,7 @@ Long-running refinement sessions may fail mid-way (e.g., API timeout, context co
 }
 ```
 
-**Field definitions:**
-
-| Field | Values | Meaning |
-|-------|--------|---------|
-| `phase` | `"anchor"` / `"proposal"` / `"review"` / `"refine"` / `"done"` | Last **completed** phase |
-| `round` | 0–MAX_ROUNDS | Current round number |
-| `threadId` | string or null | Reviewer thread ID for `codex-reply` continuity |
-| `last_score` | number or null | Most recent overall score from reviewer |
-| `last_verdict` | string or null | Most recent verdict (READY / REVISE / RETHINK) |
-| `status` | `"in_progress"` / `"completed"` | Loop status |
-| `timestamp` | ISO 8601 | When state was last written |
-
-**Write rules:**
-- **Write after each phase completes** (not before). Overwrite each time — only the latest state matters.
-- **On completion** (Phase 5 finished), set `"status": "completed"`.
+Write after each completed phase. On completion, set `"status": "completed"`.
 
 ## Output Structure
 
@@ -102,26 +96,15 @@ Every `round-N-refinement.md` must contain a **full anchored proposal**, not jus
 Before starting any phase, check whether a previous run left a checkpoint:
 
 1. **Check for `refine-logs/REFINE_STATE.json`**:
-   - If it **does not exist** → **fresh start** (proceed to Phase 0 normally)
-   - If it exists AND `status` is `"completed"` → **fresh start** (delete state file, previous run finished)
-   - If it exists AND `status` is `"in_progress"` AND `timestamp` is **older than 24 hours** → **fresh start** (stale state from a killed/abandoned run — delete the file)
-   - If it exists AND `status` is `"in_progress"` AND `timestamp` is **within 24 hours** → **resume**
-
-2. **On resume**, read the state file and recover context:
-   - Read all existing `refine-logs/round-*.md` files to restore prior work
-   - Read `refine-logs/score-history.md` if it exists
-   - Recover `threadId` for reviewer thread continuity
-   - Log to the user: `"Checkpoint found. Resuming after phase: {phase}, round: {round}."`
-   - **Jump to the next phase** based on the saved `phase` value:
-
-   | Saved `phase` | What was completed | Resume from |
-   |---------------|-------------------|-------------|
-   | `"anchor"` | Phase 0 done | Phase 1 (read anchor from round-0 context) |
-   | `"proposal"` | Phase 1 done | Phase 2 (read `round-0-initial-proposal.md`) |
-   | `"review"` | Phase 2 or 4 done | Phase 3 (read latest `round-N-review.md`) |
-   | `"refine"` | Phase 3 done | Phase 4 (read latest `round-N-refinement.md`) |
-
-3. **On fresh start**, ensure `refine-logs/` directory exists and proceed to Phase 0.
+   - If it does not exist → fresh start
+   - If it exists and `status` is `"completed"` → fresh start
+   - If it exists and `status` is `"in_progress"` but `timestamp` is older than 24 hours → fresh start
+   - If it exists and `status` is `"in_progress"` within 24 hours → resume
+2. **On resume**:
+   - Read all existing `refine-logs/round-*.md` files and `score-history.md`
+   - Recover `threadId` for reviewer continuity
+   - Resume from the next phase based on the saved `phase`
+3. **On fresh start**, ensure `refine-logs/` exists and proceed to Phase 0.
 
 ### Phase 0: Freeze the Problem Anchor
 
@@ -315,12 +298,10 @@ Use this structure:
 
 ### Phase 2: External Method Review (Round 1)
 
-Send the full proposal to GPT-5.4 for an **elegance-first, frontier-aware, method-first** review. The reviewer should spend most of the critique budget on the method itself, not on expanding the experiment menu.
+Send the full proposal to Claude for an **elegance-first, frontier-aware, method-first** review. The reviewer should spend most of the critique budget on the method itself, not on expanding the experiment menu.
 
 ```
-mcp__codex__codex:
-  model: REVIEWER_MODEL
-  config: {"model_reasoning_effort": "xhigh"}
+mcp__claude-review__review_start:
   prompt: |
     You are a senior ML reviewer for a top venue (NeurIPS/ICML/ICLR).
     This is an early-stage, method-first research proposal.
@@ -364,6 +345,12 @@ mcp__codex__codex:
 
     **OVERALL SCORE** (1-10): Weighted toward Problem Fidelity, Method Specificity, Contribution Quality, and Frontier Leverage.
     Use this weighting: Problem Fidelity 15%, Method Specificity 25%, Contribution Quality 25%, Frontier Leverage 15%, Feasibility 10%, Validation Focus 5%, Venue Readiness 5%.
+    (Follow [`taste-calibration.md`](../shared-references/taste-calibration.md):
+    if curated known-good/known-bad past proposals are
+    available, score 3 of each on these axes FIRST to anchor the scale, and
+    name in the review which anchor the proposal sits closest to.)
+    Emit `CALIBRATION: anchored|none`, the weighted composite, and a GAP
+    paragraph. A fresh Claude positive review is cross-family accepted.
 
     For each dimension scoring < 7, provide:
     - The specific weakness
@@ -382,7 +369,9 @@ mcp__codex__codex:
     - RETHINK: the core mechanism or framing is still fundamentally off
 ```
 
-**CRITICAL: Save the `threadId`** from this call for all later rounds.
+After this start call, immediately save the returned `jobId` and poll `mcp__claude-review__review_status` with a bounded `waitSeconds` until `done=true`. Treat the completed status payload's `response` as the reviewer output, and save the completed `threadId` for any follow-up round.
+
+**CRITICAL: Save the returned `jobId`**, poll `mcp__claude-review__review_status` until `done=true`, then save the completed `threadId` from the status result for all later rounds.
 
 **CRITICAL: Save the FULL raw response** verbatim.
 
@@ -494,13 +483,12 @@ Save to `refine-logs/round-N-refinement.md`:
 
 ### Phase 4: Re-evaluation (Round 2+)
 
-Send the revised proposal back to GPT-5.4 in the **same thread**:
+Send the revised proposal back to Claude in the **same completed threadId**:
 
 ```
-mcp__codex__codex-reply:
+mcp__claude-review__review_reply_start:
   threadId: [saved from Phase 2]
-  model: REVIEWER_MODEL
-  config: {"model_reasoning_effort": "xhigh"}
+  # inherits the agent's model/effort — do not re-send
   prompt: |
     [Round N re-evaluation]
 
@@ -528,6 +516,8 @@ mcp__codex__codex-reply:
 
     Same output format: 7 scores, overall score, verdict, drift warning, simplification opportunities, modernization opportunities, remaining action items.
 ```
+
+After this start call, immediately save the returned `jobId` and poll `mcp__claude-review__review_status` with a bounded `waitSeconds` until `done=true`. Treat the completed status payload's `response` as the reviewer output, and save the completed `threadId` for any follow-up round.
 
 Save review to `refine-logs/round-N-review.md`.
 
@@ -645,7 +635,7 @@ If the final verdict is not READY, still write the best current final version he
 <details>
 <summary>Round 1 Review</summary>
 
-[Full verbatim response from GPT-5.4]
+[Full verbatim response from Claude]
 
 </details>
 
@@ -692,6 +682,13 @@ Suggested next step: /experiment-plan
 
 **Checkpoint:** Update `refine-logs/REFINE_STATE.json` with `{"phase": "done", "status": "completed", ...}`.
 
+## Output Protocols
+
+> Follow these shared protocols for all output files:
+> - **[Output Versioning Protocol](../../shared-references/output-versioning.md)** — write timestamped file first, then copy to fixed name
+> - **[Output Manifest Protocol](../../shared-references/output-manifest.md)** — log every output to MANIFEST.md
+> - **[Output Language Protocol](../../shared-references/output-language.md)** — respect the project's language setting
+
 ## Key Rules
 
 - **Large file handling**: If the Write tool fails due to file size, immediately retry using Bash (`cat << 'EOF' > file`) to write in chunks. Do NOT ask the user for permission — just do it silently.
@@ -704,8 +701,8 @@ Suggested next step: /experiment-plan
 - **Minimal experiments.** Inside this skill, experiments only need to prove the core claims.
 - **Review the mechanism, not the parts count.** A long module list is not novelty.
 - **Pushback is encouraged.** If reviewer feedback causes drift or unnecessary complexity, argue back with evidence.
-- **ALWAYS use `config: {"model_reasoning_effort": "xhigh"}`** for all Codex review calls.
-- **Save `threadId` from Phase 2** and use `mcp__codex__codex-reply` for later rounds.
+- **Always ask the Claude reviewer for strict, high-rigor feedback** in every review round.
+- **Save the completed `threadId` from Phase 2** and use `mcp__claude-review__review_reply_start` plus `mcp__claude-review__review_status` for later rounds.
 - **Do not fabricate results.** Only describe expected evidence and planned experiments.
 - **Be specific about compute and data assumptions.** Vague "we'll train a model" is not enough.
 - **Document everything.** Save every raw review, every anchor check, every simplicity check, and every major method change.

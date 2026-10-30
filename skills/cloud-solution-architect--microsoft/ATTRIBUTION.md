@@ -2,7 +2,7 @@
 
 - **Item:** Cloud Solution Architect (`cloud-solution-architect`)
 - **Original source:** https://github.com/microsoft/skills/tree/main/.github/skills/cloud-solution-architect
-- **Repository:** https://github.com/microsoft/skills @ `bd924c165294`
+- **Repository:** https://github.com/microsoft/skills @ `41138f3cb482`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

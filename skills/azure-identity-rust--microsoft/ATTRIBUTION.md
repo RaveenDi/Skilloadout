@@ -2,7 +2,7 @@
 
 - **Item:** Azure Identity Rust (`azure-identity-rust`)
 - **Original source:** https://github.com/microsoft/skills/tree/main/.github/plugins/azure-sdk-rust/skills/azure-identity-rust
-- **Repository:** https://github.com/microsoft/skills @ `bd924c165294`
+- **Repository:** https://github.com/microsoft/skills @ `41138f3cb482`
 - **License:** MIT (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.
