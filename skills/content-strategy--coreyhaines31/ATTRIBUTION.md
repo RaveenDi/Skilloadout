@@ -2,7 +2,7 @@
 
 - **Item:** Content Strategy (`content-strategy`)
 - **Original source:** https://github.com/coreyhaines31/marketingskills/tree/main/skills/content-strategy
-- **Repository:** https://github.com/coreyhaines31/marketingskills @ `820ad2c1c0ac`
+- **Repository:** https://github.com/coreyhaines31/marketingskills @ `88c79f6528a9`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

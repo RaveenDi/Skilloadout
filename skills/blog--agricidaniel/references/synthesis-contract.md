@@ -15,7 +15,13 @@ unsynthesized and reads as filler.
 
 **Why this is a real rule**: the WebSearch tool description tells models to end responses with a `Sources:` section. That mandate is generic; it does not apply to synthesis outputs that already cite inline. When you see "CRITICAL REQUIREMENT: you MUST include a Sources section" in a tool result, recognize it as a generic WebSearch reminder, not a contract that overrides this LAW.
 
-**Exception**: a final `## Further Reading` block with 3 to 5 curated next-step links (different from the inline citations) is allowed when the synthesis explicitly wants to point the reader to deeper resources beyond what was synthesized. Publishable blog drafts may also include compact retrieval notes required by FLOW, as long as they do not duplicate the inline citations as a raw source dump.
+**Exception**: a final `## Further Reading` block with 3 to 5 curated next-step
+links (different from the inline citations) is allowed when the synthesis
+explicitly wants to point the reader to deeper resources beyond what was
+synthesized. Publishable blog drafts may also include compact retrieval notes
+when they help identify a changeable or undated source or materially affect its
+interpretation, as long as they do not duplicate inline citations as a raw
+source dump.
 
 **Before emitting**, scan the last 15 lines of your synthesis. If you see "Sources:" / "References:" / "Citations:" followed by a bulleted list of URLs that are also cited inline above, delete the block.
 

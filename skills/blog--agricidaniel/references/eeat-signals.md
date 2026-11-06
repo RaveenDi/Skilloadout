@@ -36,6 +36,31 @@ publisher and the page also exposes clear editorial ownership.
 - Same name used on social profiles linked via `sameAs`
 - One author per post (co-authors acceptable with both named)
 
+### Authorship Integrity (Google helpful-content page, updated 2026-10-05)
+
+Source: https://developers.google.com/search/docs/fundamentals/creating-helpful-content
+(page shows "Last updated 2026-10-05 UTC"; fetched 2026-10-11).
+
+- Google strongly encourages accurate authorship information, such as bylines,
+  where readers might expect it.
+- Google describes fabricating creator profiles (AI-generated headshots,
+  made-up names, false credentials) as a form of deception. Never invent an
+  author, a headshot, or a credential. If no real accountable person exists, use
+  the real publisher or editorial team and state what is true.
+- Google lists changing a page's date to look fresh, when the content has not
+  substantially changed, as a warning sign. Move `dateModified` only after a
+  substantive edit.
+- Google asks whether automation, including AI generation, is self-evident to
+  visitors through disclosures or other ways. Disclose AI assistance where
+  readers would expect it (see
+  https://developers.google.com/search/docs/fundamentals/using-gen-ai-content,
+  updated 2026-10-01).
+- Who, How, and Why: who created the content (byline, author page), how it was
+  created (method, testing, any automation), and why it exists (to help readers,
+  not to attract search traffic). Google calls Why perhaps the most important.
+- Google also says E-E-A-T is not itself a ranking factor. Treat the above as
+  editorial integrity checks, not a score hack.
+
 ---
 
 ## Author Bio Structure
@@ -128,7 +153,9 @@ can follow the site's existing information architecture.
 
 The Person schema embedded in BlogPosting and on author pages.
 
-| Property | Required | Description | Example |
+The "This project" column is the house convention for author pages. Google's Article documentation recommends only `author.name` and `author.url`; the other properties are optional trust signals, not requirements.
+
+| Property | This project | Description | Example |
 |----------|----------|-------------|---------|
 | `@type` | Yes | Always "Person" | `"Person"` |
 | `@id` | Yes | Stable URI with fragment | `"https://example.com/author/sarah-chen#person"` |
@@ -173,20 +200,19 @@ The Person schema embedded in BlogPosting and on author pages.
 
 ---
 
-## Experience Signal Markers
+## Supported First-Hand Evidence
 
-Phrases that demonstrate first-hand experience. Use these naturally throughout
-content to signal genuine expertise to both human readers and quality raters.
-In AI citation selection, demonstrated Experience is the tie-breaker when two
-sources are similarly authoritative: original testing, named workflows, direct
-observations, and proprietary data win over generic summaries.
+First-hand claims can add value only when they are true and supported by
+methodology, measurements, screenshots, records, or other inspectable evidence.
+Never add first-person phrasing merely to earn E-E-A-T points. Neutral,
+well-sourced explainers are valid.
 
 ### Use These Patterns
 
-| Pattern | When to Use |
+| Pattern | Use Only When |
 |---------|-------------|
-| "When we tested..." | Describing an experiment or A/B test |
-| "In our experience..." | Sharing practitioner insight |
+| "When we tested..." | The test setup, sample, and result can be described |
+| "In our experience..." | The relevant work and observation can be substantiated |
 | "After implementing this for [client]..." | Case study context |
 | "Over the past [N] years, I've found..." | Long-term observation |
 | "Here's what our data shows..." | Introducing proprietary findings |
@@ -206,7 +232,7 @@ observations, and proprietary data win over generic summaries.
 | "Everyone agrees..." | Unfalsifiable |
 | "Trust us when we say..." | Demands trust rather than earning it |
 | Generic "top tips" language | Could have been written by anyone |
-| No first-person perspective | Reads like encyclopedia, not experience |
+| Unsupported first-person claim | Performs experience without evidence |
 | "In this article, we will..." | Filler, not experience signal |
 
 ---
@@ -241,7 +267,12 @@ Trust encompasses and validates all other signals.
 | Expert review | "Reviewed by [Expert Name], [credentials]" |
 | Date transparency | Publish date AND last updated date visible |
 
-**Trustworthiness requires the FLOW evidence triple.** Experience and authority signals only land when the underlying claims are verifiable: year anchor in prose, inline citation with publisher and title, URL with retrieval date in compact retrieval notes, footnotes, or a bibliography. See `flow-alignment.md`.
+**Trustworthiness requires source fidelity and claim-appropriate provenance.**
+Experience and authority signals only land when the underlying claims are
+verifiable. Include source identity, relevant dates, methodology, limitations,
+stable URLs, and retrieval notes when those details are needed to identify or
+interpret the evidence. No fixed citation form is required. See
+`flow-alignment.md`.
 
 ---
 
@@ -297,8 +328,11 @@ scrutiny.
 - **Highest risk**: health, finance, legal, safety, elections, civics, and other
   YMYL topics need strong credentials, sourcing, review, and harm-prevention
   language.
-- **Medium risk**: technical, business, and product guidance needs first-hand
-  testing, transparent methodology, and current sources.
+- **Medium risk**: technical, business, and product guidance needs evidence
+  proportionate to the claim and potential harm. First-hand testing and a
+  transparent methodology are required when the article claims a test or
+  recommends a consequential action; neutral sourced analysis can rely on
+  current, appropriate sources without inventing personal experience.
 - **Lower risk**: hobby and entertainment topics still benefit from experience
   signals, but they do not need the same proof burden as health or finance.
 

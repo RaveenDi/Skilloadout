@@ -2,7 +2,7 @@
 
 - **Item:** Shadcn (`shadcn`)
 - **Original source:** https://github.com/shadcn-ui/ui/tree/main/skills/shadcn
-- **Repository:** https://github.com/shadcn-ui/ui @ `96da9cc7f1aa`
+- **Repository:** https://github.com/shadcn-ui/ui @ `8a3536678a52`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

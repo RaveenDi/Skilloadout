@@ -2,7 +2,7 @@
 
 - **Item:** Spring Boot Engineer (`spring-boot-engineer`)
 - **Original source:** https://github.com/Jeffallan/claude-skills/tree/main/skills/spring-boot-engineer
-- **Repository:** https://github.com/Jeffallan/claude-skills @ `143243cb2da0`
+- **Repository:** https://github.com/Jeffallan/claude-skills @ `078a25cc5bfd`
 - **License:** MIT (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

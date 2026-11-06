@@ -1,6 +1,6 @@
 ---
 name: "cfo-review"
-description: "/c-level-agents:cfo-review [plan] — Numerate-skeptic interrogation of any plan that touches money. Unit economics, runway, dilution, capital allocation. Use when a plan commits meaningful spend — e.g. a hiring wave, a fundraise decision, or a new channel budget."
+description: "Challenge a plan that spends real money: hiring wave, raise, channel budget. Use whenever asked or /c-level-agents:cfo-review."
 ---
 
 # /c-level-agents:cfo-review — CFO Forcing Questions

@@ -3,10 +3,10 @@
 ## Contents
 
 - [robots.txt Template for AI Crawlers](#robotstxt-template-for-ai-crawlers)
-- [Cloudflare AI Crawl Control: CRITICAL](#cloudflare-ai-crawl-control-critical)
+- [Cloudflare AI Crawl Control: Verify Current Settings](#cloudflare-ai-crawl-control-verify-current-settings)
 - [Google Gen-AI Guidance](#google-gen-ai-guidance)
 - [llms.txt Implementation](#llmstxt-implementation)
-- [Server-Side Rendering Requirements](#server-side-rendering-requirements)
+- [Rendering And Target-Crawler Verification](#rendering-and-target-crawler-verification)
 - [Passage-Level Extractability](#passage-level-extractability)
 - [Performance Requirements](#performance-requirements)
 - [Testing AI Crawler Visibility](#testing-ai-crawler-visibility)
@@ -165,18 +165,22 @@ Treat each bot category differently based on your goals:
 
 ---
 
-## Cloudflare AI Crawl Control: CRITICAL
+## Cloudflare AI Crawl Control: Verify Current Settings
 
-**Since July 2025, Cloudflare blocks AI crawlers by default on new domains.**
-This is the single most common reason blogs are invisible to AI systems despite
-having correct robots.txt configuration.
+Cloudflare bot controls can affect some third-party crawlers, but defaults vary
+by account, plan, configuration, crawler, and policy date. Do not treat a
+Cloudflare setting, robots.txt, or client-side rendering as the universal cause
+of missing visibility. Diagnose the intended crawler or Google surface using
+current provider policy, the deployed configuration, response tests, and
+available request logs.
 
 ### How to Fix
 
 1. Log in to Cloudflare dashboard
 2. Navigate to **Security > Bots > AI Crawlers**
 3. Review the list of AI crawlers
-4. **Toggle "Allow" for each AI crawler you want to permit**
+4. Set the policy for each crawler according to the intended product surface
+   and current provider documentation
 5. Save changes
 
 ### What Cloudflare Blocks by Default
@@ -209,12 +213,14 @@ If you get a 403 or an HTML page with "Cloudflare" in it, the crawler is blocked
 
 ## Google Gen-AI Guidance
 
-Google Search Central's AI features guidance says optimization for AI Overviews
-and AI Mode is normal SEO: https://developers.google.com/search/docs/appearance/ai-features.
-Google does not require special AI schema or llms.txt for Search AI features.
-Use crawlable HTML, standard Article schema with author Person and publisher
-Organization, clear source attribution, helpful trustworthy content, and fast
-server responses.
+Google Search Central says optimization for AI Overviews and AI Mode is normal
+SEO:
+https://developers.google.com/search/docs/fundamentals/ai-optimization-guide.
+Google does not require special AI schema, llms.txt, tiny content chunks, or
+AI-only rewrites. Use crawlable content, accurate metadata, clear source
+attribution, helpful non-commodity material, and relevant images or video.
+Creating a page for every possible fan-out query can violate scaled-content
+abuse policy when done to manipulate Search.
 
 ---
 
@@ -277,12 +283,14 @@ for non-Google tools, not a ranking, indexing, or citation requirement.
 
 ---
 
-## Server-Side Rendering Requirements
+## Rendering And Target-Crawler Verification
 
-Standard non-Google AI crawlers generally should be assumed not to execute
-JavaScript unless their documentation says otherwise. Content rendered only via
-client-side JavaScript is risky for AI visibility; render important blog content
-into initial HTML and verify per crawler.
+Do not assume a universal JavaScript capability across non-Google crawlers.
+Check current crawler-specific documentation and test the deployed response.
+For Google, JavaScript-generated primary content and schema are acceptable when
+they reach the rendered DOM, match visible content, and pass validation.
+Initial HTML, SSG, or SSR remain useful resilience and portability measures for
+crawlers that do not execute JavaScript, not unconditional Google pass criteria.
 
 ### Rendering Strategy Ranking
 
@@ -291,7 +299,7 @@ into initial HTML and verify per crawler.
 | **SSG** (Static Site Generation) | Best | Best | Preferred for blogs |
 | **SSR** (Server-Side Rendering) | Excellent | Good | Good for dynamic content |
 | **ISR** (Incremental Static Regeneration) | Excellent | Good | Good for large sites |
-| **CSR** (Client-Side Rendering) | None | Poor for crawlers | Never use for content |
+| **CSR** (Client-Side Rendering) | Crawler-dependent | Risky for non-JS crawlers | Avoid for primary content unless target-crawler rendering is verified |
 
 ### JavaScript Execution by Crawler
 
@@ -316,9 +324,11 @@ into initial HTML and verify per crawler.
 
 ### Vercel Findings
 
-Vercel analyzed 500M+ GPTBot fetches and found **zero evidence of JavaScript
-execution**. GPTBot reads raw HTML only. Content loaded via React hydration,
-Vue mounting, or any client-side framework is completely invisible.
+Vercel reported no evidence of JavaScript execution in its analyzed GPTBot
+fetches. Treat client-rendered-only content as unavailable to GPTBot unless
+current, crawler-specific testing proves otherwise. This does not make
+JavaScript-generated JSON-LD invalid for Google: Google can use it when it is in
+the rendered DOM, matches visible content, and passes validation.
 
 ### Exception: Agentic Tools
 
@@ -327,26 +337,22 @@ Standard AI crawlers generally do not execute JavaScript. However, **agentic too
 - **Google-Agent / Project Mariner** (Google, 2026): Operates through Chrome with full rendering.
 
 These are user-directed agents, not automated crawlers. They can see JS-rendered content,
-but they do not replace the need for SSR - standard crawlers still dominate citation indexing.
+but that does not show how a product selects sources or remove the need to test
+the documented crawlers relevant to the site's goals.
 
 ---
 
 ## Passage-Level Extractability
 
-Crawler access gets a page into the candidate set. Citation selection depends on
-whether the page contains self-contained answer passages AI systems can extract.
-Target 120-180 word passages that answer one question without relying on the
-surrounding article.
+Crawler access gets a page into the candidate set. Organize material with
+descriptive headings and coherent paragraphs for readers, but do not force
+120-180-word passages, fixed-size answer capsules, question headings, or any
+other "chunking" quota. Google explicitly says there is no ideal page length and
+no requirement to break content into tiny pieces for generative AI Search.
 
-Under each H2, start with an approximately 50-word direct-answer sentence that
-gives the answer, the year, the named entity, and the source attribution. Follow
-with specific entities, dates, original examples, and first-hand Experience
-markers. A clean passage can earn an AI Overview citation even when the full
-page is not cited.
-
-AI Overviews also began highlighting links from a user's subscribed
-publications in 2026, so publisher trust and subscriptions can affect which
-citations users notice (Nieman Lab, 2026-05).
+When direct evidence, dates, examples, or first-hand findings are relevant, make
+them clear and source them. Never add first-person experience markers unless the
+article has a real method and evidence behind the claim.
 
 ---
 
@@ -359,30 +365,31 @@ fetch, and extraction reliability before content quality is evaluated.
 (Discovered Labs, Prerender.io, Kevin Indig). They are NOT officially published specifications
 from OpenAI, Anthropic, or Perplexity. Treat as directional targets, not guaranteed cutoffs.
 
-### Thresholds
+### Directional Diagnostics
 
-| Metric | Target | Risk threshold | Consequence |
-|--------|--------|----------------|-------------|
-| TTFB (Time to First Byte) | < 200ms | > 600ms | May reduce crawl or extraction reliability |
-| Full page load (HTML) | < 500ms | > 1,000ms | May reduce crawl frequency |
-| Response size (HTML) | < 200KB | > 500KB | May cause partial content extraction |
+| Metric | Diagnostic use | Action |
+|--------|----------------|--------|
+| TTFB (Time to First Byte) | Compare by region and user agent | Investigate sustained regressions against the site's tested budget |
+| Full page load (HTML) | Measure fetch reliability and variance | Investigate repeated timeouts or incomplete responses |
+| Response size (HTML) | Check whether important material is fetched | Reduce bloat when testing shows truncation or extraction loss |
 
 ### Optimization Priorities
 
-1. **Use a CDN**: Content must be served from edge locations
+1. **Evaluate a CDN**: Use edge delivery when measurements show it improves reliability
 2. **Enable compression**: gzip or Brotli for all text responses
 3. **Minimize HTML bloat**: Remove unused CSS/JS from HTML response
-4. **Cache aggressively**: Static pages should have long cache headers
-5. **Pre-render**: Use SSG or SSR, never CSR for content pages
+4. **Cache intentionally**: Set cache headers that fit update frequency and correctness
+5. **Prefer pre-rendering**: Use SSG or SSR for primary content when broad
+   crawler portability matters
 
 ---
 
 ## Testing AI Crawler Visibility
 
-### Quick Test: See What AI Crawlers See
+### Quick Test: Inspect the Initial Response
 
 ```bash
-# Basic: view raw HTML (what all AI crawlers receive)
+# Basic: view initial response HTML; subsequent rendering varies by crawler
 curl -s https://yourdomain.com/blog/your-post | head -200
 
 # Check if main content is in HTML source
@@ -393,8 +400,8 @@ curl -s https://yourdomain.com/blog/your-post | grep -c "id=\"__next\""
 curl -s https://yourdomain.com/blog/your-post | grep -c "id=\"root\""
 curl -s https://yourdomain.com/blog/your-post | grep -c "id=\"app\""
 
-# If the above returns content in a <noscript> tag or empty divs,
-# your content is behind JS and invisible to AI crawlers.
+# Empty shells indicate client rendering; verify whether each target crawler
+# can render and access the primary content before classifying a failure.
 ```
 
 ### Full Crawler Simulation
@@ -423,6 +430,28 @@ grep -c "your-expected-heading-text" /tmp/gptbot-view.html
 | `<script>` tags contain all content as JSON | Data fetched client-side, not in HTML |
 | HTML under 5KB for a full blog post | Content not rendered server-side |
 
+### Googlebot Byte-Limit Check
+
+For Google Search, inspect the uncompressed response as well as the rendered
+page. Googlebot processes the first 2MB of a supported file and the first 64MB
+of a PDF; content after the cutoff is ignored. Keep the title, meta directives,
+canonical, essential structured data, and primary article content before the
+cutoff. Warn when inline base64 images, CSS, JavaScript, or navigation bloat
+could push critical content beyond it. Treat this as crawl eligibility, not a
+ranking factor.
+
+### Navigation Behavior Check
+
+Flag back-button hijacking only after demonstrating that a user cannot return
+to the previous page normally, is sent to a deceptive page, or receives
+unsolicited recommendations or ads through manipulated history. Legitimate
+History API use is not a violation by itself.
+
+For a section intended as a Google "Read more" deep link, keep its content
+immediately visible and its heading or anchor stable. Do not remove the hash or
+force the scroll position on page load. Other disclosure widgets can still be
+used when they are not the intended deep-link target.
+
 ### Next.js App Router Guidance
 
 - Prefer static rendering for blog routes. Use Server Components for article
@@ -436,21 +465,17 @@ grep -c "your-expected-heading-text" /tmp/gptbot-view.html
 
 ---
 
-## AI Crawler Traffic Growth
+## AI Crawler and Referral Measurement Context
 
-Traffic from AI crawlers is growing exponentially. Sites that block or fail
-to serve these crawlers are losing compounding visibility.
+Infrastructure and analytics vendors report changing crawler volumes and
+referral mixes, often from small baselines and different site samples. Use
+first-party logs and analytics to measure the site's own traffic by documented
+user agent, referrer, date, and response status.
 
-| Metric | Value | Source |
-|--------|-------|--------|
-| GPTBot traffic growth | +305% YoY | Cloudflare Radar, 2025 |
-| PerplexityBot traffic growth | +157,490% YoY | Cloudflare Radar, 2025 |
-| AI crawling volume overall | +32% YoY | Cloudflare, 2025 |
-| Top 10 domains' citation share | 46% of all ChatGPT citations per topic | Growth Memo, Mar 2026 |
-| AI referral traffic share | Small but fastest-growing; no standardized total-web share | Similarweb, 2026-05-28 |
-| AI referral traffic growth | 3x+ YoY from September 2024 to September 2025 | Similarweb, 2026-05-28 |
-| Gemini referral trend | About 18% share, +237% YoY | Similarweb, 2026-05-28 |
-| ChatGPT referral trend | Share slid from about 87% to the high-60s | Similarweb, 2026-05-28 |
+Crawler volume, referral growth, and source-share observations do not establish
+a ranking factor, readiness score, citation probability, or causal visibility
+benefit. Blocking a crawler can be an intentional policy choice; document the
+tradeoff against the site's stated goals.
 
 ---
 
@@ -458,11 +483,13 @@ to serve these crawlers are losing compounding visibility.
 
 | Check | Pass | Fail |
 |-------|------|------|
-| robots.txt allows AI crawlers | All major bots listed with `Allow: /` | Missing entries or `Disallow: /` |
-| Cloudflare AI settings reviewed | AI crawlers explicitly allowed in dashboard | Default block left in place |
+| robots.txt matches declared crawler policy | Documented crawlers are allowed or blocked as intended | Policy and file behavior disagree |
+| Cloudflare AI settings reviewed | Dashboard setting matches the declared policy | Setting was not reviewed or contradicts policy |
 | llms.txt treated as optional | Not required for Google AI visibility | Treating a missing file as a blocker |
-| Content in HTML source | `curl` returns full content | Empty divs, JS-only rendering |
-| TTFB under 200ms | Measured from CDN edge | Over 600ms increases crawl or extraction risk |
-| Schema in HTML source | Standard Article, Person, Organization JSON-LD in source HTML | Special AI-only schema or JS-injected schema |
+| Primary content accessible to the target crawler | Verified access; useful initial HTML improves portability | Testing shows the declared crawler cannot retrieve or render the primary content |
+| Server response reliability | Measured from relevant regions and user agents | Timeouts or repeated failures block retrieval |
+| Schema available to the target crawler | Source/server-rendered for non-JS crawlers; source or rendered DOM for Google | Special AI-only schema or absent from the rendered DOM |
+| Googlebot byte cutoff checked | Critical metadata and content occur within first 2MB | Content after first 2MB produces a crawl warning, not an automatic publication failure |
+| Browser history behaves normally | Back returns to the previous page | Deceptive entries, forced redirects, or unsolicited pages obstruct Back |
 | Sitemap.xml accessible | Valid XML, all blog URLs included | Missing or returns 404 |
 | No Cloudflare challenge on bot UA | 200 status code | 403 or challenge page |

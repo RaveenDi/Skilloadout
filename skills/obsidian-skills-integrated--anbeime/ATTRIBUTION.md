@@ -2,7 +2,7 @@
 
 - **Item:** Obsidian Skills Integrated (`obsidian-skills-integrated`)
 - **Original source:** https://github.com/anbeime/skill/tree/main/skills/obsidian-skills-integrated
-- **Repository:** https://github.com/anbeime/skill @ `65de48eb885f`
+- **Repository:** https://github.com/anbeime/skill @ `9d21a2eeba44`
 - **License:** MIT (resolved via skill)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

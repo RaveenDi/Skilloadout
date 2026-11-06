@@ -2,7 +2,7 @@
 
 - **Item:** Hv Analysis (`hv-analysis`)
 - **Original source:** https://github.com/KKKKhazix/khazix-skills/tree/main/hv-analysis
-- **Repository:** https://github.com/KKKKhazix/khazix-skills @ `322346ded812`
+- **Repository:** https://github.com/KKKKhazix/khazix-skills @ `35bd05b466ce`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

@@ -37,7 +37,7 @@ hooks:
           command: "SH=\"\"; for c in \"${PWF_SCRIPT_DIR}/skill-hook.sh\" \"${CLAUDE_SKILL_DIR}/scripts/skill-hook.sh\" \"$HOME/.claude/skills/planning-with-files-zh/scripts/skill-hook.sh\" \"$HOME/.claude/skills/planning-with-files/scripts/skill-hook.sh\" \"$HOME/.claude/plugins/marketplaces/planning-with-files/scripts/skill-hook.sh\"; do [ -f \"$c\" ] && { SH=\"$c\"; break; }; done; [ -n \"$SH\" ] && sh \"$SH\" --event=precompact; exit 0"
 metadata:
 
-  version: "3.26.0"
+  version: "3.28.0"
 
 ---
 
@@ -247,9 +247,14 @@ if 操作失败:
 
 ### 列出已保存的计划
 
+
+为代理提供结构化路径和状态时，在列表命令后添加 `--json`（PowerShell：`-Json`）。字段说明和代理任务交接示例见 [plan-inventory.md](plan-inventory.md)。此查询是可选操作，正常启用技能时不会自动运行。
+
 恢复任务前，可运行 `sh "<skill-dir>/scripts/set-active-plan.sh" --list` 查找计划；在 Windows PowerShell 中运行 `& "<skill-dir>/scripts/set-active-plan.ps1" -List`。将 `<skill-dir>` 替换为此技能的安装目录，并将当前工作目录保持在项目根目录。
 
 此命令仅执行读取，列出当前目录下 `.planning/` 中的命名计划及阶段进度。`[active]` 表示共享的默认指针，不会将会话绑定到计划。并行任务仍需为每个宿主设置 `PLAN_ID`，或使用独立的工作树。
+
+当钩子提示有多个计划可用，或某个命名计划的所有阶段均已完成时，运行列表命令，并告诉用户哪些计划看起来已经完成。只归档用户同意的计划：`--archive <id>`（PowerShell：`-Archive <id>`）预览移动到 `.planning/.archive/` 的操作，`--yes`（`-Yes`）执行移动，`--restore <id>`（`-Restore <id>`）将计划移回。不要仅因计划时间较久或已完成就将其归档。
 
 ## 安全边界
 

@@ -1,20 +1,15 @@
 # Content Distribution Strategy: Playbook for AI Visibility
 
-Vendor-reported datasets suggest many AI citations come from off-site signals,
-not on-page optimization alone. Treat the often-cited 88-92% range as directional
-guidance, not a universal benchmark. This playbook covers channel-by-channel
-distribution tactics to support traditional search visibility and AI citation
-readiness.
-
-**Budget allocation**: 40% owned content / 60% earned media and distribution.
-Most companies allocate 90/10: this is wrong for AI search SEO. Treat the
-split as directional, vendor-reported guidance. Off-site presence is a major
-factor in whether AI systems cite your content.
+Distribution helps content reach people on the channels they use. Vendor
+datasets also observe off-site sources in AI answers, but those observations are
+non-causal and do not establish a universal citation share or budget formula.
+Allocate effort according to audience relevance, evidence, and measured
+business outcomes.
 
 ## Contents
 
-- [Reddit (Highest Growth Channel for AI Visibility)](#reddit-highest-growth-channel-for-ai-visibility)
-- [YouTube (Strongest AI Visibility Correlation)](#youtube-strongest-ai-visibility-correlation)
+- [Reddit](#reddit)
+- [YouTube](#youtube)
 - [LinkedIn](#linkedin)
 - [Twitter / X](#twitter--x)
 - [Email Newsletter](#email-newsletter)
@@ -25,7 +20,7 @@ factor in whether AI systems cite your content.
 
 ---
 
-## Reddit (Highest Growth Channel for AI Visibility)
+## Reddit
 
 **Platform change (June 2023):** Reddit restricted high-volume and commercial API
 access. Limited compliant API use may still be available, but content strategy
@@ -33,12 +28,10 @@ should rely on organic participation, not programmatic posting, scraping, or
 automation.
 
 ### Why Reddit Matters for AI
-- Reddit visibility in AI citations grew in vendor-reported datasets; verify the
-  source, date, and methodology before quoting exact percentages
-- Google's $60M annual API deal surfaces Reddit content in AI training
-- 7,085 of 10,000 keyphrases show "Discussions and Forums" SERP features
-- 2.2-21% of AI Overview citations by query type come from Reddit
-- 70.85% of keyphrases with product reviews show Discussion features in SERPs
+- Community discussions can reveal language, questions, and practitioner
+  context that first-party pages miss.
+- Visibility observations vary by query, product, and date. Do not infer a
+  ranking or citation benefit from participation.
 
 ### Subreddit Research Methodology
 
@@ -56,7 +49,7 @@ automation.
    | Self-promotion rules | Most subs require max 10% self-promotional content |
    | Post types allowed | Some ban links entirely; others require text posts |
    | Active moderators | Dead subs provide no value |
-   | Comment quality | High-quality discussions = higher AI citation chance |
+   | Comment quality | High-quality discussions better serve the community |
    | Flair requirements | Some subs require specific post flair |
 
 3. **Observe before posting**: Spend 1-2 weeks reading and commenting
@@ -80,7 +73,7 @@ content. For every 1 promotional post, you need 9 genuine contributions
 ```
 Title: [Specific finding] - [context/data point]
 
-TL;DR: [2-3 sentence summary with key stats]
+TL;DR: [concise standalone summary with verified support where needed]
 
 [Paragraph 1: The insight or finding with data]
 
@@ -104,26 +97,25 @@ Mine existing threads for content ideas:
 3. Write blog posts that answer these questions with data
 4. Answer the Reddit thread with a genuine, helpful response (link optional)
 
-This creates a flywheel: Reddit thread ranks for the query, your comment
-adds value, your blog post becomes the authoritative source.
+This can create a useful cross-reference when the Reddit comment genuinely
+helps the community and the blog post provides deeper verified support. Do not
+promise ranking, authority, or citation outcomes.
 
 ---
 
-## YouTube (Strong AI Visibility Correlation)
+## YouTube
 
-### Why YouTube Matters for AI
-- 0.737 correlation with AI visibility in an Ahrefs 75,000-brand study; this is
-  correlation, not proof of causation
-- Citations in AI Overviews up 414% (Q1 2025, NP Digital)
-- How-to video citations up 651%
-- Visual demo citations up 592%
-- 200x more cited than any other video platform
-- YouTube is the second-largest search engine globally
+### When YouTube Helps
+Use video when a relevant demonstration, walkthrough, or expert explanation
+adds material value for the audience. Vendor observations about video mentions
+and measured visibility are non-causal, time-bound context, not a ranking,
+readiness, or citation bonus.
 
 ### Companion Video Structure
 
-Mirror your blog's H2 sections as video chapters. This creates cross-platform
-topical authority that AI systems recognize.
+When the same material suits both formats, video chapters may mirror the blog's
+topic sequence so people can navigate consistently. Do not manufacture a
+companion video or claim machine-recognized authority.
 
 | Blog Section | Video Chapter | Notes |
 |-------------|---------------|-------|
@@ -142,8 +134,8 @@ topical authority that AI systems recognize.
 - Front-load the value: "[Key Finding]: How to [Achieve Outcome]"
 
 ### Transcript SEO
-YouTube auto-captions are approximately 85% accurate. Always upload your own
-transcript for perfect accuracy:
+YouTube auto-captions can contain errors. Upload your own transcript for
+accuracy:
 
 1. Export transcript from your blog post (strip formatting)
 2. Add timestamps matching video chapters
@@ -161,7 +153,7 @@ a current primary source is loaded.
 |---------|-----------|
 | Colors | Contrasting colors (complementary palette), avoid YouTube red |
 | Text | Maximum 4 words, large readable font (even on mobile) |
-| Face | Close-up with expressive emotion (increases CTR 30-40%) |
+| Face | Close-up with expressive emotion (test against your own channel data) |
 | Consistency | Use brand template for recognizable channel identity |
 | Resolution | 1280x720 minimum, 16:9 aspect ratio |
 | File size | Under 2MB (YouTube compresses further) |
@@ -187,14 +179,14 @@ Resources mentioned:
 #keyword1 #keyword2 #keyword3
 ```
 
-### Video Performance Targets
+### Video Performance Observations
 
-| Metric | Target | Why |
-|--------|--------|-----|
-| Length | 10+ minutes | Longer videos get more AI citations |
-| Retention | 50%+ average | Signals quality to YouTube algorithm |
-| CTR | 5%+ | Indicates compelling title/thumbnail |
-| Upload frequency | 1-2/week | Consistent publishing builds authority |
+| Metric | How to Use It |
+|--------|---------------|
+| Length | Match the time needed to teach or demonstrate the topic |
+| Retention | Diagnose where the intended audience stops finding value |
+| CTR | Review whether the title and thumbnail accurately set expectations |
+| Upload frequency | Choose a sustainable cadence; no authority quota applies |
 
 ### YouTube Shorts Note
 
@@ -231,8 +223,11 @@ over keyword-optimized SEO content.
 | Links | Put external links in the FIRST COMMENT, not the body |
 
 ### Why First Comment for Links
-LinkedIn's algorithm suppresses posts containing external links in the body.
-Posts with external links get 30-50% less reach than text-only posts. Place
+Some practitioners report lower reach for posts with external links in the
+body. Observational studies disagree: some find a reach penalty, others find
+little or none, and LinkedIn has not confirmed a link penalty (for example
+Ordinal's analysis, https://www.tryordinal.com/blog/linkedin-link-penalty-study,
+seen in search 2026-10-11, not fully verified). As a low-cost hedge, place
 your blog link as the first comment immediately after publishing.
 
 ### Thought Leadership Positioning
@@ -340,23 +335,23 @@ If this was useful, retweet the first tweet so others can find it.
 ## Email Newsletter
 
 ### Timing
-Send within 24 hours of blog post publication. Freshness drives engagement
-and early traffic signals that benefit both traditional and AI search.
+Send when the audience expects the newsletter and the material is ready. Do not
+claim that delivery timing creates search or AI-citation benefits.
 
 ### Subject Line Formulas
 
 | Formula | Example |
 |---------|---------|
-| `[Stat]: [Key Finding]` | "61% CTR Decline: How AI Overviews Are Reshaping Search" |
-| `How [Strategy] Delivers [Outcome]` | "How Answer-First Formatting Drives More AI Citations" |
-| `[Number] [Things] That [Outcome]` | "5 Off-Site Signals That Drive AI Citations (Data Inside)" |
-| `The [Adjective] Truth About [Topic]` | "The Uncomfortable Truth About SEO in 2026" |
-| `We Analyzed [N] [Things]: [Specific Finding]` | "We Analyzed 75,000 Brands: What Drives AI Visibility" |
+| `[Verified Stat]: [Supported Finding]` | `[VERIFIED RESULT]: [READER-RELEVANT FINDING]` |
+| `How [Method] Affected [Measured Outcome]` | Use only with supplied methodology, evidence, and results |
+| `[Number] [Things] for [Reader Task]` | Use only when the item count follows the real material |
+| `[Clear Finding] About [Topic]` | State the supported finding without clickbait |
+| `We Analyzed [N] [Things]: [Specific Finding]` | Use only when the real sample, method, limitations, and results are supplied |
 
-### Excerpt Structure (150-200 Words)
+### Excerpt Structure (sized to the message)
 
 ```
-**TL;DR**: [1-2 sentence summary of the blog post's core finding]
+**TL;DR**: [concise summary of the blog post's core finding]
 
 3 key takeaways from this week's analysis:
 
@@ -386,24 +381,20 @@ and early traffic signals that benefit both traditional and AI search.
 
 ## Review Platforms (B2B)
 
-### Why Reviews Drive AI Citations
-- Multi-platform review presence gives 2.6-3.5x citation multiplier
-  (Authoritas, 2025)
-- G2 accounts for 22-23% of review-platform citations (Radix via G2's own blog;
-  self-reported - Hall.com independent analysis found only 8.25%)
-- 33% of all review citations come from G2 (Profound via G2's blog; treat as directional)
-- Companies with profiles on 3+ platforms: 4.6-6.3 citations vs 1.8
-  without (2.6-3.5x multiplier)
+### Why Review Platforms Matter
+Review platforms can help buyers compare products and expose recurring
+questions or objections. Vendor citation-share studies conflict across samples,
+so treat them as non-causal context rather than a multiplier.
 
 ### Platform Priority (B2B)
 
-| Platform | Citation Share | Priority |
-|----------|---------------|----------|
-| G2 | 22-23% of review citations | Critical |
-| Capterra | 15-18% | High |
-| TrustRadius | 10-12% | High |
-| Gartner Peer Insights | 8-10% | Medium |
-| Trustpilot | Consumer-focused | If B2C |
+| Platform | Audience Fit | Priority Rule |
+|----------|--------------|---------------|
+| G2 | B2B software buyers | Use when the category and customers are active there |
+| Capterra | Software comparison | Use when it supports the buyer journey |
+| TrustRadius | Detailed B2B reviews | Use when depth and category coverage fit |
+| Gartner Peer Insights | Enterprise software | Use for relevant enterprise categories |
+| Trustpilot | Broad consumer reviews | Use when the audience researches there |
 
 ### Profile Optimization Checklist
 
@@ -420,31 +411,32 @@ and early traffic signals that benefit both traditional and AI search.
 ### Review Generation Strategy
 - Ask customers at high-satisfaction moments (post-onboarding, after milestone)
 - Make the process frictionless: provide direct links to review forms
-- Respond to every review (positive and negative) within 48 hours
-- Negative review responses demonstrate transparency (E-E-A-T signal)
-- Goal: maintain 4.0+ rating across all platforms
-- Volume: 50+ reviews per platform for credible presence
+- Respond to reviews when a useful, accurate reply is warranted
+- Handle negative reviews transparently and without suppressing criticism
+- Track rating and review coverage in context; no universal score or volume
+  threshold creates trust, ranking, or citation benefits
 
 ---
 
 ## Wikipedia and Wikidata
 
-### Why Wikipedia Matters
-- 7.8% of all ChatGPT citations reference Wikipedia (Profound)
-- Used as a "credibility tiebreaker" when AI sources conflict
-- Wikidata Q-IDs strengthen entity recognition in Knowledge Graph
+### Optional Entity and Reference Context
+Wikipedia and Wikidata can be useful public reference projects when an entity
+independently satisfies their policies. Do not create or edit entries as an AI
+citation, ranking, credibility, or Knowledge Graph tactic.
 
 ### Strategy
 Wikipedia requires notability established through independent, reliable
 sources. You cannot create a Wikipedia page for self-promotion.
 
-**Pathway to Wikipedia presence**:
-1. Get covered by 3-5 independent reliable sources (news outlets, industry publications)
-2. Ensure coverage is substantive (not just mentions)
+**Policy-compliant pathway**:
+1. Confirm independent notability using reliable, substantive sources
+2. Disclose conflicts of interest and follow the project's contribution rules
 3. Create or request a Wikidata item only if the entity meets Wikidata notability
    policy; disclose conflicts of interest and avoid promotional edits
 4. If notable, an independent editor may create a Wikipedia article
-5. Never edit your own Wikipedia page: this violates Wikipedia policy
+5. For a connected subject, prefer talk-page or requested-edit processes and
+   follow current conflict-of-interest guidance
 
 ### Wikidata Entry
 ```
@@ -483,15 +475,15 @@ Industry: [Q-ID for your industry]
 | Week | Action | Purpose |
 |------|--------|---------|
 | Week 2 | Pitch to industry newsletters | Earned media |
-| Week 3 | Engage in 2-3 Reddit threads per day | Community building |
-| Week 4 | Update blog post with new data (if available) | Freshness signal |
+| Week 3 | Participate in relevant Reddit discussions when helpful | Community building |
+| Week 4 | Update the blog post only if facts or evidence changed | Accuracy |
 
 ### Quarterly
 
 | Action | Purpose |
 |--------|---------|
-| Refresh blog post with new statistics | Freshness (76% citation factor) |
-| Record updated YouTube video (if data changed significantly) | Cross-platform freshness |
+| Refresh blog post when statistics materially change | Accuracy and reader trust |
+| Record updated YouTube video if the changed data affects its usefulness | Cross-platform accuracy |
 | Audit review platform profiles | Ensure accuracy |
 | Review AI citation metrics | Adjust strategy |
 
@@ -504,11 +496,11 @@ Industry: [Q-ID for your industry]
 | Channel | Primary Metric | Secondary Metrics |
 |---------|---------------|-------------------|
 | Reddit | Thread engagement (upvotes + comments) | Referral traffic, keyword rankings for thread URLs |
-| YouTube | AI Overview citation rate | Watch time, subscriber growth, transcript keyword rankings |
+| YouTube | Watch time for the intended audience | Subscriber growth, referral traffic, useful feedback |
 | LinkedIn | Engagement rate (reactions + comments / impressions) | Profile views, connection requests, referral traffic |
 | Twitter/X | Thread impressions and retweets | Profile clicks, link clicks |
 | Email | Click-through rate | Open rate, reply rate, unsubscribe rate |
-| Review platforms | Rating and review count | AI citation mentions, profile views |
+| Review platforms | Rating and review count | Profile views and qualified referrals |
 
 ### AI Citation Tracking
 

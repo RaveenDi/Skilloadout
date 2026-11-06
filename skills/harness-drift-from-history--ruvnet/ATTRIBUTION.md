@@ -2,7 +2,7 @@
 
 - **Item:** Harness Drift From History (`harness-drift-from-history`)
 - **Original source:** https://github.com/ruvnet/ruflo/tree/main/plugins/ruflo-metaharness/skills/harness-drift-from-history
-- **Repository:** https://github.com/ruvnet/ruflo @ `d000e27e82c7`
+- **Repository:** https://github.com/ruvnet/ruflo @ `206e59259a1d`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

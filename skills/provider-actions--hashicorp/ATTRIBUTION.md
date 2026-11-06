@@ -2,7 +2,7 @@
 
 - **Item:** Provider Actions (`provider-actions`)
 - **Original source:** https://github.com/hashicorp/agent-skills/tree/main/plugins/terraform/skills/provider-actions
-- **Repository:** https://github.com/hashicorp/agent-skills @ `bc6b14b77481`
+- **Repository:** https://github.com/hashicorp/agent-skills @ `5e30fa5c867b`
 - **License:** MPL-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

@@ -2,7 +2,7 @@
 
 - **Item:** Baoyu Post To X (`baoyu-post-to-x`)
 - **Original source:** https://github.com/JimLiu/baoyu-skills/tree/main/skills/baoyu-post-to-x
-- **Repository:** https://github.com/JimLiu/baoyu-skills @ `1567581c26ec`
+- **Repository:** https://github.com/JimLiu/baoyu-skills @ `5792c7dc8d09`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

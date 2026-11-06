@@ -2,7 +2,7 @@
 
 - **Item:** Multi Platform Launch (`multi-platform-launch`)
 - **Original source:** https://github.com/tech-leads-club/agent-skills/tree/main/packages/skills-catalog/skills/(gtm)/multi-platform-launch
-- **Repository:** https://github.com/tech-leads-club/agent-skills @ `738451e40785`
+- **Repository:** https://github.com/tech-leads-club/agent-skills @ `8658b6658c76`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

@@ -2,7 +2,7 @@
 
 - **Item:** Caveman Review (`caveman-review`)
 - **Original source:** https://github.com/JuliusBrussee/caveman/tree/main/skills/caveman-review
-- **Repository:** https://github.com/JuliusBrussee/caveman @ `9b68f7ed12b0`
+- **Repository:** https://github.com/JuliusBrussee/caveman @ `ca3a524022a9`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

@@ -2,7 +2,7 @@
 
 - **Item:** Wiki Qa (`wiki-qa`)
 - **Original source:** https://github.com/microsoft/skills/tree/main/.github/plugins/deep-wiki/skills/wiki-qa
-- **Repository:** https://github.com/microsoft/skills @ `41138f3cb482`
+- **Repository:** https://github.com/microsoft/skills @ `4f831bbbf54e`
 - **License:** MIT (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

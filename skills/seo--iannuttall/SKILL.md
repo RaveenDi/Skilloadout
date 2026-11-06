@@ -1,6 +1,6 @@
 ---
 name: seo
-description: Free Google Search Console MCP server and CLI for AI agents. Reads your real Search Console, Google Analytics, Bing Webmaster Tools and Clicky data, plus DataForSEO and Ahrefs keyword research. Use it for any SEO question - why Google traffic or clicks dropped, organic traffic decline, quick wins, low CTR, striking distance keywords, content decay and declining pages, keyword cannibalization, indexing and URL inspection, one page's queries, Google update impact, the questions people ask AI that show in Search Console, competitor keywords, backlinks, technical SEO crawls, redirects, internal links and client SEO reports. Returns facts from your own data, never guesses.
+description: Free Google Search Console MCP server and CLI for AI agents. Reads your real Search Console, Google Analytics, Bing Webmaster Tools and Clicky data, plus DataForSEO and Ahrefs keyword research. Use it for any SEO question - why Google traffic or clicks dropped, organic traffic decline, quick wins, low CTR, striking distance keywords, content decay and declining pages, keyword cannibalization, indexing and URL inspection, one page's queries, Google update impact, the questions people ask AI that show in Search Console, competitor keywords, backlinks, technical SEO crawls, redirects, internal links, client SEO reports and building a new programmatic SEO site. Returns facts from your own data, never guesses.
 ---
 
 # seo
@@ -23,15 +23,43 @@ link for them to approve, then run it again.
 | `seo page --url <url>` | `seo_page` | One URL: live page, index status, queries |
 | `seo compare --site <site> --date <date>` | `seo_compare` | Before and after a date, with Google updates |
 | `seo index --site <site>` | `seo_index` | Google's indexing reasons, labelled, and pages that lost their clicks |
-| `seo research <action>` | `seo_research` | Keywords, SERP, competitors, backlinks, AI answer citations |
+| `seo research <action>` | `seo_research` | Keywords, SERP, competitors, backlinks, link gaps, AI answer citations |
 | `seo data --site <site>` | `seo_data` | Raw Search Console, Bing, Clicky or Google Analytics rows |
 | `seo crawl --url <url>` | `seo_crawl` | Technical issues across a site |
 | `seo internal-links --site <site>` or `--url <url>` | `seo_internal_links` | Links to add across a site, or to one page |
+| `seo lint <files>` | `seo_lint` | Lines in a draft, title or description that read as AI-written, each with a fix; no sign-in |
 | `seo sites` | `seo_sites` | The properties the person can read |
+| `seo site new <folder>`, then `seo site guide <step>` | CLI only | Build a new data-driven site on Astro and Cloudflare, one step at a time. Its build runs `seo site check` |
 
 Each result ends with the command to run next. Start small and ask for more:
 a site, then a `--section` (`section`), then `--detail rows` or `full`.
 `seo <command> --help` shows the options.
+
+## Issues kept between sessions
+
+`seo report --site <site> --section issues` (`section "issues"`) checks the
+site again and keeps a list of what it found, each with an id, the latest
+check (found, not found or not checked) and what the person marked it. When
+the person says they fixed an issue or want it left alone, record it:
+`--mark fixed` or `--mark ignored` with `--issues <id>,<id>` (`mark`,
+`issues`, optional `note`). Read the list at the start of a session instead
+of reporting old issues as new. "Fixed" is the person's word; the list says
+when the check still finds it. The CLI and local MCP keep the list in
+`issues.json`; the hosted server keeps it only for sites in the weekly site
+audit. For any other site the result says the server is not storing it and
+ends with the list as JSON (`{"version":1,"sites":{"<site>":[...]}}`, the
+`issues.json` shape): save it in the person's project, such as
+`.seo/issues.json`, and pass its contents as `saved` with the next `issues`
+or `mark` call so marks carry over.
+
+## Google updates
+
+When the person asks whether a Google update hit the site, run
+`seo report --site <site> --section google-updates` (`section
+"google-updates"`). It compares the latest ranking update's days with the
+same days before and says whether that is outside the site's normal
+movement. `--end-date` (`end_date`) picks an earlier update. Report it as
+timing, never as the cause.
 
 ## Indexing reasons each week
 

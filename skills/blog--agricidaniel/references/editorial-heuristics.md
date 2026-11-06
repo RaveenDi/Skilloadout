@@ -9,12 +9,17 @@ Adapted from Nielsen's 10 Usability Heuristics via the impeccable plugin (Paul B
 | Score | Meaning | Severity tag | When to assign |
 |---|---|---|---|
 | 0 | Absent or actively wrong | P0 (blocking) | Fabricated stat, broken structure, plagiarism risk |
-| 1 | Major gaps; most checks fail | P1 (ship-blocker) | Missing source on load-bearing claim, AI-detection signal |
+| 1 | Major gaps; most checks fail | P1 (urgent remediation) | Important but nonblocking weakness after every ship-blocking defect has been classified P0 |
 | 2 | Mixed; important checks fail | P2 (publish then iterate) | Weak heading, missing schema, suboptimal opener |
 | 3 | Good; minor gaps | P3 (nice to have) | Cosmetic, marginal SEO, stylistic preference |
 | 4 | Genuinely excellent (rare) | (none) | "Would cite in a meta-review of best-practice blog craft" |
 
-A 0 or 1 on any heuristic generates at least one P0 or P1. Most strong production posts land 2 to 3 across the board.
+A 0 or 1 on any heuristic generates at least one P0 or P1. P0 is the only
+absolute severity blocker: fabricated evidence, an unsupported load-bearing
+claim, plagiarism risk, broken primary structure, or another defect that makes
+publication unsafe or materially misleading is P0. P1 is urgent remediation
+that does not independently block a draft already at 90 or above with zero P0.
+Most strong production posts land 2 to 3 across the board.
 
 ## Nielsen mapping
 
@@ -95,15 +100,19 @@ Within a post, terminology, tone, formatting, and structural patterns must not d
 
 Structure that prevents fabricated or unsourced data from entering the draft.
 
-**Check for**: every numeric claim has a named source in the same paragraph; every source URL reachable (tier 1 to 3); year anchor in prose for time-sensitive claims (FLOW evidence triple); retrieval date on citation; no vague "studies show" without naming who.
+**Check for**: every material factual claim has support that actually
+substantiates it; source URLs are reachable; relevant dates or study periods
+appear when they affect meaning; methodology and limitations are present when
+needed; changeable or undated sources have retrieval notes; and vague
+"studies show" wording identifies the underlying evidence.
 
 | Score | Criteria |
 |---|---|
 | 0 | Multiple unsourced numeric claims (P0) |
 | 1 | Half of numeric claims unsourced |
 | 2 | Most sourced; one or two suspicious |
-| 3 | All sourced; minor gaps in retrieval dates |
-| 4 | Full FLOW evidence triple on every statistic |
+| 3 | All material claims sourced; minor gaps in claim-appropriate provenance |
+| 4 | Sources faithfully support every material claim, with the context needed to verify and interpret them |
 
 ### 6. Recognition over recall
 
@@ -123,26 +132,32 @@ Reader should not have to remember what was said three sections ago to follow th
 
 The post should reward both modes: executive who scans, practitioner who reads end to end.
 
-**Check for**: bold lead-ins on key points; pull quotes for high-leverage claims; each H2 opener starts with an about 50-word direct-answer sentence followed by a 120 to 180 word citable passage; lists where lists are right, prose where prose is right; FAQ section.
+**Check for**: descriptive headings; lead-ins that state the section point at
+the depth the reader's intent requires; passages that are independently clear
+without padding to a fixed length; lists where lists are right and prose where
+prose is right; optional visible Q&A only when genuine reader questions remain.
+Q&A presence and passage length earn no points by themselves.
 
 | Score | Criteria |
 |---|---|
 | 0 | Only readable end-to-end; no skim affordances |
-| 1 | Some headings, but no bold lead-ins, pull quotes, or answer-first openers |
-| 2 | Skim affordances in some sections; missing FAQ or answer-first opener |
-| 3 | Most sections have skim affordances; one of (answer-first opener, FAQ, pull quotes) missing |
-| 4 | Rewards both modes equally: bold lead-ins, answer-first openers on every H2, FAQ, pull quotes |
+| 1 | Some headings, but key sections still obscure their point |
+| 2 | Skim affordances in some sections; several openings need clearer framing |
+| 3 | Most sections support scanning and sustained reading; minor navigation or framing gaps remain |
+| 4 | Rewards both modes with clear headings, intent-appropriate openings, useful navigation, and self-contained explanations |
 
 ### 8. Information-density discipline
 
 Long does not equal valuable. Every paragraph should earn its place; padding is a slop signal.
 
-**Check for**: no paragraph over 150 words; no intro delaying the first substantive claim by more than 150 words; no SEO-padded conclusion; no filler transitions ("Now, let's discuss..."); word count appropriate to topic.
+**Check for**: paragraph pacing that fits the audience; an introduction that
+states its purpose without needless delay; no SEO-padded conclusion; no filler
+transitions ("Now, let's discuss..."); length appropriate to the topic.
 
 | Score | Criteria |
 |---|---|
 | 0 | Padding pervasive; intro buries the lede; conclusion restates the post |
-| 1 | Several paragraphs over 150 words; multiple filler transitions |
+| 1 | Several difficult-to-follow paragraphs; multiple filler transitions |
 | 2 | One bloat axis present (e.g. SEO-padded conclusion or long intro) |
 | 3 | Minor bloat (1 to 2 long paragraphs or one filler transition); otherwise tight |
 | 4 | Every paragraph earns its place; word count matches topic scope |

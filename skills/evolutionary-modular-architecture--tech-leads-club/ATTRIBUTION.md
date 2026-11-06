@@ -2,7 +2,7 @@
 
 - **Item:** Evolutionary Modular Architecture (`evolutionary-modular-architecture`)
 - **Original source:** https://github.com/tech-leads-club/agent-skills/tree/main/packages/skills-catalog/skills/(architecture)/evolutionary-modular-architecture
-- **Repository:** https://github.com/tech-leads-club/agent-skills @ `738451e40785`
+- **Repository:** https://github.com/tech-leads-club/agent-skills @ `8658b6658c76`
 - **License:** CC-BY-4.0 (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

@@ -1,6 +1,6 @@
 ---
 name: "cpo-review"
-description: "/c-level-agents:cpo-review [plan] — JTBD-driven interrogation of product roadmap, PMF signal, and portfolio focus. Use when committing a quarter's roadmap, deciding whether to kill a feature, or claiming PMF without a retention curve."
+description: "Challenge a roadmap, PMF claim or feature kill. Use whenever asked or /c-level-agents:cpo-review."
 ---
 
 # /c-level-agents:cpo-review — CPO Forcing Questions

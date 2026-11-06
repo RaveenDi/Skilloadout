@@ -1,6 +1,6 @@
 ---
 name: "aims-audit"
-description: "/compliance-os:aims-audit [scope] — ISO/IEC 42001 AIMS internal-audit 6-question forcing interrogation. Use before certification stage 1, before annual internal audit cycles, or when onboarding a new AI system into an existing AIMS."
+description: "ISO 42001 AI readiness check. Use before a stage 1 or internal audit, or /compliance-os:aims-audit."
 ---
 
 # /compliance-os:aims-audit — AIMS ISO 42001 Forcing Questions

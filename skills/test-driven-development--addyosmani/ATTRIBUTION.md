@@ -2,7 +2,7 @@
 
 - **Item:** Test Driven Development (`test-driven-development`)
 - **Original source:** https://github.com/addyosmani/agent-skills/tree/main/skills/test-driven-development
-- **Repository:** https://github.com/addyosmani/agent-skills @ `eb07f19f52c2`
+- **Repository:** https://github.com/addyosmani/agent-skills @ `301b02b12bff`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

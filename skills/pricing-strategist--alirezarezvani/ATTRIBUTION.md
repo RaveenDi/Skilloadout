@@ -2,7 +2,7 @@
 
 - **Item:** Pricing Strategist (`pricing-strategist`)
 - **Original source:** https://github.com/alirezarezvani/claude-skills/tree/main/commercial/skills/pricing-strategist
-- **Repository:** https://github.com/alirezarezvani/claude-skills @ `0496583603e5`
+- **Repository:** https://github.com/alirezarezvani/claude-skills @ `8f082544116f`
 - **License:** MIT (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

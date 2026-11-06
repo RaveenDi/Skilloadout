@@ -284,7 +284,7 @@
     {
       "name": "company-os--alirezarezvani",
       "source": "./skills/company-os--alirezarezvani",
-      "description": "The meta-framework for how a company runs — the connective tissue between all C-suite roles. Covers operating system selection (EOS, Scaling Up, OKR-native, hybrid), accountability charts, scorecards, meeting pulse, issue resolution, and 90-day rocks. Use when setting up company operations, selectin"
+      "description": "Use when choosing or setting up how the company runs: EOS, Scaling Up or OKRs, accountability chart, scorecard, meeting rhythm, quarterly rocks."
     },
     {
       "name": "company-valuation--himself65",
@@ -359,7 +359,7 @@
     {
       "name": "customer-success-manager--alirezarezvani",
       "source": "./skills/customer-success-manager--alirezarezvani",
-      "description": "Monitors customer health, predicts churn risk, and identifies expansion opportunities using weighted scoring models for SaaS customer success. Use when analyzing customer accounts, reviewing retention metrics, scoring at-risk customers, or when the user mentions churn, customer health scores, upsell"
+      "description": "Use when reviewing customer accounts for health, churn risk or expansion. Scores health with health_score_calculator.py, churn with churn_risk_analyzer.py and upsell with expansion_opportunity_scorer.py."
     },
     {
       "name": "data-storytelling--wshobson",
@@ -444,7 +444,7 @@
     {
       "name": "embedded-iot-mentor--alirezarezvani",
       "source": "./skills/embedded-iot-mentor--alirezarezvani",
-      "description": "Mentor for embedded and IoT hardware projects. Helps select MCUs, dev boards, and toolchains, decides where sensor readings end up (phone, PC, dashboard, or alert), and gives time/cost estimates and a phased build plan from breadboard MVP to production PCB. Use when the user mentions embedded, IoT, "
+      "description": "Use for any embedded or IoT hardware project (ESP32, STM32, Arduino, Pico, firmware, PCB, MQTT, Home Assistant, sensor dashboards), before buying parts. Picks the MCU, board and toolchain, decides where readings go and gives a phased build plan with time and cost."
     },
     {
       "name": "embedded-systems--jeffallan",
@@ -744,7 +744,7 @@
     {
       "name": "mdr-745-specialist--alirezarezvani",
       "source": "./skills/mdr-745-specialist--alirezarezvani",
-      "description": "EU MDR 2017/745 compliance specialist for medical device classification, technical documentation, clinical evidence, and post-market surveillance. Covers Annex VIII classification rules, Annex II/III technical files, Annex XIV clinical evaluation, Art. 86 PSUR schedules, and EUDAMED integration. Use"
+      "description": "Use for EU MDR 2017/745 work: device classification under Annex VIII, technical file gaps (Annex II/III), clinical evaluation, PMS and PSUR cadence, notified body prep. Checks the file with mdr_gap_analyzer.py."
     },
     {
       "name": "mem-search--thedotmack",
@@ -799,7 +799,7 @@
     {
       "name": "neon-postgres--neondatabase",
       "source": "./skills/neon-postgres--neondatabase",
-      "description": "Guides and best practices for working with Lakebase Postgres on Neon: connections, pooled vs direct, schema migrations, branching, autoscaling, scale-to-zero, instant restore, read replicas, IP allow lists, logical replication, and Lakebase Search. Use when the work is an existing DATABASE_URL, SQL,"
+      "description": "Guides and best practices for working with Lakebase Postgres on Neon: connections, pooled vs direct, schema migrations, branching (including schema-only, reset-from-parent, and branch-per-PR workflows), autoscaling, scale-to-zero, instant restore, read replicas, IP allow lists, logical replication, "
     },
     {
       "name": "nextflow-development--anthropics",
@@ -904,7 +904,7 @@
     {
       "name": "product-manager-toolkit--alirezarezvani",
       "source": "./skills/product-manager-toolkit--alirezarezvani",
-      "description": "Comprehensive toolkit for product managers including RICE prioritization, customer interview analysis, PRD templates, discovery frameworks, and go-to-market strategies. Use when prioritizing features, synthesizing user research, writing requirement documentation, or developing product strategy."
+      "description": "PM toolkit: RICE prioritization, customer interview synthesis, PRDs and go-to-market. Use whenever the user asks what to build next, to rank features, write a PRD or sum up interview notes."
     },
     {
       "name": "programmatic-seo--coreyhaines31",
@@ -1194,7 +1194,7 @@
     {
       "name": "syllabus--alirezarezvani",
       "source": "./skills/syllabus--alirezarezvani",
-      "description": "Generates a curated supplementary reading list from any course syllabus using Consensus academic search. Grill-me intake (syllabus input format + course audience + year range) plus a grouping forcing-options checkpoint before any search runs — so the reading list matches the course's level and recen"
+      "description": "Use when the user shares a course syllabus or outline and wants supplementary readings. Groups topics with topic_grouper.py, finds recent peer-reviewed papers and writes a .docx with summaries and discussion questions."
     },
     {
       "name": "synthesize-research--anthropics",

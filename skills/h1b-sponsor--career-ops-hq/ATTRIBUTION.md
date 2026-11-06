@@ -2,7 +2,7 @@
 
 - **Item:** H1b Sponsor (`h1b-sponsor`)
 - **Original source:** https://github.com/career-ops-hq/career-ops/tree/main/plugins/h1b-sponsor
-- **Repository:** https://github.com/career-ops-hq/career-ops @ `a068b716f9f3`
+- **Repository:** https://github.com/career-ops-hq/career-ops @ `6de681cc8666`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

@@ -1,6 +1,6 @@
 ---
 name: "ai-decision-authority"
-description: "Routes marketing and GTM decisions into three AI governance zones (AI-Primary, Collaborative, Human-Primary) by stakes and reversibility. Use when deciding which AI outputs need human review, whether an agent may act autonomously on a task, why AI adoption is collapsing under review requirements, or when auditing a list of workflows for safe autonomy. Triggers on 'should a human review this', 'can the agent just do this', 'AI governance policy', 'human in the loop'."
+description: "Use before letting AI or an agent act on a marketing or GTM task without human review, or when writing an AI review policy. Places each workflow in AI-primary, collaborative or human-primary by stakes and reversibility."
 ---
 
 # AI Decision Authority
@@ -108,6 +108,6 @@ Always name the misclassification cost. It is the part that changes behaviour.
 
 ## Provenance
 
-Based on the Augmented Marketing Decision Architecture, developed in an enterprise product marketing function and observed across 16 product launches at Tableau (Salesforce) prior to 2025. Observational deployment, not a controlled study. The 70% figure and the zone definitions come from that context and may not transfer to yours.
+Based on the Augmented Marketing Decision Architecture, developed in an enterprise product marketing function and observed across 16 product launches at a large enterprise software company prior to 2025. Observational deployment, not a controlled study. The 70% figure and the zone definitions come from that context and may not transfer to yours.
 
 Framework by Kuber Sharma. Specification: kubersharma.com/frameworks/amda

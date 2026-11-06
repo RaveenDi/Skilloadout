@@ -2,7 +2,7 @@
 
 - **Item:** X Article Publisher (`x-article-publisher`)
 - **Original source:** https://github.com/anbeime/skill/tree/main/skills/qiaomu-x-article-publisher
-- **Repository:** https://github.com/anbeime/skill @ `65de48eb885f`
+- **Repository:** https://github.com/anbeime/skill @ `9d21a2eeba44`
 - **License:** MIT (resolved via skill)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

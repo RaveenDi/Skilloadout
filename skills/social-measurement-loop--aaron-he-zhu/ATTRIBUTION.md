@@ -2,7 +2,7 @@
 
 - **Item:** Social Measurement Loop (`social-measurement-loop`)
 - **Original source:** https://github.com/aaron-he-zhu/aaron-marketing-skills/tree/main/social/observe/social-measurement-loop
-- **Repository:** https://github.com/aaron-he-zhu/aaron-marketing-skills @ `62c64cac0531`
+- **Repository:** https://github.com/aaron-he-zhu/aaron-marketing-skills @ `9c8815c728c5`
 - **License:** Apache-2.0 (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

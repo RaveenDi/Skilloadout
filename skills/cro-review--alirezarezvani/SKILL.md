@@ -1,6 +1,6 @@
 ---
 name: "cro-review"
-description: "/c-level-agents:cro-review [plan] — Pipeline-paranoid interrogation of revenue, win rate, NRR, and ramp time. Use when the forecast misses pipeline coverage, win rates drop, or before scaling the sales team."
+description: "Challenge a forecast, win-rate drop or sales hires. Use whenever asked or /c-level-agents:cro-review."
 ---
 
 # /c-level-agents:cro-review — CRO Forcing Questions

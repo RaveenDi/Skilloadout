@@ -2,7 +2,7 @@
 
 - **Item:** Choose Zoom Approach (`choose-zoom-approach`)
 - **Original source:** https://github.com/anthropics/knowledge-work-plugins/tree/main/partner-built/zoom-plugin/skills/choose-zoom-approach
-- **Repository:** https://github.com/anthropics/knowledge-work-plugins @ `2574e29377c7`
+- **Repository:** https://github.com/anthropics/knowledge-work-plugins @ `d900840716eb`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

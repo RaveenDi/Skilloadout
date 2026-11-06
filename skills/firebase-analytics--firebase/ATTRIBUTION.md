@@ -1,0 +1,9 @@
+# Attribution
+
+- **Item:** Firebase Analytics (`firebase-analytics`)
+- **Original source:** https://github.com/firebase/agent-skills/tree/main/skills/firebase-analytics
+- **Repository:** https://github.com/firebase/agent-skills @ `b76be96aaf5f`
+- **License:** Apache-2.0 (resolved via repo-file)
+
+Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.
+

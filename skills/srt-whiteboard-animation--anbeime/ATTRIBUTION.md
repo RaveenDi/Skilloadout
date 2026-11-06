@@ -2,7 +2,7 @@
 
 - **Item:** Srt Whiteboard Animation (`srt-whiteboard-animation`)
 - **Original source:** https://github.com/anbeime/skill/tree/main/skills/srt-whiteboard-animation
-- **Repository:** https://github.com/anbeime/skill @ `65de48eb885f`
+- **Repository:** https://github.com/anbeime/skill @ `9d21a2eeba44`
 - **License:** MIT (resolved via skill)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

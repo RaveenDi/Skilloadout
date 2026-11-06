@@ -11,12 +11,20 @@ description: >
   consume. Use when user says "outline", "blog outline", "content outline",
   "structure blog", "plan sections", "article skeleton", "heading structure",
   "SERP analysis", "competitive outline", "plan article".
-user-invokable: true
+user-invocable: true
 argument-hint: "<topic>"
 license: MIT
 ---
 
 # Blog Outline Generator: SERP-Informed Structure Planning
+
+Bundled paths below use host Markdown substitution of `${CLAUDE_SKILL_DIR}`;
+it is not an exported shell variable. Resolve them before execution, quote
+paths, and refuse nonabsolute overrides. Pass `blog_reference_root` resolved
+from `${CLAUDE_SKILL_DIR}/../blog/references`, `blog_template_root` from
+`${CLAUDE_SKILL_DIR}/../blog/templates`, and needed sibling roots to agents.
+Read the main reference `orchestration-details.md` before loading project
+context; pass only its helper-fenced output to downstream agents.
 
 Generates skeletal blog post outlines informed by SERP analysis. A lighter
 alternative to a full content brief - produces heading hierarchy, section
@@ -70,22 +78,23 @@ Create a structured outline with the following format:
 # Outline: [Topic]
 
 ## Title Suggestions
-1. [Primary title - 40-60 chars, front-loaded keyword, power word]
+1. [Primary title - clear, accurate, specific to the page]
 2. [Alternative title - different angle]
 3. [Alternative title - question format]
 
 ## Target Parameters
 - **Primary keyword**: [keyword]
 - **Search intent**: [Informational/Commercial/Transactional]
-- **Target word count**: [X,XXX] words
-- **H2 sections**: [6-8]
-- **Target reading level**: Flesch 60-70
+- **Optional planning estimate**: [X,XXX] words, adjusted to intent and never
+  used as a score or gate
+- **H2 sections**: [as many as the subject needs; no fixed count]
+- **Target reading level**: [audience-matched; the active persona's band, else the `quality-scoring.md` range]
 
 ---
 
 ## Outline
 
-### H2: [Section Title - Question Format] (~300-400 words)
+### H2: [Section Title - question form only when it fits the intent]
 - **Answer-first opener**: [What stat or fact should open this section?]
 - **Key points to cover**:
   - [Point 1]
@@ -97,16 +106,16 @@ Create a structured outline with the following format:
 - **Chart suggestion**: [Bar/Line/Donut/None] - [What data to visualize]
 - **Image placement**: [Yes/No] - [Description of recommended image]
 
-### H2: [Section Title] (~300-400 words)
-[... repeat for 6-8 sections ...]
+### H2: [Section Title]
+[... repeat for each section the subject needs ...]
 
-### Optional FAQ Section (3-5 items)
+### Optional FAQ Section (only when real reader questions warrant it)
 1. [Question from People Also Ask] - [Brief answer direction]
 2. [Question from People Also Ask] - [Brief answer direction]
 3. [Question from People Also Ask] - [Brief answer direction]
 4. [Question from SERP analysis] - [Brief answer direction]
 
-### Conclusion (~100-150 words)
+### Conclusion
 - Key takeaways to summarize
 - Call to action direction
 
@@ -123,10 +132,11 @@ Create a structured outline with the following format:
 ```
 
 Guidelines for heading generation:
-- Use 60-70% question-format H2 headings when the query pattern and readability support it; do not force questions against user intent
+- Use question-format H2 headings only when the query pattern and reader intent support them; no ratio target
 - Each H2 should have a clear answer-first paragraph prompt
 - Include H3 subsections only where the topic genuinely warrants subdivision
-- Target word counts should sum to the overall post target
+- Section estimates may help planning, but coverage follows intent; estimates
+  never score or block a complete outline
 - Choose chart types by data shape first; prefer diversity only when it does not weaken the visualization
 - Image placement markers should be distributed evenly across the post
 

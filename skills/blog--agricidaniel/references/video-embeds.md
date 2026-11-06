@@ -2,46 +2,33 @@
 
 ## Why YouTube Embeds Matter
 
-Video can improve engagement and extraction when it is relevant, current, and
-high quality. Treat vendor correlation studies as directional, not as ranking
-requirements. Key data points:
+Video can help readers when a demonstration, walkthrough, or expert explanation
+adds information the article cannot communicate as effectively in text or
+images. Vendor datasets report associations between video mentions and measured
+visibility, but those observations are non-causal, time-bound, and not ranking
+or readiness bonuses.
 
-- **0.737 correlation** with AI visibility, the strongest single signal (Ahrefs 75K-brand study)
-- Video citations in AI Overviews up **414%** year-over-year (NP Digital Q1 2025, 10K+ AIO analysis)
-- How-to video citations up **651%**, visual demo citations up **592%** (NP Digital)
-- YouTube is cited **200x more** than any other video platform by AI systems
-
-Strongly prefer relevant YouTube embeds when a suitable video exists. Skip video
-when available videos are stale, low quality, off-topic, or would distract from
-the article.
+Embed a video only when it is relevant, accurate, accessible, and useful. Skip
+video when available options are stale, low quality, off-topic, duplicative, or
+distracting.
 
 ---
 
 ## Video Quality Criteria
 
-### Minimum Standards
+### Suitability Review
 
-| Criterion | Minimum | Preferred |
-|-----------|---------|-----------|
-| Views | >1,000 | >10,000 |
-| Like ratio | >90% | >95% |
-| Recency | <3 years | <18 months |
-| Channel subscribers | >1,000 | >10,000 |
-| Duration | >3 minutes | 5-15 minutes |
-| Captions | Present | Accurate/manual |
-| Relevance | Title keyword match | Title + description match |
+| Criterion | Review Question |
+|-----------|-----------------|
+| Relevance | Does the video directly support the section's reader task? |
+| Accuracy | Are material claims current and verifiable? |
+| Added value | Does it demonstrate or explain something beyond the surrounding text? |
+| Accessibility | Are accurate captions or a useful transcript available? |
+| Source transparency | Is the creator identifiable and are conflicts disclosed? |
+| User experience | Is the embed performant, privacy-conscious, and non-disruptive? |
 
-### Quality Scoring Formula (0-100)
-
-| Factor | Weight | Scoring Method |
-|--------|--------|---------------|
-| Relevance (title/description keyword match) | 35 pts | Exact keyword in title = 35, partial = 20, description only = 10 |
-| View count (log scale) | 20 pts | log10(views) / log10(10M) * 20, capped at 20 |
-| Recency (months since publish) | 20 pts | max(0, 20 - (months_old * 0.8)) |
-| Channel authority (subscribers, log scale) | 15 pts | log10(subs) / log10(1M) * 15, capped at 15 |
-| Engagement (like ratio) | 10 pts | (like_ratio - 0.80) / 0.20 * 10, capped at 10 |
-
-**Minimum score threshold: 50/100.** Videos scoring below 50 should be skipped.
+Views, likes, channel size, age, and duration may provide context, but none is a
+universal quality threshold or citation-readiness score.
 
 ---
 
@@ -49,14 +36,14 @@ the article.
 
 | Position | Video Purpose | When |
 |----------|--------------|------|
-| After introduction (before first H2 body) | Overview / explainer | Always place 1st video here |
+| After introduction (before first H2 body) | Overview / explainer | Only if it adds immediate context |
 | Mid-article (after 2nd or 3rd H2) | Tutorial / demo / how-to | If video shows a process |
 | Before FAQ or conclusion | Summary or expert opinion | Optional 3rd video |
 
 ### Placement Rules
 
-- **2-3 videos per post** (never more than 3)
-- Minimum **500 words** between video embeds
+- Use only as many videos as the reader task warrants
+- Space embeds according to surrounding content and page usability, not a word quota
 - Never place a video immediately before or after a chart
 - Videos **complement** text; they never replace written content
 

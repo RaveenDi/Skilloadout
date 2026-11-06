@@ -144,20 +144,25 @@ skill that never loads cannot announce that it was relevant.
 ### The activation block
 
 ```text
-(task-observer activation block — template of v3.8.1)
+(task-observer activation block — template of v3.9.0)
 Before the first tool call of any session — and before writing or
 proposing a plan, not merely before executing one — invoke the
 task-observer skill AND execute its Session Start Protocol (storage
-check, frontmatter scan, review trigger). Loading the skill and running
+check and workspace creation, the starter-set reconciliation when due,
+frontmatter scan, review trigger). Loading the skill and running
 the protocol are separate steps; a session that loads the file and stops
 has activated nothing. Any turn that will involve a tool call counts; do
 not classify the session as "too simple" from its opening message.
+Copy the protocol's seven `- [ ]` items into your first reply and tick
+each as it runs; an item you cannot tick is the step you report.
 A step you did not run is reported before the answer, in one line — never
 after it, where it reads as a suggestion. If the skill does not resolve on
 this turn, say which probe told you so (the skill listing, or the skill
 directory on disk), re-check the listing on every later turn that makes a
 tool call, and run the protocol the first time it resolves — a "not
-installed" verdict holds for one turn.
+installed" verdict holds for one turn. Listed on disk but refused by the
+Skill tool ("Unknown skill"): read its SKILL.md directly and run the
+protocol; the lookup call rides with that read, never with the refused call.
 
 Select skills on the DECISION the request is about, not on the artefact it
 arrived as. Name what the user is deciding, then match the installed skill
@@ -166,8 +171,10 @@ still needs the skill whose description names its subject.
 
 After completing each task, list the observation records written this
 session in the same turn and report a one-line summary from that listing
-(ids and titles, or "none logged and why") — never from memory of
-writing them. This is the activation backstop: it forces a look at the log,
+(ids and titles, or "none logged" followed by one line per user correction
+and per incident in the task, each with why it is not an observation —
+one-off, already captured in <skill>; a "none" with no such line is a
+claim nobody checked) — never from memory of writing them. This is the activation backstop: it forces a look at the log,
 so a session that silently skipped the protocol is discovered at the
 first task boundary instead of never.
 
@@ -183,7 +190,14 @@ target_file: field carries by any path.)
 (Use find, not a bare *.md glob: under zsh an unmatched glob aborts the
 whole block, and on an empty log it is unmatched in every session.)
 Apply their insights to the current work — meaning: let them change what
-you do in THIS task. Editing the skill file, or writing the rule into any
+you do in THIS task, with the user's consent at the point of use: when one
+actually changes what you are about to do, surface it once per session,
+at a natural break (never mid-task), in one line with accept / opt-out —
+follow it in this task or not — and append the answer to the entry's
+`use_evidence:` (SKILL.md, How to Log). An opt-out keeps the entry open;
+an unattended run appends `used` without asking; an entry with no
+evidence line 30 days after its `date:` is offered with that note.
+Editing the skill file, or writing the rule into any
 other file a later session reads, is acting on the observation and waits
 for the review. See "Log, don't act" in SKILL.md: the test is whether the
 action leaves a durable change outside the observation log. Run this at every skill load, however many skills load
@@ -202,7 +216,12 @@ substitute for the skill that owns it.
 Where scripts run, the lookup and its checkpoint line are one command:
   bash "<skill directory>/scripts/skill-load.sh" "[ABSOLUTE PATH]" <skill-name>
 The Skill invocation and that call are ONE batch — emit them together,
-one call per skill loaded, never the call in a later batch. On a first
+one call per skill loaded, never the call in a later batch. A skill whose
+frontmatter sets `disable-model-invocation: true` cannot be loaded by the
+Skill tool: emit neither call for it. A Skill call that is refused or
+errors gets, in the next call, the same command with
+`--correct "<refusal text>"` appended, which records `NOT loaded` under
+the false `loaded` line and prints nothing. On a first
 run the log does not exist yet (step 1 creates it): the call says so and
 exits 0 with no checkpoint line; re-run it once per skill loaded in that
 batch after the Workspace creation command.
@@ -228,8 +247,11 @@ location; do not derive one per session, tool or project.
 
 The user's repositories live under:
   [PROJECTS ROOT]
+[UPSTREAM CHECK: the line "the review may check upstream versions" lets the
+review's Step 2 fetch a foreign-maintained skill's upstream version — the
+one network use a review starts; delete this line to keep reviews local]
 (the root the sibling check sweeps before declaring a skill absent;
-observation-log.md, "Skill families and the sibling check").
+observation-families.md, "Skill families and the sibling check").
 
 A subagent dispatched by a session that already runs this protocol does
 not run it again and does not write to the log. The controller observes,
@@ -242,8 +264,12 @@ another session (not a subagent), pass it a working folder inside the
 project, or the workspace root, so the block is in context from its first
 turn; a folder named only in the brief does not load it.
 Before briefing a delegate under an agent definition or instructions
-file, run the lookup for that file's name; its open entries shape the
-brief.
+file, run the lookup for that file's name with `--query-only` (no load
+rides with it, so no `loaded` line); its open entries shape the brief.
+A controller that dispatches a specialist outside its own harness puts
+one line in the task context — `task-observer: the controller observes;
+report observations in your handoff` — because the specialist cannot see
+its caller.
 
 A run of this block that cannot write here or get an approval answered —
 a child run with no protocol-running caller, a job with a narrow tool
@@ -355,7 +381,12 @@ route ("Git as an optional staging medium" below; `observation-log.md`,
 "When the workspace is under version control", for the two-install
 case), not through a live-synced directory. The user decides; the
 questions are asked before the pin is written, not after the first
-missed session.
+missed session. A synced or mirrored tree also has a second writer the
+session cannot see: a pull can replace a file written since its listing,
+and a mirror that does not propagate deletes turns `mv` into a copy, so an
+archived entry comes back. Where the user keeps one, record the sync client
+in the activation record and treat a write there as provisional until one
+sync cycle has passed.
 
 **A session started without a project folder has no stable project
 identity.** In a desktop app that runs such a session in a per-session
@@ -394,13 +425,16 @@ legitimate (see the multi-log block in `weekly-review.md`).
 
 **The session-start scan lists the neighbours on every run.** One line of
 the scan (`scripts/session-start-scan.sh`) finds every
-`skill-observations/observation-log/` up to three levels under the
-pinned root's parent and prints each with its file count — `logs under
-the parent (…): /a/proj=157  /a/other=19`. One entry is the ordinary
+`skill-observations/observation-log/` up to five levels under the
+pinned root's parent (one project folder below a projects folder; `.git`,
+`node_modules` and `skill-updates` trees pruned) and prints each with its
+file count and the date of its `checkpoints.log`'s last line — `logs under
+the parent (…): /a/proj=157 last=<date>  /a/other=19 last=none`; a shard
+still being written shows a recent date. One entry is the ordinary
 case. Several are either shards or the legitimate plural case, and the
 line cannot tell which: report it in one line, route to "Several
 observation logs on one machine" in `weekly-review.md`, and never
-consolidate from the scan. The probe is bounded by the parent's depth-3
+consolidate from the scan. The probe is bounded by the parent's depth-5
 tree, not by any log's size; an empty line means the probe could not read
 the parent, since the pinned log itself is always under it.
 
@@ -531,7 +565,7 @@ enforcement layer by what it needs in order to function: a filesystem
 write survives into any session type, a prose reminder survives only
 while the prose is being acted on.
 
-A third belt: the scan's `checkpoints.log` line (`observation-log.md`,
+A third belt: the scan's `checkpoints.log` line (`observation-scan.md`,
 "The scan ends in a write, not only a print").
 Treat *loaded but not run* as a distinct failure cause, alongside the
 skill being absent, truncated, or present and skipped: it is the likeliest
@@ -666,8 +700,9 @@ const touched = files.some((f) => { try { return fs.statSync(f).mtimeMs > starte
 if (touched) process.exit(0);
 
 block('task-observer backstop: this session used tools but wrote no observation file and no checkpoint line. ' +
-  'If the skill was never invoked, invoke it now; then write pending observations or append a ' +
-  '"no observations" line to checkpoints.log, and report the one-line summary. Fires once per session.');
+  'If the skill was never invoked, invoke it now; then write pending observations, or append a ' +
+  '"no observations" line to checkpoints.log naming each user correction and incident of the session and why it ' +
+  'is not an observation, and report the one-line summary. Fires once per session.');
 ```
 
 **The session's start time is the fragile input.** A transcript's birth
@@ -961,7 +996,12 @@ and the start-up lines say so ("probe in batch 2: device server still
 connecting"). Never put a placeholder command in the probe's slot — an
 `echo`, or an `ls` of the cloud container: it probes nothing and reads in
 the transcript like a probe that passed. In a session with two filesystems
-a container `ls` never counts as the workspace probe.
+a container `ls` never counts as the workspace probe. The one-line test,
+applied without judgement: **a probe of a bridged path issued through the
+cloud shell is never a probe — the channel has to be the one that reaches
+that filesystem.** A command addressed at the right path through the wrong
+channel cannot fail informatively, and its failure reads like an unmounted
+folder; name the channel, not the intent.
 
 **A failed probe has three readings, and the parent tells them apart.**
 The pinned path is absent on the first run of every install, because
@@ -1058,7 +1098,7 @@ permission problem with the destination. Where this bites, invoke the
 script with an absolute path and no `cd`, and write observation bodies with
 the editing tool rather than through a shell. A guard that refuses the
 session-start scan itself is handled the same way — degrade to flat
-commands, never skip the step (`observation-log.md`, "A refused snippet is
+commands, never skip the step (`observation-scan.md`, "A refused snippet is
 a degraded path, never a skipped step").
 
 **Staging a harness configuration change is not like staging a skill.** A
@@ -1184,7 +1224,7 @@ and its writes deferred.
    append: a mode can refuse a command that mixes a read with a write as
    a whole, and the refusal takes the reads with it. The scan script
    writes that line, so a mode that refuses it gets the flat reads
-   (`observation-log.md`, "A refused snippet is a degraded path, never a
+   (`observation-scan.md`, "A refused snippet is a degraded path, never a
    skipped step").
 2. Defer, never skip, the writes: storage creation, `.id-floor`,
    archival, the `checkpoints.log` line. Ids are resolved at flush
@@ -1336,7 +1376,8 @@ other content holding backslashes with the editing tool, and run a
 snippet that carries `\\` from a file written with the editing tool
 (`bash <file>`). Very long inline commands have also been reported cut on
 the same transport, so keep inline commands short and put long content in
-files.
+files. A hook or proxy that rewrites commands on any host is the same
+fault: `observation-scan.md`, "Every instrument gets the same guard".
 
 **A byte order mark from Windows PowerShell.** PowerShell 5.1 writes UTF-8
 with a BOM (`Set-Content -Encoding UTF8`, `Out-File -Encoding utf8`).
@@ -1398,9 +1439,24 @@ installed skill tree, scripts included, can exist only in the cloud
 container while the log lives on the device. First look for the review's
 copy at `skill-observations/.bin/`: its `MANIFEST` records the installed
 `version:` and a sha256 per script, refreshed by every review that confirms
-an install (`weekly-review.md`, Step 1 gate). Hash the installed scripts on
-your side and run the `.bin/` copy only when every digest matches the
-manifest. Absent or mismatched, look for another copy in the workspace — a
+an install (`weekly-review.md`, Step 1 gate). The digest that decides is
+the INSTALLED script's, hashed in the container — never `.bin/`'s own:
+the manifest was written from that copy, so hashing `.bin/` against it is
+a tautology that passes a stale cache under a newer install. The check is
+one command, so the wrong operand cannot be chosen: hash the installed
+scripts in the container (`sha256sum "<skill directory>"/scripts/*.sh
+"<skill directory>"/scripts/*.py`), pass that output to the device as a
+file (the command per environment is a row of the table below: "Refresh
+the digests"), and run every `.bin/` script through
+`bash "<root>/skill-observations/.bin/bin-check.sh" "<root>" <digests-file> <script> [args]`,
+which compares each `.bin/` file with the installed digests and refuses to
+run on any difference (exit 3). The check runs at session start, before the
+first `.bin/` script — the scan included — never at the next review: on a
+refusal, or where `.bin/` holds no `bin-check.sh` (compare the installed
+digests with `.bin/MANIFEST` instead), refresh `.bin/` and its MANIFEST from
+the installed scripts in the same batch (`weekly-review.md`, Step 1 gate,
+names the refresh), then run the scan. Where `.bin/` is absent or cannot be
+refreshed, look for another copy in the workspace — a
 staged copy under `skill-updates/*/task-observer/scripts/` — and compare its
 digest (`md5sum` or `sha256sum`, run on both sides) with the installed
 scripts BEFORE running it, and run it only on a match: a staged copy can
@@ -1418,6 +1474,7 @@ snippet through the device shell. Never a hand-derived id.
 | Scheduled review | the app's scheduled tasks (cloud-default: run remotely; legacy local mode: run on the user's machine, only while it is on — see the execution-mode note above) | cron / an account-level scheduler that can reach the workspace — headless invocations carry the workspace grant (`--add-dir`) in the task definition; a `SessionStart` hook reports the review state, it does not run the review | calendar reminder + manual trigger |
 | Session-start hook | none | `SessionStart` hook (`hookSpecificOutput.additionalContext`) | none |
 | Local-vs-cloud tell | `allow_cowork_file_delete` present ⇒ local session | n/a | n/a |
+| Refresh the digests `bin-check.sh` reads ("Where the scripts are not on the device") | cloud session bridged to the device: `sha256sum "<skill directory>"/scripts/* > digests.txt` in the container, then the device file-commit tool carries that file to `[ABSOLUTE PATH]/skill-observations/.bin/digests.txt`; local session: the scripts are on the device, so `sha256sum` writes the file there directly | `sha256sum "<skill directory>"/scripts/* > "[ABSOLUTE PATH]/skill-observations/.bin/digests.txt"` — one shell, nothing to carry | n/a |
 
 **The Claude Code column is the terminal CLI; the desktop app has a
 scheduler of its own.** Claude Code run inside the desktop app exposes
@@ -1441,8 +1498,13 @@ skill invocation, and a scheduled prompt that opens with "invoke, in this
 order: …" makes the first invocation the first call. A rule that wants something before the
 first listed action has to appear in that list, not in the text the list
 loads: write the activation pointer in every scheduled prompt as "probe the
-workspace folder (one `ls` of its absolute path), then invoke <skills>",
-and keep the probe's procedure and failure handling in the skill.
+workspace folder (one `ls` of its absolute path, through the tool that
+reaches it; in a bridged session whose device server is still connecting,
+a tool search for the device file tools, then the listing as the first
+call of batch 2 — never a shell command in its place), then invoke
+<skills>", and keep the probe's procedure and failure handling in the
+skill. The clause names the channel so a run that reads only the prompt
+cannot substitute a shell command for the probe.
 
 **The second listed action leaves a started marker.** After the probe,
 every scheduled review prompt writes the date and time to
@@ -1453,8 +1515,10 @@ overwrites it with `completed <date>`:
 printf '%s\n' "$(date '+%F %H:%M')" > "[ABSOLUTE PATH]/skill-observations/review-started.txt"
 ```
 
-A scheduler's "succeeded" says the job launched; the marker says how far
-it got. At the next session start, a marker that does not read
+The review's Step 5 overwrites it with `started <date> <time> <label>
+step5 <anchor>` as it claims its anchor (`weekly-review.md`, Step 5), so an
+interactive or commissioned review leaves a live claim too. A scheduler's
+"succeeded" says the job launched; the marker says how far it got. At the next session start, a marker that does not read
 `completed` is a run that died mid-way, and a scheduler last run later
 than `last-review-date.txt` with the marker untouched is a run that fired
 and never reached its second action — two different defects, and neither
@@ -1581,6 +1645,15 @@ unanswerable offer as surfaced. Never run the review unprompted either:
 "autonomous" in step 3 means a scheduled run whose prompt asks for the
 review, not a worker whose caller asked for something else.
 
+**A whole review delegated to a subagent is the one exception to the
+subagent rule**, and only where the brief says so explicitly and quotes the
+user's permission. The parent then writes nothing to the log until the
+executor has reported; the run's approval mode is the scheduled-autonomous
+one (escalation criteria apply, nothing needing consent is applied) unless
+the brief quotes the user's approval of a specific list; and before
+accepting the record the parent re-runs the Step 6 re-scan and the
+validator itself — a delegate's "done" is a claim about its own edits.
+
 What happens to logging depends on who the caller is. Where the caller
 is itself a session running this protocol, the activation block's
 subagent rule applies: the worker writes nothing, and a finding worth
@@ -1682,9 +1755,11 @@ regimes:
 
 This skill consists of `SKILL.md`, the reference files it lists
 (`weekly-review.md`, `skill-authoring.md`, `environments.md`,
-`observation-log.md`, `signals.md`, `migration.md`,
-`starter-principles.md`) and `scripts/migrate-log.py`,
-`scripts/new-observation.sh`, `scripts/session-start-scan.sh`,
+`observation-log.md`, `observation-scan.md`, `observation-families.md`,
+`signals.md`, `migration.md`,
+`starter-principles.md`) and `scripts/bin-check.sh`, `scripts/diff-staged.sh`,
+`scripts/migrate-log.py`, `scripts/new-observation.sh`, `scripts/session-start-scan.sh`,
+`scripts/set-fields.sh`,
 `scripts/skill-load.sh` and `scripts/validate-skill-bundle.py`. If any is
 missing, SKILL.md "Reference files" applies (the rule lives there because
 this file can be the missing one). `references/ceilings.txt` travels with

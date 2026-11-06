@@ -2,7 +2,7 @@
 
 - **Item:** Turning Engineering Analytics Into Insights (`turning-engineering-analytics-into-insights`)
 - **Original source:** https://github.com/PostHog/skills/tree/main/skills/omnibus/turning-engineering-analytics-into-insights
-- **Repository:** https://github.com/PostHog/skills @ `5cf5f5a5c34c`
+- **Repository:** https://github.com/PostHog/skills @ `f816c8f7f19d`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

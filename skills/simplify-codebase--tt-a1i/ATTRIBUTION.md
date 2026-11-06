@@ -2,7 +2,7 @@
 
 - **Item:** Simplify Codebase (`simplify-codebase`)
 - **Original source:** https://github.com/tt-a1i/archify/tree/main/.agents/skills/simplify-codebase
-- **Repository:** https://github.com/tt-a1i/archify @ `e3920894b0f3`
+- **Repository:** https://github.com/tt-a1i/archify @ `a4065941f12b`
 - **License:** MIT (resolved via skill)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

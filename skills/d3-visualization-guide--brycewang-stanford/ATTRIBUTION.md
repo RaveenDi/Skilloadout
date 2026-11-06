@@ -2,7 +2,7 @@
 
 - **Item:** D3 Visualization Guide (`d3-visualization-guide`)
 - **Original source:** https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills/tree/main/skills/43-wentorai-research-plugins/skills/analysis/dataviz/d3-visualization-guide
-- **Repository:** https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills @ `8dd077b5410c`
+- **Repository:** https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills @ `bfa0a6e5a843`
 - **License:** CC-BY-SA-4.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

@@ -9,7 +9,7 @@
 
 Use this template when:
 - A topic generates many recurring questions across forums, support channels, or search
-- Each question can be answered in 80-120 words with a clear, direct response
+- Each question can be answered clearly and directly without a fixed word band
 - The content needs to be optimized for Google Featured Snippets and AI citations
 - Search queries are phrased as questions ("how do I," "what is the difference between," "why does")
 - You want to create a linkable reference page that other content can point to
@@ -57,7 +57,8 @@ Person, Organization, and BreadcrumbList schema.
 
 ### Introduction (100-150 words)
 
-[ANSWER-FIRST] Introduce the topic and establish why these questions matter. Include a stat about the topic's relevance or how common these questions are.
+[ANSWER-FIRST] Introduce the topic and establish why these questions matter.
+Use a verified statistic only when it materially improves that explanation.
 
 ```markdown
 # [Topic]: Frequently Asked Questions ([Year])
@@ -86,7 +87,7 @@ This FAQ covers the [N] most common questions about [topic], organized into [N] 
 
 ---
 
-### FAQ Category 1: "Getting Started" Questions (3-4 Questions)
+### FAQ Category 1: "Getting Started" Questions (count by reader need)
 
 Foundational questions for newcomers. Each question is an H2.
 
@@ -95,7 +96,7 @@ Foundational questions for newcomers. Each question is an H2.
 
 ### What is [topic/tool/concept]?
 
-[ANSWER-FIRST] [Topic] is [clear, jargon-free definition in 40-60 words]. [One sentence of additional context about its purpose or primary use case].
+[ANSWER-FIRST] [Topic] is [clear, jargon-free definition sized to the concept]. [Add context about its purpose or primary use case when helpful].
 
 [STAT: adoption or usage data point that validates relevance]
 
@@ -135,7 +136,7 @@ Foundational questions for newcomers. Each question is an H2.
 
 ---
 
-### FAQ Category 2: "How It Works" Questions (3-4 Questions)
+### FAQ Category 2: "How It Works" Questions (count by reader need)
 
 Functional questions about mechanics and capabilities.
 
@@ -144,7 +145,7 @@ Functional questions about mechanics and capabilities.
 
 ### How does [topic/feature] work?
 
-[ANSWER-FIRST] [Topic/feature] works by [mechanism explained in 40-60 words without jargon]. [One sentence of technical detail for readers who want depth].
+[ANSWER-FIRST] [Topic/feature] works by [mechanism explained completely without unnecessary jargon]. [Add technical detail for readers who need depth].
 
 [VISUAL: simple-diagram showing how it works, if applicable]
 
@@ -187,7 +188,7 @@ Functional questions about mechanics and capabilities.
 
 ---
 
-### FAQ Category 3: "Common Problems" Questions (3-4 Questions)
+### FAQ Category 3: "Common Problems" Questions (count by reader need)
 
 Troubleshooting questions for users who are stuck.
 
@@ -248,7 +249,7 @@ Troubleshooting questions for users who are stuck.
 
 ---
 
-### FAQ Category 4: "Advanced" Questions (2-3 Questions)
+### FAQ Category 4: "Advanced" Questions (count by reader need)
 
 Questions from experienced users looking for deeper understanding.
 
@@ -374,10 +375,10 @@ Before publishing, verify:
 - [ ] Questions are organized into 3-4 logical categories
 - [ ] Every question is phrased exactly as users would search it
 - [ ] Every answer opens with [ANSWER-FIRST] (direct answer in first sentence)
-- [ ] Each answer is 80-120 words and self-contained
+- [ ] Each answer is complete and self-contained; length alone does not pass or fail
 - [ ] Each answer is extractable as a standalone snippet (no "as mentioned above" references)
-- [ ] At least 12 total questions across all categories
-- [ ] At least 3 [STAT] markers with relevant data points
+- [ ] Question count follows demonstrated reader need without padding
+- [ ] Statistics are optional, material to an answer, and verified when used
 - [ ] At least 2 [INFO-GAIN] markers with original experience or insight
 - [ ] At least 6 [INTERNAL-LINK] zones connecting to detailed content
 - [ ] At least 1 [VISUAL] marker (comparison table or diagram)

@@ -41,21 +41,23 @@ in place so the writer can focus on delivering unique value.
 
 ## Template Selection Guide
 
-Use this table to select the right template based on content goals.
+Use this table to select the right template based on content goals. Canonical
+target ranges live in each template file header; this table mirrors those
+headers and must be updated in the same change.
 
 | Goal | Template | Best For | Word Count |
 |------|----------|----------|------------|
 | Teach a process | `how-to-guide` | Step-by-step tutorials, "How to X" queries | 2,000-2,500 |
 | Rank for "best X" | `listicle` | Curated lists, "Best X for Y" queries | 1,500-2,000 |
-| Build authority | `case-study` | Proving results with real metrics | 2,000-3,000 |
+| Build authority | `case-study` | Proving results with real metrics | 1,500-2,000 |
 | Capture comparison traffic | `comparison` | "X vs Y" queries, tool evaluations | 1,500-2,000 |
 | Dominate a topic | `pillar-page` | Comprehensive coverage, hub pages | 3,000-4,000 |
-| Convert buyers | `product-review` | Bottom-of-funnel "is X worth it" queries | 1,500-2,500 |
-| Thought leadership | `thought-leadership` | Industry opinion, predictions, analysis | 2,000-3,000 |
-| Curate expertise | `roundup` | Expert quotes, multi-source collections | 2,000-2,500 |
-| Technical audience | `tutorial` | Code walkthroughs, tool demos | 2,500-3,500 |
+| Convert buyers | `product-review` | Bottom-of-funnel "is X worth it" queries | 1,500-2,000 |
+| Thought leadership | `thought-leadership` | Industry opinion, predictions, analysis | 1,500-2,500 |
+| Curate expertise | `roundup` | Expert quotes, multi-source collections | 1,500-2,000 |
+| Technical audience | `tutorial` | Code walkthroughs, tool demos | 2,000-3,000 |
 | Timely content | `news-analysis` | Event reactions, algorithm update coverage | 800-1,200 |
-| Original research | `data-research` | Proprietary data, survey results, experiments | 2,500-3,500 |
+| Original research | `data-research` | Proprietary data, survey results, experiments | 2,000-3,000 |
 | Answer questions | `faq-knowledge` | Knowledge base pages, Q&A reference content | 1,500-2,000 |
 
 ### Search Intent Mapping
@@ -78,12 +80,12 @@ guide the writer (and `/blog write`) on what content each section needs.
 
 | Marker | Purpose | Example |
 |--------|---------|---------|
-| `[ANSWER-FIRST]` | Start with an about 50-word direct-answer sentence, then a 120-180 word citable passage with stat + source | "In 2026, [direct answer]. [Source-backed context follows]." |
+| `[ANSWER-FIRST]` | State the section point early, then add the context and verified support it needs; no fixed length | "[Direct point]. [Source-backed context follows when needed]." |
 | `[VISUAL: chart-type]` | Place a chart of the specified type here | `[VISUAL: grouped-bar]` for before/after data |
 | `[IMAGE]` | Place a relevant image with descriptive alt text here | After H2 heading, before body text |
 | `[INFO-GAIN: type]` | Section requires original data or unique perspective | `[INFO-GAIN: case-study]`, `[INFO-GAIN: personal-experience]` |
 | `[STAT: description]` | A specific statistic is needed in this location | `[STAT: market size or growth rate]` |
-| `[FAQ]` | Place the FAQ section (3-5 questions, 40-60 word answers) | Always before the conclusion |
+| `[FAQ]` | Optional Q&A when genuine reader questions warrant it | Usually before the conclusion when included |
 | `[INTERNAL-LINK]` | Natural place for an internal link to related content | `[INTERNAL-LINK: related pillar page or supporting post]` |
 
 ### Universal Template Skeleton
@@ -99,7 +101,7 @@ Every template, regardless of content type, follows this outer structure:
 - Promise: [What they'll learn by reading]
 
 ## H2: [Section: usually Question Format] (word count)
-[ANSWER-FIRST]: about 50-word direct-answer sentence, then 120-180 word citable passage with stat + source
+[ANSWER-FIRST]: state the section point early, then add enough verified support and context; do not pad to a word band
 [CONTENT]: Topic coverage guidance
 [INFO-GAIN]: Where unique perspective is needed
 [VISUAL]: Chart type or [IMAGE] placement
@@ -108,26 +110,27 @@ Every template, regardless of content type, follows this outer structure:
 [... 4-8 H2 sections depending on template ...]
 
 ## Frequently Asked Questions
-[FAQ]: 3-5 questions with 40-60 word answers; include sourced stats only when they genuinely improve the answer
+[FAQ]: Optional reader questions with complete answers; include sourced stats only when they genuinely improve the answer
 
 ## Conclusion (100-150 words)
 - Key takeaways (bulleted, 3-5 items)
 - Call to action
 ```
 
-### Section Word Count Targets
+### Optional Section Planning Ranges
 
-Word count targets ensure proper pacing. Readers disengage when sections
-are too long, and AI systems prefer well-chunked content.
+Use these ranges only for rough planning. Intent-dependent completeness,
+evidence, and reader usefulness control the final length. Falling outside a
+range has no Google or AI scoring consequence and must not block delivery.
 
-| Section Type | Target Word Count | Hard Limit |
-|-------------|-------------------|------------|
-| Introduction | 100-150 words | 200 words |
-| Standard H2 section | 300-400 words | 500 words |
-| Lightweight H2 section | 200-300 words | 400 words |
-| Heavy H2 section (pillar) | 400-600 words | 700 words |
-| FAQ answer (each) | 40-60 words | 80 words |
-| Conclusion | 100-150 words | 200 words |
+| Section Type | Optional Planning Range | Editorial Decision |
+|-------------|-------------------------|--------------------|
+| Introduction | Often 100-150 words | Use the space needed to establish purpose |
+| Standard H2 section | Often 300-400 words | Complete the section without padding |
+| Lightweight H2 section | Often 200-300 words | Shorter is fine when the answer is complete |
+| Heavy H2 section (pillar) | Often 400-600 words | Expand only when evidence and reader needs warrant it |
+| FAQ answer (each) | Usually concise | Answer completely; no fixed band |
+| Conclusion | Often 100-150 words | End once the takeaway and next step are clear |
 
 ---
 
@@ -154,8 +157,9 @@ Conclusion (key takeaways + next step)
 **Visual plan**: Process flow chart + before/after comparison chart.
 3-5 screenshots or relevant images, one per major step.
 
-**AI citation strength**: High for "how to" queries. AI systems frequently
-extract step-by-step instructions from well-structured how-to content.
+**Reader-usefulness note**: A clear sequence and verified prerequisites help
+readers complete "how to" tasks. This template carries no automatic search or
+AI-citation advantage.
 
 ---
 
@@ -178,8 +182,9 @@ Conclusion (top pick + comparison table)
 **Visual plan**: Comparison bar chart + market share donut chart.
 Logo/screenshot per item, or grouped comparison image.
 
-**AI citation strength**: High, but vendor-reported listicle shares vary.
-AI systems often extract individual list items and recommendations.
+**Reader-usefulness note**: Distinct evaluation criteria and supported
+recommendations make individual list items useful. The format itself earns no
+search or AI-citation benefit.
 
 ---
 
@@ -203,8 +208,8 @@ Conclusion (CTA to learn more)
 **Visual plan**: Before/after bar chart + results timeline or line chart.
 Screenshots, dashboards, team/process photos.
 
-**AI citation strength**: High for specific queries about outcomes and metrics.
-Case studies provide the exact type of original data AI cannot fabricate.
+**Reader-usefulness note**: Verified case-study methods and results can provide
+original evidence. The template itself earns no search or AI-citation benefit.
 
 **Critical requirement**: Real metrics from the actual project. Without genuine
 data, this template produces content that fails E-E-A-T evaluation.
@@ -232,8 +237,9 @@ Conclusion (recommendation matrix)
 **Visual plan**: Feature comparison radar chart + pricing bar chart.
 Product screenshots and UI comparisons.
 
-**AI citation strength**: Very high for commercial queries. AI systems
-frequently cite comparison content when users ask "which is better."
+**Reader-usefulness note**: Consistent criteria and evidence can help readers
+make commercial comparisons. The format itself earns no search or AI-citation
+benefit.
 
 ---
 
@@ -263,9 +269,9 @@ Conclusion (learning path + next steps)
 **Internal linking**: Heavy. Every subtopic H2 should link to a supporting
 blog post. This is the hub of a topic cluster.
 
-**AI citation strength**: Highest when the page covers a topic comprehensively
-and provides source-backed passages. Treat vendor claims about long-form AI
-citation lift as directional unless the cited study is loaded and verified.
+**Reader-usefulness note**: Pillar pages work when they cover the reader's task
+and provide source-backed material. Length and template choice do not create an
+automatic search or AI-citation benefit.
 
 ---
 
@@ -416,9 +422,9 @@ Conclusion (summary of findings + data access)
 **Visual plan**: 3-4 charts (data visualizations are central to this type).
 Charts ARE the content: they should be the primary focus of each finding section.
 
-**Differentiator**: Original data is the entire value proposition. B2B SaaS
-websites conducting original research saw 25.1% average increase in top-10
-rankings (Stratabeat study). AI cannot create proprietary data.
+**Differentiator**: Original data is the entire value proposition. Proprietary
+data is something a model cannot generate from public text, and it gives other
+writers a primary source to cite. No ranking uplift is claimed here.
 
 ---
 
@@ -448,9 +454,8 @@ structure itself provides the value.
 **Special requirements**: Every factual claim must be verifiable. Use sourced
 statistics when they clarify the answer; do not force numbers into qualitative
 answers.
-FAQPage schema is optional entity markup for visible Q&A. It does not generate
-Google rich results or known SERP features; use it only to clarify question and
-answer entities for AI citation support.
+FAQPage schema is optional markup for visible Q&A. It does not generate Google
+rich results and earns no Google or AI-readiness score benefit.
 
 ---
 
@@ -505,7 +510,7 @@ Here is how template features map to scoring categories:
 | Heading hierarchy, title, meta, keyword use, internal links | SEO Optimization | 25 pts |
 | `[INFO-GAIN]`, author signals, citations, trust markers | E-E-A-T Signals | 15 pts |
 | `[VISUAL]`, `[IMAGE]`, schema, performance, OG metadata | Technical Elements | 15 pts |
-| `[ANSWER-FIRST]`, Q&A passages, entity clarity, crawlability | AI Citation Readiness | 15 pts |
+| Evidence-backed sections, purpose fit, entity clarity, crawlability | AI Citation Readiness | 15 pts |
 
 A content piece that follows its template structure has coverage for the 100-point
 rubric. Final scoring still depends on evidence quality, originality, and execution.
@@ -537,14 +542,15 @@ Changes take effect immediately: no restart needed.
    - What is the logical flow from introduction to conclusion?
    - Where do visuals add the most value?
 
-3. Add markers to every section:
-   - `[ANSWER-FIRST]` on every H2 (non-negotiable)
+3. Add markers where they help:
+   - `[ANSWER-FIRST]` on important sections that need a clearer opening
    - `[VISUAL]` or `[IMAGE]` on 60-70% of H2 sections
    - `[INFO-GAIN]` on sections that need original perspective
    - `[STAT]` where specific data points are essential
    - `[INTERNAL-LINK]` where related content connections are natural
 
-4. Set word count targets that match the content type's natural depth
+4. Optionally estimate length for planning, while letting intent-dependent
+   completeness determine the final article
 
 5. Add a topic signal entry to the auto-detection table (update the
    blog-write SKILL.md or document the detection keywords)
@@ -553,27 +559,27 @@ Changes take effect immediately: no restart needed.
 
 | Practice | Why |
 |----------|-----|
-| Keep sections focused on one topic each | AI systems extract by section |
+| Keep sections focused on one topic each | Readers can follow and reuse the material |
 | Place `[VISUAL]` where data naturally supports a chart | Forced visuals feel awkward |
-| Use `[INFO-GAIN]` liberally | These sections differentiate from AI consensus |
-| Set realistic word counts | Over-padding dilutes quality scores |
-| Always include `[FAQ]` zone and conclusion | Both are scoring elements |
+| Use `[INFO-GAIN]` only for supported original material | Labels alone add no value |
+| Use length estimates only for planning | Completeness matters more than a word band |
+| Include `[FAQ]` only when warranted | FAQ presence has no Google or AI score effect |
 | Test with `/blog analyze` after writing | Validates template effectiveness |
 
 ---
 
 ## FAQ Section Guidelines (All Templates)
 
-Every template includes a visible Q&A section. It supports engagement and may aid
-AI citation as an entity signal. It is not a Google rich result.
+Templates may include a visible Q&A section when genuine reader questions
+warrant it. FAQ presence is not a Google rich result or an AI-readiness score factor.
 
-### FAQ Requirements
+### FAQ Planning Guidance
 
 | Requirement | Specification |
 |-------------|--------------|
-| Minimum questions | 3 (standard templates), 5-8 (pillar-page, faq-knowledge) |
+| Minimum questions | No universal minimum; use enough to serve the reader task |
 | Maximum questions | 8 (diminishing returns beyond this) |
-| Answer length | 40-60 words each |
+| Answer length | Concise planning range only; completeness takes priority |
 | Statistics | Include only when factual, relevant, and sourced |
 | Source attribution | Every statistic must cite a named source |
 | Schema | Generate FAQPage only when FAQ content is visible; never present it as a Google rich result; keep Article + Person + Organization + BreadcrumbList as the 2026 priority |

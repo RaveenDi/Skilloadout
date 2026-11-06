@@ -2,7 +2,7 @@
 
 - **Item:** Econometrics Julia (`econometrics-julia`)
 - **Original source:** https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills/tree/main/skills/14-luischanci-claude-code-research-starter/dot-claude/skills/econometrics-julia
-- **Repository:** https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills @ `8dd077b5410c`
+- **Repository:** https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills @ `bfa0a6e5a843`
 - **License:** CC-BY-SA-4.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.
