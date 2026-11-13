@@ -77,11 +77,11 @@ assembly's body, on the parts it places.
 
 ## Child models and imported components
 
-A project model is composed by calling it; `read_xbf` reads a vendor part converted
-once from its STEP (`cad export vendor.step vendor.xbf`), and `read_step` a STEP
+A project model is composed by calling it; `xbf.read` reads a vendor part converted
+once from its STEP (`cad step export vendor.step vendor.xbf`), and `step.read` a STEP
 as it is. Both are inputs, like every file a run reads
 ([inputs](model-contract.md#inputs)). An imported part keeps its vendor's origin and
-orientation; a snapshot or `cad inspect` shows them and its functional features, and the
+orientation; a snapshot or `cad <type> inspect` shows them and its functional features, and the
 measured offsets or joint frames go in the source.
 
 ## Alignment and measurement checks
@@ -90,8 +90,8 @@ There is no generic alignment mode that guesses which points or axes the design
 means: a check names the mating features and states the relationship in Python
 ([inspection](inspection-and-validation.md)).
 
-For example, for the enclosure's two mating faces, using `find_part` and `world_parts`
-copied from [Opening geometry](inspection-and-validation.md#opening-geometry):
+For example, for the enclosure's two mating faces, using `find_part` copied from
+[Opening geometry](inspection-and-validation.md#opening-geometry):
 
 ```python
 import build123d as bd

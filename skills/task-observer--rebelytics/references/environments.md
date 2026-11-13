@@ -1,6 +1,6 @@
 # Environments, Activation Setup, and Handoff-Doc Mode
 
-Load triggers: anchoring, pinning, re-pinning or diagnosing a shard of the workspace; setting up or diagnosing activation (instruction block, hooks, activation config); placing the session-start mount probe in the first batched call; the folder picker is refused or no device-bridge tool is found; no filesystem at all (handoff-doc mode); no stable path resolves for a disposable worker (report-back mode); a session whose output a caller owns; after a compaction or resume; the checkpoint in a priced-write workspace; a permission or classifier denial of a log write; a mode that forbids every write by design; the first-run backfill
+Load triggers: anchoring, pinning, re-pinning or diagnosing a shard of the workspace; a new log was just created (list the sibling logs); setting up or diagnosing activation (instruction block, hooks, activation config); placing the session-start mount probe in the first batched call; the folder picker is refused or no device-bridge tool is found; no filesystem at all (handoff-doc mode); no stable path resolves for a disposable worker (report-back mode); a session whose output a caller owns; after a compaction or resume; the checkpoint in a priced-write workspace; a permission or classifier denial of a log write; a mode that forbids every write by design; the first-run backfill
 
 Load this for setup questions, compaction/resume behaviour, or when running
 in an environment without filesystem access.
@@ -424,19 +424,19 @@ than consolidating on your own judgement, because one plural case is
 legitimate (see the multi-log block in `weekly-review.md`).
 
 **The session-start scan lists the neighbours on every run.** One line of
-the scan (`scripts/session-start-scan.sh`) finds every
-`skill-observations/observation-log/` up to five levels under the
-pinned root's parent (one project folder below a projects folder; `.git`,
-`node_modules` and `skill-updates` trees pruned) and prints each with its
-file count and the date of its `checkpoints.log`'s last line — `logs under
-the parent (…): /a/proj=157 last=<date>  /a/other=19 last=none`; a shard
-still being written shows a recent date. One entry is the ordinary
-case. Several are either shards or the legitimate plural case, and the
-line cannot tell which: report it in one line, route to "Several
-observation logs on one machine" in `weekly-review.md`, and never
-consolidate from the scan. The probe is bounded by the parent's depth-5
-tree, not by any log's size; an empty line means the probe could not read
-the parent, since the pinned log itself is always under it.
+the scan (`scripts/session-start-scan.sh`) searches the anchors named here:
+the pinned root's parent to five levels, and to a workspace two folders
+below each the parent's siblings, the user-scope config home and its
+`projects/` (identity roots, `memory/`), `.git`, `node_modules` and
+`skill-updates` pruned — a search keyed on one directory's ancestry never
+sees a store kept at another scope. It prints each log with its file count, its
+`checkpoints.log`'s last date and `legacy=N` for a `log.md` beside it —
+`logs at the plausible anchors (…): /a/proj=157 last=<date>  /a/other=19
+last=none legacy=4`; another root's `log.md` beside its directory is a
+SPLIT STORE line naming that root. One entry is the ordinary case; several
+are shards or the legitimate plural case: report them in one line, route to
+"Several observation logs on one machine" in `weekly-review.md`, and never
+consolidate from the scan. An empty line means the probe could not read the parent.
 
 **Before creating a log, search for one.** Check the plausible anchor
 candidates — the pinned path, the project identity root, the
@@ -480,6 +480,42 @@ still in use, perhaps on purpose, so report both roots and ask; never
 consolidate, delete or re-anchor on its word alone. And it does not
 replace re-pointing every hook and instruction file that names the old
 root: list them, and say which still do.
+
+**A renamed project orphans its log.** The anchor derives from the
+project path, so once the project folder is renamed or moved the old
+anchor is no longer among the plausible candidates above: sessions open
+a fresh log, the old one's open entries are read by no session, and both
+logs number from 1. So when Workspace creation makes a new log
+(`created=` names `observation-log` on its checkpoint line), list the
+sibling workspaces before the first write — every log at the scan's anchors
+(the root's parent holds a renamed folder and an identity directory encoded
+from the old path alike), plus any other plausible anchor whose
+name contains the project's name — with each one's open entries:
+
+```bash
+root="[ABSOLUTE PATH]"; par=$(dirname "$root"); c="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"   # quoted: it may contain a space; bash
+for a in "$par" "$(dirname "$par")"/* "$HOME/.claude" "$HOME/.claude/projects" "$c" "$c/projects"; do [ -d "$a" ] && find "$a" -maxdepth 5 \( -name .git -o \
+  -name node_modules -o -name skill-updates \) -prune -o -type d -path '*/skill-observations/observation-log' -print 2>/dev/null; done | sort -u |
+while IFS= read -r d; do
+  r=${d%/skill-observations/observation-log}; [ "$r" = "$root" ] && continue
+  n=$(find "$d" -maxdepth 1 -name '*.md' -exec grep -l '^status: open' {} + 2>/dev/null | wc -l | tr -d ' ')
+  printf '%s open=%s
+' "$r" "$n"
+done
+```
+
+Every sibling prints, zero included; no output means no other log at the
+anchors, or anchors the probe could not read (the scan's `logs at the
+plausible anchors` line is the cross-check). For a sibling with open entries,
+name it in one line and offer to carry those entries over — never carry
+unasked, since two logs can be the legitimate plural case. A carried
+entry is appended to the new log through the write path, one at a time,
+with a new id from the new log's counter and its provenance in the body
+(the old log's path and the old id); then mark the source `actioned` with
+a resolution naming the new id, and leave the `MOVED.md` pointer, as in a
+consolidation above. In a review that spans several logs before the
+carry-over, cite each entry as `log#N` (`weekly-review.md`, "Qualify
+every id that leaves its log").
 
 **A re-anchor moves the root, not only the log.** Session Start step 1's
 ephemeral-to-stable re-anchor and a shard consolidation relocate every
@@ -1114,8 +1150,7 @@ protections missing.
 So: deliver a config change as a **complete replacement file** built from
 the user's current one, never as a fragment to splice in; state in one line
 what else that file was carrying, so the user can verify it survived; and
-where the harness supports it, prefer a separate file over editing a shared
-one.
+where the harness allows, prefer a separate file over editing a shared one.
 
 ### If CLAUDE.md (or the equivalent config) is governance-protected
 
@@ -1161,8 +1196,7 @@ believes the strongest tier is active.
 
 The fallbacks above branch on two kinds of denial: a hard guard (a
 governance hook, a file-protection rule) and an interactive permission
-prompt that one user approval clears. There is a third, and it behaves like
-neither.
+prompt that one user approval clears. A third behaves like neither.
 
 An automated content classifier can refuse the edit on the grounds that the
 activation block is **third-party instruction text being written into a
@@ -1414,8 +1448,7 @@ permission tool (`allow_cowork_file_delete`) present in the tool surface
 Steps that must edit scheduled tasks, delete workspace files (review
 cleanup, keep-two pruning), or run git in the shared folder need a local
 session — treat that as a one-line precondition on those steps, and when
-reporting a mode-conditional limit, name the mode and the switch in the
-same breath.
+reporting a mode-conditional limit, name the mode and the switch with it.
 
 **A cloud session bridged to the user's machine writes observations
 through the device shell, at write time.** In a bridged session the agent
@@ -1437,20 +1470,24 @@ never ran because it lives in the command the commit bypassed; the lagging
 **Where the scripts are not on the device.** In a bridged session the
 installed skill tree, scripts included, can exist only in the cloud
 container while the log lives on the device. First look for the review's
-copy at `skill-observations/.bin/`: its `MANIFEST` records the installed
-`version:` and a sha256 per script, refreshed by every review that confirms
-an install (`weekly-review.md`, Step 1 gate). The digest that decides is
+copy at `skill-observations/.bin/`: its `MANIFEST` carries
+`verified_against: <version>` and a sha256 per script, refreshed by every
+review that confirms an install (`weekly-review.md`, Step 1 gate). The digest that decides is
 the INSTALLED script's, hashed in the container — never `.bin/`'s own:
 the manifest was written from that copy, so hashing `.bin/` against it is
 a tautology that passes a stale cache under a newer install. The check is
 one command, so the wrong operand cannot be chosen: hash the installed
-scripts in the container (`sha256sum "<skill directory>"/scripts/*.sh
-"<skill directory>"/scripts/*.py`), pass that output to the device as a
-file (the command per environment is a row of the table below: "Refresh
-the digests"), and run every `.bin/` script through
+scripts in the container, headed by the installed `SKILL.md`'s `version:`
+line, pass that output to the device as a file (the command per
+environment is a row of the table below: "Refresh the digests"), and run
+every `.bin/` script through
 `bash "<root>/skill-observations/.bin/bin-check.sh" "<root>" <digests-file> <script> [args]`,
 which compares each `.bin/` file with the installed digests and refuses to
-run on any difference (exit 3). The check runs at session start, before the
+run on any difference (exit 3). It also refuses when that installed version
+is newer than the MANIFEST's `verified_against:`, or the MANIFEST lacks the
+line, so the install that outdates the copy fails closed; a digests file
+without the `version:` line takes `--installed-version <v>` before `"<root>"`,
+and with neither the version gate is skipped with a note. The check runs at session start, before the
 first `.bin/` script — the scan included — never at the next review: on a
 refusal, or where `.bin/` holds no `bin-check.sh` (compare the installed
 digests with `.bin/MANIFEST` instead), refresh `.bin/` and its MANIFEST from
@@ -1464,7 +1501,13 @@ be an unreleased version that nothing refreshes on install. With no
 matching copy, transfer the scripts to the device — a
 permission-classifier denial of that transfer gets at most one identical
 retry, told to the user (SKILL.md, How to Log) — or run the inline id
-snippet through the device shell. Never a hand-derived id.
+snippet through the device shell. Never a hand-derived id. SKILL.md step
+6's compare follows the same split: `diff-staged.sh` needs both trees in one
+shell (from `.bin/` through `bin-check.sh` where the scripts are not on the
+device); with staged copies on the device and live in the container, run
+`(cd <dir> && find . -type f -exec sha256sum {} + | LC_ALL=C sort)` in each
+shell and diff the two listings — a differing `SKILL.md` then gets the
+frontmatter compare (`weekly-review.md`, "Staged-work reconciliation gate").
 
 | Capability | Claude Cowork | Claude Code | Web chat / no filesystem |
 |---|---|---|---|
@@ -1474,7 +1517,7 @@ snippet through the device shell. Never a hand-derived id.
 | Scheduled review | the app's scheduled tasks (cloud-default: run remotely; legacy local mode: run on the user's machine, only while it is on — see the execution-mode note above) | cron / an account-level scheduler that can reach the workspace — headless invocations carry the workspace grant (`--add-dir`) in the task definition; a `SessionStart` hook reports the review state, it does not run the review | calendar reminder + manual trigger |
 | Session-start hook | none | `SessionStart` hook (`hookSpecificOutput.additionalContext`) | none |
 | Local-vs-cloud tell | `allow_cowork_file_delete` present ⇒ local session | n/a | n/a |
-| Refresh the digests `bin-check.sh` reads ("Where the scripts are not on the device") | cloud session bridged to the device: `sha256sum "<skill directory>"/scripts/* > digests.txt` in the container, then the device file-commit tool carries that file to `[ABSOLUTE PATH]/skill-observations/.bin/digests.txt`; local session: the scripts are on the device, so `sha256sum` writes the file there directly | `sha256sum "<skill directory>"/scripts/* > "[ABSOLUTE PATH]/skill-observations/.bin/digests.txt"` — one shell, nothing to carry | n/a |
+| Refresh the digests `bin-check.sh` reads ("Where the scripts are not on the device") | cloud session bridged to the device: `{ grep -m1 '^version:' "<skill directory>"/SKILL.md; sha256sum "<skill directory>"/scripts/*; } > digests.txt` in the container, then the device file-commit tool carries that file to `[ABSOLUTE PATH]/skill-observations/.bin/digests.txt`; local session: the scripts are on the device, so `sha256sum` writes the file there directly | `{ grep -m1 '^version:' "<skill directory>"/SKILL.md; sha256sum "<skill directory>"/scripts/*; } > "[ABSOLUTE PATH]/skill-observations/.bin/digests.txt"` — one shell, nothing to carry | n/a |
 
 **The Claude Code column is the terminal CLI; the desktop app has a
 scheduler of its own.** Claude Code run inside the desktop app exposes

@@ -2,7 +2,7 @@
 
 - **Item:** Officecli Academic Paper (`officecli-academic-paper`)
 - **Original source:** https://github.com/iOfficeAI/OfficeCLI/tree/main/skills/officecli-academic-paper
-- **Repository:** https://github.com/iOfficeAI/OfficeCLI @ `c56512c8c7b7`
+- **Repository:** https://github.com/iOfficeAI/OfficeCLI @ `91c06b6f5c80`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

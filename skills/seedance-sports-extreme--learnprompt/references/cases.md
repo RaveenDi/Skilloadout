@@ -6,7 +6,7 @@ Generated from `data/cases.json` + `data/case-taxonomy.json`. Do not hand-edit.
 
 ## E1 · Seedance 2.5 Dance Clip Real Enough to Fool You
 
-- Seedance 2.5 · creator: @johnAGI168 · heat: 92 · stability: 51
+- Seedance 2.5 · creator: @johnAGI168 · heat: 91 · stability: 51
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-269d1fc95820) · [finished media](https://media.goodcase.ai/media/video/seedance-269d1fc95820.mp4) · [poster](https://media.goodcase.ai/media/poster/seedance-269d1fc95820.jpg) · [original source](https://x.com/johnAGI168/status/2095025524586193105)
 - Summary: 不会有人认为这是真的吧？😄 Seedance 2.5 也过于逼真了啊🫠连影子都那么真实 上传自己的图片，加上下面的提示词，你也能这么跳😂 Seedance 2.5 prompt 👇 Duration: 10秒 Aspect rati
 
@@ -144,7 +144,7 @@ Negative:
 
 ## E2 · Woman Snowboarding and Catching Air at an Alpine Resort
 
-- Seedance 2.0 · creator: @ayzalnooor24521 · heat: 80 · stability: 79
+- Seedance 2.0 · creator: @ayzalnooor24521 · heat: 78 · stability: 79
 - Evidence: [GoodCase](https://goodcase.ai/cases/ayzalnooor24521-seedance-ai-db77eb406bfb) · [finished media](https://media.goodcase.ai/media/video/ayzalnooor24521-seedance-ai-db77eb406bfb.mp4) · [poster](https://media.goodcase.ai/media/poster/ayzalnooor24521-seedance-ai-db77eb406bfb.jpg) · [original source](https://x.com/ayzalnooor24521/status/2094243156225315270)
 - Summary: Chasing the rush where snow meets the sky. Big jumps, fresh powder, and endless mountain energy. Created on seedance 2.0
 
@@ -158,7 +158,7 @@ High-energy, professional ski-film aesthetic, smooth camera movement, crisp deta
 
 ## E3 · Blonde Woman Scores a Spectacular Goal in High Heels
 
-- Seedance 2.0 · creator: @Alexneyef · heat: 72
+- Seedance 2.0 · creator: @Alexneyef · heat: 70
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-ultra-realistic-viral-smartphone-video-in-one-continuous-handheld-shot-4702582e360c) · [finished media](https://media.goodcase.ai/cases/708b5580c270.mp4) · [poster](https://media.goodcase.ai/cases/0f6e8055f9d7.jpg) · [original source](https://x.com/Alexneyef/status/2099607916789563863)
 - Summary: OMG, what a strike 😭 Nobody expected her to pull THAT off. This is AI. And the crazy part is, you don’t need advanced skills, a pile of references, or some com…
 
@@ -197,7 +197,7 @@ Audio: natural park ambience, distant voices, ball impact, footsteps
 
 ## E4 · Bicycle Courier Racing Through the City
 
-- Seedance 2.5 · creator: @Elvorya · heat: 64 · stability: 81
+- Seedance 2.5 · creator: @Elvorya · heat: 62 · stability: 81
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-create-a-15-second-photorealistic-cinematic-animated-urban-adventure-sequence-f-92f2a4a51ac5) · [finished media](https://media.goodcase.ai/cases/678ddbe216a4.mp4) · [poster](https://media.goodcase.ai/cases/d9e8d052ad57.jpg) · [original source](https://x.com/Elvorya/status/2102622012351131832)
 - Summary: When a delivery ride turns into a cinematic city adventure. Created on seedance 2.5 Prompt:Create a 15-second photorealistic cinematic animated urban adventure …
 
@@ -217,7 +217,7 @@ Negative prompt: no subtitles, no text, no logos, no watermark, no distorted fac
 
 ## E5 · Elephant Launches Acrobat into Flips and a Horseback Landing
 
-- Seedance 2.5 · creator: @sipteaandcoffee · heat: 62
+- Seedance 2.5 · creator: @sipteaandcoffee · heat: 60
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-2-5-i-m-a-flexible-girl-0a4d9719d867) · [finished media](https://media.goodcase.ai/cases/9c865aa2ff52.mp4) · [poster](https://media.goodcase.ai/cases/ec4e8d1301a8.jpg) · [original source](https://x.com/sipteaandcoffee/status/2107060987157524524)
 - Summary: I'm a flexible girl Seedance 2.5 on @TapNow_AI Prompt Create a 15-second ultra-realistic vertical 9:16 circus performance video, filmed casually by an audience …
 
@@ -312,7 +312,7 @@ Audience members react enthusiasti
 
 ## E6 · Female Rider Wins Mountain Bike Final by a Wheel
 
-- Seedance 2.5 · creator: @nawalsehar · heat: 58 · stability: 76
+- Seedance 2.5 · creator: @nawalsehar · heat: 56 · stability: 76
 - Evidence: [GoodCase](https://goodcase.ai/cases/nawalsehar-seedance-ai-9cff7acb6229) · [finished media](https://media.goodcase.ai/media/video/nawalsehar-seedance-ai-9cff7acb6229.mp4) · [poster](https://media.goodcase.ai/media/poster/nawalsehar-seedance-ai-9cff7acb6229.jpg) · [original source](https://x.com/nawalsehar/status/2094294374381441152)
 - Summary: Two elite riders, one brutal final sprint, and a finish decided by inches. Created on seedance 2.5 Prompt: Ultra-photore
 
@@ -332,7 +332,7 @@ No CGI appearance, no extra racers, no spectators blocking the riders, no imposs
 
 ## E7 · White-Clad Acrobat Leaps Across Tall Poles Above a Mountain Lake
 
-- Seedance 2.0 · creator: @ayzalnooor24521 · heat: 58
+- Seedance 2.0 · creator: @ayzalnooor24521 · heat: 56
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-2-0-create-it-30-second-video-featuring-a-breathtaking-cinematic-acrobatic-performa-d8c6b0e19d99) · [finished media](https://media.goodcase.ai/cases/e3e323cb5411.mp4) · [poster](https://media.goodcase.ai/cases/a396247022dc.jpg) · [original source](https://x.com/ayzalnooor24521/status/2113128549930729895)
 - Summary: Grace, balance, and breathtaking moves come together in this stunning acrobatic performance above the water. Created on seedance 2.0 Prompt: Create it 30-second…
 
@@ -342,7 +342,7 @@ Create it 30-second video featuring a breathtaking cinematic acrobatic performan
 
 ## E8 · Seedance Smooth Snowboard Run Through a Terrain Park
 
-- Seedance 2.5 · creator: @nawalsehar · heat: 57 · stability: 73
+- Seedance 2.5 · creator: @nawalsehar · heat: 54 · stability: 73
 - Evidence: [GoodCase](https://goodcase.ai/cases/nawalsehar-seedance-ai-e50de3d2896e) · [finished media](https://media.goodcase.ai/media/video/nawalsehar-seedance-ai-e50de3d2896e.mp4) · [poster](https://media.goodcase.ai/media/poster/nawalsehar-seedance-ai-e50de3d2896e.jpg) · [original source](https://x.com/nawalsehar/status/2088854230626865490)
 - Summary: Some runs are all about the flow. Seedance 2.5 keeps every carve, jump, and landing feeling naturally smooth with seamle
 

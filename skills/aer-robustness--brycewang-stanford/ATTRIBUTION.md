@@ -2,7 +2,7 @@
 
 - **Item:** Aer Robustness (`aer-robustness`)
 - **Original source:** https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills/tree/main/skills/50-brycewang-aer-skills/skills/aer-robustness
-- **Repository:** https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills @ `bfa0a6e5a843`
+- **Repository:** https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills @ `8684584e7d11`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

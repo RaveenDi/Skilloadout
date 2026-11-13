@@ -785,12 +785,14 @@ const SOFT_PATTERNS = [
 const HARD_PATTERNS = [
   [/[（(](此处|以下|这里|下文|后续)?[^）)]{0,10}(省略|略去|略过)[^）)]{0,10}[）)]/, "占位符（括号省略）"],
   [/(TODO|占位符|placeholder|待补充|此处待填|此处待补)/, "占位符"],
-  [/(细纲|情节点|卷纲|功能标签|目标情绪|字数目标|章首钩子|章尾钩子|任务描述)/, "工程词泄漏"],
+  [/(细纲|(?<!剧)情节点|卷纲|功能标签|目标情绪|字数目标|章首钩子|章尾钩子|任务描述)/, "工程词泄漏"],
   [/�/, "乱码（替换字符）"],
 ]
 
+const TOXIC_END_SIGNOFF = /^[-—~～＜<【\[（(《\s]*(?:全文完|正文完|全书完|本卷完|完结|完|END|End|end|THE\s+END|The\s+End|the\s+end)[-—~～＞>】\]）)》.。！!\s]*$/
+
 function skippableLine(line) {
-  return !line || line.startsWith("#") || line === "---" || /^[-—=*·•\s]+$/.test(line)
+  return !line || line.startsWith("#") || line === "---" || /^[-—=*·•\s]+$/.test(line) || TOXIC_END_SIGNOFF.test(line)
 }
 
 // ── 毒句式（确定性 AI 句式指纹，写后正文网热路径）─────────────────────────────
@@ -812,14 +814,19 @@ const TOXIC_CLAUSE_BOUNDARY = new Set(Array.from("，,。.！!？?；;：:、…
 const TOXIC_TAG_PARTICLES = new Set(["吗", "吧", "嘛"])
 const TOXIC_AFFIRM_PARTICLES = new Set(["的", "啊", "呀", "呢"])
 const TOXIC_TRAILER_WINDOW = 600
-// 不收 em-dash（check-ai-patterns.js 里它也是 blocking）是有意的：破折号是标点，长篇 chapter check
+const TOXIC_SCALE_UNIT_CHARS = 4500
+const TOXIC_NOT_IS_MIN_HITS = 3
+const TOXIC_VOICE_MIN_HITS = 2
+const TOXIC_PARADE_MIN_HITS = 2
+const TOXIC_TRAILER_MIN_HITS = 2
+// 不收 em-dash（check-ai-patterns.js 里旁白破折号为 blocking）是有意的：破折号是标点，长篇 chapter check
 // --fix-punctuation / normalize-punctuation.js 会确定性整理，短篇收尾同样先跑标点整理；这张网只推回
-// 需要模型动笔改写的句式。每次写正文都把破折号当硬信号推回只会制造噪声，漏网的仍被 chapter check 拦在提交前。
+// 需要模型动笔改写的句式，且单章计数门槛与 check-ai-patterns.js 的 blocking 线逐项一致。
 const TOXIC_SENTENCE_PATTERNS = [
-  [/声音(?:并)?不[大高响亮][^。！？!?\n]{0,16}[却但偏]/g, "voice-contrast", "删「不X…却Y」反差腔，直接写具体效果或动作。"],
+  [/声音(?:并)?不[大高响亮][^。！？!?\n]{0,16}[却但偏]/g, "voice-contrast", "删「不X…却Y」反差腔，直接写台词分量、利害后果或在场反应。"],
   [/(?:没有[^。！？!?\n，,]{1,12}[，,]){2}/g, "negation-parade", "「没有…，没有…」排比删到只剩一个或全删，改写正面在场的细节。"],
-  [/是[^。！？!?\n，,]{1,12}[，,]\s*(?:而)?不是[^。！？!?\n]{1,20}/g, "reverse-not-is", "删否定铺垫，直接写肯定项，或改成动作细节。"],
-  [/不是[^。！？!?\n]{1,16}[，,]\s*(?:而)?是/g, "not-is-comparison", "删否定铺垫，直接写肯定项，或改成动作细节。"],
+  [/是[^。！？!?\n，,]{1,12}[，,]\s*(?:而)?不是[^。！？!?\n]{1,20}/g, "reverse-not-is", "删否定铺垫，直接写后项（直白情绪、判断、对话或具体细节皆可）。"],
+  [/不是[^。！？!?\n]{1,16}[，,]\s*(?:而)?是/g, "not-is-comparison", "删否定铺垫，直接写后项（直白情绪、判断、对话或具体细节皆可）。"],
 ]
 // 「正式拉开序幕/帷幕」是场内事件的报幕式陈述，不是叙述者预告，lookbehind 排除（同 check-ai-patterns.js）。
 const TOXIC_TRAILER_PATTERN = /没人知道|谁也不知道|谁也没想到|殊不知|(?:这)?才刚刚开(?:始|头)|正(?:朝着|向着)[^。！？!?\n]{0,24}(?:压|涌|袭|逼)(?:了?过去|了?过来|来)|(?<!正式)拉开(?:序幕|帷幕)|即将(?:开始|来临|降临)/
@@ -867,18 +874,28 @@ function toxicReverseNotIsExcluded(line, matched, start) {
   return false
 }
 
-// 每行只报第一条命中的句式规则（复扫到净哲学：改完一处再扫下一处）。
-function matchToxicSentence(line) {
-  for (const [regex, label, fix] of TOXIC_SENTENCE_PATTERNS) {
+// 提取单行内所有不重叠的句式命中（按码点起点与规则顺序去重），供全章密度分级计数。
+function matchToxicSentences(line) {
+  const candidates = []
+  for (let order = 0; order < TOXIC_SENTENCE_PATTERNS.length; order += 1) {
+    const [regex, label, fix] = TOXIC_SENTENCE_PATTERNS[order]
     regex.lastIndex = 0
     let match
     while ((match = regex.exec(line)) !== null) {
       if (label === "not-is-comparison" && toxicNotIsExcluded(line, match[0], match.index)) continue
       if (label === "reverse-not-is" && toxicReverseNotIsExcluded(line, match[0], match.index)) continue
-      return [label, fix, match[0]]
+      const cpStart = Array.from(line.slice(0, match.index)).length
+      const cpEnd = cpStart + Array.from(match[0]).length
+      candidates.push([cpStart, cpEnd, order, label, fix, match[0]])
     }
   }
-  return null
+  candidates.sort((a, b) => a[0] - b[0] || a[2] - b[2])
+  const accepted = []
+  for (const item of candidates) {
+    if (accepted.some((prev) => item[0] < prev[1] && item[1] > prev[0])) continue
+    accepted.push(item)
+  }
+  return accepted.map(([, , , label, fix, text]) => [label, fix, text])
 }
 
 function codePointSlice(value, start, end) {
@@ -973,18 +990,32 @@ function maskHtmlCommentLines(lines) {
 function toxicPhraseFindings(text, whitelist = [], rescan = toxicRescanHint("")) {
   const findings = []
   const content = []
+  let docChars = 0
   maskHtmlCommentLines(text.split("\n")).forEach((raw, index) => {
     const line = raw.trim()
     if (skippableLine(line)) return
+    docChars += Array.from(line.replace(/[ \t\r\n\f\v\u3000]+/g, "")).length
     const masked = maskQuotedSpans(maskStyleText(line, whitelist))
     for (const ch of masked) {
       if (TOXIC_QUOTE_CHARS.has(ch)) return
     }
     content.push([index + 1, masked])
   })
+  const scale = Math.max(1, Math.floor((docChars + Math.floor(TOXIC_SCALE_UNIT_CHARS / 2)) / TOXIC_SCALE_UNIT_CHARS))
+  const sentenceHits = []
+  const counts = new Map()
   for (const [lineNo, masked] of content) {
-    const hit = matchToxicSentence(masked)
-    if (hit) findings.push(`第${lineNo}行 毒句式[${hit[0]}]：『${codePointSlice(hit[2], 0, 20)}』——${hit[1]}`)
+    for (const [label, fix, matched] of matchToxicSentences(masked)) {
+      sentenceHits.push([lineNo, label, fix, matched])
+      counts.set(label, (counts.get(label) || 0) + 1)
+    }
+  }
+  const notIsCombined = (counts.get("not-is-comparison") || 0) + (counts.get("reverse-not-is") || 0)
+  for (const [lineNo, label, fix, matched] of sentenceHits) {
+    if ((label === "not-is-comparison" || label === "reverse-not-is") && notIsCombined < TOXIC_NOT_IS_MIN_HITS * scale) continue
+    if (label === "voice-contrast" && (counts.get("voice-contrast") || 0) < TOXIC_VOICE_MIN_HITS * scale) continue
+    if (label === "negation-parade" && (counts.get("negation-parade") || 0) < TOXIC_PARADE_MIN_HITS * scale) continue
+    findings.push(`第${lineNo}行 毒句式[${label}]：『${codePointSlice(matched, 0, 20)}』——${fix}`)
   }
   // trailer-ending 只扫文末 600 字窗口（引号占位后按行累计，边界行整行计入）。
   let acc = 0
@@ -993,12 +1024,31 @@ function toxicPhraseFindings(text, whitelist = [], rescan = toxicRescanHint(""))
     cut -= 1
     acc += Array.from(content[cut][1]).length
   }
+  const trailerRe = new RegExp(TOXIC_TRAILER_PATTERN.source, "g")
+  const summaryRe = new RegExp(TOXIC_TRAILER_SUMMARY_PATTERN.source, "g")
+  const windowRows = []
+  let totalTrailers = 0
   for (let i = cut; i < content.length; i++) {
     const [lineNo, masked] = content[i]
-    const match = masked.match(TOXIC_TRAILER_PATTERN)
-    if (match) findings.push(`第${lineNo}行 毒句式[trailer-ending]：『${codePointSlice(match[0], 0, 20)}』——删章尾预告腔，用正在发生的动作或画面收章。`)
-    const summary = masked.match(TOXIC_TRAILER_SUMMARY_PATTERN)
-    if (summary) findings.push(`第${lineNo}行 毒句式[trailer-summary]：『${codePointSlice(summary[0], 0, 20)}』——删章尾状态总结句，细纲的结尾设定要落成最后的具体动作、画面或台词。`)
+    const trailers = []
+    const summaries = []
+    let match
+    trailerRe.lastIndex = 0
+    while ((match = trailerRe.exec(masked)) !== null) trailers.push(match[0])
+    summaryRe.lastIndex = 0
+    while ((match = summaryRe.exec(masked)) !== null) summaries.push(match[0])
+    totalTrailers += trailers.length
+    windowRows.push([lineNo, trailers, summaries])
+  }
+  for (const [lineNo, trailers, summaries] of windowRows) {
+    if (totalTrailers >= TOXIC_TRAILER_MIN_HITS) {
+      for (const hit of trailers) {
+        findings.push(`第${lineNo}行 毒句式[trailer-ending]：『${codePointSlice(hit, 0, 20)}』——删章尾预告腔，用正在发生的动作或画面收章。`)
+      }
+    }
+    for (const hit of summaries) {
+      findings.push(`第${lineNo}行 毒句式[trailer-summary]：『${codePointSlice(hit, 0, 20)}』——删章尾状态总结句，细纲的结尾设定要落成最后的具体动作、画面或台词。`)
+    }
   }
   if (findings.length) findings.push(`毒句式是确定性 AI 指纹：本章须清零后再继续。${rescan}`)
   return findings

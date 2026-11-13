@@ -2,7 +2,7 @@
 
 - **Item:** Conversion Tracking (`conversion-tracking`)
 - **Original source:** https://github.com/coreyhaines31/marketingskills/tree/main/skills/conversion-tracking
-- **Repository:** https://github.com/coreyhaines31/marketingskills @ `88c79f6528a9`
+- **Repository:** https://github.com/coreyhaines31/marketingskills @ `1f837447b20b`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

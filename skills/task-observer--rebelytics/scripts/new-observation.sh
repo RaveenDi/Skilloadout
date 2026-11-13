@@ -33,7 +33,8 @@
 #
 # Prints the created file's absolute path on stdout (one line) and exits 0.
 # Any guard firing prints its message on stderr and exits 1 with NO file
-# created. The file is never empty: the create writes a frontmatter
+# created — TOOLS MISSING, a command the script runs absent from PATH,
+# first of all. The file is never empty: the create writes a frontmatter
 # skeleton — `id:` (the number, unpadded), `date:` today, `status: open`,
 # every other field present and empty — so a scan that meets it mid-write
 # reads a header with its id, not a LOST entry, and the id is on disk
@@ -96,6 +97,14 @@ done
 
 if [ -z "$slug" ]; then
   echo "usage: new-observation.sh [--body <entry-file>] <slug> [workspace-root]" >&2; exit 1
+fi
+# --- the tools: a missing command is named once, before anything runs -------
+miss=
+for t in find awk sed grep wc tr date sort tail mv mkdir cat sleep; do
+  command -v "$t" >/dev/null 2>&1 || miss="$miss $t"
+done
+if [ -n "$miss" ]; then
+  printf 'TOOLS MISSING —%s not on PATH; no id issued, no file created\n' "$miss" >&2; exit 1
 fi
 if [ -n "$body" ] && ! { [ -f "$body" ] && [ -r "$body" ]; }; then
   echo "--body file is missing or unreadable: '$body'" >&2; exit 1
@@ -205,8 +214,8 @@ fi
 # large log); one mv per stale resolved file, bounded by the files due
 ( cd "$d" && LC_ALL=C awk -v today="$today" 'FNR==1 {st=""; r=""; sub(/^\357\273\277/, ""); fm=/^---[[:space:]]*$/; if (!fm) nextfile; next}
     fm && /^---[[:space:]]*$/ {if (st ~ /^(actioned|declined|superseded)$/ && r ~ /^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]$/ && r < today) print FILENAME; nextfile}
-    fm && /^status:/ {st=$2}
-    fm && /^resolved:/ {r=$2}' [0-9]*.md 2>/dev/null | while IFS= read -r x; do
+    fm && /^status:/ {st=$2; gsub(/["\047]/, "", st)}
+    fm && /^resolved:/ {r=$2; gsub(/["\047]/, "", r)}' [0-9]*.md 2>/dev/null | while IFS= read -r x; do
       mv -n "$x" archive/ 2>/dev/null   # -n: never overwrite a same-named archived file
       if [ -e "$x" ]; then
         if [ -e "archive/$x" ]; then echo "NOTE: $x not archived — archive/$x already exists; compare the two copies by hand" >&2

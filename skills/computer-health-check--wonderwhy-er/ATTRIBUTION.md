@@ -2,7 +2,7 @@
 
 - **Item:** Computer Health Check (`computer-health-check`)
 - **Original source:** https://github.com/wonderwhy-er/DesktopCommanderMCP/tree/main/plugins/claude/skills/computer-health-check
-- **Repository:** https://github.com/wonderwhy-er/DesktopCommanderMCP @ `edfc9039c1e8`
+- **Repository:** https://github.com/wonderwhy-er/DesktopCommanderMCP @ `bce370e9395f`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

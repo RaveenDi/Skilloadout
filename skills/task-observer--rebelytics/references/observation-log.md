@@ -83,6 +83,10 @@ done
 printf '%s [%s] workspace: created=%s\n' "$(date '+%F %H:%M')" "${PWD##*/}" "${c:-none}" >> "$d/checkpoints.log"   # step 1's trace
 ```
 
+A checkpoint line whose `created=` names `observation-log` is a new log:
+before its first write, list the sibling logs and their open entries
+(`environments.md`, "A renamed project orphans its log").
+
 `mkdir -p` creates the parent, so `observation-log/` needs no separate line;
 the `[ -e ]` guards make the command safe to re-run on an existing
 workspace, which is what lets step 1 run it unconditionally rather than
@@ -708,6 +712,13 @@ named keys' lines, each named key occurs once, and `id:` still reads as the
 filename prefix; phase 2 writes through a temp file and `mv`, then re-reads
 each file against the checked text. A loop once wrote one entry's lines
 over another's file with every count intact; `--check` runs phase 1 alone.
+A change to `actioned` goes through it too, a single entry included: it is
+refused unless `resolution:` gives each `skill:` member `<member>: applied`,
+`excluded` or `carried` with where or why, and, on a partial close whose body
+numbers its points, each point `(N) landed at <file:line>`,
+`(N) carried by #<id>` or `(N) not a point`; each point check leaves a trace line in
+`checkpoints.log`, and the session-start scan names an actioned entry that
+lacks a member's disposition.
 
 Rewriting a text file from the shell passes the replacement through the
 shell's quoting first, and what arrives is not always what was typed: an

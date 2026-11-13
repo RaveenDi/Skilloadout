@@ -2,7 +2,7 @@
 
 - **Item:** Codebase Design (`codebase-design`)
 - **Original source:** https://github.com/LibreChat-AI/LibreChat/tree/main/.claude/skills/codebase-design
-- **Repository:** https://github.com/LibreChat-AI/LibreChat @ `f4154b649efa`
+- **Repository:** https://github.com/LibreChat-AI/LibreChat @ `2e6b23cb08b9`
 - **License:** MIT (resolved via skill)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

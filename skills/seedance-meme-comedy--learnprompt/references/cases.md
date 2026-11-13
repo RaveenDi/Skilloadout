@@ -1,12 +1,12 @@
 # Case evidence · Twist-ending comedy skit
 
-45 verified cases are filed under this template in awesome-seedance; the 8 hottest are below, full prompts included. Pick one as the anchor before drafting.
+46 verified cases are filed under this template in awesome-seedance; the 8 hottest are below, full prompts included. Pick one as the anchor before drafting.
 
 Generated from `data/cases.json` + `data/case-taxonomy.json`. Do not hand-edit.
 
 ## E1 · Seoul Subway Revenge: Woman Throws Her Tormentor into a Bin
 
-- Seedance 2.5 · creator: @AIwithSynthia · heat: 99
+- Seedance 2.5 · creator: @AIwithSynthia · heat: 98
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-2-5-create-a-live-action-cinematic-revenge-comedy-video-set-in-a-seoul-subway-stati-ce9067a15dcc) · [finished media](https://media.goodcase.ai/cases/3611dc73a4c9.mp4) · [poster](https://media.goodcase.ai/cases/e7a04f6d6d46.jpg) · [original source](https://x.com/AIwithSynthia/status/2108760866422415701)
 - Summary: Don't F*** with her Made using Seedance 2.5 on @wavespeed_ai Prompt : Create a live-action cinematic revenge-comedy video set in a Seoul subway station. Use rea…
 
@@ -24,7 +24,7 @@ Maintain identical faces, hairstyles, outfits, and location throughout. Include 
 
 ## E2 · Woman Pulls Laughing Man Out Through a Shattered Subway Window
 
-- Seedance 2.5 · creator: @AIwithkhan · heat: 94
+- Seedance 2.5 · creator: @AIwithkhan · heat: 93
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-create-a-30-second-1080p-ultra-realistic-korean-subway-action-comedy-scene-usi-93b40e9db5b1) · [finished media](https://media.goodcase.ai/cases/93018061e73f.mp4) · [poster](https://media.goodcase.ai/cases/c07aff74d745.jpg) · [original source](https://x.com/AIwithkhan/status/2097168171367338428)
 - Summary: Girl with a B **** H mode 🥵 Seedance 2.5 Prompt : Create a 30-second, 1080p ultra-realistic Korean subway action-comedy scene using the uploaded images as exac…
 
@@ -46,7 +46,7 @@ No gore, blood, serious injuries, identity drift, outfit changes, duplicated peo
 
 ## E3 · Girlfriend Praises Boyfriend for Resisting Temptation
 
-- Seedance 2.0 · creator: @YourAlphaMom · heat: 92
+- Seedance 2.0 · creator: @YourAlphaMom · heat: 91
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-create-a-30-second-ultra-realistic-fast-paced-comedy-skit-that-looks-like-a-ge-7bbf67fa75c5) · [finished media](https://media.goodcase.ai/cases/5ffed6588a9b.mp4) · [poster](https://media.goodcase.ai/cases/35483961abc5.jpg) · [original source](https://x.com/YourAlphaMom/status/2098541423062548561)
 - Summary: OMG, what a loyal boyfriend 😭 This is AI. Modern AI tools already make it possible to create almost any realistic video with almost any story — if you know how…
 
@@ -176,7 +176,7 @@ His eyes remain wide while he tries
 
 ## E4 · Tiny Skateboarder Crosses a Giant at Sunset
 
-- Seedance 2.5 · creator: @Just_sharon7 · heat: 91
+- Seedance 2.5 · creator: @Just_sharon7 · heat: 90
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-pov-your-crush-is-the-landscape-and-you-re-late-for-work-9cab76396089) · [finished media](https://media.goodcase.ai/cases/04133376ac7d.mp4) · [poster](https://media.goodcase.ai/cases/7b93f99dd303.jpg) · [original source](https://x.com/Just_sharon7/status/2103420922376163808)
 - Summary: POV: your crush is the landscape and you’re late for work. Seedance 2.5 on @FishCreativeHQ Prompt A cinematic 10-second tracking shot at golden hour. A giant yo…
 
@@ -196,7 +196,7 @@ Camera is extremely low and close, starting at her legs and tracking forward and
 
 ## E5 · Woman Splashes Attacker with Coffee and Bins Him in Seoul Subway
 
-- Seedance 2.5 · creator: @AIwithkhan · heat: 90
+- Seedance 2.5 · creator: @AIwithkhan · heat: 89
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-2-5-create-a-ultra-realistic-live-action-revenge-comedy-scene-inside-a-seoul-subway-9029fc876a3a) · [finished media](https://media.goodcase.ai/cases/8c85e8b4f989.mp4) · [poster](https://media.goodcase.ai/cases/86aa94cd154a.jpg) · [original source](https://x.com/AIwithkhan/status/2113841913065615450)
 - Summary: Guess why he slapped her 🤔 Seedance 2.5 Prompt : Create a ultra-realistic live-action revenge-comedy scene inside a Seoul subway station. Natural handheld came…
 
@@ -224,7 +224,7 @@ VISUAL REQUIREMENTS: Maintain consistent faces, hairstyles, outfits, and locatio
 
 ## E6 · Monday Morning’s Upside-Down Water Ritual
 
-- Seedance 2.5 · creator: @Just_sharon7 · heat: 89
+- Seedance 2.5 · creator: @Just_sharon7 · heat: 88
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-this-is-how-it-feels-like-to-wake-up-on-monday-to-go-to-work-b0d56af4f909) · [finished media](https://media.goodcase.ai/cases/71885692ca73.mp4) · [poster](https://media.goodcase.ai/cases/d86c8eb13364.jpg) · [original source](https://x.com/Just_sharon7/status/2104544058471502330)
 - Summary: This is how it feels like to wake up on Monday to go to work. Seedance 2.5 on @FishCreativeHQ Prompt A cinematic indoor performance-art / fashion editorial vide…
 
@@ -246,7 +246,7 @@ Natural window light, muted filmic color palette, shallow depth of field, slight
 
 ## E7 · A Wizard's Ten-Second Escape Plan: Become a Duck
 
-- Seedance 2.5 · creator: @AIwithNatalia · heat: 87 · stability: 73
+- Seedance 2.5 · creator: @AIwithNatalia · heat: 86 · stability: 73
 - Evidence: [GoodCase](https://goodcase.ai/cases/aiwithnatalia-seedance-ai-7597faa7285f) · [finished media](https://media.goodcase.ai/cases/4cabc64762f9.mp4) · [poster](https://media.goodcase.ai/cases/15792e0fa5ef.jpg) · [original source](https://x.com/AIwithNatalia/status/2089170554725265625)
 - Summary: 按秒拆成钩子、施法、倒数、魔法爆发、反转、反应、包袱七段，30 秒讲完女巫为躲怪物把自己变成鸭子的反转喜剧，Seedance 2.5 生成，逐秒分镜结构可直接套用。
 
@@ -283,7 +283,7 @@ End text:
 
 ## E8 · A Tiny Woman’s Bathroom Survival Escape
 
-- Seedance 2.5 · creator: @AIwithkhan · heat: 87
+- Seedance 2.5 · creator: @AIwithkhan · heat: 86
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-2-5-create-a-30-second-photorealistic-live-action-miniature-person-vfx-comedy-vide-eb069c17b460) · [finished media](https://media.goodcase.ai/cases/31e9afdb26ea.mp4) · [poster](https://media.goodcase.ai/cases/4ee76d605dc5.jpg) · [original source](https://x.com/AIwithkhan/status/2110699529041310046)
 - Summary: Apparently, Taking a Shower Is Now an Extreme Sport 🚿 Made using Seedance 2.5 on Higgsfield Prompt: Create a 30-second, photorealistic live-action miniature-pe…
 

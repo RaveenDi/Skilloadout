@@ -2,7 +2,7 @@
 
 - **Item:** Grill Me (`grill-me`)
 - **Original source:** https://github.com/alirezarezvani/claude-skills/tree/main/engineering/grill-me/skills/grill-me
-- **Repository:** https://github.com/alirezarezvani/claude-skills @ `8f082544116f`
+- **Repository:** https://github.com/alirezarezvani/claude-skills @ `08cd8a9fc86c`
 - **License:** MIT (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

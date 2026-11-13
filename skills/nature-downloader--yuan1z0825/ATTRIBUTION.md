@@ -2,7 +2,7 @@
 
 - **Item:** Nature Downloader (`nature-downloader`)
 - **Original source:** https://github.com/Yuan1z0825/nature-skills/tree/main/skills/nature-downloader
-- **Repository:** https://github.com/Yuan1z0825/nature-skills @ `d774add241c6`
+- **Repository:** https://github.com/Yuan1z0825/nature-skills @ `7bff1d0539c0`
 - **License:** MIT (resolved via skill)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

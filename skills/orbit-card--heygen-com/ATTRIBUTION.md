@@ -2,7 +2,7 @@
 
 - **Item:** Orbit Card (`orbit-card`)
 - **Original source:** https://github.com/heygen-com/hyperframes/tree/main/registry/blocks/orbit-card
-- **Repository:** https://github.com/heygen-com/hyperframes @ `66cbabc39aef`
+- **Repository:** https://github.com/heygen-com/hyperframes @ `ff687fed9900`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

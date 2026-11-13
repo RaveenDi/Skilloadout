@@ -1114,6 +1114,58 @@ def check_reference_shape(skill_dir, core, fails):
                 f"remedy is a split by episode, not a raise")
 
 
+# A `## Bundle manifest` section (in SKILL.md or a reference) is a hand-kept
+# inventory of the directories it names, so it is checked against them: every
+# file under scripts/ and references/ is named there (as `scripts/x`,
+# `references/x` or the bare file name), and every file it names exists. A
+# skill without the section has not opted in and nothing is checked.
+MANIFEST_FILE_RE = re.compile(r"`([A-Za-z0-9_./-]+\.(?:md|sh|py|txt|json))`")
+# (name, manifest section, bundle files, (unlisted, missing) manifest_misses must return)
+MANIFEST_FIXTURES = [
+    ("every file listed, every entry present",
+     "`SKILL.md`, `a.md`, `scripts/x.sh` and `references/ceilings.txt`.\n",
+     ["SKILL.md", "references/a.md", "references/ceilings.txt", "scripts/x.sh"], ([], [])),
+    ("a shipped script the list lacks",
+     "`a.md` and `scripts/x.sh`.\n",
+     ["references/a.md", "scripts/x.sh", "scripts/y.py"], (["scripts/y.py"], [])),
+    ("a listed file that does not ship",
+     "`a.md`, `b.md` and `scripts/x.sh`.\n",
+     ["references/a.md", "scripts/x.sh"], ([], ["b.md"])),
+]
+
+
+def manifest_misses(section, files):
+    """(unlisted, missing) for a manifest section and the bundle's relative paths."""
+    named = set(MANIFEST_FILE_RE.findall(section))
+    have = set(files)
+    unlisted = [f for f in sorted(have) if f.split("/")[0] in ("scripts", "references")
+                and f not in named and f.rsplit("/", 1)[-1] not in named]
+    missing = [n for n in sorted(named) if not ({n} if "/" in n else
+               {n, "references/" + n, "scripts/" + n}) & have]
+    return unlisted, missing
+
+
+def check_bundle_manifest(skill_dir, fails):
+    docs = [skill_dir / "SKILL.md"] + sorted((skill_dir / "references").glob("*.md"))
+    for doc in docs:
+        text = doc.read_text(encoding="utf-8") if doc.is_file() else ""
+        m = re.search(r"(?ms)^## Bundle manifest[ \t]*\n(.*?)(?=^## |\Z)", text)
+        if not m:
+            continue
+        files = [str(p.relative_to(skill_dir)) for p in skill_dir.rglob("*")
+                 if p.is_file() and not any(x.startswith(".") or x in BUILD_JUNK
+                                            for x in p.relative_to(skill_dir).parts)
+                 and p.suffix != ".pyc"]
+        unlisted, missing = manifest_misses(m.group(1), files)
+        where = doc.relative_to(skill_dir)
+        for f in unlisted:
+            fails.append(f"bundle manifest ({where}): {f} ships but is not listed — add it")
+        for f in missing:
+            fails.append(f"bundle manifest ({where}): lists {f}, which does not exist — "
+                         f"restore it or drop it from the list")
+        return
+
+
 def check_plugin_manifest(skill_dir, fails):
     """A skill bundle must NOT contain a plugin manifest.
 
@@ -1317,6 +1369,7 @@ def check_dir(skill_dir, fails):
     check_core_size(skill_md, fails)
     check_reference_indexes(skill_dir, fails)
     check_plugin_manifest(skill_dir, fails)
+    check_bundle_manifest(skill_dir, fails)
     check_orphans(skill_dir)
     for p in skill_dir.rglob("*"):
         parts = p.relative_to(skill_dir).parts
@@ -1696,6 +1749,16 @@ SCAN_FIXTURES = [
     ("a sibling's entry count carries the date of its checkpoints.log's last line", "siblings", True, 0,
      "/projA=1 last=2026-01-05", 1, "/c/d="),
     ("depth 5 is the bound: a log there is listed", "siblings", True, 0, "/a/b/c=1 last=none", 1, ".git"),
+    ("a user-scope workspace is listed; past two folders below an anchor is not", "userscope", True, 0,
+     "/home dir/.claude=1 last=none  ", 1, "/x/y="),
+    ("the project identity root's memory/ workspace is listed", "userscope", True, 0,
+     "/home dir/.claude/projects/-w/memory=2 last=none", 1, ""),
+    ("another root's log.md beside its directory: SPLIT STORE names that root", "splitsib", True, 0,
+     "/old: log.md holds 2 observations beside that root's observation-log/", 1, ""),
+    ("a legacy count rides on another root's listing", "splitsib", True, 0,
+     "/old=1 last=none legacy=2", 1, ""),
+    ("a log.md-only workspace is listed with -, not a split store", "splitsib", True, 0,
+     "/legacy=- last=none legacy=1", 1, "/legacy: log.md"),
     ("a header key written twice is a NOTE naming the file and the key, active and archive", "dupkey", True, 0,
      "keep one line, never batch-rewrite: 0002-b.md (resolved), archive/0009-z.md (status)", 1, ""),
     ("a key-shaped run beside api_key: the file is named, never the match", "secret", True, 0,
@@ -1754,6 +1817,22 @@ def scan_case(scenario, pass_root, extra=None, entries=None, after=None, headers
                     (sl / f"{j:04d}-x.md").write_text(f"---\nid: {j}\n---\n", encoding="utf-8")
             (pathlib.Path(tmp) / "projA" / "skill-observations" / "checkpoints.log").write_text(
                 "2026-01-05 09:00 [w] session-start scan: files=1 parsed=1 principles=absent\n", encoding="utf-8")
+        # HOME for the run, deeper than the parent's five levels: only the user-scope anchor reaches it
+        home = pathlib.Path(tmp) / "h" / "i" / "j" / "home dir"
+        if scenario == "userscope":   # the user scope, an identity root's memory/, one past the bound
+            for rel, k in ((".claude", 1), (".claude/projects/-w/memory", 2), (".claude/projects/-w/x/y", 1)):
+                sl = home / rel / "skill-observations" / "observation-log"
+                sl.mkdir(parents=True)
+                for j in range(1, k + 1):
+                    (sl / f"{j:04d}-x.md").write_text(f"---\nid: {j}\n---\n", encoding="utf-8")
+        if scenario == "splitsib":   # a split store and a log.md-only workspace beside the root
+            so_old = pathlib.Path(tmp) / "old" / "skill-observations"
+            (so_old / "observation-log").mkdir(parents=True)
+            (so_old / "observation-log" / "0001-x.md").write_text("---\nid: 1\n---\n", encoding="utf-8")
+            (so_old / "log.md").write_text("### Observation 1: A\n\n### Observation 2: B\n", encoding="utf-8")
+            (pathlib.Path(tmp) / "legacy" / "skill-observations").mkdir(parents=True)
+            (pathlib.Path(tmp) / "legacy" / "skill-observations" / "log.md").write_text(
+                "### Observation 1: A\n", encoding="utf-8")
         if scenario == "dupkey":
             (log / "archive" / "0009-z.md").write_text('---\nid: 9\nstatus: actioned\nstatus: open\n---\n', encoding="utf-8")
         if scenario == "resurrect":
@@ -1808,7 +1887,9 @@ def scan_case(scenario, pass_root, extra=None, entries=None, after=None, headers
         if scenario == "split":
             (root / "skill-observations" / "log.md").write_text(
                 "### Observation 1: A\n\n### Observation 2: B\n", encoding="utf-8")
-        env = {k: v for k, v in os.environ.items() if k != "TASK_OBSERVER_WORKSPACE"}
+        env = {k: v for k, v in os.environ.items() if k not in ("TASK_OBSERVER_WORKSPACE", "CLAUDE_CONFIG_DIR")}
+        home.mkdir(parents=True, exist_ok=True)
+        env["HOME"] = str(home)
         import shutil
         args = [shutil.which("bash") or "bash", str(SCAN_SCRIPT)] + list(extra or [])
         if env_path is not None:
@@ -1850,7 +1931,7 @@ def scan_repeat_ok(scenario, prefix):
     if len(lines) != 2 or lines[0] != lines[1]:
         return False, f"{len(lines)} copies of the line"
     first, second, end = out.index(lines[0]), out.rindex(lines[0]), out.rindex("end of scan")
-    entries_at = out.index("logs under the parent")
+    entries_at = out.index("logs at the plausible anchors")
     counted = re.search(r"GAP\): (\d+), repeated", out)
     ok = (first < entries_at < second < end and side is not None and lines[0] + "\n" in side
           and counted is not None and side.count("\n") == int(counted.group(1)))
@@ -1952,6 +2033,56 @@ def scan_size_ok():
             f"exit {r.returncode}, {len(r.stdout)} characters"
 
 
+def scan_bytes_ok():
+    """The end line names the bytes printed above it, counted in bytes (a
+    title with an em dash), and a halted run's output still reaches stdout
+    through the buffer."""
+    import os
+    import subprocess
+    with tempfile.TemporaryDirectory() as tmp:
+        root = pathlib.Path(tmp) / "work space"
+        log = root / "skill-observations" / "observation-log"
+        (log / "archive").mkdir(parents=True)
+        for i in range(1, 4):
+            (log / f"{i:04d}-e.md").write_text(f'---\nid: {i}\ntitle: "entry {i} \u2014 dash"\nstatus: open\n---\nbody\n',
+                                               encoding="utf-8")
+        env = {k: v for k, v in os.environ.items() if k != "TASK_OBSERVER_WORKSPACE"}
+        r = subprocess.run(["bash", str(SCAN_SCRIPT), str(root)], cwd=tmp, env=env, capture_output=True)
+        above, _, last = r.stdout.rstrip(b"\n").rpartition(b"\n")
+        m = re.search(rb"; (\d+) bytes above this line: ", last)
+        ok = r.returncode == 0 and last.startswith("end of scan".encode()) and m is not None \
+            and int(m.group(1)) == len(above) + 1
+        (log / "0004-x.md").write_text("no header\n", encoding="utf-8")
+        for i in range(1, 4):
+            (log / f"{i:04d}-e.md").write_text("no header either\n", encoding="utf-8")
+        h = subprocess.run(["bash", str(SCAN_SCRIPT), str(root)], cwd=tmp, env=env, capture_output=True)
+        ok = ok and h.returncode == 1 and b"SCAN COMMAND BROKEN" in h.stdout
+        return ok, f"exit {r.returncode}/{h.returncode}, end line {last[-160:]!r}, {len(above) + 1} bytes above"
+
+
+def scan_disp_ok():
+    """An actioned entry whose resolution: gives a skill: member no
+    disposition is named on a NOTE line with the member; a fully
+    dispositioned one and an open one are not."""
+    import os
+    import subprocess
+    with tempfile.TemporaryDirectory() as tmp:
+        root = pathlib.Path(tmp) / "work space"
+        log = root / "skill-observations" / "observation-log"
+        (log / "archive").mkdir(parents=True)
+        for i, st, sk, res in ((1, "actioned", "[a, b]", '"a: applied in x.md"'),
+                               (2, "actioned", "\n  - a\n  - c", '"a: added; c: excluded, no such step"'),
+                               (3, "open", "[a, b]", "")):
+            (log / f"{i:04d}-e.md").write_text(f'---\nid: {i}\ntitle: "t"\nstatus: {st}\nskill: {sk}\n'
+                                               f'resolution: {res}\n---\nbody\n', encoding="utf-8")
+        env = {k: v for k, v in os.environ.items() if k != "TASK_OBSERVER_WORKSPACE"}
+        r = subprocess.run(["bash", str(SCAN_SCRIPT), str(root)], cwd=tmp, env=env, capture_output=True,
+                           text=True, encoding="utf-8", errors="replace")
+        lines = [l for l in r.stdout.splitlines() if "without a disposition for every skill: member" in l]
+        ok = r.returncode == 0 and len(lines) == 2 and all(l.endswith(": 0001-e.md (b)") for l in lines)
+        return ok, f"exit {r.returncode}, lines {lines!r}"
+
+
 def scan_entries_refused_ok():
     """--entries-to onto an existing non-empty file is refused before anything
     runs: exit 2, no checkpoint line, the file untouched."""
@@ -2020,6 +2151,8 @@ LOAD_FIXTURES = [
      "reviewer: 1 open observations\n0006-f.md", 1),
     ("no log yet: one NOTE line, exit 0, nothing written", "foo", True, 0,
      "NOTE: foo: no observation log yet at ", 0, "nolog"),
+    ("a second skill name: refused, nothing written", "foo", True, 2, "", 0, "", ("bar",)),
+    ("a list in one argument: refused, nothing written", "foo, bar", True, 2, "", 0),
 ]
 
 
@@ -2047,6 +2180,30 @@ def load_case(skill, absolute, scenario="", opts=()):
                            text=True, encoding="utf-8", errors="replace")
         written = len(ck.read_text(encoding="utf-8").splitlines()) if ck.is_file() else 0
         return r.returncode, r.stdout, written
+
+
+def tools_missing_ok(script, slug_first):
+    """With the script's commands off PATH it names them and stops: exit 1,
+    a TOOLS MISSING line, no checkpoint line, no file. `slug_first`: the
+    helper's argument order (slug, root) rather than skill-load's (root, name)."""
+    import os
+    import shutil
+    import subprocess
+    with tempfile.TemporaryDirectory() as tmp:
+        root = pathlib.Path(tmp) / "work space"
+        log = root / "skill-observations" / "observation-log"
+        (log / "archive").mkdir(parents=True)
+        ck = root / "skill-observations" / "checkpoints.log"
+        ck.write_text("", encoding="utf-8")
+        args = ["x-y", str(root)] if slug_first else [str(root), "foo"]
+        env = {k: v for k, v in os.environ.items() if k != "TASK_OBSERVER_WORKSPACE"}
+        env["PATH"] = "/nonexistent"
+        r = subprocess.run([shutil.which("bash") or "/bin/bash", str(script), *args], cwd=tmp, env=env,
+                           capture_output=True, text=True, encoding="utf-8", errors="replace")
+        made = sorted(p.name for p in log.rglob("*") if p.is_file())
+        written = ck.read_text(encoding="utf-8")
+        ok = r.returncode == 1 and "TOOLS MISSING —" in r.stdout + r.stderr and not made and not written
+        return ok, f"exit {r.returncode}, files {made}, checkpoint {written!r}, out {(r.stdout + r.stderr)!r}"
 
 
 def load_query_ok():
@@ -2137,6 +2294,12 @@ BINCHECK_FIXTURES = [
     ("a .bin/ file with no installed digest: refused", "extra", 3, "", "has no digest in the installed set"),
     ("the named script is absent from .bin/: refused", "absent", 3, "", "BIN REFUSED — no 'gone.sh'"),
     ("no digests file: usage, exit 2", "nodig", 2, "", "digests file missing"),
+    ("installed version newer than the MANIFEST's verified_against: refused", "older", 3, "", "is newer than .bin/MANIFEST verified_against 3.8.0"),
+    ("installed version equal to verified_against: the script runs", "same", 0, "hello a b", ""),
+    ("--installed-version newer than verified_against: refused", "flag", 3, "", "installed 3.10.0 is newer"),
+    ("installed version known, MANIFEST without verified_against: refused", "nover", 3, "", "has no verified_against: line"),
+    ("the MANIFEST passed as the digests file: refused", "selfdig", 3, "", "it is the MANIFEST"),
+    ("no installed version anywhere: gate skipped with a note, digests decide", "match", 0, "hello a b", "version gate skipped"),
 ]
 
 
@@ -2156,9 +2319,17 @@ def bincheck_case(scenario):
         if scenario == "extra":
             (bin_dir / "extra.py").write_text("print(1)\n", encoding="utf-8")
         dig = pathlib.Path(tmp) / "installed.sha256"
-        dig.write_text("".join(f"{hashlib.sha256(p.read_bytes()).hexdigest()}  {p}\n"
-                               for p in sorted(installed.iterdir())), encoding="utf-8")
-        args = ["bash", str(BINCHECK_SCRIPT), str(root),
+        sums = "".join(f"{hashlib.sha256(p.read_bytes()).hexdigest()}  {p}\n"
+                       for p in sorted(installed.iterdir()))
+        head = 'version: "3.9.0"\n' if scenario in ("older", "same", "nover", "selfdig") else ""
+        dig.write_text(head + sums, encoding="utf-8")
+        manifest = bin_dir / "MANIFEST"
+        va = {"older": "3.8.0", "same": "3.9.0", "flag": "3.9.0", "selfdig": "3.9.0"}.get(scenario)
+        manifest.write_text((f"verified_against: {va}\n" if va else "") + sums, encoding="utf-8")
+        if scenario == "selfdig":
+            dig = manifest
+        flag = ["--installed-version", "3.10.0"] if scenario == "flag" else []
+        args = ["bash", str(BINCHECK_SCRIPT), *flag, str(root),
                 str(dig if scenario != "nodig" else pathlib.Path(tmp) / "none"),
                 "gone.sh" if scenario == "absent" else "hello.sh", "a", "b"]
         r = subprocess.run(args, cwd=tmp, capture_output=True, text=True, encoding="utf-8", errors="replace")
@@ -2207,6 +2378,32 @@ def migrate_case(skill_line, ov):
         r = subprocess.run(args, capture_output=True, text=True, encoding="utf-8", errors="replace")
         files = sorted((t / "out").glob("0088-*.md")) if (t / "out").is_dir() else []
         return r.returncode, files[0].read_text(encoding="utf-8") if files else None
+
+
+def migrate_count_ok():
+    """The conformance count agrees with the written files, field by field,
+    on a converted set where one record's siblings_checked is empty: the
+    count reads render_header(), the block render() writes."""
+    import json
+    import subprocess
+    with tempfile.TemporaryDirectory() as tmp:
+        t = pathlib.Path(tmp)
+        (t / "skills" / "companion-a").mkdir(parents=True)
+        (t / "log.md").write_text("".join(f"### Observation {i}: T{i}\n**Date:** 2026-01-01\n**Status:** OPEN\n"
+                                          f"**Skill:** companion-a\n\n**Issue:** x\n\n---\n\n" for i in (88, 89)),
+                                  encoding="utf-8")
+        (t / "ov.json").write_text(json.dumps({"88": {"siblings_checked": "none", "_reason": "t"}}), encoding="utf-8")
+        r = subprocess.run([sys.executable, str(MIGRATE_SCRIPT), "--convert", str(t / "log.md"), "--out", str(t / "out"),
+                            "--known-skills", str(t / "skills"), "--overrides", str(t / "ov.json")],
+                           capture_output=True, text=True, encoding="utf-8", errors="replace")
+        heads = [p.read_text(encoding="utf-8").split("\n---", 1)[0] for p in sorted((t / "out").glob("00*.md"))]
+        got = {}
+        for field in ("status", "siblings_checked"):
+            m = re.search(rf"^  {field}\s+(\d+)/(\d+)", r.stdout, re.M)
+            got[field] = (int(m.group(1)), int(m.group(2))) if m else None
+        want = {f: (sum(f"\n{f}:" in h for h in heads), len(heads)) for f in got}
+        ok = r.returncode == 0 and len(heads) == 2 and got == want and want["siblings_checked"] == (1, 2)
+        return ok, f"exit {r.returncode}, counted {got}, files {want}"
 
 
 # scripts/new-observation.sh, the only write path where a script can run.
@@ -2268,6 +2465,16 @@ NEWOBS_FIXTURES = [
 ]
 
 
+def disp_shared_ok():
+    """The dispositions program is one text in the scan and the batch field
+    editor: the lines between `# >>> disp` and `# <<< disp` are identical."""
+    def part(path):
+        m = re.search(r"(?ms)^# >>> disp\b[^\n]*\n(.*?)^# <<< disp$", path.read_text(encoding="utf-8"))
+        return m.group(1) if m else None
+    a, b = part(SCAN_SCRIPT), part(SETFIELDS_SCRIPT)
+    return a is not None and a == b, f"scan {len(a or '')} chars, set-fields {len(b or '')} chars"
+
+
 def sus_shared_ok():
     """The suspect-YAML program is one text in three scripts: the lines
     between the `# >>> sus` and `# <<< sus` markers are identical in the
@@ -2310,6 +2517,27 @@ SETFIELDS_FIXTURES = [
      [_T.join(["set", "0001-a.md", "skill", "[a]"])], False, 1, "holds a block value", None),
     ("a plan line that is not tab-separated is refused by line number", "plain",
      ["set 0001-a.md status actioned"], False, 1, "plan line 1 is not", None),
+    ("actioned with a skill: member given no disposition: refused naming it", "family",
+     [_T.join(["set", "0001-a.md", "status", "actioned"]),
+      _T.join(["set", "0001-a.md", "resolution", '"a: applied in x.md"'])], False, 1,
+     "no disposition for skill: member(s) b", None),
+    ("actioned with every member dispositioned (a qualified name by its bare form): written", "family",
+     [_T.join(["set", "0001-a.md", "status", "actioned"]),
+      _T.join(["set", "0001-a.md", "resolution", '"a: applied in x.md:4; p:b: excluded, never reads it"'])], False, 0,
+     "done — 1 file(s) written", {"0001-a.md": 2}),
+    ("a partial close missing a numbered point: refused, and the run traced in checkpoints.log", "family",
+     [_T.join(["set", "0001-a.md", "status", "actioned"]),
+      _T.join(["set", "0001-a.md", "resolution", '"a: applied; p:b: carried by #9; (1) landed at x.md:3; (2) not a point"'])],
+     False, 1, "set-fields point check: 0001-a.md points=3 missing=3 refused", None),
+    ("a partial close accounting for every numbered point: written, traced as passed", "family",
+     [_T.join(["set", "0001-a.md", "status", "actioned"]),
+      _T.join(["set", "0001-a.md", "resolution",
+               '"a: applied; p:b: carried by #9; (1) landed at x.md:3; (2) not a point; (3) carried by #9"'])],
+     False, 0, "points=3 missing=- passed", {"0001-a.md": 2}),
+    ("--check runs the point check but writes no trace line", "family",
+     [_T.join(["set", "0001-a.md", "status", "actioned"]),
+      _T.join(["set", "0001-a.md", "resolution", '"a: applied; p:b: carried by #9; (1) landed at x.md:3"'])],
+     True, 1, "accounts for no numbered point(s) 2,3 of 3", None),
 ]
 
 
@@ -2330,8 +2558,12 @@ def setfields_case(scenario, plan, check):
                 extra = "resolved: 2026-01-01\n"
             if scenario == "block" and i == 1:
                 extra = "skill:\n  - a\n"
+            body = f"body {i}"
+            if scenario == "family" and i == 1:   # two members, three numbered points, one after Principle
+                extra = 'skill: [a, "p:b"]\n'
+                body = "**Issue:** (1) one\n(2) two\n\n**Suggested improvement:**\n3. three\n\n**Principle:** (4) not a point"
             (log / f"{i:04d}-{s}.md").write_text(
-                f'---\nid: {i}\ntitle: "{s}"\nstatus: open\nresolved:\n{extra}resolution:\n---\n\nbody {i}\n', encoding="utf-8")
+                f'---\nid: {i}\ntitle: "{s}"\nstatus: open\nresolved:\n{extra}resolution:\n---\n\n{body}\n', encoding="utf-8")
         before = {p.name: p.read_text(encoding="utf-8") for p in log.glob("[0-9]*.md")}
         (pathlib.Path(tmp) / "plan.tsv").write_text("\n".join(plan) + "\n", encoding="utf-8")
         args = ["bash", str(SETFIELDS_SCRIPT)] + (["--check"] if check else []) + [str(root), str(pathlib.Path(tmp) / "plan.tsv")]
@@ -2340,12 +2572,15 @@ def setfields_case(scenario, plan, check):
         after = {p.name: p.read_text(encoding="utf-8") for p in log.glob("[0-9]*.md")}
         floor = (log / "archive" / ".id-floor").read_text(encoding="utf-8").strip()
         stray = [p.name for p in log.iterdir() if p.name.startswith(".")]
-        return r.returncode, r.stdout + r.stderr + ("".join(f" STRAY {s}" for s in stray)), before, after, floor
+        ck = root / "skill-observations" / "checkpoints.log"
+        trace = " TRACE " + ck.read_text(encoding="utf-8") if ck.is_file() else ""
+        return r.returncode, r.stdout + r.stderr + ("".join(f" STRAY {s}" for s in stray)) + trace, before, after, floor
 
 
 def setfields_ok(scenario, plan, check, want_rc, want_out, want_diff):
     rc, out, before, after, floor = setfields_case(scenario, plan, check)
     ok = rc == want_rc and want_out in out and "STRAY" not in out
+    ok = ok and not (check and "TRACE" in out)
     if want_diff is None:
         ok = ok and before == after and floor == "5"
     elif want_diff == "rename":
@@ -2647,6 +2882,11 @@ def selftest():
         ok = got == want
         bad += not ok; total += 1
         print(f"{'ok  ' if ok else 'FAIL'} load triggers line: {name}" + ("" if ok else f" (got {got})"))
+    for name, section, files, want in MANIFEST_FIXTURES:
+        got = manifest_misses(section, files)
+        ok = got == (want[0], want[1])
+        bad += not ok; total += 1
+        print(f"{'ok  ' if ok else 'FAIL'} bundle manifest: {name}" + ("" if ok else f" (got {got})"))
     for name, text, want in ORPHAN_FIXTURES:
         got = index_orphans(text)
         ok = got == want
@@ -2729,7 +2969,9 @@ def selftest():
                          ("a root with no observation log under it is refused by name, nothing written", scan_wrong_root_ok),
                          ("a root named skill-observations/ holding the log scans its parent, with a NOTE", scan_child_root_ok),
                          ("the scan's commands off PATH: SCAN TOOLS MISSING, no checkpoint line", scan_tools_missing_ok),
-                         ("forty populated entries print under 30,000 characters", scan_size_ok)):
+                         ("forty populated entries print under 30,000 characters", scan_size_ok),
+                         ("the end line names the bytes above it; a halted run still prints", scan_bytes_ok),
+                         ("an actioned entry lacking a skill: member's disposition is named", scan_disp_ok)):
             ok, detail = fn()
             bad += not ok; total += 1
             print(f"{'ok  ' if ok else 'FAIL'} scan script: {name}" + ("" if ok else f" ({detail})"))
@@ -2761,6 +3003,10 @@ def selftest():
         ok, detail = load_query_ok()
         bad += not ok; total += 1
         print(f"{'ok  ' if ok else 'FAIL'} skill-load script: --query-only prints the same lookup and appends nothing"
+              + ("" if ok else f" ({detail})"))
+        ok, detail = tools_missing_ok(LOAD_SCRIPT, False)
+        bad += not ok; total += 1
+        print(f"{'ok  ' if ok else 'FAIL'} skill-load script: commands off PATH, LOOKUP TOOLS MISSING, nothing written"
               + ("" if ok else f" ({detail})"))
         for name, first, reason, want_rc, want_lines in LOAD_CORRECT_FIXTURES:
             rc, out, lines = load_correct_case(first, reason)
@@ -2804,6 +3050,14 @@ def selftest():
             bad += not ok; total += 1
             print(f"{'ok  ' if ok else 'FAIL'} new-observation script: {name}"
                   + ("" if ok else f" (exit {rc}, files {files}, floor {floor!r}, err {err.strip()!r})"))
+        ok, detail = tools_missing_ok(NEWOBS_SCRIPT, True)
+        bad += not ok; total += 1
+        print(f"{'ok  ' if ok else 'FAIL'} new-observation script: commands off PATH, TOOLS MISSING, no file"
+              + ("" if ok else f" ({detail})"))
+        ok, detail = disp_shared_ok()
+        bad += not ok; total += 1
+        print(f"{'ok  ' if ok else 'FAIL'} set-fields script: the dispositions program is the scan's, byte for byte"
+              + ("" if ok else f" ({detail})"))
         ok, detail = sus_shared_ok()
         bad += not ok; total += 1
         print(f"{'ok  ' if ok else 'FAIL'} new-observation script: the suspect-YAML rules are the scan's and set-fields', byte for byte"
@@ -2842,6 +3096,10 @@ def selftest():
                 and (has is None or has in (text or "")) and (lacks is None or lacks not in (text or ""))
             bad += not ok; total += 1
             print(f"{'ok  ' if ok else 'FAIL'} migrate-log: {name}" + ("" if ok else f" (exit {rc})"))
+        ok, detail = migrate_count_ok()
+        bad += not ok; total += 1
+        print(f"{'ok  ' if ok else 'FAIL'} migrate-log: the conformance count equals the written files (one siblings_checked empty)"
+              + ("" if ok else f" ({detail})"))
     else:
         bad += 1; total += 1
         print(f"FAIL migrate-log: {MIGRATE_SCRIPT.name} missing beside this file")

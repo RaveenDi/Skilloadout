@@ -5,6 +5,11 @@ arguments, stamps a version, and returns a proper exit code. Verified against
 `ScriptReference/BuildPipeline.BuildPlayer`, `ScriptReference/EditorUserBuildSettings.SwitchActiveBuildTarget`
 and the 6000.3 Manual page "Editor command line arguments".
 
+Contents: [A parameterised build method](#a-parameterised-build-method) ·
+[Invoking from CI](#invoking-from-ci) ·
+[Building a saved Build Profile with no script](#building-a-saved-build-profile-with-no-script) ·
+[Addressables content build](#addressables-content-build-when-used) · [Gotchas](#gotchas)
+
 **Pick the platform with Unity's own `-buildTarget` flag, not from inside the script.**
 `EditorUserBuildSettings.SwitchActiveBuildTarget` is not available in batch mode: a platform
 switch needs a script recompile, which cannot happen while your `-executeMethod` code runs.
@@ -101,8 +106,11 @@ Unity -batchmode -nographics \
   an uncaught exception also exits with 1, but `-quit` after a `Debug.LogError` returns 0.
 - One platform per Editor launch: run the command again with another `-buildTarget` for the
   next platform instead of switching inside the method.
-- Activate the Unity license in batch mode (`-username`/`-password`/`-serial` or a license
-  file) as a separate step before building on a clean runner.
+- Activate the Unity license in a separate step before building on a clean runner, using
+  the provisioning flow supported by your license type. Unity's credential flags
+  (`-username`/`-password`/`-serial`) can expose values through process arguments or logs;
+  do not commit literal credentials or paste them into shell history. Limit activation
+  secrets to that step and protect any license files the flow creates.
 
 ### Building a saved Build Profile with no script
 

@@ -2,7 +2,7 @@
 
 - **Item:** Google Ads (`google-ads`)
 - **Original source:** https://github.com/nowork-studio/notfair-plugin/tree/main/skills/google-ads
-- **Repository:** https://github.com/nowork-studio/notfair-plugin @ `ed835f273dce`
+- **Repository:** https://github.com/nowork-studio/notfair-plugin @ `8035315b9593`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

@@ -2,7 +2,7 @@
 
 - **Item:** Osint Investigation (`osint-investigation`)
 - **Original source:** https://github.com/affaan-m/ECC/tree/main/skills/osint-investigation
-- **Repository:** https://github.com/affaan-m/ECC @ `b38be6a7f635`
+- **Repository:** https://github.com/affaan-m/ECC @ `d2ef2680594f`
 - **License:** CC-BY-SA-4.0 (resolved via skill)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

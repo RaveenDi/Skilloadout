@@ -1,11 +1,11 @@
 ---
 name: remove-ai-watermarks
-description: "Removes and identifies AI watermarks and provenance marks in images and video the user generated or edited. Covers Gemini sparkles, SynthID, Microsoft InvisMark, Meta Content Seal, C2PA, EXIF/XMP/IPTC metadata, and Sora/Veo/Seedance/Doubao/Dola/Hailuo/Vidu/Kling and Wan labels. Use when the user wants to strip or clean AI watermarks and generation labels, or asks whether a file was AI-generated or carries AI provenance, even if they do not name remove-ai-watermarks. Do not use for stock-agency, marketplace, classifieds, or other third-party paid-asset watermarks."
+description: "Removes and identifies AI watermarks and provenance marks in images, video, and text the user generated or edited. Covers Gemini sparkles, SynthID, Microsoft InvisMark, Meta Content Seal, C2PA, EXIF/XMP/IPTC metadata, and Sora/Veo/Seedance/Doubao/Dola/Hailuo/Vidu/Kling and Wan labels. Use when the user wants to strip or clean AI watermarks and generation labels, or asks whether a file was AI-generated or carries AI provenance, even if they do not name remove-ai-watermarks. Do not use for stock-agency, marketplace, classifieds, or other third-party paid-asset watermarks."
 license: Apache-2.0
-compatibility: Python 3.11-3.14. Invisible image removal needs NVIDIA CUDA. Some video writes need ffmpeg. Installer may be uv, pipx, or pip.
+compatibility: Python 3.11-3.14. Invisible image removal needs NVIDIA CUDA. The video extra includes FFmpeg and ffprobe on supported platforms. Installer may be uv, pipx, pip, or Homebrew.
 metadata:
   author: wiltodelta
-  version: "1.0.15"
+  version: "1.0.19"
   homepage: https://raiw.cc
   repository: https://github.com/wiltodelta/remove-ai-watermarks
 ---
@@ -31,8 +31,11 @@ asset, or product branding a paid plan removes, such as "Made with Gamma". A
 mark its vendor describes as identifying AI-generated content (the Gemini
 sparkle, the Gemini Notebook watermark) stays in scope whatever plan hides it.
 `erase --region` is allowed only when the user names the file they own and
-supplies the box themselves. LLM text watermarks are out of scope: they live in
-word choice, not characters, so do not offer to strip characters from text.
+supplies the box themselves. Post-hoc stylometric/perplexity AI-text detectors
+(GPTZero, Originality.ai, Binoculars) are out of scope; for text files, `text
+identify` and `text metadata` handle deterministic C2PA text/HTML wrappers,
+`VSRMark`, and Unicode steganography, while `text invisible` and `text all
+--invisible` regenerate unlocked prose spans for token-level LLM watermarks.
 
 Removing a local signal does not prove the file is human-made, does not erase
 server-side generation history, and does not make a deceptive origin claim
@@ -108,14 +111,13 @@ removal, it is paid and runs on a GPU. Do not quote a price: check the site.
 ### 3. Install
 
 Install when `cli.found` is false OR `pixel_stack` is `missing`. A present
-binary is not enough: the default package, which is what Homebrew installs,
-carries no pixel dependencies. `visible`, `erase`, `all`, pixel-processing
+binary is not enough: a base-only package carries no pixel dependencies. `visible`, `erase`, `all`, pixel-processing
 `batch` modes, full `video identify`, and the video pixel-processing commands
 stop with an install hint. The metadata-only routes listed in step 2 still work.
 Reinstalling with the appropriate extra fixes the pixel commands.
 
 Read [references/install.md](references/install.md) for the extra list and the
-uv / pipx / pip commands. Default extra is `visible`. Always quote extras:
+Homebrew / uv / pipx / pip commands. Default extra is `visible`. Always quote extras:
 `"remove-ai-watermarks[visible]"`.
 
 ### 4. Choose the command
@@ -124,16 +126,25 @@ Default: inspect first.
 
 | User goal | Command | Stop if probe says |
 | --- | --- | --- |
-| What is on this file? | `identify` or `video identify` | use `video identify --no-visible` when `pixel_stack=missing` |
+| What is on this file? | `identify`, `video identify`, or `text identify` | use `video identify --no-visible` when `pixel_stack=missing` |
 | Known visible AI label on an image | `visible` | |
 | User-supplied box on their own image | `erase` | |
-| AI metadata only | `metadata` or `video metadata` | |
+| AI metadata only | `metadata`, `video metadata`, or `text metadata` | |
 | Known visible AI label on video | `video visible` or `video all` | `video_visible=needs_video_extra`, `needs_ffmpeg`, or `unverified` |
 | Invisible image / image SynthID | `invisible` | `invisible_images=unavailable_no_cuda` |
+| Owned Seedance video, experimental opt-in | `video all --invisible --profile seedance-experimental` | same runtime requirements as Video SynthID; verify profile availability in help |
 | Video SynthID | `video invisible` | `video_invisible=needs_video_and_diffusion_extras`, `needs_ffmpeg`, or `unverified` |
+| Text token watermark / full text clean | `text invisible` or `text all` | `text invisible` and `text all --invisible` need `diffusion` (`torch` + `transformers`) |
 | Everything on an image | `all` | `image_all=do_not_run_writes_nothing` |
 | A directory | `batch` or `video batch` | same as the mode |
 | No signal found, user still wants a guess | `classify` or `classify-source` | it is a guess, not provenance |
+
+For a public Python API feature without a CLI option, such as draft OCR or the
+ONNX classifier backend, use the library in an isolated Python environment.
+Read the canonical [Python API guide](https://github.com/wiltodelta/remove-ai-watermarks/blob/main/docs/python-api.md)
+and install the required extras using [references/install.md](references/install.md).
+Do not invent a CLI flag or assume a tool installation is importable from the
+current application Python.
 
 Flags and mark names: [references/commands.md](references/commands.md). Read
 that file only when you need a flag, a mark key, or a video recipe.

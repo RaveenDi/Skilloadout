@@ -2,7 +2,7 @@
 
 - **Item:** Host Observer (`host-observer`)
 - **Original source:** https://github.com/thedotmack/claude-mem/tree/main/claude-mem-grok-bot/skills/host-observer
-- **Repository:** https://github.com/thedotmack/claude-mem @ `f09068514365`
+- **Repository:** https://github.com/thedotmack/claude-mem @ `0c488b54e761`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

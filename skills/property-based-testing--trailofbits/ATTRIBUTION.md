@@ -2,7 +2,7 @@
 
 - **Item:** Property Based Testing (`property-based-testing`)
 - **Original source:** https://github.com/trailofbits/skills/tree/main/plugins/property-based-testing/skills/property-based-testing
-- **Repository:** https://github.com/trailofbits/skills @ `470419e16f97`
+- **Repository:** https://github.com/trailofbits/skills @ `149d7b21f406`
 - **License:** CC-BY-SA-4.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

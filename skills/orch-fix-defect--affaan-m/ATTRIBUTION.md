@@ -2,7 +2,7 @@
 
 - **Item:** Orch Fix Defect (`orch-fix-defect`)
 - **Original source:** https://github.com/affaan-m/ECC/tree/main/skills/orch-fix-defect
-- **Repository:** https://github.com/affaan-m/ECC @ `b38be6a7f635`
+- **Repository:** https://github.com/affaan-m/ECC @ `d2ef2680594f`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

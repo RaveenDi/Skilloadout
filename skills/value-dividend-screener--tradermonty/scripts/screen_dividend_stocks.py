@@ -26,14 +26,20 @@ import math
 import os
 import re
 import sys
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Optional
 
 try:
     import requests
 except ImportError:
-    print("ERROR: requests library not found. Install with: pip install requests", file=sys.stderr)
-    sys.exit(1)
+    from pathlib import Path as _Path
+
+    print(
+        "ERROR: requests library not found. Install this skill's dependencies: "
+        f"pip install -r {_Path(__file__).resolve().parents[1] / 'requirements.txt'}",
+        file=sys.stderr,
+    )
+    sys.exit(2)
 
 
 class FINVIZClient:
@@ -1331,7 +1337,7 @@ Environment Variables:
     # Add metadata
     output_data = {
         "metadata": {
-            "generated_at": datetime.utcnow().isoformat() + "Z",
+            "generated_at": datetime.now(timezone.utc).replace(tzinfo=None).isoformat() + "Z",
             "criteria": {
                 "dividend_yield_min": 3.0,
                 "pe_ratio_max": 20,

@@ -2,12 +2,12 @@
 
 ## 当前版本
 
-助手版本 40（v0.10.1）。已有项目更新技能包后，在项目根重跑 `/story-setup`（Codex 用 `$story-setup`，Antigravity 用 `/skills` 或直接点名），再新开会话。
+助手版本 44（v0.10.5）。已有项目更新技能包后，在项目根重跑 `/story-setup`（Codex 用 `$story-setup`，Antigravity 用 `/skills` 或直接点名），再新开会话。
 
-- `setup_skill_version: 1.3.8`
-- `agents_version: 40`
+- `setup_skill_version: 1.3.12`
+- `agents_version: 44`
 
-`.story-deployed` 字段不全，或 `agents_version` 不是整数、低于 40，都算待更新，重跑 story-setup 即可。项目里的 `agents_version` 大于 40，说明本机技能包比项目旧：先更新 oh-story-claudecode，不要用旧包覆盖。各版本改了什么见仓库根目录 `CHANGELOG.md`。
+`.story-deployed` 字段不全，或 `agents_version` 不是整数、低于 44，都算待更新，重跑 story-setup 即可。项目里的 `agents_version` 大于 44，说明本机技能包比项目旧：先更新 oh-story-claudecode，不要用旧包覆盖。各版本改了什么见仓库根目录 `CHANGELOG.md`。
 
 ## 升级步骤
 
@@ -17,7 +17,27 @@
 4. 正在写的长篇：确认每本书有 `追踪/_tracking-state.json`。没有就按下方「追踪模型迁移」重建，否则写下一章会被拦。
 5. 拆文成果或细纲不满足当前格式时，按检查提示定点补齐，不因单项缺口整本重拆。
 
-## 本次更新必须重跑 story-setup（v0.10.1，助手版本 40）
+## 本次更新必须重跑 story-setup（v0.10.5，助手版本 44）
+
+- 写手、排纲、拆文、审稿助手与各端写后钩子按真人网文校准了万字短篇句式阻断门槛、退化与截断检查、弯引号默认、审稿细则和 0.10 细纲字段；重跑 story-setup 后新开会话才生效。
+- 书稿、设定、追踪不用迁移。
+
+## v0.10.4 的改动（助手版本 43）
+
+- 写手、排纲、审稿助手与参考资料按真人网文校准了情绪直写、利害算账、标点整理和去味阻断门槛，各端写后钩子同步按单章次数分级，重部署时还会清掉受管目录里已退役的旧文件；重跑 story-setup 后新开会话才生效。
+- 书稿、设定、追踪不用迁移。
+
+## v0.10.3 的改动（助手版本 42）
+
+- 7 个专业助手与它们读的参考资料去掉了重复段落和培训腔，保留全部输出模板、速查表与正反例；重跑 story-setup 后新开会话才生效。
+- 书稿、设定、追踪不用迁移。
+
+## v0.10.2 的改动（助手版本 41）
+
+- 写手、排纲、拆文、去味助手与它们读的参考资料做了一轮精修，Antigravity 2.0、ZCode 3.7+、OpenCode 2.x 与 Reasonix 2.57 的项目配置和插件也一起更新；重跑 story-setup 后新开会话才生效。
+- 书稿、设定、追踪不用迁移。
+
+## v0.10.1 的改动（助手版本 40）
 
 - 排纲助手多了一份跨书召回的资料。登记了 2 本及以上对标书的项目，重跑 story-setup 后新开会话，出卷纲、细纲和定设定才不会停下。
 - 书稿、设定、追踪不用迁移。
@@ -71,7 +91,7 @@ OpenCode 2.0 起发布在 npm 包 `@opencode/cli`（`opencode-ai` 停在 1.x）�
 
 ## 插件打包身份迁移（v0.7.9 同版本修复）
 
-Claude Code / ZCode 市场改为单一 `oh-story` 插件，仍包含全部 13 个 Skills。该迁移始于 v0.7.9 的同版本修复，仍使用旧插件身份的用户需手动迁移；`npx skills` 安装无需迁移。卸载前备份要保留的插件数据，以下操作仅针对旧插件记录，保留写作项目及 story-setup 部署文件。
+Claude Code / ZCode 市场改为单一 `oh-story` 插件，当时包含全部 13 个 Skills（v0.9.2 起为 14 个）。该迁移始于 v0.7.9 的同版本修复，仍使用旧插件身份的用户需手动迁移；`npx skills` 安装无需迁移。卸载前备份要保留的插件数据，以下操作仅针对旧插件记录，保留写作项目及 story-setup 部署文件。
 
 ### Claude Code
 
@@ -143,7 +163,7 @@ OpenClaw、Reasonix 和通用模式把 skill 放在项目 `skills/` 里，重跑
 |------|------|
 | `追踪/_tracking-state.json` 存在且 `check` 通过 | 正常，无需处理 |
 | 缺 `_tracking-state.json` 但已有正文 | 日更停止；Claude Code、Codex、OpenCode、ZCode、Antigravity 上写正文会被 hook 直接拦下，其他工具由写作流程自己停下 |
-| 存在但派生视图被手改 | `check` 报 `derived view differs from _tracking-state.json` |
+| 存在但自动生成的追踪文件被手改 | `check` 报 `derived view differs from _tracking-state.json` |
 
 迁移**不需要重跑全书拆解**：正文、`设定/`、`大纲/`、`拆文库/` 都不受影响，只重建 `追踪/`。执行 `/story-import` 的「旧追踪项目迁移」——数出最后完整章号 `N`，从旧追踪文件与最近几章正文重建当前状态，构造 `last_chapter=N` 的初始化事务跑 `tracking_commit.py init`。旧追踪结构会被按原样整体移入 `追踪/_旧追踪存档/`，不删除、不参与解析。
 

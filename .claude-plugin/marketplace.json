@@ -19,7 +19,7 @@
     {
       "name": "ab-testing--coreyhaines31",
       "source": "./skills/ab-testing--coreyhaines31",
-      "description": "When the user wants to plan, design, or implement an A/B test or experiment, or build a growth experimentation program. Also use when the user mentions \"A/B test,\" \"split test,\" \"experiment,\" \"test this change,\" \"variant copy,\" \"multivariate test,\" \"hypothesis,\" \"should I test this,\" \"which version "
+      "description": "When the user wants to plan, run, or read A/B tests, or asks a judgement call on one: is the result real, can we stop, which version won, is this worth testing at all: sample size, duration, significance, hypotheses, and experiment backlogs. For tracking setup, see analytics. For page-level conversi"
     },
     {
       "name": "ai-engineering",
@@ -152,11 +152,6 @@
       "description": "This skill should be used when the user asks to \"build an MCP server\", \"create an MCP\", \"make an MCP integration\", \"wrap an API for Claude\", \"expose tools to Claude\", \"make an MCP app\", or discusses building something with the Model Context Protocol. It is the entry point for MCP server development "
     },
     {
-      "name": "build-threejs-scroll-worlds--mengto",
-      "source": "./skills/build-threejs-scroll-worlds--mengto",
-      "description": "Build rich, scroll-controlled real-time Three.js experiences as one persistent 3D world whose camera, lighting, atmosphere, materials, objects, DOM story, and interactions evolve across authored chapters. Use for 3D scrollytelling, scroll-driven WebGL worlds, camera journeys, interactive portfolios,"
-    },
-    {
       "name": "business-pulse--anthropics",
       "source": "./skills/business-pulse--anthropics",
       "description": "Produces a one-page cross-functional business snapshot for SMB owners — cash position (the ledger: MYOB, NetSuite, QuickBooks, Xero, or Zoho Books), sales trend (PayPal/Square/Stripe), pipeline movement (HubSpot), this week's commitments (Calendar), urgent watch-list items (Gmail or M365, Slack), an"
@@ -214,7 +209,7 @@
     {
       "name": "churn-prevention--coreyhaines31",
       "source": "./skills/churn-prevention--coreyhaines31",
-      "description": "When the user wants to reduce churn, build cancellation flows, set up save offers, recover failed payments, or implement retention strategies. Also use when the user mentions 'churn,' 'cancel flow,' 'offboarding,' 'save offer,' 'dunning,' 'failed payment recovery,' 'win-back,' 'retention,' 'exit sur"
+      "description": "When the user wants to reduce churn, or asks why customers cancel, whether to offer a discount or pause: cancellation flows, exit surveys, save offers, dunning and failed-payment recovery. For win-back emails, see emails. For in-app upgrade screens, see paywalls."
     },
     {
       "name": "ci-cd-and-automation--addyosmani",
@@ -249,7 +244,7 @@
     {
       "name": "cloudflare--cloudflare",
       "source": "./skills/cloudflare--cloudflare",
-      "description": "Discover and choose Cloudflare products for apps, APIs, AI agents, storage, networking, and security. Use for architecture and product selection, including when the user describes a need without naming a Cloudflare product; then find the relevant skill or documentation."
+      "description": "Discover and choose Cloudflare products for apps, APIs, AI agents, storage, networking, and security. Use for architecture and product selection, including when the user describes a need without naming a Cloudflare product; then find the relevant skill or documentation. Also use when a Cloudflare-pr"
     },
     {
       "name": "code-review-and-quality--addyosmani",
@@ -274,7 +269,7 @@
     {
       "name": "cold-email--coreyhaines31",
       "source": "./skills/cold-email--coreyhaines31",
-      "description": "Write and run B2B cold outbound that gets replies, from cold emails and follow-ups to sending setup, LinkedIn, multichannel cadences, and reply handling. Use when the user mentions \"cold email,\" \"cold outreach,\" \"outbound,\" \"prospecting email,\" \"SDR emails,\" \"follow-up sequence,\" \"nobody's replying,"
+      "description": "When the user wants to write or run B2B cold outbound, or asks whether an opener, reason to reach out, or email works or why nobody replies: cold emails, follow-ups, sending domains, deliverability, LinkedIn, cadences. Send from secondary domains, verify lists first, turn off open tracking, stop eve"
     },
     {
       "name": "comp-analysis--anthropics",
@@ -304,7 +299,7 @@
     {
       "name": "content-strategy--coreyhaines31",
       "source": "./skills/content-strategy--coreyhaines31",
-      "description": "When the user wants to plan a content strategy, decide what content to create, or figure out what topics to cover. Also use when the user mentions \"content strategy,\" \"what should I write about,\" \"content ideas,\" \"blog strategy,\" \"topic clusters,\" \"content planning,\" \"editorial calendar,\" \"content m"
+      "description": "When the user wants to plan content, or asks which topic or piece to prioritize, what to write about, or why posts bring no customers: topic clusters, editorial calendars, roadmaps tied to customers and search. For writing pieces, see copywriting. For SEO audits, see seo-audit. For social content, s"
     },
     {
       "name": "context-engineering",
@@ -334,12 +329,12 @@
     {
       "name": "copy-editing--coreyhaines31",
       "source": "./skills/copy-editing--coreyhaines31",
-      "description": "When the user wants to edit, review, or improve existing marketing copy, or refresh outdated content. Also use when the user mentions 'edit this copy,' 'review my copy,' 'copy feedback,' 'proofread,' 'polish this,' 'make this better,' 'copy sweep,' 'tighten this up,' 'this reads awkwardly,' 'clean u"
+      "description": "When the user wants to edit, tighten, proofread, or refresh existing copy, or asks whether to keep, cut, or change a line in it, without rewriting from scratch. Every edit removes AI tells: 'it's not X, it's Y' reveals, 'no X, no Y, no Z' lists, and sentences that trail into extra comma clauses. A r"
     },
     {
       "name": "copywriting--coreyhaines31",
       "source": "./skills/copywriting--coreyhaines31",
-      "description": "When the user wants to write, rewrite, or improve marketing copy for any page, including homepage, landing pages, pricing pages, feature pages, about pages, or product pages. Also use when the user says \"write copy for,\" \"improve this copy,\" \"rewrite this page,\" \"marketing copy,\" \"headline help,\" \"C"
+      "description": "When the user wants to write or rewrite page copy (homepage, landing, pricing, feature), or asks which headline, promise, or message to lead with. Diagnoses the input first (blank brief, real voice, or point edit) and changes only what it calls for. Claims must be supportable; a declined claim names"
     },
     {
       "name": "create-viz--anthropics",
@@ -349,7 +344,7 @@
     {
       "name": "cro--coreyhaines31",
       "source": "./skills/cro--coreyhaines31",
-      "description": "When the user wants to optimize, improve, or increase conversions on any marketing page or form — including homepage, landing pages, pricing pages, feature pages, lead capture forms, or contact forms. Also use when the user says 'CRO,' 'conversion rate optimization,' 'this page isn't converting,' 'i"
+      "description": "When the user wants more conversions from a page or form, or asks why a page isn't converting, what to change first, or whether to add or remove a field or element: landing and pricing pages, lead forms, or a URL shared for feedback. For signup flows, see signup. For activation, see onboarding. For "
     },
     {
       "name": "customer-escalation--anthropics",
@@ -415,6 +410,11 @@
       "name": "documentation-and-adrs--addyosmani",
       "source": "./skills/documentation-and-adrs--addyosmani",
       "description": "Records decisions and documentation. Use when you need to document an architecture decision (ADR) or the reasoning behind a design choice, when changing public APIs, shipping features, or when you need to record context that future engineers and agents will need to understand the codebase."
+    },
+    {
+      "name": "docx--anthropics",
+      "source": "./skills/docx--anthropics",
+      "description": "Use this skill whenever the user wants to create, read, edit, or manipulate Word documents (.docx files) or Word templates (.dotx files). Triggers include: any mention of 'Word doc', 'word document', '.docx', '.dotx', or requests to produce professional documents with formatting like tables of conte"
     },
     {
       "name": "draft-outreach--anthropics",
@@ -734,7 +734,7 @@
     {
       "name": "marketing-plan--coreyhaines31",
       "source": "./skills/marketing-plan--coreyhaines31",
-      "description": "When the user needs a comprehensive marketing plan for a client, a company they advise, or their own product. Also use when the user mentions \"marketing plan,\" \"growth plan,\" \"GTM plan,\" \"go-to-market plan,\" \"AARRR plan,\" \"90-day marketing plan,\" \"12-month marketing roadmap,\" \"fractional CMO plan,\" "
+      "description": "When the user wants a full marketing or go-to-market plan for a client, an advised company, or their own product, or asks how to sequence or prioritize several initiatives with a fixed team and budget: channels, budget, team, goals across AARRR, market sizing. For positioning first, see product-mark"
     },
     {
       "name": "mcp-builder--anthropics",
@@ -829,7 +829,7 @@
     {
       "name": "paywalls--coreyhaines31",
       "source": "./skills/paywalls--coreyhaines31",
-      "description": "When the user wants to create or optimize in-app paywalls, upgrade screens, upsell modals, or feature gates. Also use when the user mentions \"paywall,\" \"upgrade screen,\" \"upgrade modal,\" \"upsell,\" \"feature gate,\" \"convert free to paid,\" \"freemium conversion,\" \"trial expiration screen,\" \"limit reache"
+      "description": "When the user wants to create or improve in-app paywalls and upgrade moments, or asks when or how hard to ask free users to pay (after they've seen value): upgrade screens, upsell modals, feature gates, limit-reached and trial-expired screens, mobile subscription paywalls. For public pricing pages, "
     },
     {
       "name": "pdf--openai",
@@ -872,6 +872,11 @@
       "description": "Comprehensive portfolio analysis using Alpaca MCP Server integration to fetch holdings and positions, then analyze asset allocation, risk metrics, individual stock positions, diversification, and generate rebalancing recommendations. Use when user requests portfolio review, position analysis, risk a"
     },
     {
+      "name": "pptx--anthropics",
+      "source": "./skills/pptx--anthropics",
+      "description": "Use this skill any time a .pptx or .potx file is involved in any way — as input, output, or both. This includes: creating slide decks, pitch decks, or presentations; reading, parsing, or extracting text from any .pptx or .potx file (even if the extracted content will be used elsewhere, like in an em"
+    },
+    {
       "name": "pr-writer--getsentry",
       "source": "./skills/pr-writer--getsentry",
       "description": "Create or refresh reviewer-facing PR titles and descriptions. Use when opening a PR, updating its title or body, or preparing branch changes for review."
@@ -889,7 +894,7 @@
     {
       "name": "pricing--coreyhaines31",
       "source": "./skills/pricing--coreyhaines31",
-      "description": "When the user wants help with pricing decisions, packaging, or monetization strategy. Also use when the user mentions 'pricing,' 'pricing tiers,' 'freemium,' 'free trial,' 'packaging,' 'price increase,' 'value metric,' 'Van Westendorp,' 'willingness to pay,' 'monetization,' 'how much should I charge"
+      "description": "When the user wants to set pricing and packaging, or asks what to charge, whether to raise prices, or how to move existing customers: tiers, value metrics, per-seat vs usage, freemium and trials, willingness to pay, pricing pages. For in-app upgrade screens, see paywalls. For offers on services, cou"
     },
     {
       "name": "prisma-postgres--prisma",
@@ -909,7 +914,7 @@
     {
       "name": "programmatic-seo--coreyhaines31",
       "source": "./skills/programmatic-seo--coreyhaines31",
-      "description": "When the user wants to create SEO-driven pages at scale using templates and data. Also use when the user mentions \"programmatic SEO,\" \"template pages,\" \"pages at scale,\" \"directory pages,\" \"location pages,\" \"[keyword] + [city] pages,\" \"comparison pages,\" \"integration pages,\" \"building many pages for"
+      "description": "When the user wants SEO pages at scale from templates and data, or asks whether a page set will rank or look thin: location, integration, comparison, directory, and '[X] for [Y]' pages, each useful rather than thin. For SEO audits, see seo-audit. For content planning, see content-strategy."
     },
     {
       "name": "prompt-optimizer--getsentry",
@@ -919,7 +924,7 @@
     {
       "name": "prospecting--coreyhaines31",
       "source": "./skills/prospecting--coreyhaines31",
-      "description": "When the user wants to find, qualify, and build a list of prospects to reach out to, across B2B SaaS, general B2B, or local small businesses. Also use when the user mentions \"prospecting,\" \"build a prospect list,\" \"find leads,\" \"lead list,\" \"outbound list,\" \"target account list,\" \"ICP-fit accounts,\""
+      "description": "When the user wants to find and qualify prospects for outbound, or asks who to target first, which signal to prioritize, or where to spot buyers with the problem: buying signals, enrichment, verification, account research. Verify emails before a sequence, never scrape LinkedIn: define audiences in S"
     },
     {
       "name": "pyhealth--aipoch",
@@ -1024,7 +1029,7 @@
     {
       "name": "sales-enablement--coreyhaines31",
       "source": "./skills/sales-enablement--coreyhaines31",
-      "description": "When the user wants to create sales collateral, pitch decks, one-pagers, objection handling docs, or demo scripts. Also use when the user mentions 'sales deck,' 'pitch deck,' 'one-pager,' 'leave-behind,' 'objection handling,' 'deal-specific ROI analysis,' 'demo script,' 'talk track,' 'sales playbook"
+      "description": "When the user wants sales collateral, or asks what to give a champion or rep, or how to answer an objection or make the case: decks, one-pagers, objection handling, demo scripts, talk tracks, battle cards, proposals, win-loss. For public comparison pages, see competitors. For buyer research, see cus"
     },
     {
       "name": "scenes--phaserjs",
@@ -1242,8 +1247,8 @@
       "description": "Upgrade Three.js games from prototype visuals to premium browser graphics: art-direction critique, procedural model building, material and texture libraries, world prop kits, shaders, VFX, lighting and render pipeline, LOD and instancing, render budgets, and a 10-category visual scorecard. Use when "
     },
     {
-      "name": "threejs-fundamentals--calesthio",
-      "source": "./skills/threejs-fundamentals--calesthio",
+      "name": "threejs-fundamentals--openmontageinc",
+      "source": "./skills/threejs-fundamentals--openmontageinc",
       "description": "Three.js scene setup, cameras, renderer, Object3D hierarchy, coordinate systems. Use when setting up 3D scenes, creating cameras, configuring renderers, managing object hierarchies, or working with transforms."
     },
     {
@@ -1299,7 +1304,7 @@
     {
       "name": "unity-skills--besty0728",
       "source": "./skills/unity-skills--besty0728",
-      "description": "Automate the Unity Editor through a local REST API — scripts, scenes, prefabs, assets, materials, lighting, tests and hundreds of other Editor operations. Use when the user wants to actually operate the Unity Editor from chat — create, modify or batch-edit GameObjects/scripts/scenes/assets, or run E"
+      "description": "Operate the Unity Editor through a local REST API — create, edit and batch-edit GameObjects, components, scripts, scenes, prefabs, assets and materials, run tests — and answer Unity design questions (architecture, script design, patterns) from bundled advisory docs. Use for any Unity Editor task or "
     },
     {
       "name": "upgrading-react-native--callstackincubator",
@@ -1385,6 +1390,11 @@
       "name": "writing-plans--obra",
       "source": "./skills/writing-plans--obra",
       "description": "Use when you have a spec or requirements for a multi-step task, before touching code"
+    },
+    {
+      "name": "xlsx--anthropics",
+      "source": "./skills/xlsx--anthropics",
+      "description": "Use this skill any time a spreadsheet file is the primary input or output. This means any task where the user wants to: open, read, edit, or fix an existing .xlsx, .xlsm, .xltx, .csv, or .tsv file (e.g., adding columns, computing formulas, formatting, charting, cleaning messy data); create a new spr"
     },
     {
       "name": "zoom-general--anthropics",

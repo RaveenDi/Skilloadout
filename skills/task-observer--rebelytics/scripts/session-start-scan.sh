@@ -31,7 +31,8 @@
 # starter-principles-reviewed.txt is absent or names an older set than
 # references/starter-principles.md beside this script; where that file is
 # unreadable — a .bin/ copy in a bridged session — an absent marker is still
-# DUE and an older one is not compared, so no line prints for it;
+# DUE and an older one is not compared, so no line prints for it; the line
+# names where the offer may be made, since it is read mid-task;
 # UNFILLED: a header whose title: is empty — the skeleton new-observation.sh
 # writes at create time, a write in progress or abandoned; NOTE: id: … when
 # a header's id does not read as its filename prefix; DUPLICATE ID — NNNN:
@@ -39,7 +40,8 @@
 # a numeric prefix — a write that went around the id snippet's prefix
 # guard; RESURRECTED — when an active file is byte-identical to its
 # same-named archive/ copy, a restored archive entry, never renumbered); the
-# NOTE lines for a header key written twice and for a file holding a
+# NOTE lines for a header key written twice, for an actioned entry whose
+# resolution: gives a skill: member no disposition, and for a file holding a
 # key-shaped run beside key / token / secret / password (names only); the
 # counts line (files, parsed, suspect, archive-suspect, resurrected); a SPLIT STORE line when a
 # pre-3.0 log.md sits beside the directory; a `staged:` line naming
@@ -47,9 +49,9 @@
 # roots) or NOTE: legacy staging root line when
 # skill-observations/skill-updates/ (the pre-3.0 staging root) exists; a NOTE: pointer line when
 # skill-observations/MOVED.md exists; a GAP
-# line when the previous scan in checkpoints.log is 7 or more days old; the logs found up to
-# five levels under the root's parent, each with its entry count and its
-# checkpoints.log's last date; the active principles' headings; then one line per numbered entry,
+# line when the previous scan in checkpoints.log is 7 or more days old; the logs found at the
+# plausible anchors, each with its entry count, its checkpoints.log's last
+# date and any log.md beside it; the active principles' headings; then one line per numbered entry,
 # `id | status | skill | proposes_skill | title` (`-` for a field the header
 # lacks), parked entries after the others, an actioned, declined or
 # superseded entry as `id | status | skill | proposes_skill | resolved <date>
@@ -61,8 +63,8 @@
 # that needs another field; then the summary
 # block: every finding line (DUE / NOTE / LOST ENTRIES / UNFILLED / DUPLICATE
 # ID / RESURRECTED / SPLIT STORE / GAP) repeated VERBATIM, and LAST one `end of scan` line
-# repeating the counts, how many finding lines stand above the entries, and
-# this script's version (VERSION below, equal to the skill's `version:`), so
+# repeating the counts, how many finding lines stand above the entries, how
+# many bytes stdout carried above it, and this script's version (VERSION below, equal to the skill's `version:`), so
 # a run can tell a script that lacks a feature from one that is broken. The findings
 # open the output and close it, so a view cut by `head` keeps them and one
 # cut by `tail` keeps them with the summary; the same lines are written to
@@ -109,7 +111,7 @@
 
 set -u
 
-VERSION="3.9.0"   # equal to the skill's frontmatter version:; the end line names it
+VERSION="3.10.0"   # equal to the skill's frontmatter version:; the end line names it
 
 entries=   # --entries-to target; empty = the entries print to stdout
 while [ $# -gt 0 ]; do
@@ -190,6 +192,18 @@ if [ -n "$miss" ]; then
   exit 1
 fi
 
+# --- the output is counted: stdout goes through a buffer up to the end line ---
+# The end line names how many bytes stand above it, so a copy that a harness
+# saved to a file or cut to a preview is told from the whole output by its
+# size, not by whether the end line happens to be in view. The buffer is
+# written out on every exit, a halt included; without mktemp the output runs
+# unbuffered and the end line says the bytes were not counted.
+buf=$(mktemp 2>/dev/null) || buf=
+if [ -n "$buf" ]; then
+  exec 5>&1 >"$buf"
+  trap 'exec >&5; cat "$buf"; rm -f "$buf"' EXIT
+fi
+
 # --- counts -------------------------------------------------------------------
 # n: numbered, non-empty files — what the parse can read. Counted from the
 # literal path, independent of $d, so the guard below compares two numbers
@@ -247,6 +261,30 @@ sus='FNR==1 {sub(/^\357\273\277/, ""); fm = (/^---[[:space:]]*$/ ? 1 : 0); if (!
   fm && /'"$key"'"([^"\\]|('"$esc_ok"'))*\\('"$esc_bad"')/ {print FILENAME "\t6\t" $0; nextfile}
   fm && /^[a-z_]+:[ ]+\[/ {v=$0; sub(/^[a-z_]+:[ ]+/,"",v); gsub(/"([^"\\]|\\.)*"/,"",v); gsub(/\047[^\047]*\047/,"",v); sub(/[[:space:]]#.*/,"",v); if (v ~ /:/) {print FILENAME "\t7\t" $0; nextfile}}'
 # <<< sus
+# The dispositions program, shared with set-fields.sh (which refuses the
+# change it reports): an actioned entry whose resolution: gives a listed
+# skill: member no disposition prints `<file> TAB <members>`.
+# >>> disp: shared with session-start-scan.sh, byte for byte (the selftest compares them)
+disp='function has(r, m,  s, i, c, rest) {s = r
+    while ((i = index(s, m ":")) > 0) {c = (i > 1) ? substr(s, i - 1, 1) : ""
+      rest = substr(s, i + length(m) + 1); sub(/^[[:space:]]+/, "", rest)
+      if (c !~ /[A-Za-z0-9_.-]/ && rest ~ /^(applied|added|excluded|carried)/) return 1
+      s = substr(s, i + length(m) + 1)}
+    return 0}
+  function add(x) {sub(/[[:space:]]+#.*$/, "", x); gsub(/["\047\r]/, "", x); gsub(/^[[:space:]]+|[[:space:]]+$/, "", x); sub(/.*:/, "", x); if (x != "") sk[++ns] = x}
+  FNR==1 {split("", sk); ns = 0; res = ""; st = ""; key = ""; sub(/^\357\273\277/, ""); fm = /^---[[:space:]]*$/; if (!fm) nextfile; next}
+  fm && /^---[[:space:]]*$/ {fm = 0; miss = ""
+    if (st == "actioned") for (j = 1; j <= ns; j++) if (!has(res, sk[j])) miss = miss (miss == "" ? "" : " ") sk[j]
+    if (miss != "") print FILENAME "\t" miss
+    nextfile}
+  fm && /^[A-Za-z_][A-Za-z0-9_]*:/ {key = $0; sub(/:.*/, "", key); v = $0; sub(/^[A-Za-z_][A-Za-z0-9_]*:[[:space:]]*/, "", v); sub(/\r$/, "", v)
+    if (key == "status") {st = v; sub(/[[:space:]]+#.*$/, "", st); gsub(/["\047[:space:]]/, "", st)}
+    if (key == "resolution") res = v
+    if (key == "skill") {sub(/[[:space:]]+#.*$/, "", v); gsub(/\[|\]/, "", v); nn = split(v, a, ","); for (j = 1; j <= nn; j++) add(a[j])}
+    next}
+  fm && key == "skill" && /^[[:space:]]+-[[:space:]]/ {v = $0; sub(/^[[:space:]]+-[[:space:]]*/, "", v); add(v); next}
+  fm && key == "resolution" && /^[[:space:]]+[^[:space:]#]/ {res = res " " $0}'
+# <<< disp
 suspect=$(LC_ALL=C find "$d" -maxdepth 1 -name '[0-9]*.md' -exec awk "$sus" {} + | wc -l | tr -d ' ')
 a_sus=0; [ -d "$d/archive" ] && a_sus=$(LC_ALL=C find "$d/archive" -maxdepth 1 -name '*.md' -exec awk "$sus" {} + | wc -l | tr -d ' ')   # archive/ may not exist yet
 
@@ -279,11 +317,11 @@ mk="$root/skill-observations/starter-principles-reviewed.txt"
 sp="$(dirname "$0")/../references/starter-principles.md"
 ship=; [ -r "$sp" ] && ship=$(sed -n 's/^Starter set version:[[:space:]]*\([0-9][0-9]*\).*/\1/p' "$sp" | head -n 1)
 if [ ! -e "$mk" ]; then
-  finding "DUE: starter-set reconciliation — skill-observations/starter-principles-reviewed.txt is absent; load references/starter-principles.md (Reconciliation) and offer once"
+  finding "DUE: starter-set reconciliation — skill-observations/starter-principles-reviewed.txt is absent; offer once, in a review or a session opened for skill work, never in another task's reply (references/starter-principles.md, Reconciliation)"
 elif [ -n "$ship" ]; then
   mv_v=$(sed '1!d; s/[^0-9]//g' "$mk")
   if [ -z "$mv_v" ] || [ "$((10#$mv_v))" -lt "$ship" ]; then
-    finding "DUE: starter-set reconciliation — marker v${mv_v:-?} < shipped set v$ship; load references/starter-principles.md (Reconciliation) and offer once"
+    finding "DUE: starter-set reconciliation — marker v${mv_v:-?} < shipped set v$ship; offer once, in a review or a session opened for skill work, never in another task's reply (references/starter-principles.md, Reconciliation)"
   fi
 fi
 
@@ -350,6 +388,11 @@ dk=$( { LC_ALL=C find "$d" -maxdepth 1 -name '[0-9]*.md' -exec awk 'FNR==1 {spli
     fm && /^---[[:space:]]*$/ {nextfile}
     fm && /^[A-Za-z_][A-Za-z0-9_]*:/ {x=$0; sub(/:.*/, "", x); if (k[x]++ == 1) print f " (" x ")"}' {} +; } | LC_ALL=C sort | awk '{s = s (NR > 1 ? ", " : "") $0} END {print s}')
 [ -n "$dk" ] && finding "NOTE: a header key occurs twice — parsers disagree on which copy they keep; read the body, keep one line, never batch-rewrite: $dk"
+# Actioned entries, active only, whose resolution: gives a listed skill:
+# member no disposition: a family fix marked done while a member was never
+# edited for it reads as complete everywhere else.
+nd=$(LC_ALL=C find "$d" -maxdepth 1 -name '[0-9]*.md' -exec awk "$disp" {} + | sed 's|^.*/||' | LC_ALL=C sort | awk -F '\t' '{s = s (NR > 1 ? ", " : "") $1 " (" $2 ")"} END {print s}')
+[ -n "$nd" ] && finding "NOTE: actioned without a disposition for every skill: member — resolution: names each as '<member>: applied|excluded|carried'; complete it, or re-open the entry, through scripts/set-fields.sh: $nd"
 # Secret-shaped values, active and archive/, header and body: a line naming
 # key / token / secret / password that also holds a run of 24 or more letters
 # and digits, both present (a 40- or 64-hex digest is skipped). File names
@@ -431,16 +474,53 @@ gap=$( [ -f "$ck" ] && LC_ALL=C awk -v today="$(date +%F)" '
 printf '%s [%s] session-start scan: files=%s parsed=%s principles=%s\n' "$(date '+%F %H:%M')" "${PWD##*/}" "$n" "$parsed" "$pr" \
   >> "$root/skill-observations/checkpoints.log"
 
-# --- sibling logs: every observation log up to five levels under the parent --
-# A report, never a reason to consolidate from here. Five levels reach a log
-# one project folder below a projects folder; .git, node_modules and
-# skill-updates trees are pruned, so a large parent stays cheap. Each log
-# carries its entry count and the date of its checkpoints.log's last line,
-# so a shard still being written reads differently from an abandoned one.
-find "$(dirname "$root")" -maxdepth 5 \( -name .git -o -name node_modules -o -name skill-updates \) -prune -o -type d -path '*/skill-observations/observation-log' -print 2>/dev/null | LC_ALL=C sort | while IFS= read -r o; do
-  w="${o%/observation-log}/checkpoints.log"; lc=none
-  [ -f "$w" ] && lc=$(tail -n 1 "$w" | cut -c 1-10) && case $lc in ([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]) ;; (*) lc=none ;; esac
-  printf '%s=%s last=%s\n' "${o%/skill-observations/observation-log}" "$(find "$o" -maxdepth 1 -name '[0-9]*.md' | wc -l | tr -d ' ')" "$lc"; done | awk '{s = s "  " $0} END {print "logs under the parent (report; never consolidate from here):" s}'
+# --- sibling logs: every observation log at the plausible anchors ----------
+# A report, never a reason to consolidate from here. One directory's ancestry
+# cannot see a store kept at another scope, so the anchors are the homes
+# references/environments.md names: the root's parent (the root, its
+# siblings, a renamed folder), the parent's siblings, the user-scope config
+# home (~/.claude, and CLAUDE_CONFIG_DIR when set) and its projects/ (the
+# project identity roots and their memory/ directories). The parent keeps
+# five levels (a log one project folder below a projects folder, with
+# margin); every other anchor is searched to a workspace two folders below
+# it; .git, node_modules and skill-updates trees are pruned. The parent's
+# siblings are skipped when the parent is a top-level directory (its
+# siblings are system trees). A workspace
+# holding only a legacy log.md is listed too. Each log carries its entry
+# count (`-` without the directory), its checkpoints.log's last date, so a
+# shard still being written reads differently from an abandoned one, and
+# legacy=N for a log.md beside it: the split-store check reads every log
+# found, and another root's split store is a finding of its own.
+par=$(dirname "${root%/}"); anchors="$par"
+gp=$(dirname "$par")
+case $gp in
+  (/|.|[A-Za-z]:|[A-Za-z]:[/\\]) ;;
+  (*) for s_a in "$gp"/*; do [ -d "$s_a" ] && [ "$s_a" != "$par" ] && anchors="$anchors"$'\n'"$s_a"; done ;;
+esac
+for c_a in "${CLAUDE_CONFIG_DIR:-}" "${HOME:+$HOME/.claude}"; do
+  [ -n "$c_a" ] && anchors="$anchors"$'\n'"${c_a%/}"$'\n'"${c_a%/}/projects"
+done
+found=$(printf '%s\n' "$anchors" | while IFS= read -r a; do
+    [ -n "$a" ] && [ -d "$a" ] || continue
+    md=4; [ "$a" = "$par" ] && md=5
+    find "$a" -maxdepth "$md" \( -name .git -o -name node_modules -o -name skill-updates \) -prune \
+      -o \( -type d -path '*/skill-observations/observation-log' -o -type f -path '*/skill-observations/log.md' \) -print 2>/dev/null
+  done | sed 's|/skill-observations/observation-log$||; s|/skill-observations/log\.md$||' | LC_ALL=C sort -u)
+sib=
+while IFS= read -r w; do
+  [ -n "$w" ] || continue
+  o="$w/skill-observations/observation-log"; w_lg="$w/skill-observations/log.md"; w_ck="$w/skill-observations/checkpoints.log"
+  cnt=-; [ -d "$o" ] && cnt=$(find "$o" -maxdepth 1 -name '[0-9]*.md' | wc -l | tr -d ' ')
+  lc=none
+  [ -f "$w_ck" ] && lc=$(tail -n 1 "$w_ck" | cut -c 1-10) && case $lc in ([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]) ;; (*) lc=none ;; esac
+  lgn=; [ -f "$w_lg" ] && lgn=$(grep -c '^### Observation ' "$w_lg" | tr -d ' ')
+  sib="$sib  $w=$cnt last=$lc${lgn:+ legacy=$lgn}"
+  # the pinned root's own split store is the SPLIT STORE line above
+  if [ -n "$lgn" ] && [ -d "$o" ] && [ "$w" != "${root%/}" ]; then
+    finding "SPLIT STORE — $w: log.md holds $lgn observations beside that root's observation-log/: an older installed copy still writes there; report the root and its copy's version, never migrate or consolidate another root from this scan (references/migration.md)"
+  fi
+done <<< "$found"
+printf 'logs at the plausible anchors (report; never consolidate from here):%s\n' "$sib"
 
 # --- content: printed with the headers below ---------------------------------
 # The active principles' headings.
@@ -506,6 +586,12 @@ printf '%s' "$findings" > "$sidecar" 2>/dev/null || sc="$sidecar (write failed)"
 printf '%s' "$findings"
 st=; [ "$rc" -eq 0 ] || st="; content print exited $rc"
 [ -n "${empty_ent:-}" ] && st="; the entries file is EMPTY (exit 3)"
-printf 'end of scan — files: %s  parsed: %s  suspect: %s  archive-suspect: %s  resurrected: %s  principles: %s; finding lines above the entries (DUE / NOTE / LOST ENTRIES / UNFILLED / DUPLICATE ID / RESURRECTED / SPLIT STORE / GAP): %s, repeated just above this line and written to %s%s%s; full headers in %s. Read the output whole: never cut it with head, tail or grep — session-start-scan.sh v%s\n' \
-  "$n" "$parsed" "$suspect" "$a_sus" "$nres" "$pr" "$fx" "$sc" "$ent" "$st" "$hd_note" "$VERSION"
+bytes="bytes above this line not counted (no mktemp)"
+if [ -n "$buf" ]; then
+  by=$(wc -c < "$buf" | tr -d ' ')
+  exec >&5; cat "$buf"; rm -f "$buf"; trap - EXIT
+  bytes="$by bytes above this line: a saved or cut copy holding fewer is a truncated scan"
+fi
+printf 'end of scan — files: %s  parsed: %s  suspect: %s  archive-suspect: %s  resurrected: %s  principles: %s; finding lines above the entries (DUE / NOTE / LOST ENTRIES / UNFILLED / DUPLICATE ID / RESURRECTED / SPLIT STORE / GAP): %s, repeated just above this line and written to %s%s%s; full headers in %s; %s. Read the output whole: never cut it with head, tail or grep — session-start-scan.sh v%s\n' \
+  "$n" "$parsed" "$suspect" "$a_sus" "$nres" "$pr" "$fx" "$sc" "$ent" "$st" "$hd_note" "$bytes" "$VERSION"
 exit "$rc"

@@ -2,7 +2,7 @@
 
 - **Item:** V3 Deep Integration (`V3 Deep Integration`)
 - **Original source:** https://github.com/ruvnet/RuView/tree/main/.claude/skills/v3-integration-deep
-- **Repository:** https://github.com/ruvnet/RuView @ `5728b90949e6`
+- **Repository:** https://github.com/ruvnet/RuView @ `094e1400719d`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

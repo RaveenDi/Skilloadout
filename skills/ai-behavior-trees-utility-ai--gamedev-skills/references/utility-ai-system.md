@@ -1,10 +1,15 @@
-# Utility AI system — curves, considerations, evaluator
+# Utility AI system: curves, considerations, evaluator
 
-Depth for `ai-behavior-trees-utility-ai`. Utility AI turns *"which action do I want most right
+Contents:
+1. Response-curve library (`Curves`, including `Compensate`)
+2. Considerations
+3. Scored actions and the compensation factor
+4. The evaluator: argmax with hysteresis, softmax
+
+Utility AI turns *"which action do I want most right
 now?"* into arithmetic: describe each candidate action with a few **considerations**, map each raw
 fact through a **normalized response curve** to 0..1, combine them into a score, and select. Same
-C#-only style as the BT core, so it composes with it (see the hybrid section in
-`references/practical-examples.md`).
+C#-only style as the BT core; `UtilityAction.Behavior` holds an optional BT subtree for hybrids.
 
 Golden rule: **every consideration outputs 0..1.** Mixing ranges (one 0..1, one 0..100) lets the
 big one dominate and makes weights meaningless.
@@ -97,8 +102,8 @@ var myHealth = new Consideration("myHealth",
 
 ## Scored actions and the compensation factor
 
-A `UtilityAction` scores as its `weight` times the **combined** considerations. Multiplying factors
-is standard (a single near-zero consideration should veto the action), but naive multiplication
+A `UtilityAction` scores as its `weight` times the **combined** considerations. An exactly-zero
+consideration vetoes the action; near-zero is only a low preference. Naive multiplication
 over-punishes as you add considerations. Apply Dave Mark's **compensation factor** so more
 considerations don't unfairly drag the score down.
 
@@ -134,6 +139,10 @@ The evaluator scores every action and selects one. Offer three strategies: **arg
 **weighted-random** over raw scores. Add **hysteresis** (an inertia bonus for the current action)
 so agents commit instead of flip-flopping on near-ties.
 
+Both selectors exclude non-positive raw scores before adding inertia or computing softmax weights.
+If no action qualifies, they clear the current action and return `null`; the caller must handle
+this no-action result. Use an exactly-zero consideration for a hard constraint.
+
 ```csharp
 public sealed class UtilityEvaluator
 {
@@ -149,6 +158,7 @@ public sealed class UtilityEvaluator
         foreach (var a in _actions)
         {
             float s = a.Score(bb);
+            if (s <= 0f) continue;                      // inertia cannot revive a vetoed action
             if (a == _current) s += inertiaBonus;      // stickiness to avoid jitter
             if (s > bestScore) { bestScore = s; best = a; }
         }
@@ -163,21 +173,32 @@ public sealed class UtilityEvaluator
     {
         var weights = new float[_actions.Count];  // allocate once as a field on hot paths
         float maxScore = float.NegativeInfinity;
+        int lastEligible = -1;
         for (int i = 0; i < _actions.Count; i++)
         {
             weights[i] = _actions[i].Score(bb);
+            if (weights[i] <= 0f) { weights[i] = 0f; continue; }
+            lastEligible = i;
             if (weights[i] > maxScore) maxScore = weights[i];
         }
-        float t = System.MathF.Max(temperature, 1e-4f), sum = 0f;
+        if (lastEligible == -1) { _current = null; return null; }
+        float t = System.MathF.Max(temperature, 1e-4f);
+        double sum = 0;
+        int lastWeighted = -1;
         for (int i = 0; i < weights.Length; i++)
         {
+            if (weights[i] <= 0f) continue;
             weights[i] = System.MathF.Exp((weights[i] - maxScore) / t);
             sum += weights[i];
+            if (weights[i] > 0f) lastWeighted = i;
         }
-        float roll = (float)rng.NextDouble() * sum;
+        double roll = rng.NextDouble() * sum;          // retain precision near the exclusive upper bound
         for (int i = 0; i < weights.Length; i++)
-            if ((roll -= weights[i]) <= 0f) { _current = _actions[i]; return _actions[i]; }
-        _current = _actions[^1];
+        {
+            if (weights[i] <= 0f) continue;            // also skip zero when the random roll is zero
+            if ((roll -= weights[i]) < 0f) { _current = _actions[i]; return _actions[i]; }
+        }
+        _current = _actions[lastWeighted];            // never fall back to an underflowed zero weight
         return _current;
     }
 }
@@ -185,6 +206,4 @@ public sealed class UtilityEvaluator
 
 Usage: score every decision step, then run the winner's `Behavior` (hybrid) or call its handler
 directly. Verify by drawing each action's live score as a debug bar while tuning — utility bugs are
-almost always a mis-shaped curve or an un-normalized fact, and both are obvious on screen. The
-worked villager-needs evaluator and the BT+Utility hybrid are in
-`references/practical-examples.md`.
+almost always a mis-shaped curve or an un-normalized fact, and both are obvious on screen.

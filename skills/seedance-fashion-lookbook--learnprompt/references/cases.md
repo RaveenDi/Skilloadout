@@ -1,6 +1,6 @@
 # Case evidence · Fashion lookbook and portrait film
 
-49 verified cases are filed under this template in awesome-seedance; the 8 hottest are below, full prompts included. Pick one as the anchor before drafting.
+53 verified cases are filed under this template in awesome-seedance; the 8 hottest are below, full prompts included. Pick one as the anchor before drafting.
 
 Generated from `data/cases.json` + `data/case-taxonomy.json`. Do not hand-edit.
 
@@ -51,7 +51,7 @@ Photoreal cinematic ~9 seconds, high-end fashion-film look. A young woman with l
 
 ## E3 · Cinematic Paris Fashion Campaign, Five Shots
 
-- Seedance 2.0 · creator: @Just_sharon7 · heat: 90 · stability: 82
+- Seedance 2.0 · creator: @Just_sharon7 · heat: 89 · stability: 82
 - Evidence: [GoodCase](https://goodcase.ai/cases/youmind-paris-fashion-campaign-streetwear) · [finished media](https://media.goodcase.ai/media/video/youmind-paris-fashion-campaign-streetwear.mp4) · [poster](https://media.goodcase.ai/media/poster/youmind-paris-fashion-campaign-streetwear.jpg) · [original source](https://x.com/Just_sharon7/status/2083793251132186998)
 - Summary: 15 秒五个场景的巴黎街拍广告，每个场景固定 3 秒并写死机位和背景地标，用同一只粉色手袋贯穿全片当身份锚点，靠真实人群和手持质感把广告片拍出街拍抓拍的偶然感。
 
@@ -80,7 +80,7 @@ AVOID: cartoon, CGI, plastic skin, robotic movement, stiff poses, blurry face, o
 
 ## E4 · Woman Playing Tennis on a Skateboard on a Pink Court at Night
 
-- Seedance 2.5 · creator: @AIwithNatalia · heat: 89
+- Seedance 2.5 · creator: @AIwithNatalia · heat: 88
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-2-5-create-a-photorealistic-cinematic-fashion-sports-video-set-on-a-pink-tennis-cou-b27f2c8361f5) · [finished media](https://media.goodcase.ai/cases/6d94ac862edd.mp4) · [poster](https://media.goodcase.ai/cases/322498c2ac13.jpg) · [original source](https://x.com/AIwithNatalia/status/2107056982163402833)
 - Summary: Too glam to play by the rules🖤🎾🛹 Created with Seedance 2.5 on @TapNow_AI PROMPT: Create a photorealistic cinematic fashion-sports video set on a pink tennis …
 
@@ -101,7 +101,7 @@ Negative prompt: distorted face, changing identity, extra fingers, extra limbs, 
 
 ## E5 · Pink-Haired Woman Wandering Through a Fading European City
 
-- Seedance 2.5 · creator: @Just_sharon7 · heat: 86
+- Seedance 2.5 · creator: @Just_sharon7 · heat: 85
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-what-if-every-beautiful-moment-disappears-before-we-even-realize-it-was-happeni-e781d14cb692) · [finished media](https://media.goodcase.ai/cases/0440b58f61c0.mp4) · [poster](https://media.goodcase.ai/cases/78da937a2c39.jpg) · [original source](https://x.com/Just_sharon7/status/2102013620066636225)
 - Summary: What if every beautiful moment disappears before we even realize it was happening? Seedance 2.5 on @TapNow_AI Prompt A cinematic fashion short film, ~20 seconds…
 
@@ -146,7 +146,7 @@ Cinematic fashion film, editorial movement, motion blur, anamorphic flares, gold
 
 ## E6 · A Woman Changes Outfits on a Persian Rug Beneath a Ceiling Fan
 
-- Seedance 2.5 · creator: @Zoyavelle · heat: 84
+- Seedance 2.5 · creator: @Zoyavelle · heat: 83
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-2-5-a-cinematic-top-down-overhead-shot-of-a-young-asian-woman-lying-barefoot-on-an-279944014505) · [finished media](https://media.goodcase.ai/cases/6c0160709a73.mp4) · [poster](https://media.goodcase.ai/cases/8457e12426f4.jpg) · [original source](https://x.com/Zoyavelle/status/2108060187840180394)
 - Summary: Made with seedance 2.5 Prompt: A cinematic top-down overhead shot of a young Asian woman lying barefoot on an elegant vintage Persian rug in a warm, cozy living…
 
@@ -160,7 +160,7 @@ Style: photorealistic cinematic fashion video, warm cozy atmosphere, seamless tr
 
 ## E7 · A Seoul Girl’s Day from Morning Makeup to City Strolls
 
-- Seedance 2.5 · creator: @AIwithkhan · heat: 83
+- Seedance 2.5 · creator: @AIwithkhan · heat: 82
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-2-5-shot-1-ecu-85mm-push-in-close-up-of-a-smartphone-alarm-vibrating-beside-a-k-e0b5d7d74a37) · [finished media](https://media.goodcase.ai/cases/1be66a61eacc.mp4) · [poster](https://media.goodcase.ai/cases/6d751a665387.jpg) · [original source](https://x.com/AIwithkhan/status/2113244959990329635)
 - Summary: A Day in the Life of a Korean Baddie 💋 Seedance 2.5 just got us amazed Prompt : STYLE: Hyper-realistic cinematic K-fashion editorial, Seoul street aesthetic, c…
 
@@ -200,7 +200,7 @@ SHOT 14: WS, 35mm orbit / Golden-hour rooftop scene overlooking Seoul. She poses
 
 ## E8 · Model and Fashion Items in Synchronized 360° Rotation
 
-- Seedance 2.5 · creator: @AI__TSUBAKI · heat: 80 · stability: 60
+- Seedance 2.5 · creator: @AI__TSUBAKI · heat: 79 · stability: 60
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-a-clean-premium-4-second-fashion-lookbook-animation-starting-from-the-first-fr-a7de463708af) · [finished media](https://media.goodcase.ai/cases/0d093f32d701.mp4) · [poster](https://media.goodcase.ai/cases/04e386463d97.jpg) · [original source](https://x.com/AI__TSUBAKI/status/2102459655700287648)
 - Summary: Korean outfit style board GPT Image 2.5 and Seedance 2.5 on @renoiseaijp Prompt: A clean, premium 4-second fashion lookbook animation starting from the first fr…
 

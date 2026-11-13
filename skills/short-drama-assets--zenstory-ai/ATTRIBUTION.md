@@ -2,7 +2,7 @@
 
 - **Item:** Short Drama Assets (`short-drama-assets`)
 - **Original source:** https://github.com/zenstory-ai/drama-skills/tree/main/skills/short-drama-assets
-- **Repository:** https://github.com/zenstory-ai/drama-skills @ `057fef2895db`
+- **Repository:** https://github.com/zenstory-ai/drama-skills @ `8cf7404981b7`
 - **License:** MIT (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

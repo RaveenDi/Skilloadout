@@ -2,7 +2,7 @@
 
 - **Item:** Archify (`archify`)
 - **Original source:** https://github.com/tt-a1i/archify/tree/main/archify
-- **Repository:** https://github.com/tt-a1i/archify @ `a4065941f12b`
+- **Repository:** https://github.com/tt-a1i/archify @ `7e45f36c66de`
 - **License:** Apache-2.0 (resolved via skill)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

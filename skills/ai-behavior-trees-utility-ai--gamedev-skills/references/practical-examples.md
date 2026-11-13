@@ -1,9 +1,13 @@
-# Practical examples — guard AI, villager needs, hybrid agent
+# Practical examples: guard AI, villager needs, hybrid agent
 
-Depth for `ai-behavior-trees-utility-ai`. Three drop-in templates that assemble the BT core
-(`references/behavior-tree-core.md`) and the Utility system (`references/utility-ai-system.md`) into
-real agents. Same plain-C# style — bind the movement/attack leaves to your engine's transform,
-navigation, and combat.
+Contents:
+1. Enemy guard: Patrol and Combat behavior tree (`Patrol`, `AttackTarget`, `GuardAgent`)
+2. Villager needs: Utility AI
+3. Hybrid: a BT leaf that delegates a choice to utility (`UtilitySelectorNode`)
+
+Three templates that assemble the BT runtime and the utility scorer from this skill into real
+agents. They assume those types are already in the project. Bind the movement and attack leaves
+to your engine's transform, navigation and combat.
 
 ## 1. Enemy guard — Patrol → Combat behavior tree
 
@@ -126,6 +130,7 @@ UtilityEvaluator BuildVillagerBrain()
 void UpdateVillager(UtilityEvaluator brain, Blackboard bb)
 {
     var choice = brain.SelectBest(bb, inertiaBonus: 0.05f);
+    if (choice == null) return; // no available action; preserve the game's idle behavior
     Dispatch(choice.Name);      // route "Eat"/"Sleep"/... to your gameplay handlers
 }
 ```
@@ -151,7 +156,9 @@ public sealed class UtilitySelectorNode : Leaf
     {
         var choice = _evaluator.SelectBest(bb, _inertia);
         if (choice != _running) { _running?.Behavior?.Reset(); _running = choice; }  // switched: clean up
-        return _running?.Behavior?.Tick(bb, dt) ?? Status.Failure;
+        var s = _running?.Behavior?.Tick(bb, dt) ?? Status.Failure;
+        if (s != Status.Running) Reset();             // the chosen subtree may be entered again
+        return s;
     }
 
     public override void Reset() { _running?.Behavior?.Reset(); _running = null; }
@@ -177,5 +184,5 @@ var hybrid = new BehaviorTree(
 ```
 
 This layering is the recommended default for combat AI: keep the readable, debuggable BT for
-"engage vs disengage vs patrol", and let utility handle the continuous trade-offs. The performance
-and architecture trade-offs of the hybrid are in `references/best-practices-and-pitfalls.md`.
+"engage vs disengage vs patrol", and let utility handle the continuous trade-offs. Keep the
+utility set inside one branch small so scoring stays cheap.

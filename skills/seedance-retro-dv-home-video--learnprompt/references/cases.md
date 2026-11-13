@@ -1,6 +1,6 @@
 # Case evidence · Early-2000s DV home video
 
-41 verified cases are filed under this template in awesome-seedance; the 8 hottest are below, full prompts included. Pick one as the anchor before drafting.
+43 verified cases are filed under this template in awesome-seedance; the 8 hottest are below, full prompts included. Pick one as the anchor before drafting.
 
 Generated from `data/cases.json` + `data/case-taxonomy.json`. Do not hand-edit.
 
@@ -16,7 +16,7 @@ Create a 30-second, 1080p ultra-realistic personal home-video showing an ordinar
 
 ## E2 · An Afternoon in a Hammock and Washing a Motorcycle
 
-- Seedance 2.5 · creator: @doctorwasif · heat: 97
+- Seedance 2.5 · creator: @doctorwasif · heat: 96
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-subject-preserve-exact-identity-face-skin-tone-body-proportions-hair-298f82f12f00) · [finished media](https://media.goodcase.ai/cases/5a19fec06723.mp4) · [poster](https://media.goodcase.ai/cases/d3f9b6377ec3.jpg) · [original source](https://x.com/doctorwasif/status/2099836703729172540)
 - Summary: Korean It-Girl — Seedance 2.5, Higgsfield Prompt: Subject: “<<<image_1>>>” — preserve exact identity, face, skin tone, body proportions, hair, and outfit. South…
 
@@ -193,7 +193,7 @@ She looks toward
 
 ## E5 · A Korean Girl’s Early-2000s Birthday Celebration
 
-- Seedance 2.5 · creator: @saniaspeaks_ · heat: 94
+- Seedance 2.5 · creator: @saniaspeaks_ · heat: 93
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-a-birthday-worth-remembering-2f852147a691) · [finished media](https://media.goodcase.ai/cases/1ef7dd97de52.mp4) · [poster](https://media.goodcase.ai/cases/4f746779db27.jpg) · [original source](https://x.com/saniaspeaks_/status/2105146792681832481)
 - Summary: A birthday worth remembering 🎂 Generated with seedance 2.5 Prompt Create a 30-second ultra-realistic Korean birthday vlog set in South Korea in the early 2000s…
 
@@ -232,7 +232,7 @@ FINAL FEEL: A genuine Korean birthday memory from the early 2000s, with every sc
 
 ## E6 · POV: Korean Baddie Meets Her Boyfriend in the US
 
-- Seedance 2.5 · creator: @AIwithkhan · heat: 92
+- Seedance 2.5 · creator: @AIwithkhan · heat: 91
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-use-the-uploaded-reference-image-as-the-exact-character-reference-214303ebc4cf) · [finished media](https://media.goodcase.ai/media/video/seedance-use-the-uploaded-reference-image-as-the-exact-character-reference-214303ebc4cf.mp4) · [poster](https://media.goodcase.ai/media/poster/seedance-use-the-uploaded-reference-image-as-the-exact-character-reference-214303ebc4cf.jpg) · [original source](https://x.com/AIwithkhan/status/2094997895187673489)
 - Summary: POV - Korean baddie met her boyfriend in US Seedance 2.5 realism 😳 Prompt : Use the uploaded reference image as the exa
 
@@ -256,7 +256,7 @@ Negative prompt: No subtitles, text, logos, watermarks, identity changes, outfit
 
 ## E7 · A Girl’s Retro Selfie Diary on Seoul’s Shopping Streets
 
-- Seedance 2.5 · creator: @Just_sharon7 · heat: 91
+- Seedance 2.5 · creator: @Just_sharon7 · heat: 90
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-2-5-seedance-2-5-on-14a9d2540b85) · [finished media](https://media.goodcase.ai/cases/bd0828053242.mp4) · [poster](https://media.goodcase.ai/cases/40eec7295c01.jpg) · [original source](https://x.com/Just_sharon7/status/2109218767620444331)
 - Summary: Seedance 2.5 on @DomoAI_ Prompt CAMERA: Early-2010s smartphone front-camera selfie vlog, filmed on an old iPhone 4 or Samsung Galaxy S2. The girl holds the phon…
 
@@ -334,7 +334,7 @@ Authentic low-quality smartphone microphone. Distant Korean street conversations
 
 ## E8 · Early-2000s Seoul Couple's Afternoon Drive
 
-- Seedance 2.5 · creator: @AIwithkhan · heat: 91
+- Seedance 2.5 · creator: @AIwithkhan · heat: 90
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-create-a-30-second-1080p-ultra-realistic-early-2000s-consumer-dv-camcorder-hom-a3fa022a7b4e) · [finished media](https://media.goodcase.ai/cases/0c1a24cc546f.mp4) · [poster](https://media.goodcase.ai/cases/64e9f9e3ac3b.jpg) · [original source](https://x.com/AIwithkhan/status/2104776214066188611)
 - Summary: A Little Drive, A Little Love ❤️ Seedance 2.5 Prompt: Create a 30-second, 1080p ultra-realistic early-2000s consumer DV camcorder home video of a young Korean c…
 
