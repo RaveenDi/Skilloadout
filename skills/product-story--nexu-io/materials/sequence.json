@@ -1,0 +1,8 @@
+{
+  "unit": "seconds",
+  "scenes": [
+    { "id": "promise", "start": 0, "end": 3, "input": "headline", "typeRole": "typography.h1" },
+    { "id": "proof", "start": 3, "end": 8, "input": "evidence", "typeRole": "typography.body" },
+    { "id": "close", "start": 8, "end": 12, "input": "action", "typeRole": "typography.body" }
+  ]
+}

@@ -2,7 +2,7 @@
 
 - **Item:** Seo Drift (`seo-drift`)
 - **Original source:** https://github.com/AgriciDaniel/claude-seo/tree/main/skills/seo-drift
-- **Repository:** https://github.com/AgriciDaniel/claude-seo @ `cca7e4a26799`
+- **Repository:** https://github.com/AgriciDaniel/claude-seo @ `468ed5b0d9e3`
 - **License:** MIT (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

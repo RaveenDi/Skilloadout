@@ -1,22 +1,25 @@
-# 拆解学习阶段契约
+# 拆解学习阶段规范
 
-本阶段拥有 `输入/对标/<REF-ID>/`（登记、测量、转写挂接、拼图、字幕扫描、音轨测量、逐镜小段及 `还原/` 下的独立还原项目与核对）和 `项目开发/对标拆解.md`（拆解报告、差距表、学习记录），不改本项目其他技能拥有的文档或项目配置。
+本阶段负责维护 `输入/对标/<REF-ID>/`（对标登记、实测数据、字幕转写挂接、代表帧拼图、硬字幕扫描、音轨响度、重点段落逐镜切片，以及 `还原/` 目录下的独立还原项目与抽检记录）和 `项目开发/对标拆解.md`（拆解报告、同尺差距表与归档记录），不直接改动本项目中归其他技能负责的创作文档或全局配置。
 
 ## 本阶段规则
 
 ### `BRK`
 
-| ID | Class | Knowledge |
+| 编号 | 等级 | 规则内容 |
 |---|---|---|
-| BRK-01 | structural_invariant | Register every reference before measuring with a REF-ID, locator, permitted use (`study`, `owned`, or `licensed` with basis), external-model upload permission, and the round's question; without upload permission, run local measurement only. |
-| BRK-02 | structural_invariant | Keep reference media, transcripts, contact sheets, subtitle crops, shot clips, and reconstructions under `输入/对标/<REF-ID>/`. Except under BRK-11, project stages never read the reconstruction as project material, and reports/handoffs omit reference titles, character names, lines, and distinctive plot sequences. |
-| BRK-03 | reviewed_invariant | Separate direct observation, interpretation, and unknown in every finding; state sample, cut threshold, and transcript source for every number. |
-| BRK-04 | reviewed_invariant | State reference count, audience problem solved, and failure boundary for each mechanism candidate; label single-reference findings as single-source. |
-| BRK-05 | craft_default | Measure opening episodes separately from later episodes and sample adjacent episodes in pairs to capture first-episode structure and episode-to-episode pickup. |
-| BRK-06 | structural_invariant | Compare plans, own footage, and references in one table only under matching measurement rules, labelling whether each number came from a plan or from footage. |
-| BRK-07 | reviewed_invariant | Treat measured values as proposal evidence, not quality thresholds; they enter the rhythm profile only via `$short-drama-develop` and creator acceptance. |
-| BRK-08 | structural_invariant | Do not edit documents owned by other skills; hand each gap to its owner with evidence and the creator's confirmation on whether the difference is intended. |
-| BRK-09 | reviewed_invariant | Run generation checks on the same model, resolution, and aspect ratio (unless testing aspect ratio) with at least two runs per version, judging unlabelled shuffled frames with a named judge. |
-| BRK-10 | taste_option | Offer reference aspect ratio, production form, and on-screen text conventions as playback-surface-tied options rather than defaults; the creator makes the choice. |
-| BRK-11 | structural_invariant | A reconstruction leaves `输入/对标/<REF-ID>/` only when registered as `owned` or `licensed` with a recorded basis, by copying the whole project out or iterating inside it—never by merging files into the outer project's episodes. |
-| BRK-12 | reviewed_invariant | Take cut times from measurement and line times from burned-in subtitles when present, marking unanchored lines, names, and shot facts as inferred; list unmatched model cuts for human judgment and use role labels when a name lacks on-screen or spoken evidence. |
+| BRK-01 | reviewed_invariant | 开测前为每部对标作品登记 `REF-ID`、素材位置、授权用途（`study`、`owned` 或附有依据的 `licensed`）以及是否允许上传外部模型服务；未获准外传时只跑本机离线测量脚本。 |
+| BRK-02 | reviewed_invariant | 对标原片、转写稿、代表帧拼图、字幕裁图、单镜切片与还原项目一律存放在 `输入/对标/<REF-ID>/` 内。除符合 `BRK-11` 的情况外，主项目各创作环节不得读取还原目录充当素材；学习用途（`study`）对标剧的真实剧名、专有角色名、逐字台词与独有桥段严禁进入移交至创作者原创项目的文档（`creative-brief.md`、`story-engine.md`、`剧本.md`、`视觉设定.md` 及各类提示词等）以及公开分享或归档复用的材料；创作者本地私有的 `项目开发/对标拆解.md` 允许记录真实参考片名、集数与平台出处以便查考，但禁止照抄受版权保护的逐字台词。 |
+| BRK-03 | reviewed_invariant | 每条拆解结论都要把实测与画面事实、作用分析和待确认盲区分开写清；凡引用统计数字，须注明样本集范围、切镜阈值与字幕转写来源。 |
+| BRK-04 | reviewed_invariant | 每条可借鉴手法都要写明在几部独立故事里出现过、解决了观众什么观看问题、在什么情况下会失灵；只在单部对标剧里出现的做法标明为单部个例。 |
+| BRK-05 | craft_default | 把开篇前几集与后续常规集分开统计，并成对抽取相邻集，用来看清首集立题加长结构与集间衔接手法。 |
+| BRK-06 | reviewed_invariant | 把本项目纸面计划、自家成片和外部对标放进同一张表横向比对时，测量与计法用同一把尺子，并逐项标清数字来自纸面估算（`plan`）还是成片实测（`measure`）。 |
+| BRK-07 | reviewed_invariant | 对标实测数值只作为拟定方案的参考依据，不得直接当成卡死交付的质量门槛；相关指标经 `$short-drama-develop` 整理提议并由创作者拍板确认后，才写入项目节奏目标。 |
+| BRK-08 | reviewed_invariant | 不直接动手改其他技能负责的文档；需要补强的差距附带实测依据转交对应的负责技能处理，疑似有意取舍的差异单列供创作者定夺。 |
+| BRK-10 | taste_option | 对标剧常用的画幅比例、制作形态与花字名条版式跟投放平台习惯相关，只作为备选方案供参考，最终由创作者拍板决定。 |
+| BRK-11 | reviewed_invariant | 还原项目只有在明确登记为自有（`owned`）或已获授权（`licensed`）并写明依据时，才能整套复制成独立项目或在其内部继续迭代开发，严禁把单集还原文件直接混入外层主项目的剧集目录。 |
+| BRK-12 | reviewed_invariant | 还原时切镜时间以脚本实测为准，有烧录字幕的台词起止时间以字幕扫描为准；无烧录字幕的台词时间、未点破的姓名和看不清的镜头细节标为推断；模型报出但未与实测候选吻合的镜内切点单列出来交人工判断；画面名条、字幕和台词均未点明姓名的角色改用身份称呼，不编造人名。 |
+| BRK-13 | craft_default | 反推《剧本.md》时结合配音、嘴型与硬字幕定词：配音正常发声而硬字幕用避敏字（如“亖”代“死”）的还原为正常汉字；音画同时消音打码的在 `还原核对.md` 记下推断原意，正文换用贴合人物口吻的可播词；硬字幕错字、同音异写与配音漏字相互校对择优，保留角色刻意的喜剧倒装与口癖；原片残留的第三人称小说旁白若只是复述画面动作则改写为动作段；自动字幕把吸气、叹息误标成语气单字的按人物神态改为动作反应；配乐自带的人声采样或音频水印核对嘴型后剔除。 |
+| BRK-14 | craft_default | 发声标记按场次内外划分：同一场次内当面交谈的角色在画面切向听者反应或局部特写时继续说话，写普通现场对白，不标 `[OS]`；隔门窗墙体、场外未露面人物或电话、连麦外放标 `[OS]`；闭口心声、传音、主角独享系统音与回忆混响标 `[VO]`，跨镜头声桥按声线与立场核准说话人。 |
+| BRK-15 | craft_default | 原片画面文字分类处理：无对白念出的关键纸条、通知单、系统面板、弹幕与来电显示写 `[画面文字]`，局部生成错字或屏幕数额与紧邻对白冲突时按上下文改回准确字面并在台账记原貌；角色出场名条如需保留写 `[画面文字] 名条：姓名｜身份`，篇首 `人物：` 行补齐零台词的关键在场人物；地点与时间字卡优先并入场次标题；气氛符号与拟声字改为神态动作或 `[SFX]`；常驻免责水印与片尾挂角字剔除；生成画面的无意穿帮在正文按主空间连戏状态写，原片穿帮秒数记入 `还原核对.md`。 |
+| BRK-16 | craft_default | 场次切分兼顾时空清楚与戏脉连贯：室内外或连麦双空间高频正反切合为 `内外` 场次，完整往事单立回忆场次，数秒短闪回用 `[转场]` 归拢；每集核对代表帧拼图 `END` 尾帧、`tail_candidate_cuts` 与最后 3 秒，防止漏掉集尾短场次；定长硬切把同一段对话切成上下两集时，先拼回连续对话理顺因果与说话人，再按分集点切回并用 `[连续性]` 交接。 |

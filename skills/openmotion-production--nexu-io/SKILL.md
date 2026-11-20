@@ -20,10 +20,10 @@ Agent 根据本轮意图选择入口，专业任务可直接进入对应 Skill�
 ## 2. 工程操作与交付
 
 1. 修改已有内容时读取 [共享修改流程](references/edit.md)，确定变化、保持项及连带影响；仅查询、预览、审查或导出按本轮范围执行。
-2. Existing-project content edits apply the [continuing-edit preview rules](references/native.md#continuing-edits) before writing and after saving, including scoped engineering work. Preserve the current chat by default; queue its latest preview while inactive and inspect it on return. Only an explicit show-now request permits switching back for this turn. 操作工程前读取 [运行规范](references/production.md)；编写原生内容前另读 [Native authoring](references/native.md) 及工具返回的固定版本引擎指南。确认 projectId、最新 revision 与 currentVersionId，复用已完成操作。
-3. 需要选择、获取或替换素材时读取 [共享素材规范](references/materials.md)；按共享上下文补齐其他受影响的质量规范。换现成音乐、调音量也需核对声画锚点与原有 SFX；画面锁定时保持视觉内容。补读结果先返回模型，后续调用再执行依赖操作。
+2. 修改已有工程内容（含工程类局部修改）时，最终视频就绪后按 [继续编辑的预览规则](references/native.md#continuing-edits) 打开预览。操作工程前读取 [运行规范](references/production.md)；编写原生内容前另读 [Native authoring](references/native.md) 及工具返回的固定版本引擎指南。确认 projectId、最新 revision 与 currentVersionId，复用已完成操作。
+3. 需要选择、获取或替换素材时读取 [共享素材规范](references/materials.md)；生成或替换的素材原位接替原素材，保留已确认的动作、停留和剪辑，用户要求时才加动作或重剪；按共享上下文补齐其他受影响的质量规范。换现成音乐、调音量也需核对声画锚点与原有 SFX；画面锁定时保持视觉内容。
 4. 检查受影响区间、接点和保持项。需要新渲染的导出或成片交付读取 [验证](references/verification.md)，针对已审查 revision/versionId 导出，已有适用任务先查询并复用；模板出片按专业入口在编辑器中核验，需要导出时检查实际 MP4。技术通过与创作品质、正常播放及试听分别记录。
-5. 停在用户要求的方案、预览、工程或成片阶段。交付实际结果、检查与必要限制。编辑器中打开的工程就是交付物，只有用户明确要 MP4、视频文件、下载或导出时才附 MP4。
+5. 停在用户要求的方案、预览、工程或成片阶段。交付实际结果、检查与必要限制。成片在对话中的单次展示遵循 [预览方式选择](references/production.md#choose-one-final-video-preview)；额外的文件副本和下载附件按用户要求提供。
 
 ## 专业导航与旧调用兼容
 
@@ -37,7 +37,7 @@ Agent 根据本轮意图选择入口，专业任务可直接进入对应 Skill�
 | 明确要求把参考视频重建为可复用模板文件夹或 ZIP | [openmotion-video-to-template](../openmotion-video-to-template/SKILL.md) |
 | 根据实际视频重建本次作品；只有成片文件/链接、没有对应可编辑工程时，即使只改几处字 | [openmotion-recreate](../openmotion-recreate/SKILL.md)，沿用已有复刻方法与数字测量 |
 | 参考视频只提供风格灵感 | openmotion-director |
-| 接受安装后的首次体验邀请 | openmotion-template-to-video；沿用本次邀请中用户接受的准确模板 ID、原生时长、独立工程及可编辑预览；三候选的“是”先澄清 |
+| 接受安装后的首次体验邀请 | openmotion-template-to-video；沿用本次邀请中用户接受的准确模板 ID、原生时长、独立工程及可编辑预览；是否需要澄清按[模板能力说明](references/templates.md#accepted-template-selection)的 Accepted template selection 判断 |
 
 模糊需求结合用户目标和已有素材判断；只补充影响选路或真实性的关键缺口。链接与文件是输入形式，不自动等于复刻。模板来源与精确 ID 按 [模板能力说明](references/templates.md) 核对；原创新片需要补齐简报时使用 [需求与记录](references/intake.md)。
 

@@ -2,7 +2,7 @@
 
 - **Item:** RuiC Card Skill (`RuiC-card-skill`)
 - **Original source:** https://github.com/anbeime/skill/tree/main/skills/RuiC-card-skill/RuiC-card-skill
-- **Repository:** https://github.com/anbeime/skill @ `2978c3e669b6`
+- **Repository:** https://github.com/anbeime/skill @ `0d6646ee9cfa`
 - **License:** MIT (resolved via skill)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

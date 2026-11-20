@@ -2,7 +2,7 @@
 
 - **Item:** Ima Sdk Client Side (`ima-sdk-client-side`)
 - **Original source:** https://github.com/google/skills/tree/main/skills/ads/ima-sdk-client-side
-- **Repository:** https://github.com/google/skills @ `85f227ea6a8f`
+- **Repository:** https://github.com/google/skills @ `5fb62c2cf7bc`
 - **License:** Apache-2.0 (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

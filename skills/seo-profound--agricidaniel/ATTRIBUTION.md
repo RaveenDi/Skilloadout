@@ -2,7 +2,7 @@
 
 - **Item:** Seo Profound (`seo-profound`)
 - **Original source:** https://github.com/AgriciDaniel/claude-seo/tree/main/extensions/profound/skills/seo-profound
-- **Repository:** https://github.com/AgriciDaniel/claude-seo @ `cca7e4a26799`
+- **Repository:** https://github.com/AgriciDaniel/claude-seo @ `468ed5b0d9e3`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

@@ -444,10 +444,12 @@
           // Face is an unlit "screen" — shows the exact vivid Shiki colors (no PBR/emissive wash).
           // The 3D read comes from the lit, beveled EDGES + perspective, like a glowing monitor.
           var faceMat = new THREE.MeshBasicMaterial({ map: tex });
-          var edgeMat = new THREE.MeshStandardMaterial({
+          // Keep the lit bevel independent of fragment-derivative extensions,
+          // including when a backgrounded preview rebuilds its WebGL resources.
+          var edgeMat = new THREE.MeshPhongMaterial({
             color: 0x141d2b,
-            roughness: 0.3,
-            metalness: 0.4,
+            specular: 0x536479,
+            shininess: 30,
           });
           // ExtrudeGeometry groups: 0 = front+back faces, 1 = sides. Front shows the code.
           var slab = new THREE.Mesh(geo, [faceMat, edgeMat]);

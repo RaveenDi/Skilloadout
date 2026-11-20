@@ -1,0 +1,9 @@
+# Attribution
+
+- **Item:** Cloud Operator Share Context (`cloud-operator-share-context`)
+- **Original source:** https://github.com/google/skills/tree/main/skills/cloud/cloud-operator-share-context
+- **Repository:** https://github.com/google/skills @ `5fb62c2cf7bc`
+- **License:** Apache-2.0 (resolved via repo-file)
+
+Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.
+

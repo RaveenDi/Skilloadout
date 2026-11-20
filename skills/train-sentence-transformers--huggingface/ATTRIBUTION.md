@@ -2,7 +2,7 @@
 
 - **Item:** Train Sentence Transformers (`train-sentence-transformers`)
 - **Original source:** https://github.com/huggingface/skills/tree/main/skills/train-sentence-transformers
-- **Repository:** https://github.com/huggingface/skills @ `25910b3d0ba3`
+- **Repository:** https://github.com/huggingface/skills @ `5291c2b9365e`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

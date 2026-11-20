@@ -38,7 +38,7 @@ STEP 3: Install the PostHog SDK. (Skip if PostHog is already set up.)
 STEP 4: Initialize PostHog. (Skip if PostHog is already set up.)
   - Follow the framework reference for where and how to initialize. This varies significantly by framework (e.g., instrumentation-client.ts for Next.js 15.3+, AppConfig.ready() for Django, create_app() for Flask).
   - For posthog-js, set `defaults` to the preset the framework docs reference shows. The example projects can show an older preset.
-  - For posthog-js, if the framework reference documents a reverse proxy for this framework, set it up as part of this change. Otherwise, suggest one in your final message: a reverse proxy keeps ad blockers from dropping events (https://posthog.com/docs/advanced/proxy.md).
+  - For posthog-js, if the framework reference documents a reverse proxy for this framework, set it up as part of this change. Otherwise, suggest one in your final message: a reverse proxy keeps ad blockers from dropping events, and the `instrument-reverse-proxy` skill sets one up (https://posthog.com/docs/advanced/proxy.md).
 
 STEP 5: Plan event tracking.
   - From the project's file list, select between 10 and 15 files that might have interesting business value for event tracking, especially conversion and churn events.
@@ -63,8 +63,8 @@ STEP 8: Add error tracking.
 STEP 9: Set up environment variables.
   - Check if the project already has PostHog environment variables configured (e.g. in `.env`, `.env.local`, or framework-specific env files). If valid values already exist, skip this step.
   - If the PostHog project token is missing, use the project token that the tool or CLI which started this setup already gave you (for example in its output or instructions).
-  - If it gave you none, use the PostHog MCP server's `projects-get` tool to retrieve the project's `api_token`. If multiple projects are returned, ask the user which project to use. If the MCP server is not connected or not authenticated, ask the user for their PostHog project token instead.
-  - For the PostHog host URL: use the host that the tool or CLI which started this setup already gave you. If it gave you none, check the `projects-get` MCP response for a `region` field — `US` maps to `https://us.i.posthog.com`, `EU` maps to `https://eu.i.posthog.com`. If you still have no host from the calling tool, the MCP response, or existing project configuration, ask the user: "Are you on PostHog US Cloud or EU Cloud?" Do not assume US Cloud.
+  - If it gave you none, call the PostHog MCP server's `projects-get` tool to list the projects. If more than one comes back, ask the user which project to use. Then call `project-get` with that project's `id` and read its `api_token`. Before you write the token, tell the user the project's `name` and confirm it is the one this app should send to. If the MCP server is not connected or not authenticated, ask the user for their PostHog project token instead.
+  - For the PostHog host URL: use the host that the tool or CLI which started this setup already gave you. If it gave you none, use the `api_host` field of the `project-get` response. If you still have no host from the calling tool, the MCP response, or existing project configuration, ask the user: "Are you on PostHog US Cloud or EU Cloud?" Do not assume US Cloud.
   - Write these values to the appropriate env file using the framework's naming convention.
   - Reference these environment variables in code instead of hardcoding them.
   - List the key names in `.env.example`, or the env template the project already uses, with placeholder values, so the next developer knows what to set. Create `.env.example` if the project has none. Never put real values in it.
@@ -138,7 +138,7 @@ STEP 10: Verify and clean up.
 - `references/svelte.md` - Svelte
 - `references/astro.md` - Astro
 - `references/angular.md` - Angular
-- `references/node.md` - Node.js
+- `references/node.md` - PostHog Node.js SDK
 - `references/nestjs.md` - Nestjs
 - `references/fastify.md` - Fastify
 - `references/hono.md` - Hono
@@ -147,14 +147,14 @@ STEP 10: Verify and clean up.
 - `references/convex.md` - Convex
 - `references/django.md` - Django
 - `references/flask.md` - Flask
-- `references/python.md` - Python
+- `references/python.md` - PostHog python SDK
 - `references/posthog-python.md` - PostHog python SDK
 - `references/dotnet.md` - .net
 - `references/elixir.md` - Elixir
 - `references/phoenix.md` - Phoenix
-- `references/go.md` - Go
+- `references/go.md` - PostHog go SDK
 - `references/java.md` - Java
-- `references/rust.md` - Rust
+- `references/rust.md` - PostHog rust SDK
 - `references/laravel.md` - Laravel
 - `references/php.md` - Php
 - `references/wordpress.md` - How to set up wordpress analytics with PostHog

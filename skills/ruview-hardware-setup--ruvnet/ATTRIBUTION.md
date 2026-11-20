@@ -2,7 +2,7 @@
 
 - **Item:** Ruview Hardware Setup (`ruview-hardware-setup`)
 - **Original source:** https://github.com/ruvnet/RuView/tree/main/plugins/ruview/skills/ruview-hardware-setup
-- **Repository:** https://github.com/ruvnet/RuView @ `094e1400719d`
+- **Repository:** https://github.com/ruvnet/RuView @ `13b47883a73d`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

@@ -2,7 +2,7 @@
 
 - **Item:** Video Template Frame Product Promo 30s (`video-template-frame-product-promo-30s`)
 - **Original source:** https://github.com/nexu-io/open-design/tree/main/plugins/_official/video-templates/frame-product-promo-30s
-- **Repository:** https://github.com/nexu-io/open-design @ `e427ad965595`
+- **Repository:** https://github.com/nexu-io/open-design @ `07258801b9e4`
 - **License:** MIT (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

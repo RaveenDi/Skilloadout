@@ -116,6 +116,29 @@ Claude Code now uses automatic retrieval and background memorization hooks, but 
 - Read plist labels, program arguments, and launchd domains to establish whether a registration belongs to the Claude Code memU bridge.
 - Verify unloading and configuration removal in the correct domain on a real macOS environment. Report insufficient permissions accurately.
 
+### Current CLI Gaps to Verify
+
+`memu-claude-code schedule uninstall` currently delegates to the older shared
+Windows helper. A simulated removal error still returns success and deletes the
+local wrapper, prompt, and registration record. Inspection also treats failed
+queries as absent tasks. Replace these outcomes with explicit failures and retain
+artifacts needed for retry; verify action ownership and absence after deletion.
+The Hermes Windows cleanup in PR #802 provides a separate verified path; bringing
+Claude Code onto that path and verifying its historical registrations belongs to
+this task. Linux/macOS inspection and removal remain platform-specific subtasks.
+
+Current acceptance status covers only CLI inspection, removal, and readback of
+legacy schedule registrations:
+
+| Host | Windows | Linux | macOS |
+| --- | --- | --- | --- |
+| Claude Code | Defects reproduced as above; fixes and successful verification still pending | Not verified | Not verified |
+| Hermes | Windows Task Scheduler cleanup verified, including historical registrations, ownership checks, deletion readback, and failure propagation | Not verified | Not verified |
+
+Automatic migration cleanup of Hermes native cron jobs is also unverified and is
+outside the verified Windows Task Scheduler scope. Hermes is recorded here for
+comparison; it does not expand this task's Claude Code implementation scope.
+
 ### Acceptance Criteria for Each Platform
 
 - Provide runnable inspection and targeted removal commands, preferably using the existing `memu-claude-code schedule` integration. Discuss the exact command interface when claiming the task.
@@ -125,6 +148,33 @@ Claude Code now uses automatic retrieval and background memorization hooks, but 
 - Preserve schedules belonging to other software and other hosts, existing hooks, shared configuration, and memory data.
 - Cover historical names, coexisting registrations, preservation of unrelated tasks, and insufficient permissions in tests. Provide real-platform verification records with the OS version, registration scope, and permissions used.
 - Update the relevant CLI help and installation/uninstallation instructions.
+
+### Related Cleanup Follow-up for Other Hosts
+
+Local Windows validation for [PR #807](https://github.com/NevaMind-AI/memU/pull/807)
+also confirmed `memu-bridging-codex`, `memu-bridging-cursor` and
+`memu-bridging-pi` under `\memU\`. Read-only inspection of task actions and
+wrappers/prompts confirmed hourly host-specific prepare/agent/commit memorization
+pipelines, not retrieval skills. None was disabled or unregistered. This evidence
+is not successful cleanup acceptance, and task presence alone does not establish
+a previous uninstall failure.
+
+Track inspection and targeted removal of these confirmed legacy registrations
+as related task-003 follow-up, with scope, claims and acceptance confirmed
+separately by **host + platform**. Existing Claude Code platform subtasks remain
+unchanged. New evidence currently covers only Windows registrations for these
+three hosts; establish actual historical installations before adding locations
+on other platforms.
+
+- Reuse shared scheduler capabilities, but verify each host's own historical actions, wrappers, execution accounts and registration locations. Do not inherit another host's acceptance result.
+- Distinguish absent, present, inspection failed and removal failed in the CLI; read back after removal and preserve retry artifacts on failure. Provide read-only inspection and targeted removal, and explicitly report unhandled registrations during uninstall.
+- For running tasks, disable future triggers first and wait for the current run and descendants to finish naturally. Unregistration does not mean a process has stopped; do not terminate a user's running agent.
+- Preserve other hosts'/software's tasks, existing hooks, shared configuration and memory. Cover aliases, coexisting registrations, permission failures and repeated removal, with real-platform validation records.
+
+#807 implements instruction/skill ownership and cleanup and updates scheduler
+inspection guidance. It **does not complete automatic discovery, unregistration
+and readback acceptance of these real system tasks**. This section tracks future
+work, not implemented functionality or a task claim.
 
 **Historical record**: [#793](https://github.com/NevaMind-AI/memU/issues/793).
 

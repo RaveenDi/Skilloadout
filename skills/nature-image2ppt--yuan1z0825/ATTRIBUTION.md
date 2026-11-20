@@ -2,7 +2,7 @@
 
 - **Item:** Nature Image2ppt (`nature-image2ppt`)
 - **Original source:** https://github.com/Yuan1z0825/nature-skills/tree/main/skills/nature-image2ppt
-- **Repository:** https://github.com/Yuan1z0825/nature-skills @ `7bff1d0539c0`
+- **Repository:** https://github.com/Yuan1z0825/nature-skills @ `9bd1d0823f56`
 - **License:** MIT (resolved via skill)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

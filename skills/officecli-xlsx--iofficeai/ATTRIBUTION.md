@@ -2,7 +2,7 @@
 
 - **Item:** Officecli Xlsx (`officecli-xlsx`)
 - **Original source:** https://github.com/iOfficeAI/OfficeCLI/tree/main/skills/officecli-xlsx
-- **Repository:** https://github.com/iOfficeAI/OfficeCLI @ `91c06b6f5c80`
+- **Repository:** https://github.com/iOfficeAI/OfficeCLI @ `fecece3ee605`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

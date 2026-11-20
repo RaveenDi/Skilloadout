@@ -2,7 +2,7 @@
 
 - **Item:** Publish (`publish`)
 - **Original source:** https://github.com/Q00/ouroboros/tree/main/skills/publish
-- **Repository:** https://github.com/Q00/ouroboros @ `515c0f70fc56`
+- **Repository:** https://github.com/Q00/ouroboros @ `7ade13ed39ba`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

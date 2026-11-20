@@ -2,7 +2,7 @@
 
 - **Item:** Update Nanoclaw (`update-nanoclaw`)
 - **Original source:** https://github.com/nanocoai/nanoclaw/tree/main/.claude/skills/update-nanoclaw
-- **Repository:** https://github.com/nanocoai/nanoclaw @ `0ede4cf61c13`
+- **Repository:** https://github.com/nanocoai/nanoclaw @ `1a02784cedd3`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

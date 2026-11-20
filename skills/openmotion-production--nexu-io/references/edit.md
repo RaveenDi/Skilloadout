@@ -14,7 +14,7 @@
 
 ## Present the latest preview without switching chats
 
-Before the first content write and after the saved batch, apply the [continuing-edit preview rules](native.md#continuing-edits). Reuse the same project/native tab; show it when the calling chat is active, otherwise queue it until the user returns. Confirm the latest version and live content before recording display evidence. Only an explicit show-now request permits switching back for this turn. Explicit background requests take precedence.
+Before the first content write and after the saved batch, apply the [continuing-edit preview rules](native.md#continuing-edits). Confirm the latest version and live content before recording display evidence. Only an explicit show-now request permits switching back for this turn. Explicit background requests take precedence.
 
 ## 基于当前工程修改
 
@@ -39,10 +39,14 @@ Before the first content write and after the saved batch, apply the [continuing-
 
 对完全锁定的源文件，可用字节或哈希核对；引擎缓存、历史记录及自动补写 ID 与内容变化分开说明，不能把全部差异一概排除。调整过的文件也要核对未授权变化；只检查“改动文件名单”不足以证明局部性。技术 lint 不替代画面、动态或声音检查；检查能力不足时标明具体缺口。
 
-沿用 [审片标准](../../openmotion-director/references/motion-review.md)，按影响应用 [制作决策](../../openmotion-director/references/production-decisions.md) 与 [声音叙事](../../openmotion-director/references/sound-narrative.md)。已读正文直接使用，不为每一轮重读，也不为修改任务加载无关创作规范。
+沿用 [审片标准](review.md)，按影响应用 [制作决策](decisions.md) 与 [声音执行](sound.md)。已读正文直接使用，不为每一轮重读，也不为修改任务加载无关创作规范。
 
 ## 让下一轮接着当前结果
 
 更新同一份简短记录：实际改了什么、仍有效的保持项、当前工程与 revision、已完成检查及未验证部分。下一轮只恢复当前需要的信息，不照抄过期源文件或失效的旧决定。
 
 用户要求交付时，按 [验证](verification.md) 对当前确认的版本导出。若已有导出，先核对其 job/revision 是否对应当前结果；修改后的请求不能误交旧成片，仅索取既有成片链接也不能触发新导出。核验实际文件，抽查修改位置及必要的后续再现，确保最新修改进入交付。
+
+## Inline playback for an edit round
+
+For an actual content edit in an MCP Apps host, follow [the inline work-round contract](production.md#final-video-delivery) with mode=modify before writing. Explicit editor-only, review-only and existing-link requests retain their scope. Preserve previous work frames; the new round must bind its own saved version and final export.

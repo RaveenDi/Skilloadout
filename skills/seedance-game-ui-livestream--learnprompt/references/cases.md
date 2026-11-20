@@ -1,6 +1,6 @@
 # Case evidence · Gameplay capture with HUD and stream overlay
 
-16 verified cases are filed under this template in awesome-seedance; the 8 hottest are below, full prompts included. Pick one as the anchor before drafting.
+16 source-checked cases are filed under this template in awesome-seedance; the 8 hottest are below, full prompts included. Pick one as the anchor before drafting.
 
 Generated from `data/cases.json` + `data/case-taxonomy.json`. Do not hand-edit.
 
@@ -281,7 +281,7 @@ ABSOLUTE LOCKS: Exactly one hard cut at 27s. First 27 seconds completely continu
 
 ## E5 · Three Children Search for a Mysterious Station Beneath the Snow
 
-- Seedance 2.5 · creator: @Just_sharon7 · heat: 78 · stability: 82
+- Seedance 2.5 · creator: @Just_sharon7 · heat: 77 · stability: 82
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-a-mysterious-train-station-is-buried-beneath-the-snow-and-three-friends-are-de-118e70d4e33e) · [finished media](https://media.goodcase.ai/cases/9007759eac57.mp4) · [poster](https://media.goodcase.ai/cases/79e519115cd2.jpg) · [original source](https://x.com/Just_sharon7/status/2099820658880548879)
 - Summary: A mysterious train station is buried beneath the snow, and three friends are determined to find it before sunrise. Seedance 2.5 on @SJinn_Agent Prompt A 30-seco…
 
@@ -315,7 +315,7 @@ Sequence:
 
 ## E6 · Rio Street Chase Over a Misplaced Package
 
-- Seedance 2.5 · creator: @john_my07 · heat: 55
+- Seedance 2.5 · creator: @john_my07 · heat: 54
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-create-a-30-second-ultra-realistic-aaa-third-person-open-world-gameplay-sequenc-70896856a838) · [finished media](https://media.goodcase.ai/cases/3d47a3342470.mp4) · [poster](https://media.goodcase.ai/cases/a766a24fcbfe.jpg) · [original source](https://x.com/john_my07/status/2099832403305079015)
 - Summary: GTA in Brazil 🇧🇷 All this chaos just to deliver the package to the right house! Created using Seedance 2.5 on Pollo AI Prompt: Create a 30-second ultra-realis…
 
@@ -435,7 +435,7 @@ She finally reaches a small Brazilian house matching the address printed on the
 
 ## E7 · Female Surgeon's Hospital Rescue Mission
 
-- Seedance 2.5 · creator: @saniaspeaks_ · heat: 51 · stability: 73
+- Seedance 2.5 · creator: @saniaspeaks_ · heat: 50 · stability: 73
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-okay-this-feels-straight-out-of-gta-4dcfe15565a6) · [finished media](https://media.goodcase.ai/cases/c8ed67b6ad8e.mp4) · [poster](https://media.goodcase.ai/cases/9377bc7b94f2.jpg) · [original source](https://x.com/saniaspeaks_/status/2100429151719075851)
 - Summary: Okay this feels straight out of GTA Seedance 2.5 on @itsPolloAI Prompt Create a 30-second ultra-realistic AAA third-person medical action game mission set insid…
 

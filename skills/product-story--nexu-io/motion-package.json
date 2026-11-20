@@ -1,0 +1,97 @@
+{
+  "specVersion": "0.2",
+  "name": "product-story",
+  "version": "0.1.0",
+  "description": "An original promise, evidence and action recipe with product and education input examples.",
+  "license": "Apache-2.0",
+  "licenseFile": "LICENSE",
+  "motion": "MOTION.md",
+  "design": {
+    "path": "DESIGN.md",
+    "format": "design-md",
+    "specVersion": "alpha"
+  },
+  "skill": "SKILL.md",
+  "inputs": "inputs.schema.json",
+  "tags": [
+    "product-demo",
+    "education",
+    "recipe"
+  ],
+  "dependencies": [
+    {
+      "name": "node",
+      "kind": "tool",
+      "version": "26.11.1",
+      "source": "https://nodejs.org/download/release/v26.11.1/"
+    }
+  ],
+  "files": [
+    {
+      "path": "DESIGN.md",
+      "role": "design",
+      "sha256": "5aea39e7d5750b86236ad4c4c8571f97176a5d5e938b06c9860911455ace9adf"
+    },
+    {
+      "path": "LICENSE",
+      "role": "license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "MOTION.md",
+      "role": "motion",
+      "sha256": "61a5520a54cc3f2f2d8001daff5fc288260657d4a2edc5357a6fbab92c48d08e"
+    },
+    {
+      "path": "README.md",
+      "role": "documentation",
+      "sha256": "4fa108f2cf65cdbc90446c23ab664c4151692b66f592c1e6de5af657b994f3b3"
+    },
+    {
+      "path": "SKILL.md",
+      "role": "skill",
+      "sha256": "4c3ad9b21da0cf2b331a1db753713b6f380cae25db40a5e62d122cec04bc6b13"
+    },
+    {
+      "path": "elements/emphasis.svg",
+      "role": "asset",
+      "sha256": "368cca4f0216ef36c83da7d780095ac91ae8fa7ba35bc06faba5a617bda8d23d"
+    },
+    {
+      "path": "inputs.schema.json",
+      "role": "inputs",
+      "sha256": "500eea3ddd11b00a91d9d8d5ba580b26424a68a95e90cfc878833757afc8c680"
+    },
+    {
+      "path": "materials/requirements.md",
+      "role": "material",
+      "sha256": "77a8bb3b500435fb6e5e1b5a0c678fad23409f1985e00264b6d39b996a8b53c3"
+    },
+    {
+      "path": "materials/sequence.json",
+      "role": "material",
+      "sha256": "cc09e202402b3ed406c06809fc6f9e3b37efd913a5619c01ebc9142ae538f2a2"
+    },
+    {
+      "path": "presets/lesson.json",
+      "role": "preset",
+      "sha256": "1170cf330b34ff84550d3fd583a9980e18d32efed2a1def9b5be2176288bec10"
+    },
+    {
+      "path": "presets/product.json",
+      "role": "preset",
+      "sha256": "140c5db5fc9ff7a384dde0db33dc0e6afc47691fb1192ab62f4e65b7e1f005c7"
+    },
+    {
+      "path": "scripts/plan.mjs",
+      "role": "script",
+      "sha256": "b8f519c96988b2a624e561c3df38aee61fedcd7f9c709d51df2348d67e520a62"
+    }
+  ],
+  "extensions": {
+    "org.openmotion": {
+      "status": "recipe",
+      "rendered": false
+    }
+  }
+}

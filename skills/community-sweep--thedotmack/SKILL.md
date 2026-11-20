@@ -76,7 +76,7 @@ On a first run, that is all of them.
 **Test baseline.** Take it once per run, before landing anything. Use a clean `origin/main` worktree and the same Bun as CI (`bun-version: latest`), because an older local Bun can fail subprocess tests that CI passes. If local Bun is behind, run every suite in the run (baseline, per-PR and gate) as `npx -y bun@<latest> test …`. `npm view bun version` gives the latest version.
 
 ```bash
-npm install --no-audit --no-fund && npm run build
+bun install && npm run build
 env -u CLAUDE_MEM_LLM_TIMEOUT_MS bun test tests > "$RUN/baseline-suite.log" 2>&1; echo "suite exit $?"
 grep -E '^\(fail\)' "$RUN/baseline-suite.log" | sed -E 's/ \[[0-9.]+m?s\]$//' | sort -u > "$RUN/baseline-failures.txt"
 tail -n 40 "$RUN/baseline-suite.log" | grep -E '^ *[0-9]+ pass$|^ *[0-9]+ fail$|^Ran [0-9]+ tests across'
@@ -153,7 +153,9 @@ The local observer is live-only. The owner set this on 2026-11-03, and `AGENTS.m
 
 ## 3. Land as the contributor
 
-Work in your own worktree, never the user's current one: an Agent with `isolation: "worktree"`, or `git worktree add --detach "$MAIN_CHECKOUT/.claude/worktrees/community-<name>" origin/main`. Then run `npm install --no-audit --no-fund`.
+Work in your own worktree, never the user's current one: an Agent with `isolation: "worktree"`, or `git worktree add --detach "$MAIN_CHECKOUT/.claude/worktrees/community-<name>" origin/main`. Then run `bun install`.
+
+**Install with `bun install`, one per worktree.** On macOS, Bun copies packages from its global cache as copy-on-write clones, so a worktree's `node_modules` takes about 60 MB of real disk instead of about 1.3 GB with `npm install` (measured 2026-11-18 with `df`; `du` still reports the full 1.3 GB, so judge disk with `df`). It reads the same `package.json`, and `trustedDependencies` there already decides which postinstalls run. The full suite matches the `npm install` baseline. Never symlink one shared `node_modules` into several worktrees: it goes stale as soon as main adds a dependency, which on 2026-11-17 broke every test importing `typescript-compiler-api`. After `git merge origin/main`, or on a PR that changes `package.json`, run `bun install` again.
 
 ```bash
 gh pr view <N> --repo thedotmack/claude-mem --json state,isDraft,mergeable,baseRefName,headRefName,maintainerCanModify   # merged or closed meanwhile? ledger it `skipped`
@@ -165,7 +167,7 @@ git merge --no-edit origin/main                                   # a merge comm
 **Generated bundles never land from a PR**; they're rebuilt at release. The generated set is what `scripts/build-hooks.js` and `scripts/build-viewer.js` write. If the list below looks stale, re-read those two scripts:
 - `plugin/scripts/{worker-service,hook-service,server-service,mcp-server,context-generator,context-read-worker,work-view-read-worker,transcript-watcher,claude-mem-launcher,ensure-launcher}.cjs` and their `.map` files;
 - `plugin/sqlite/**`;
-- `plugin/ui/viewer-bundle.js`, `plugin/ui/viewer.html`, `plugin/ui/tv.html`, `plugin/ui/work-view/**` (the Vite build of `src/ui/my-work`), and the fonts and icons copied into `plugin/ui/`;
+- `plugin/ui/viewer-bundle.js`, `plugin/ui/viewer.html`, `plugin/ui/work-view/**` (the Vite build of `src/ui/my-work`), and the fonts and icons copied into `plugin/ui/`;
 - `plugin/package.json`;
 - `plugin/skills/request-progress/scripts/request-groups.mjs`.
 
@@ -303,7 +305,7 @@ Make them warm, specific and short: name the person, and say what changed for us
 - **GitHub's API budget is shared:** 5,000 requests an hour each for REST and GraphQL. Poll CI no faster than every 60 seconds, batch fields into one `--json` call, and on a rate-limit error wait for the reset (`gh api rate_limit`) instead of retrying.
 - **Keep helper scripts in each executor's own subdirectory.** During the sweep, shared helpers at a common root were overwritten by another executor.
 - **Stop cleanly on a spend or usage limit:** release the lock, stop making changes, and report what is mid-flight.
-- **Watch the disk:** each worktree is about 1 GB of `node_modules`. Remove run worktrees when the run ends.
+- **Watch the disk:** with `bun install`, each worktree costs about 60 MB of real disk; check free space with `df -h /`, not `du`. Remove run worktrees when the run ends.
 
 ## Never
 

@@ -2,7 +2,7 @@
 
 - **Item:** Aks Known Issues (`aks-known-issues`)
 - **Original source:** https://github.com/microsoft/skills/tree/main/.github/plugins/aks-skills/skills/aks-known-issues
-- **Repository:** https://github.com/microsoft/skills @ `2d08976b5f1c`
+- **Repository:** https://github.com/microsoft/skills @ `0d60658e34d0`
 - **License:** MIT (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

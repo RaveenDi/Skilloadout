@@ -1,6 +1,6 @@
 ---
 name: expo-overview
-description: "Entry point and router for every Expo or EAS task. Load this skill first — before writing code and before choosing another expo-* / eas-* skill — when the request, PRD, or spec mentions Expo, EAS, Expo Go, or an expo-* package, or the project has an `expo` dependency in `package.json`. Within that gate it also covers app specs and designs to implement (tabs, stacks, maps, lists, navigation, building from a screenshot), and phrasings like 'implement a mobile app', 'make my app look native', 'add navigation', 'fetch some data', 'upgrade my SDK', 'add Expo to my existing native app', 'ship to the App Store', or 'I'm new to Expo, where do I start'. A fully specified request (SDK pinned, libraries named, layout given) still routes through here — the shared setup rules still apply. Do NOT load it when neither signal is present: a bare React Native project with no `expo` dependency is not Expo work. Detects the real goal, routes to the right expo-* / eas-* skill, and owns the shared setup rules."
+description: Entry point for Expo and EAS tasks. Load first when the request mentions Expo, EAS, Expo Go, or an expo-* package, or the project has an expo dependency. Identify the goal, apply shared SDK and setup rules, and select the relevant skill. Includes fully specified tasks; excludes React Native projects without Expo or EAS signals.
 license: MIT
 ---
 
@@ -84,7 +84,7 @@ Apply the rules that match the project and the requested task.
 
   EAS commands (`eas build`, `eas update`, `eas submit`) stay on `eas-cli`. The agent CLI is
   experimental: if a command fails because of the CLI itself, run the underlying command
-  directly and report the failure with `--category agent-cli` (see Submitting Feedback).
+  directly. You can offer to report the failure with `--category agent-cli` (see Submitting Feedback).
 - **Native app using EAS for delivery?** Route to `eas-app-stores`; its
   `references/native-ios.md` covers SwiftUI/UIKit on iOS. Keep the existing native
   project. Apply EAS auth/linking below; Expo scaffolding, SDK, and package-install
@@ -115,8 +115,8 @@ Apply the rules that match the project and the requested task.
   yourself (`simctl openurl`, `adb`, a controller), follow
   `./references/launch-without-dev-menu.md`.
 - **EAS auth & linking** (only needed for build/submit/update/observe/workflows): check
-  login with `eas whoami`, log in with `eas login`. A project is linked when
-  `extra.eas.projectId` exists in the app config; create it with `eas init` if missing.
+  login with `npx --yes eas-cli@latest whoami`, log in with `npx --yes eas-cli@latest login`. A project is linked when
+  `extra.eas.projectId` exists in the app config; create it with `npx --yes eas-cli@latest init` if missing.
 
 ## When to skip the router hop
 
@@ -127,10 +127,9 @@ Apply the rules that match the project and the requested task.
   to the matching leaf skill.
 
 ## Submitting Feedback
-If you encounter errors, misleading or outdated information in this skill, report it so Expo can improve:
+You can voluntarily report errors, misleading or outdated information in this skill, so Expo can improve it:
 ```bash
 npx --yes @expo/agent-cli@latest feedback --category skills --subject "expo-overview" --message "<actionable feedback>"
 ```
-Only submit when you have something specific and actionable to report. Include as much relevant context as possible. Messages need 40-5,000 characters.
-If an `@expo/agent-cli` command fails, gives a wrong answer, or is hard to use, report it with `--category agent-cli` and the command name as `--subject`, such as `status`.
-If an agent repeatedly fails at an Expo task or the user has to step in, submit a brief report of the task, expected result, and what went wrong using `--category evals` and the relevant Expo package or command as `--subject`.
+Use `--category agent-cli` for a problem with the agent CLI, and `--category evals` when an agent repeatedly fails at an Expo task. Run `feedback --help` for subjects and the data that the command sends.
+Each report goes to Expo with project and environment details. Show the user the message, and send it only if the user agrees. If you cannot ask the user, do not send it. Do not include secrets or personal data.

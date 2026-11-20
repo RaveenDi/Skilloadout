@@ -2,7 +2,7 @@
 
 - **Item:** Caveman Learn (`caveman-learn`)
 - **Original source:** https://github.com/JuliusBrussee/caveman/tree/main/skills/caveman-learn
-- **Repository:** https://github.com/JuliusBrussee/caveman @ `ad473752bdc8`
+- **Repository:** https://github.com/JuliusBrussee/caveman @ `a192894723a8`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

@@ -2,7 +2,7 @@
 
 - **Item:** Neurokit2 (`neurokit2`)
 - **Original source:** https://github.com/K-Dense-AI/scientific-agent-skills/tree/main/skills/neurokit2
-- **Repository:** https://github.com/K-Dense-AI/scientific-agent-skills @ `2d2065fb4520`
+- **Repository:** https://github.com/K-Dense-AI/scientific-agent-skills @ `ec59a29a03d5`
 - **License:** MIT (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

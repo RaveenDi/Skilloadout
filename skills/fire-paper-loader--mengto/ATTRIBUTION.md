@@ -2,7 +2,7 @@
 
 - **Item:** Fire Paper Loader (`fire-paper-loader`)
 - **Original source:** https://github.com/MengTo/Skills/tree/main/agent-skills/web-design/fire-paper-loader
-- **Repository:** https://github.com/MengTo/Skills @ `07274a3b3dba`
+- **Repository:** https://github.com/MengTo/Skills @ `4bce53fd1e98`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

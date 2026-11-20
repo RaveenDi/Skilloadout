@@ -15,6 +15,36 @@ Use only the OpenMotion MCP Tools actually returned by tools/list. Read [Native 
 
 When selecting, obtaining or replacing media, apply the [shared material policy](materials.md) within the selected workflow and existing authorization.
 
+## Final video delivery
+
+### Delivery scope
+
+The current request selects the delivery stage. Editor-only, draft, review and existing-link requests do not create an export. Requested HTML/project files need packaging and source/editor checks; an MP4 request also needs the completed export's technical and actual-file playback checks under [verification scope](verification.md#verification-scope).
+
+File-only delivery of already accepted content follows [source pinning](native.md#pin-source-for-independent-deliverables), without creating an authoring work round or loading creative design. Begin a work round with `generation:false` only if the discovered final-video presentation Tool requires a workId. The selected creative entry composes these operations; it does not override shared version, verification or display requirements. Actual creation/content editing follows the work-round flow below.
+
+During generation and editing, do not create an inline progress or video component and do not open the right-hand editor for intermediate saves. Begin a business work round silently with `openmotion_open_preview({action:"begin",projectId,requestId,mode:"create"|"modify"})`; retain `inlineWork.id` as `workId` through saves and the final export. This call presents no UI.
+
+Once the requested video artifact is complete, call `openmotion_open_preview({action:"complete_generation",projectId,workId,requestId,expectedRevision,expectedVersionId})` immediately, including background work. This independently validates the current native video artifact and records its first completion. It performs no save, preview opening or export. Use the current identities from `openmotion_get_project` after direct filesystem authoring. Intermediate source changes and metadata-only edits do not establish completion.
+
+Once the final authored video is ready, complete the [editable preview handoff](native.md#editable-preview-handoff) on the right.
+
+For an actual video creation/content-edit turn, render the final version once. Wait for its MP4 export to complete and pass technical verification before presenting it. Explicit editor-only work, unchanged template opening, reviews and existing-link requests do not start an unwanted render.
+
+### Choose one final-video preview
+
+Prefer the host's own video preview whenever it can play the verified export. In Codex, the default is one video embed in the final reply, for example `![Final video](/absolute/path/to/version-specific.mp4)`; do not call `openmotion_show_video` on this route. Use the completed job's file, or a version-specific delivery copy with the same SHA-256. Never overwrite a path already embedded for an earlier version. This preview does not require an explicit download request. Ordinary HTML, ZIP and MP4 download links may accompany the preview when requested; a plain download link alone does not establish video playback.
+
+For another host, check its actual video/file capabilities first. Use its native preview when usable. Only when native preview is unavailable and the connection exposes the MCP Apps presentation Tool, choose `openmotion_show_video({projectId,workId})`. Tool discovery alone is not a reason to prefer the plugin player. If neither route is usable, deliver an accessible verified file/link and state that inline playback is unavailable. Do not upload local media to another service merely to obtain a preview.
+
+The native preview and plugin player are mutually exclusive for the same completed export in one delivery. Never emit both, call the plugin after embedding the file, or add a second embed after invoking the plugin as reassurance. A queued Tool acknowledgment, hidden panel or uncertain rendering result does not authorize another preview. Keep the selected route and report unresolved presentation; change routes only after confirming the first failed without mounting a player. Later edits may deliver their own distinct final export, while prior videos retain their fixed versions. The editable Studio is separate from this one-video rule.
+
+When the plugin route is needed, call `openmotion_show_video` in its own host tool call, not in a script/batch with other commands. Bound this final presentation wait to about 60 seconds. If it has not returned, immediately give the already verified MP4's absolute file path and finish, stating that chat presentation is pending. Use a plain link, not another video embed. Do not inspect plugin source, build a custom playback page or repeatedly retry presentation. Keep the completed export identity and prior checks; this timeout does not waive actual-file playback checks or prove the player is visible.
+
+Keep editor display evidence separate: only submit `record_display` for a current editor state actually observed under the [shared handoff](native.md#continuing-edits). A presentation timeout cannot turn a pending/hidden/unavailable editor into confirmed delivery. Report the latest observed editor limitation alongside the file; do not start a new presentation recovery loop after this deadline.
+
+The final player and the editable Studio are separate delivery surfaces. Verify the actual final player and the current editor handoff; source save, a Tool success or a completed render does not prove either surface is visible or playable.
+
 ## Execution
 
 ### Tool transport and workspace readiness
@@ -36,9 +66,9 @@ If only an independent folder can be produced, state that the editable Studio ha
 
 1. Reuse complete guidance already read. Installed Skills and MCP resources/read provide the same documents; production start only routes a task that lacks a specialist. Changes to existing content use [edit workflow](edit.md). Missing instructions/source reads return to the model before dependent writes.
 2. Reuse the target projectId or explicitly create a new one. Read its current revision and content version. No global most-recent project fallback. Five is a list page size, not a retention policy.
-3. Use returned asset paths and native HTML/CSS/JS. Import and file save are separate operations. Images/footage/music generation belongs to the host's available tools or Studio; no generation Tool is exposed by this phase-one MCP package. Missing media capabilities must be stated.
+3. Use returned asset paths and native HTML/CSS/JS. Import and file save are separate operations. Follow the shared [generation boundary](materials.md#generation-boundary) before entering media generation, and the [material policy](materials.md#tool-selection-and-discovery) to select matching sources and capabilities.
 4. Follow the [native loop](native.md), preserve locked content and existing Studio manifests. Inspect actual frames, motion and sound. A saved source file or successful lint is not creative acceptance.
-5. Export only when requested. Reuse an applicable job before submitting another. Save a stable requestId per action: exact retry returns the original outcome; changed input with the same requestId is rejected. Failed request correction uses a new requestId.
+5. Export for a requested finished video or content-edit delivery; do not export explicit draft, editor-only or review-only work. Reuse an applicable job before submitting another. Save a stable requestId per action: exact retry returns the original outcome; changed input with the same requestId is rejected. Failed request correction uses a new requestId.
 6. Poll the named job through project details. Only completed exposes its real MP4 and technical verification. Inspect [final playback and evidence](verification.md) separately; record unavailable checks as not_run.
 
 ## Handoff

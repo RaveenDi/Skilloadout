@@ -1,12 +1,12 @@
 # Case evidence · Epic fantasy and sci-fi spectacle
 
-77 verified cases are filed under this template in awesome-seedance; the 8 hottest are below, full prompts included. Pick one as the anchor before drafting.
+77 source-checked cases are filed under this template in awesome-seedance; the 8 hottest are below, full prompts included. Pick one as the anchor before drafting.
 
 Generated from `data/cases.json` + `data/case-taxonomy.json`. Do not hand-edit.
 
 ## E1 · Woman in Green Summons a Fiery Tree Guardian Against Demons
 
-- Seedance 2.5 · creator: @itsSaira_1 · heat: 92
+- Seedance 2.5 · creator: @itsSaira_1 · heat: 91
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-2-5-cinematic-dark-fantasy-battle-16-9-photoreal-shallow-depth-of-field-anamorp-a90377df74d6) · [finished media](https://media.goodcase.ai/cases/ead498a1b98b.mp4) · [poster](https://media.goodcase.ai/cases/4a7f9d53f8c5.jpg) · [original source](https://x.com/itsSaira_1/status/2107685928647160275)
 - Summary: ⚡She didn’t summon a guardian—she awakened the wrath of the earth.🔥 Created with Seedance 2.5 Prompt: Cinematic dark fantasy battle, 16:9, photoreal, shallow d…
 
@@ -192,22 +192,7 @@ Prompt
 [… truncated, full prompt on the goodcase.ai page]
 ```
 
-## E5 · A Nun Becomes an Angel and Slays Demons in a Ruined Cathedral
-
-- Seedance 2.5 · creator: @itsSaira_1 · heat: 89
-- Evidence: [GoodCase](https://goodcase.ai/cases/seedance-2-5-a-cinematic-30-second-sequence-starting-in-a-dark-ruined-gothic-cathedral-at-n-ff745f107b14) · [finished media](https://media.goodcase.ai/cases/81e4ed08bc6b.mp4) · [poster](https://media.goodcase.ai/cases/605e835bd0b1.jpg) · [original source](https://x.com/itsSaira_1/status/2108765927194198397)
-- Summary: ⚡One warrior queen, a thousand demons, and a fight for survival. Created with Seedance 2.5 Prompt: A cinematic 30-second sequence starting in a dark, ruined got…
-
-```text
-A cinematic 30-second sequence starting in a dark, ruined gothic cathedral at night with a full moon. A woman dressed as a nun is kneeling inside a glowing magical rune circle on a stone floor, holding a bloodied sword, surrounded by hordes of terrifying demonic creatures. She pulls the sword to her chest, bursting with fiery light from her ribcage, and transforms into a powerful entity with large white glowing angelic wings and a halo, her clothes changing into an ornate dark blue gown with golden embroidery. She wields glowing magical swords, fighting off and defeating the demons with fiery energy and brilliant flashes of light in an epic action sequence. Finally, she plants her glowing sword into the ground, creating a protective circle with giant glowing crosses, standing victorious as the cathedral clears.
-
-Negative Prompt:
-blurry, low quality, distorted, deformed, bad anatomy, extra limbs, poorly drawn face, poorly drawn hands, watermark, signature, ugly, low resolution, choppy animation
-
-#AI #AIart️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️ #visualart
-```
-
-## E6 · Muscular Man Becomes a Moon Guardian to Face Trolls in a Cathedral
+## E5 · Muscular Man Becomes a Moon Guardian to Face Trolls in a Cathedral
 
 - Seedance 2.5 · creator: @itsSaira_1 · heat: 89
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-2-5-scene-1-wand-trolls-setup-0-00-0-03-5b9c643f99ce) · [finished media](https://media.goodcase.ai/cases/ab75ef7be18f.mp4) · [poster](https://media.goodcase.ai/cases/04e5a525e474.jpg) · [original source](https://x.com/itsSaira_1/status/2109129359441457193)
@@ -232,7 +217,7 @@ low quality, low resolution, blurry, distorted face, extra limbs, bad anatomy, d
 #AIArt #VisualStorytelling #AI
 ```
 
-## E7 · A Wounded Woman and Arcane Visions in a Gothic Cathedral
+## E6 · A Wounded Woman and Arcane Visions in a Gothic Cathedral
 
 - Seedance 2.5 · creator: @itsSaira_1 · heat: 89
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-2-5-sequence-of-shots-for-a-dark-fantasy-cinematic-video-9b5d4cc42091) · [finished media](https://media.goodcase.ai/cases/9c6af70f2b57.mp4) · [poster](https://media.goodcase.ai/cases/9b53e907e410.jpg) · [original source](https://x.com/itsSaira_1/status/2110223060066521421)
@@ -259,9 +244,24 @@ blurry, low quality, distorted, deformed, extra limbs, bad anatomy, modern cloth
 #Ai #AIart️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️ #visualart
 ```
 
+## E7 · A Nun Becomes an Angel and Slays Demons in a Ruined Cathedral
+
+- Seedance 2.5 · creator: @itsSaira_1 · heat: 88
+- Evidence: [GoodCase](https://goodcase.ai/cases/seedance-2-5-a-cinematic-30-second-sequence-starting-in-a-dark-ruined-gothic-cathedral-at-n-ff745f107b14) · [finished media](https://media.goodcase.ai/cases/81e4ed08bc6b.mp4) · [poster](https://media.goodcase.ai/cases/605e835bd0b1.jpg) · [original source](https://x.com/itsSaira_1/status/2108765927194198397)
+- Summary: ⚡One warrior queen, a thousand demons, and a fight for survival. Created with Seedance 2.5 Prompt: A cinematic 30-second sequence starting in a dark, ruined got…
+
+```text
+A cinematic 30-second sequence starting in a dark, ruined gothic cathedral at night with a full moon. A woman dressed as a nun is kneeling inside a glowing magical rune circle on a stone floor, holding a bloodied sword, surrounded by hordes of terrifying demonic creatures. She pulls the sword to her chest, bursting with fiery light from her ribcage, and transforms into a powerful entity with large white glowing angelic wings and a halo, her clothes changing into an ornate dark blue gown with golden embroidery. She wields glowing magical swords, fighting off and defeating the demons with fiery energy and brilliant flashes of light in an epic action sequence. Finally, she plants her glowing sword into the ground, creating a protective circle with giant glowing crosses, standing victorious as the cathedral clears.
+
+Negative Prompt:
+blurry, low quality, distorted, deformed, bad anatomy, extra limbs, poorly drawn face, poorly drawn hands, watermark, signature, ugly, low resolution, choppy animation
+
+#AI #AIart️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️ #visualart
+```
+
 ## E8 · Female Shinobi Summons a Black Dragon to Battle a Temple Demon
 
-- Seedance 2.5 · creator: @AiWithHani · heat: 88
+- Seedance 2.5 · creator: @AiWithHani · heat: 88 · stability: 73
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-2-5-the-shadow-dragon-awakens-7717a96f1fd3) · [finished media](https://media.goodcase.ai/cases/47abc8c22df0.jpg) · [original source](https://x.com/AiWithHani/status/2114920377491374508)
 - Summary: Say Hello to AI and Bye to Hollywood 🔥 🎬 Seedance 2.5 on Higgsfield 🧩 Prompt: The Shadow Dragon Awakens 🐉 Create an ultra-photorealistic Japanese dark fanta…
 

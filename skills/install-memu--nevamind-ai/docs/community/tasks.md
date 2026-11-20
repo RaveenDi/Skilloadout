@@ -116,6 +116,25 @@ Claude Code 已接入自动检索和后台记忆 hook，但旧版安装可能仍
 - 读取 plist 的 label、程序参数和所属 launchd domain，确认登记是否属于 Claude Code 的 memU bridge。
 - 在真实 macOS 环境验证正确 domain 下的卸载与配置移除；权限不足时给出准确诊断。
 
+### 待验证的现有 CLI 缺口
+
+`memu-claude-code schedule uninstall` 当前委托旧的共享 Windows helper。
+模拟注销报错时仍返回成功，并删除本地 wrapper、prompt 和注册记录；
+检查流程也会把查询失败视作任务不存在。需要改为明确失败，保留重试所需文件，
+核对任务动作归属，并在删除后验证不存在。
+PR #802 的 Hermes Windows 清理提供独立的已验证路径；Claude Code 接入该路径，
+并验证自己的历史注册，属于本任务范围。Linux/macOS 的检查与移除仍按平台分别推进。
+
+当前验收状态仅针对旧调度注册的 CLI 检查、移除与读回验证：
+
+| Host | Windows | Linux | macOS |
+| --- | --- | --- | --- |
+| Claude Code | 已复现上述缺陷，尚未修复并通过验收 | 未验收 | 未验收 |
+| Hermes | 已验收 Windows Task Scheduler 清理，包括历史注册、归属核对、删除读回和失败传播 | 未验收 | 未验收 |
+
+Hermes native cron 的自动迁移清理也尚未验收，不属于 Windows Task Scheduler
+的已验收范围。Hermes 的记录仅作对照，不扩展本任务的 Claude Code 实现范围。
+
 ### 每个平台的验收标准
 
 - 提供可执行的检查与定向移除命令，优先沿用现有 `memu-claude-code schedule` 接缝，具体命令形式可在认领时讨论。
@@ -125,6 +144,26 @@ Claude Code 已接入自动检索和后台记忆 hook，但旧版安装可能仍
 - 保留其他软件及其他 host 的定时任务、现有 hook、共享配置和记忆数据。
 - 测试覆盖历史名称、并存注册、无关任务保留及权限不足；提供真实平台的验证记录，注明系统版本、注册范围和使用权限。
 - 更新相应 CLI 帮助与安装／卸载说明。
+
+### 其他 host 的关联清理跟进
+
+[PR #807](https://github.com/NevaMind-AI/memU/pull/807) 的本机 Windows 验证还确认了
+`\memU\` 下的 `memu-bridging-codex`、`memu-bridging-cursor`、`memu-bridging-pi`。
+只读核对任务动作与 wrapper/prompt 后，确认它们每小时运行各宿主的
+prepare/agent/commit 记忆写入流水线，不是 retrieve SKILL。未执行禁用或注销，
+因此这份记录不代表清理验收通过，也不能仅凭任务存在判定之前卸载失败。
+
+将这些已确认的旧调度接入同一类检查与定向移除流程，作为任务 003 的关联跟进，
+按 **host + 平台** 单独确认范围、认领和验收；原有 Claude Code 平台子任务保持不变。
+目前新增证据仅覆盖上述三个 host 的 Windows 注册；其他平台先核实实际历史安装，
+不预设所有位置都存在任务。
+
+- 复用共享 scheduler 能力，但必须验证各 host 自己的历史动作、wrapper、执行账户和注册位置；不能继承其他 host 的验收结论。
+- CLI 区分不存在、存在、检查失败、删除失败，并在注销后读回；失败保留重试文件。提供只读检查及定向移除入口，卸载集成时明确报告尚未处理的注册。
+- 对运行中的任务先停用后续触发，再等待当前任务及子进程自然结束；不得把“已注销”当成“进程已停止”，也不得直接终止用户正在运行的 Agent。
+- 保留其他 host/软件的任务、现有 hooks、共享配置和记忆；覆盖历史别名、并存注册、权限不足与重复删除，并提供真实平台验证记录。
+
+#807 提供 instruction/SKILL 归属及清理，并补充调度检查指南；它**没有完成这些真实系统任务的自动发现、注销与读回验收**。此处记录后续工作，不表示已实现或已认领。
 
 **历史记录**：[#793](https://github.com/NevaMind-AI/memU/issues/793)。
 

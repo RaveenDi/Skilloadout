@@ -1,6 +1,6 @@
 ---
 name: provider-oracles
-description: Run hash-bound Google, OpenAI, Microsoft, or Meta watermark-oracle checks for this repository. Use for provider verification, multi-account Gemini checks, SynthID Detector checks at synthid.com, isolated Playwright checks, or recording oracle evidence. Walk the existing plan automatically when a task needs a provider verdict.
+description: Run hash-bound Google, OpenAI, Microsoft, Meta, ElevenLabs, Cartesia, Resemble, or Kling watermark-oracle checks for this repository. Use for provider verification, multi-account Gemini checks, SynthID Detector checks at synthid.com, ElevenLabs/Cartesia/Resemble API checks, isolated Playwright checks, or recording oracle evidence. Walk the existing plan automatically when a task needs a provider verdict.
 metadata:
   internal: true
 ---
@@ -29,14 +29,20 @@ surface, slot, or route.
 Walk `plan PROVIDER`. That command only prints the order. The order itself stays:
 
 1. The official API surface, when this tooling has one for that provider, media
-   type, and configured slot. OpenAI is `openai-api`. Microsoft is
-   `microsoft-api`.
-2. That provider's Web oracle. OpenAI is `openai-web` and Microsoft is
-   `microsoft-web`, both through isolated Playwright. Meta is `meta-web`
-   through isolated Playwright. Google is `gemini-web` on the user's existing
-   real Chrome, then `synthid-web` at `https://synthid.com/` through isolated
-   Playwright. Meta and Google have no API surface, so their first Web oracle is
-   the first row.
+   type, and configured slot. OpenAI is `openai-api`, Microsoft is
+   `microsoft-api`, ElevenLabs is `elevenlabs-api`, Cartesia is
+   `cartesia-api`, and Resemble is `resemble-api`.
+2. That provider's Web oracle. OpenAI is `openai-web`, Microsoft is
+   `microsoft-web`, Meta is `meta-web`, Kling is `kling-web` (isolated
+   Playwright first; when anonymous submission hits Kling's sign-in modal and
+   the user authorizes real Chrome, continue in an already-authenticated real
+   Chrome tab without starting a new login), and Cartesia is
+   `cartesia-web` (through isolated Playwright under `--acknowledge-uploads`,
+   stopping immediately as `refused` when Cloudflare Turnstile gates the form).
+   Google is `gemini-web` on the user's
+   existing real Chrome, then `synthid-web` at `https://synthid.com/` through
+   isolated Playwright. Meta, Google, and Kling have no API surface, so their
+   first Web oracle is the first row.
 3. The remaining configured account slots of those surfaces. A signed-in
    account is required only for Gemini, and that slot stays on the direct
    route. Every other Web surface may use isolated Playwright and a proxy.
@@ -52,7 +58,18 @@ request.
 Before starting, identify the finite set of configured slots and prepare one
 immutable batch per slot. After a quota refusal or service failure, record the
 exact response, leave that slot's remaining rows unsubmitted, and continue
-through the remaining slots in the order above.
+through the remaining slots in the order above. Exception: when `gemini-web`
+returns an explicit modality-level quota refusal (such as `the video modality
+quota has been exceeded`) or an active modality quota-hold record (`status:
+"active"`) exists for that video or audio modality, halt same-modality
+`gemini-web` account rotation rather than switching `/u/N/` Google accounts to
+evade the hold; keep prepared Gemini batches frozen and reuse exact prior
+upload-hash verdicts.
+
+For clean-control or processed video and audio uploads, pass
+`--require-clean-media` to `prepare` so residual AI metadata, invisible hints,
+and visible provider marks are rejected up front and per-stream decoded SHA-256
+digests (`stream_hashes`) are bound into `manifest.json`.
 
 Submit each frozen artifact at most once per slot in that pass. Preserve
 inconclusive results and disagreements between accounts. Stop when the plan is
@@ -109,8 +126,9 @@ submits the prepared rows once and does not retry.
    way as for Gemini, and do not submit a file that still shows a provider logo.
 3. Run `run-web` with the upload acknowledgement. The runner attaches one
    prepared upload through the page's file input.
-4. Read the settled label. `Watermark detected` is `detected`. `Watermark not
-   detected` and `SynthID was not detected` are `not_detected`. Quota and
+4. Read the settled label. `Watermark detected` and `SynthID was detected`
+   are `detected`. `Watermark not detected` and `SynthID was not detected`
+   are `not_detected`. Conflicting labels stay `indeterminate`. Quota and
    unclear wording stay `refused` or `indeterminate`. Do not click a sign-in
    button.
 5. If the anonymous page says `Please sign in before detection.` and returns no
@@ -171,6 +189,18 @@ first with `az login`. Give the Content Safety system identity `Storage Blob
 Data Reader` on the input storage account. After that call is refused, hits quota, fails, or
 returns indeterminate, continue with another `microsoft-api` slot or with
 `microsoft-web`. Keep Microsoft's Watermark and C2PA markers as separate verdicts.
+
+### ElevenLabs, Cartesia, and Resemble APIs
+
+Use `check-elevenlabs` (`ELEVENLABS_API_KEY`) or `check-cartesia`
+(`CARTESIA_API_KEY`) with `--acknowledge-upload`. Both strip AI container
+metadata and verify bit-exact decoded float32 PCM invariance before uploading
+one direct (`trust_env=False`) request; pass `--keep-metadata` only when
+testing container-metadata behavior explicitly. Use `check-resemble`
+(`RESEMBLE_API_KEY`) with `--content-uri <https_url>` and `--acknowledge-upload`;
+it verifies that the remote HTTPS bytes match `SOURCE` by SHA-256 before
+submitting one job and redacts any presigned URL query string alongside the
+API key. Never log or print an API key.
 
 ## Evidence rules
 

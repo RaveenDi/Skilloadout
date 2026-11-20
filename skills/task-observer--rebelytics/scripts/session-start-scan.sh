@@ -11,6 +11,10 @@
 #                     variable TASK_OBSERVER_WORKSPACE. One of the two is
 #                     required; the log is never resolved from the cwd. The
 #                     path may contain spaces.
+#   --skill-dir <dir>
+#                     the installed skill directory, read for the shipped
+#                     starter set; default: the directory above this script.
+#                     A copy run from skill-observations/.bin/ passes it.
 #   --entries-to <file>
 #                     write the per-entry listing to <file>
 #                     instead of stdout, for a channel that caps the output
@@ -22,6 +26,10 @@
 #                     directory: an existing non-empty file is refused (exit
 #                     2), because a redirect onto another session's file
 #                     followed by a read returns that session's scan.
+#   TASK_OBSERVER_SEARCH_SECONDS
+#                     environment: the time limit, in whole seconds, of the
+#                     sibling-log search (default 10); a search cut there
+#                     is a NOTE line, never a stall.
 #
 # Prints, on stdout, in this order: any DUE / NOTE / LOST ENTRIES / UNFILLED /
 # DUPLICATE ID / RESURRECTED lines
@@ -44,14 +52,15 @@
 # resolution: gives a skill: member no disposition, and for a file holding a
 # key-shaped run beside key / token / secret / password (names only); the
 # counts line (files, parsed, suspect, archive-suspect, resurrected); a SPLIT STORE line when a
-# pre-3.0 log.md sits beside the directory; a `staged:` line naming
+# pre-3.0 log.md sits beside the directory, and one for an observation log
+# at the working directory or beside the skill's install that is not the
+# pinned root; a `staged:` line naming
 # [root]/skill-updates/ and its manifest, and a NOTE: SPLIT STAGING (both
 # roots) or NOTE: legacy staging root line when
 # skill-observations/skill-updates/ (the pre-3.0 staging root) exists; a NOTE: pointer line when
 # skill-observations/MOVED.md exists; a GAP
-# line when the previous scan in checkpoints.log is 7 or more days old; the logs found at the
-# plausible anchors, each with its entry count, its checkpoints.log's last
-# date and any log.md beside it; the active principles' headings; then one line per numbered entry,
+# line when the previous scan in checkpoints.log is 7 or more days old; the
+# session-start record; the active principles' headings; then one line per numbered entry,
 # `id | status | skill | proposes_skill | title` (`-` for a field the header
 # lacks), parked entries after the others, an actioned, declined or
 # superseded entry as `id | status | skill | proposes_skill | resolved <date>
@@ -60,7 +69,11 @@
 # `--- <file> (header not closed)` for a file whose header did not parse (or,
 # with --entries-to, that listing goes to the file); the full headers go to
 # skill-observations/last-scan-headers.txt, overwritten each run, for a step
-# that needs another field; then the summary
+# that needs another field; then, flushed out first and bounded by a time
+# limit, the logs found at the plausible anchors, each with its entry count,
+# its checkpoints.log's last date and any log.md beside it, with any finding
+# that search makes (another root's SPLIT STORE, a NOTE when the search hit
+# its limit); then the summary
 # block: every finding line (DUE / NOTE / LOST ENTRIES / UNFILLED / DUPLICATE
 # ID / RESURRECTED / SPLIT STORE / GAP) repeated VERBATIM, and LAST one `end of scan` line
 # repeating the counts, how many finding lines stand above the entries, how
@@ -76,6 +89,9 @@
 # whole, which the end line says.
 # Appends one line to skill-observations/checkpoints.log:
 #   YYYY-MM-DD HH:MM [<cwd's last segment>] session-start scan: files=N parsed=N principles=N
+# and one to skill-observations/session-starts.log (also printed), the
+# checklist items it can measure:
+#   YYYY-MM-DD HH:MM [<label>] session start: 1 storage=… 2 scan=… 3 review=… 6 staged=… 7 log=…
 #
 # Exit status:
 #   0  the scan ran (NOTE lines are findings, not failures)
@@ -111,15 +127,18 @@
 
 set -u
 
-VERSION="3.10.0"   # equal to the skill's frontmatter version:; the end line names it
+VERSION="3.11.2"   # equal to the skill's frontmatter version:; the end line names it
 
 entries=   # --entries-to target; empty = the entries print to stdout
+skill_dir= # --skill-dir: the installed skill directory; empty = the one this script sits in
 while [ $# -gt 0 ]; do
   case $1 in
     (--entries-to) [ $# -ge 2 ] || { echo "--entries-to needs a file path" >&2; exit 2; }; entries="$2"; shift 2 ;;
     (--entries-to=*) entries="${1#--entries-to=}"; shift ;;
+    (--skill-dir) [ $# -ge 2 ] || { echo "--skill-dir needs a directory" >&2; exit 2; }; skill_dir="$2"; shift 2 ;;
+    (--skill-dir=*) skill_dir="${1#--skill-dir=}"; shift ;;
     (--) shift; break ;;
-    (-*) echo "unknown option '$1' (the options are --entries-to <file>)" >&2; exit 2 ;;
+    (-*) echo "unknown option '$1' (the options are --entries-to <file> and --skill-dir <dir>)" >&2; exit 2 ;;
     (*) break ;;
   esac
 done
@@ -197,10 +216,14 @@ fi
 # saved to a file or cut to a preview is told from the whole output by its
 # size, not by whether the end line happens to be in view. The buffer is
 # written out on every exit, a halt included; without mktemp the output runs
-# unbuffered and the end line says the bytes were not counted.
+# unbuffered and the end line says the bytes were not counted. The buffer is
+# opened for APPEND: the entries are flushed out of it before the sibling-log
+# search (below), and an emptied append-mode file takes the next write at its
+# start, where a plain `>` would leave a run of NUL bytes.
 buf=$(mktemp 2>/dev/null) || buf=
+by0=0   # bytes already flushed to stdout ahead of the end line
 if [ -n "$buf" ]; then
-  exec 5>&1 >"$buf"
+  exec 5>&1 >>"$buf"
   trap 'exec >&5; cat "$buf"; rm -f "$buf"' EXIT
 fi
 
@@ -311,14 +334,18 @@ for x in observation-log/archive last-review-date.txt cross-cutting-principles.m
 done
 [ -n "$miss" ] && finding "DUE: workspace creation — missing: $miss; run the Workspace creation command (references/observation-log.md) before anything else this session"
 # Starter-set reconciliation: the marker against the shipped set, read from
-# the reference beside this script. Where that file is unreadable (a .bin/
-# copy), an absent marker is still due; an older one cannot be compared.
+# the installed skill (--skill-dir, else the directory this script sits in).
+# A copy run away from its install (.bin/) finds no set there: an absent
+# marker is still due, and an existing one cannot be compared — said in a
+# NOTE, never skipped silently.
 mk="$root/skill-observations/starter-principles-reviewed.txt"
-sp="$(dirname "$0")/../references/starter-principles.md"
+sp="${skill_dir:-$(dirname "$0")/..}/references/starter-principles.md"
 ship=; [ -r "$sp" ] && ship=$(sed -n 's/^Starter set version:[[:space:]]*\([0-9][0-9]*\).*/\1/p' "$sp" | head -n 1)
 if [ ! -e "$mk" ]; then
   finding "DUE: starter-set reconciliation — skill-observations/starter-principles-reviewed.txt is absent; offer once, in a review or a session opened for skill work, never in another task's reply (references/starter-principles.md, Reconciliation)"
-elif [ -n "$ship" ]; then
+elif [ -z "$ship" ]; then
+  finding "NOTE: shipped starter set not found at $sp — the marker cannot be compared with it; pass --skill-dir <installed skill directory> (a copy run from skill-observations/.bin/ has no references/ beside it)"
+else
   mv_v=$(sed '1!d; s/[^0-9]//g' "$mk")
   if [ -z "$mv_v" ] || [ "$((10#$mv_v))" -lt "$ship" ]; then
     finding "DUE: starter-set reconciliation — marker v${mv_v:-?} < shipped set v$ship; offer once, in a review or a session opened for skill work, never in another task's reply (references/starter-principles.md, Reconciliation)"
@@ -425,6 +452,39 @@ lg="$root/skill-observations/log.md"
 if [ -e "$lg" ]; then
   finding "SPLIT STORE — log.md holds $(grep -c '^### Observation ' "$lg" | tr -d ' ') observations not in observation-log/: an older installed copy of the skill still writes the legacy file; name each copy's version, then migrate the remainder (references/migration.md) with ids re-issued from this directory's counter"
 fi
+# --- the anchors a session lands on: the working directory, the skill install --
+# A session that took its root from the working directory (a repository
+# root's skill-observations/) or from the skill's own install path
+# (~/.agents/skills/<skill> beside ~/.agents/skill-observations/) keeps a
+# stable log the pinned root never sees: every scan there is clean, and no
+# search of this root's ancestry reaches it. Both places are tested here,
+# above the entries, with directory tests only (no search, nothing to
+# stall): the working directory, and the resolved skill directory's parent
+# and that parent's parent (a skill directory is used only where it holds a
+# SKILL.md, so a .bin/ copy's default names no install). One that holds an
+# observation-log/ and is not the pinned root is a SPLIT STORE line; paths
+# are compared resolved (cd -P), so a symlinked pin is not a second store.
+rp() { (cd -P "$1" 2>/dev/null && pwd -P); }
+root_r=$(rp "$root"); [ -n "$root_r" ] || root_r=${root%/}
+cands="at the working directory|$PWD"
+sk_r=$(rp "${skill_dir:-$(dirname "$0")/..}")
+if [ -n "$sk_r" ] && [ -f "$sk_r/SKILL.md" ]; then
+  sk_p=$(dirname "$sk_r")
+  cands="$cands"$'\n'"beside the skill's install ($sk_r)|$sk_p"$'\n'"beside the skill's install ($sk_r)|$(dirname "$sk_p")"
+fi
+wa_seen=
+while IFS= read -r cand; do
+  [ -n "$cand" ] || continue
+  w_r=$(rp "${cand#*|}"); [ -n "$w_r" ] || continue
+  [ -d "$w_r/skill-observations/observation-log" ] || continue
+  [ "$w_r" = "$root_r" ] && continue
+  case $wa_seen in (*"|$w_r|"*) continue ;; esac
+  wa_seen="$wa_seen|$w_r|"
+  w_n=$(find "$w_r/skill-observations/observation-log" -maxdepth 1 -name '[0-9]*.md' | wc -l | tr -d ' ')
+  w_lc=none; [ -f "$w_r/skill-observations/checkpoints.log" ] && w_lc=$(tail -n 1 "$w_r/skill-observations/checkpoints.log" | cut -c 1-10)
+  case $w_lc in ([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]) ;; (*) w_lc=none ;; esac
+  finding "SPLIT STORE — a second observation log at $w_r ($w_n entries, last scan $w_lc), ${cand%%|*}, not the pinned root $root: a session that took its root from there writes entries this root never sees; report both roots and ask, never consolidate or re-anchor from this scan (references/environments.md, \"Before creating a log, search for one\")"
+done <<< "$cands"
 # The pre-3.0 staging root: an upgrade never moves it, and rounds staged
 # there are invisible to a review that reads [workspace]/skill-updates/.
 # The staging root step 6 reads sits BESIDE skill-observations/, never inside
@@ -474,53 +534,22 @@ gap=$( [ -f "$ck" ] && LC_ALL=C awk -v today="$(date +%F)" '
 printf '%s [%s] session-start scan: files=%s parsed=%s principles=%s\n' "$(date '+%F %H:%M')" "${PWD##*/}" "$n" "$parsed" "$pr" \
   >> "$root/skill-observations/checkpoints.log"
 
-# --- sibling logs: every observation log at the plausible anchors ----------
-# A report, never a reason to consolidate from here. One directory's ancestry
-# cannot see a store kept at another scope, so the anchors are the homes
-# references/environments.md names: the root's parent (the root, its
-# siblings, a renamed folder), the parent's siblings, the user-scope config
-# home (~/.claude, and CLAUDE_CONFIG_DIR when set) and its projects/ (the
-# project identity roots and their memory/ directories). The parent keeps
-# five levels (a log one project folder below a projects folder, with
-# margin); every other anchor is searched to a workspace two folders below
-# it; .git, node_modules and skill-updates trees are pruned. The parent's
-# siblings are skipped when the parent is a top-level directory (its
-# siblings are system trees). A workspace
-# holding only a legacy log.md is listed too. Each log carries its entry
-# count (`-` without the directory), its checkpoints.log's last date, so a
-# shard still being written reads differently from an abandoned one, and
-# legacy=N for a log.md beside it: the split-store check reads every log
-# found, and another root's split store is a finding of its own.
-par=$(dirname "${root%/}"); anchors="$par"
-gp=$(dirname "$par")
-case $gp in
-  (/|.|[A-Za-z]:|[A-Za-z]:[/\\]) ;;
-  (*) for s_a in "$gp"/*; do [ -d "$s_a" ] && [ "$s_a" != "$par" ] && anchors="$anchors"$'\n'"$s_a"; done ;;
-esac
-for c_a in "${CLAUDE_CONFIG_DIR:-}" "${HOME:+$HOME/.claude}"; do
-  [ -n "$c_a" ] && anchors="$anchors"$'\n'"${c_a%/}"$'\n'"${c_a%/}/projects"
-done
-found=$(printf '%s\n' "$anchors" | while IFS= read -r a; do
-    [ -n "$a" ] && [ -d "$a" ] || continue
-    md=4; [ "$a" = "$par" ] && md=5
-    find "$a" -maxdepth "$md" \( -name .git -o -name node_modules -o -name skill-updates \) -prune \
-      -o \( -type d -path '*/skill-observations/observation-log' -o -type f -path '*/skill-observations/log.md' \) -print 2>/dev/null
-  done | sed 's|/skill-observations/observation-log$||; s|/skill-observations/log\.md$||' | LC_ALL=C sort -u)
-sib=
-while IFS= read -r w; do
-  [ -n "$w" ] || continue
-  o="$w/skill-observations/observation-log"; w_lg="$w/skill-observations/log.md"; w_ck="$w/skill-observations/checkpoints.log"
-  cnt=-; [ -d "$o" ] && cnt=$(find "$o" -maxdepth 1 -name '[0-9]*.md' | wc -l | tr -d ' ')
-  lc=none
-  [ -f "$w_ck" ] && lc=$(tail -n 1 "$w_ck" | cut -c 1-10) && case $lc in ([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]) ;; (*) lc=none ;; esac
-  lgn=; [ -f "$w_lg" ] && lgn=$(grep -c '^### Observation ' "$w_lg" | tr -d ' ')
-  sib="$sib  $w=$cnt last=$lc${lgn:+ legacy=$lgn}"
-  # the pinned root's own split store is the SPLIT STORE line above
-  if [ -n "$lgn" ] && [ -d "$o" ] && [ "$w" != "${root%/}" ]; then
-    finding "SPLIT STORE — $w: log.md holds $lgn observations beside that root's observation-log/: an older installed copy still writes there; report the root and its copy's version, never migrate or consolidate another root from this scan (references/migration.md)"
-  fi
-done <<< "$found"
-printf 'logs at the plausible anchors (report; never consolidate from here):%s\n' "$sib"
+# --- the session-start record: the checklist items this scan can measure ----
+# The Session Start checklist lives in the agent's first reply, and a run
+# nobody reads (scheduled, delegated) skips it while doing the steps, so the
+# reply is no record. The items a script can measure are written here, one
+# line per session, to skill-observations/session-starts.log, and printed;
+# the review's Step 1 checks every session that loaded the skill left one.
+# Items 4 (activation) and 5 (concurrency) are judgements: the run reports them.
+rv=$(sed '1!d' "$root/skill-observations/last-review-date.txt" 2>/dev/null | tr -d '\r'); rv=${rv:-absent}
+rs=$(sed '1!d' "$root/skill-observations/review-started.txt" 2>/dev/null | tr -d '\r' | cut -c 1-40); rs=${rs:-absent}
+if [ -f "$su/PENDING.md" ]; then sg="manifest $(grep -c . "$su/PENDING.md" | tr -d ' ') lines, $su_n dirs"
+elif [ -d "$su" ]; then sg="no manifest, $su_n dirs"; else sg="none"; fi
+rec=$(printf '%s [%s] session start: 1 storage=%s 2 scan=files %s parsed %s 3 review=last %s, marker %s 6 staged=%s 7 log=%s entries; 4-5 in the run report' \
+  "$(date '+%F %H:%M')" "${PWD##*/}" "${miss:+missing: $miss}" "$n" "$parsed" "$rv" "$rs" "$sg" "$n")
+rec=${rec/1 storage= /1 storage=ok }
+printf '%s\n' "$rec" >> "$root/skill-observations/session-starts.log"
+printf '%s\n' "$rec"
 
 # --- content: printed with the headers below ---------------------------------
 # The active principles' headings.
@@ -573,6 +602,112 @@ else
   ent=
 fi
 
+# --- sibling logs: every observation log at the plausible anchors ----------
+# Run AFTER the entries, and bounded: on a root whose parent is the home
+# folder (a ~/.claude workspace) the unbounded walk read the whole home tree
+# five levels deep before a single entry printed, and a stalled walk held
+# the scan. So the output so far is flushed to stdout and the findings to
+# the sidecar first, and the search runs in the background under a time
+# limit (TASK_OBSERVER_SEARCH_SECONDS, default 10; bash's SECONDS and a
+# polled kill, since stock macOS has no `timeout`); a search cut at the
+# limit is a NOTE naming the anchor it was in and how many it never reached.
+# A report, never a reason to consolidate from here. One directory's ancestry
+# cannot see a store kept at another scope, so the anchors are the homes
+# references/environments.md names: the root's parent (the root, its
+# siblings, a renamed folder), the parent's siblings, the user-scope config
+# home (~/.claude, and CLAUDE_CONFIG_DIR when set) and its projects/ (the
+# project identity roots and their memory/ directories). The parent keeps
+# five levels (a log one project folder below a projects folder, with
+# margin) — four, no margin, where the parent is the home folder, the folder
+# of homes or / (a ~/.claude workspace), with Library and .Trash pruned there
+# and the parent's siblings (other users' homes) skipped; every other anchor is searched to a workspace two folders
+# below it; .git, node_modules and skill-updates trees are pruned. The
+# parent's siblings are skipped when the parent is a top-level directory (its
+# siblings are system trees). A workspace
+# holding only a legacy log.md is listed too. Each log carries its entry
+# count (`-` without the directory), its checkpoints.log's last date, so a
+# shard still being written reads differently from an abandoned one, and
+# legacy=N for a log.md beside it: the split-store check reads every log
+# found, and another root's split store is a finding of its own. Finding
+# lines from here print below the entries, beside the listing, and are
+# repeated and written to the sidecar with every other.
+printf '%s' "$findings" > "$sidecar" 2>/dev/null   # provisional: a run stopped in the search keeps its findings on disk
+if [ -n "$buf" ]; then
+  by0=$(wc -c < "$buf" | tr -d ' '); cat "$buf" >&5; : > "$buf"
+fi
+par=$(dirname "${root%/}"); anchors="$par"
+par_r=$(rp "$par"); [ -n "$par_r" ] || par_r=$par
+home_r=; [ -n "${HOME:-}" ] && home_r=$(rp "$HOME")
+shallow=
+# the parent is the home folder, the folder of homes above it, or the filesystem root
+case $par_r in (/|"${home_r:-/}"|"$(dirname "${home_r:-/}")") shallow=1 ;; esac
+gp=$(dirname "$par")
+case $gp in
+  (/|.|[A-Za-z]:|[A-Za-z]:[/\\]) ;;
+  (*) [ -n "$shallow" ] || for s_a in "$gp"/*; do [ -d "$s_a" ] && [ "$s_a" != "$par" ] && anchors="$anchors"$'\n'"$s_a"; done ;;
+esac
+for c_a in "${CLAUDE_CONFIG_DIR:-}" "${HOME:+$HOME/.claude}"; do
+  [ -n "$c_a" ] && anchors="$anchors"$'\n'"${c_a%/}"$'\n'"${c_a%/}/projects"
+done
+lim=${TASK_OBSERVER_SEARCH_SECONDS:-10}; case $lim in (""|*[!0-9]*|0) lim=10 ;; esac
+tf=$(mktemp 2>/dev/null) || tf=
+found=; srch=
+if [ -z "$tf" ]; then
+  finding "NOTE: sibling-log search skipped — no mktemp for its bounded run; the 'logs at the plausible anchors' line is empty, not 'no other log': search the anchors by hand before creating or consolidating a log (references/environments.md, \"Before creating a log, search for one\")"
+else
+  # The search, in a background subshell: each anchor's find runs as its own
+  # job and is waited on, so the TERM sent at the limit interrupts the wait
+  # and the trap kills that find. `#A <anchor>` marks each anchor's start and
+  # `#END` a search that finished.
+  ( fp=; trap 'kill "${fp:-}" 2>/dev/null; exit 0' TERM
+    while IFS= read -r a; do
+      [ -n "$a" ] && [ -d "$a" ] || continue
+      md=4; pr_x=
+      if [ "$a" = "$par" ]; then md=5; [ -n "$shallow" ] && { md=4; pr_x=1; }; fi
+      printf '#A %s\n' "$a" >> "$tf"
+      if [ -n "$pr_x" ]; then
+        find "$a" -maxdepth "$md" \( -name .git -o -name node_modules -o -name skill-updates -o -name Library -o -name .Trash \) -prune \
+          -o \( -type d -path '*/skill-observations/observation-log' -o -type f -path '*/skill-observations/log.md' \) -print >> "$tf" 2>/dev/null &
+      else
+        find "$a" -maxdepth "$md" \( -name .git -o -name node_modules -o -name skill-updates \) -prune \
+          -o \( -type d -path '*/skill-observations/observation-log' -o -type f -path '*/skill-observations/log.md' \) -print >> "$tf" 2>/dev/null &
+      fi
+      fp=$!; wait "$fp"; fp=
+    done <<< "$anchors"
+    printf '#END\n' >> "$tf" ) &
+  spid=$!; dl=$((SECONDS + lim)); zz=0.01   # the poll starts short: an ordinary search ends in milliseconds
+  while kill -0 "$spid" 2>/dev/null; do
+    if [ "$SECONDS" -ge "$dl" ]; then kill -TERM "$spid" 2>/dev/null; break; fi
+    sleep "$zz" 2>/dev/null || sleep 1
+    case $zz in (0.01) zz=0.03 ;; (0.03) zz=0.1 ;; esac
+  done
+  wait "$spid" 2>/dev/null
+  found=$(grep -v '^#' "$tf" | sed 's|/skill-observations/observation-log$||; s|/skill-observations/log\.md$||' | LC_ALL=C sort -u)
+  if ! grep -q '^#END$' "$tf"; then
+    cut_a=$(sed -n 's/^#A //p' "$tf" | tail -n 1)
+    n_all=$(printf '%s\n' "$anchors" | while IFS= read -r a; do [ -n "$a" ] && [ -d "$a" ] && echo x; done | wc -l | tr -d ' ')
+    n_done=$(grep -c '^#A ' "$tf" | tr -d ' ')
+    finding "NOTE: sibling-log search stopped at its ${lim}-second limit while searching ${cut_a:-the first anchor} ($((n_all - n_done)) more anchor(s) never searched) — the 'logs at the plausible anchors' line is partial, not 'no other log': search there by hand before creating or consolidating a log (references/environments.md, \"Before creating a log, search for one\"); TASK_OBSERVER_SEARCH_SECONDS raises the limit"
+  fi
+  rm -f "$tf"
+fi
+[ -n "$shallow" ] && srch="; the home folder as parent: searched 4 levels, Library and .Trash pruned"
+sib=
+while IFS= read -r w; do
+  [ -n "$w" ] || continue
+  o="$w/skill-observations/observation-log"; w_lg="$w/skill-observations/log.md"; w_ck="$w/skill-observations/checkpoints.log"
+  cnt=-; [ -d "$o" ] && cnt=$(find "$o" -maxdepth 1 -name '[0-9]*.md' | wc -l | tr -d ' ')
+  lc=none
+  [ -f "$w_ck" ] && lc=$(tail -n 1 "$w_ck" | cut -c 1-10) && case $lc in ([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]) ;; (*) lc=none ;; esac
+  lgn=; [ -f "$w_lg" ] && lgn=$(grep -c '^### Observation ' "$w_lg" | tr -d ' ')
+  sib="$sib  $w=$cnt last=$lc${lgn:+ legacy=$lgn}"
+  # the pinned root's own split store is the SPLIT STORE line above
+  if [ -n "$lgn" ] && [ -d "$o" ] && [ "$w" != "${root%/}" ]; then
+    finding "SPLIT STORE — $w: log.md holds $lgn observations beside that root's observation-log/: an older installed copy still writes there; report the root and its copy's version, never migrate or consolidate another root from this scan (references/migration.md)"
+  fi
+done <<< "$found"
+printf 'logs at the plausible anchors (report; never consolidate from here%s):%s\n' "$srch" "$sib"
+
 # --- LAST: the summary block — the findings again, then the end-of-scan line -
 # The finding lines are repeated here VERBATIM, after the entries, and written
 # to the sidecar file (overwritten every run; empty when there are none): a
@@ -588,7 +723,7 @@ st=; [ "$rc" -eq 0 ] || st="; content print exited $rc"
 [ -n "${empty_ent:-}" ] && st="; the entries file is EMPTY (exit 3)"
 bytes="bytes above this line not counted (no mktemp)"
 if [ -n "$buf" ]; then
-  by=$(wc -c < "$buf" | tr -d ' ')
+  by=$(( by0 + $(wc -c < "$buf" | tr -d ' ') ))
   exec >&5; cat "$buf"; rm -f "$buf"; trap - EXIT
   bytes="$by bytes above this line: a saved or cut copy holding fewer is a truncated scan"
 fi

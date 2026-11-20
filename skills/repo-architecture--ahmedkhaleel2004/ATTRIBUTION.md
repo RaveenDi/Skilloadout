@@ -2,7 +2,7 @@
 
 - **Item:** Repo Architecture (`repo-architecture`)
 - **Original source:** https://github.com/ahmedkhaleel2004/gitdiagram/tree/main/plugins/gitdiagram/skills/repo-architecture
-- **Repository:** https://github.com/ahmedkhaleel2004/gitdiagram @ `1f4e1957691a`
+- **Repository:** https://github.com/ahmedkhaleel2004/gitdiagram @ `b5a54583e13f`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

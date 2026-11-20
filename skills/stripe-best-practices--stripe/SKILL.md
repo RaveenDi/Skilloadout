@@ -16,7 +16,7 @@ description: >-
 
 ---
 
-Latest Stripe API version: **2026-10-28.endive**. Always use the latest API version and SDK unless the user specifies otherwise.
+Latest Stripe API version: **2026-11-18.endive**. Always use the latest API version and SDK unless the user specifies otherwise.
 
 Development and testing environment default: For new integration development, use separate [sandboxes](https://docs.stripe.com/sandboxes.md) instead of the account’s shared test mode sandbox. Sandboxes isolate settings and test data from live mode. Use separate sandboxes for local development and CI. When stronger isolation is useful, dedicate sandboxes to development teams or testing scenarios. Use the shared test mode sandbox only for an existing integration that depends on it or when a required feature doesn’t support general sandboxes.
 
@@ -54,11 +54,11 @@ API key default: Always recommend a [restricted API key (RAK)](https://docs.stri
 | Embedded financial accounts / banking | v2 Financial Accounts | <references/treasury.md> |
 | Security (key management, RAKs, webhooks, OAuth, 2FA, Connect liability) | See security reference | <references/security.md> |
 
-Read the relevant reference file before answering any integration question or writing code.
+Read the relevant reference file before answering any integration question or writing code. Reference paths are relative to this skill’s directory, not to the docs.stripe.com root. If you don’t have the skill files locally, append the path to **https://docs.stripe.com/.well-known/skills/stripe-best-practices/**. For example, fetch **https://docs.stripe.com/.well-known/skills/stripe-best-practices/references/connect.md**.
 
 ## Critical rules
 
-- *Before enabling `automatic_tax: { enabled: true }`* (or calculating tax for a custom PaymentIntent), read the [tax reference](references/tax.md) and confirm the user has an active registration. Without one, Stripe calculates and collects no tax while the user believes tax is on (the most common Stripe Tax mistake).
+- *Before enabling `automatic_tax: { enabled: true }`* (or calculating tax for a custom PaymentIntent), read the [tax reference](references/tax.md) and follow its setup and verification steps. Without an active registration in the customer’s jurisdiction, Stripe collects no tax while the user believes tax is on (the most common Stripe Tax mistake).
 
 - *Never include `payment_method_types` in any Stripe API call*, with one exception: Terminal (in-person payments) integrations must pass `payment_method_types: ['card_present']` on the PaymentIntent. For all other integrations, omit this parameter entirely to enable dynamic payment methods, which enables you to configure payment method settings from the Dashboard and dynamically display the most relevant eligible payment methods to each customer to maximize conversion. To customize which payment methods you accept, use [payment_method_configurations](https://docs.stripe.com/payments/payment-method-configurations.md) or `excluded_payment_method_types` instead of `payment_method_types`.
 

@@ -110,15 +110,20 @@ rather than this command: `starter-principles-reviewed.txt` (starter-set
 reconciliation) and `skill-families.md` (created when the first family
 is named).
 
-**A read-only or permission error on an allowlisted path is a missing
-path, not an unwritable log.** When this command fails with `Read-only
-file system` or a permission error on a workspace path the harness's
-write allowlist names, the likely cause is that the path does not exist
-yet and the sandbox cannot create it (`environments.md`, "Anchoring the
-workspace", "A grant names a path"). Say that to the user in one line and
-hand them the fix — create `skill-observations/` and `skill-updates/`
-under the pinned root from outside the sandbox — instead of retrying
-through another interface or falling through to the unwritable-log or
+**A read-only or permission error is one of two cases — tell them apart
+before naming a remedy.** When this command fails with `Read-only file
+system` or a permission error on a workspace path, read the harness's
+write allowlist first (`environments.md`, "A grant names a path"):
+(a) **the allowlist names the path** — it is missing and the sandbox cannot
+create it: hand the user the fix in one line, create `skill-observations/`
+(the log) and `skill-updates/` (staged skill updates) under the pinned root
+from outside the sandbox; (b) **the allowlist does not name it** — creating
+the folders cannot help: the fix is an allowlist entry for both folders in
+the harness settings, plus the folders; until then, writes go through an
+approved unsandboxed run or report-back mode (`environments.md`). Test
+writability with a probe (`touch` and `rm` of a file in each folder), not
+existence, so case (b) surfaces here and not at the first checkpoint. Never
+retry through another interface or fall through to the unwritable-log or
 no-filesystem branches.
 
 The assertion loop is the half that matters, because the four artefacts
@@ -153,7 +158,7 @@ promise about the rest.
 | Field | Meaning |
 |---|---|
 | `id` | Integer: the number the snippet printed, equal to the `NNNN-` filename prefix read as a number. The prefix is four digits, zero-padded (`printf '%04d'`, as the snippet and the script write it), so a listing sorts numerically and a clash is visible in it; `63-` beside `0063-` is one id written by something other than the snippet. The field is written unpadded (`id: 63`); a padded copy of the prefix (`id: 0063`) reads as the same number and is not a defect — every check compares numerically — while a value that reads as another number is. Never reused. |
-| `title` | Short descriptive title. It is the summary every restatement check and frontmatter scan matches against, and an edit to the body does not update it: when an appended instance widens the finding, rewrite the title in the same edit, or the next restatement of the wider finding misses it and is filed as new. |
+| `title` | Short descriptive title. It is the summary every restatement check and frontmatter scan matches against, and an edit to the body does not update it: when an appended instance widens the finding, rewrite the title in the same edit, or the next restatement of the wider finding misses it and is filed as new. At most 200 characters, quotes aside: `new-observation.sh --body` and `set-fields.sh` refuse a longer one; the detail belongs in the body. |
 | `status` | `open`, `actioned`, `declined`, `superseded` (a later observation found this one's mitigation does not work; `resolution` names it) or `parked`. A missing status is read as `open`, never as nonexistent. |
 | `parked` (status value) | Decided, but blocked on an external precondition: the entry is sound and no longer awaiting a judgement, so reviews drop it from the work queue and never re-escalate it. It is not resolved, so it does not archive — see Archival below. It stays in `observation-log/` until its `parked_until:` condition is met (set it back to `open`) or it is genuinely resolved. Recording a park as free text while leaving `status: open` does not work: nothing classifies on prose, so the entry stays in the queue and is re-raised at every review. |
 | `parked_until` | **Mandatory whenever status is `parked`**, empty otherwise. One line naming the condition that unparks the entry ("the X scheduled task is re-enabled"), phrased so a later review can answer yes or no without reopening the original decision. |
@@ -165,6 +170,7 @@ promise about the rest.
 | `area` | The part of the skill or workflow concerned. |
 | `date` | Date logged, `YYYY-MM-DD`. |
 | `session_context` | What was being worked on. |
+| `session_id` | Optional, never required: the host's machine id for the session that wrote the entry, copied at creation from what the environment exposes (an environment variable carrying the host's session id), so a review can open that session without searching transcripts. Empty where the host exposes none, and never inferred. It does not replace `session_context`, which stays the human-readable description because an id stops resolving once its session is deleted. A value added later is backfilled only where the creating session was seen writing the file. No check reads it, and an entry without it is complete. |
 | `resolved` | Resolution date; set only when status is `actioned`, `declined` or `superseded`. Archival is gated on it. |
 | `resolution` | What was done, or why declined. When the fix is a prescription (a rule, a check, a form to use), an `actioned` resolution names where it now lives — a file and section, a staged skill copy, or a registered backlog entry. If no such place can be named, the prescription has been described, not applied: leave the entry `open`, or resolve the part that landed and carry the rest in a carrier observation (below). A review's own resolution already names the staged copy (`weekly-review.md`, Step 6); this is the rule for a resolution set outside a review. |
 | `reference` | Optional path to saved session-local evidence. |
@@ -668,6 +674,8 @@ resolved.
 
 Core rule (How to Log); re-read first — a parallel review may have
 resolved it — and never rewrite a file you don't own.
+Append an instance with `scripts/extend-observation.sh`, never a redirect onto
+a remembered path: it finds the entry by id and refuses an archived or resolved one.
 
 **An appended instance is a test input for the entry's predicate.** The
 restatement path (core, "Check for a restatement before writing") is the

@@ -12,7 +12,7 @@ argument-hint: "[command] [url|property]"
 license: MIT
 metadata:
   author: AgriciDaniel
-  version: "2.6.0"
+  version: "2.6.2"
   category: seo
 ---
 
@@ -32,7 +32,7 @@ Before executing any command, check credentials:
 "${CLAUDE_PLUGIN_ROOT}/scripts/claude-seo" run google_auth.py --check --json
 ```
 
-Config file: `~/.config/claude-seo/google-api.json`
+Config file: `~/.config/claude-seo/google-api.json`, or `google-api.json` in `CLAUDE_SEO_PROFILE_DIR` when a project sets one (see `references/auth-setup.md`, Per-Project Profiles).
 ```json
 {
   "service_account_path": "/path/to/service_account.json",
@@ -186,6 +186,8 @@ Notify Google of a URL update.
 
 The Indexing API is officially for JobPosting and BroadcastEvent/VideoObject pages.
 Always inform the user of this restriction. Daily quota: 200 publish requests.
+An OAuth sign-in is read-only unless made with `google_auth.py --auth --indexing`;
+when the script reports `missing_indexing_scope`, relay the command it prints.
 
 ### `/seo google index-batch <file>`
 

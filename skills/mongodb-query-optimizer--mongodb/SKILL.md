@@ -6,7 +6,8 @@ compatibility: >-
   Best with MongoDB MCP server. Uses collection-indexes and explain when the connection string works; uses Atlas Performance Advisor when Atlas API is configured. Without either, suggest indexes from query shape only. User creates indexes in Atlas or migrations unless tooling allows otherwise.
 license: Apache-2.0
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
+  labelText: "Help with query optimization and indexing. Not for general query writing."
 ---
 
 # MongoDB Query Optimizer
@@ -43,7 +44,7 @@ Then make an optimization suggestion based on collected information and MongoDB 
 
 ## MCP: available tools
 
-**How to invoke.** Call the **MongoDB MCP server** with the **exact tool name** as `toolName` and a single **arguments object** as `arguments`. Do not pass the tool name as an option, query param, or nested key; pass it as the MCP tool name and the parameters as the arguments object. Full MCP Server tool reference: [MongoDB MCP Server Tools](https://www.mongodb.com/docs/mcp-server/tools/).
+**How to invoke.** Call the **MongoDB MCP server** with the **exact tool name** as `toolName` and a single **arguments object** as `arguments`. Do not pass the tool name as an option, query param, or nested key; pass it as the MCP tool name and the parameters as the arguments object. Full MCP Server tool reference: [MongoDB MCP Server Tools](https://www.mongodb.com/docs/mcp-server/tools/?utm_source=agent-skills).
 
 **Database tools** (when the MCP cluster connection works):
 

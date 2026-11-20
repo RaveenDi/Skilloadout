@@ -1,60 +1,44 @@
 ---
 name: azure-ai
-description: "Build and troubleshoot Azure AI Search, Speech, OpenAI, and Document Intelligence apps. WHEN: AI Search, query search, vector search, hybrid search, semantic search, speech-to-text, text-to-speech, transcribe, Speech SDK logs, session ID, result ID, OCR, convert text to speech."
+description: "Build and troubleshoot Azure AI Search, Speech, Document Intelligence, Content Understanding, Translator, Content Safety, and OpenAI apps. WHEN: AI Search, vector search, hybrid search, semantic search, indexer, speech-to-text, text-to-speech, fast or batch transcription, Speech SDK logs, session ID, result ID, OCR, document translation, glossary."
 license: MIT
 metadata:
   author: Microsoft
-  version: "1.2.3"
+  version: "1.2.6"
 ---
 
 # Azure AI Services
 
-## Services
+## Scope and Handoffs
 
-| Service | Use When | MCP Tools | CLI |
-|---------|----------|-----------|-----|
-| AI Search | Full-text, vector, hybrid search | `azure__search` | `az search` |
-| Speech | Speech-to-text, text-to-speech, SDK logs | `azure__speech` | - |
-| OpenAI | GPT models, embeddings, DALL-E | - | `az cognitiveservices` |
-| Document Intelligence | Form extraction, OCR | - | - |
+| Request Scope | Route To |
+|---------------|----------|
+| Foundry projects, agents (Prompt/Hosted/Voice), model deployments, fine-tuning, quota, project RBAC, Foundry VNet | `microsoft-foundry` |
+| Foundry IQ knowledge bases and connectors | `foundry-iq` (separate `foundry-iq-skills` plugin; if absent, say so) |
+| Azure API Management AI Gateway policies (`llm-content-safety`, semantic cache, token limits) | `azure-aigateway` |
+| Classic AI Search, Speech SDK/REST/batch, Document Intelligence, Content Understanding, Translator, standalone Content Safety, OpenAI SDK | Stay in `azure-ai` |
+| Roles, private endpoints, Studio storage or data handling for Document Intelligence or Content Understanding calls (including CU in the Foundry portal) | Stay in `azure-ai` |
 
-## MCP Server (Preferred)
+## Services and Diagnostic Workflows
 
-When Azure MCP is enabled:
+Read the matching reference before diagnosing errors, validating local inputs, or collecting support evidence:
 
-### AI Search
-- `azure__search` with command `search_index_list` - List search indexes
-- `azure__search` with command `search_index_get` - Get index details
-- `azure__search` with command `search_query` - Query search index
+| Service | MCP / CLI | Preflight & Diagnostics |
+|---------|-----------|-------------------------|
+| **AI Search** (classic indexes, vector/hybrid/semantic queries, indexers/skillsets) | `azure__search` (`search_service_list`, `search_index_get`, `search_index_query`), `az search` | [Index, query, and indexer diagnostics](references/search/index-and-query-diagnostics.md) |
+| **Speech** (STT, TTS, Fast/Batch Transcription, Batch Synthesis, SDK logs) | `azure__speech` (`speech_stt_recognize`, `speech_tts_synthesize`), `az cognitiveservices` | [Speech SDK client diagnostics](references/speech/diagnostics.md) \| [Audio & REST/batch preflight](references/speech/transcription-and-audio-preflight.md) |
+| **Document Intelligence** (`v4.0` Analyze, layout/OCR, custom extraction, classifiers, composed models) | `az cognitiveservices` | [Input, v4 migration, and Analyze diagnostics](references/document-intelligence/preflight-and-diagnostics.md) \| [Custom models, labels, and confidence](references/document-intelligence/custom-models.md) |
+| **Content Understanding** (analyzers, CU Studio, model defaults, custom analyzers) | `az cognitiveservices` | [Setup, API versions, and defaults](references/content-understanding/overview-and-setup.md) \| [Custom analyzers](references/content-understanding/custom-analyzers.md) \| [Diagnostics](references/content-understanding/diagnostics.md) |
+| **Access, network, and data** for Document Intelligence and Content Understanding | `azure__role` (`role_assignment_list`), `az role`, `az network` | [Roles and auth](references/foundry-tools/access-and-roles.md) \| [Studio storage](references/foundry-tools/storage-and-studio.md) \| [Private networking](references/foundry-tools/private-network.md) \| [Data handling](references/foundry-tools/data-handling.md) \| [Evidence without content](references/foundry-tools/evidence-without-content.md) |
+| **Translator** (Text & Document Translation, glossaries, Blob auth) | `az cognitiveservices` | [Document Translation & glossary preflight](references/translator/document-translation-preflight.md) |
+| **Content Safety** (standalone `text:analyze`, `image:analyze`, `text:shieldPrompt`, blocklists) | `az cognitiveservices` | [Standalone API preflight & diagnostics](references/content-safety/api-preflight-and-diagnostics.md) |
+| **OpenAI** (direct SDK/API usage) | `az cognitiveservices` | [.NET SDK](references/sdk/azure-ai-openai-dotnet.md) |
 
-### Speech
-- `azure__speech` with command `speech_transcribe` - Speech to text
-- `azure__speech` with command `speech_synthesize` - Text to speech
+**If Azure MCP is not enabled:** In Copilot CLI or Claude Code, ask the user to run `/mcp` and enable Azure MCP; in other hosts, ask the user to enable Azure MCP through the host's MCP configuration. Offline local preflight scripts do not require Azure MCP or Azure sign-in.
 
-**If Azure MCP is not enabled:** In Copilot CLI or Claude Code, ask the user to run `/mcp` and enable Azure MCP; in other hosts, ask the user to enable Azure MCP through the host's MCP configuration.
-
-## AI Search Capabilities
-
-| Feature | Description |
-|---------|-------------|
-| Full-text search | Linguistic analysis, stemming |
-| Vector search | Semantic similarity with embeddings |
-| Hybrid search | Combined keyword + vector |
-| AI enrichment | Entity extraction, OCR, sentiment |
-
-## Speech Capabilities
-
-| Feature | Description |
-|---------|-------------|
-| Speech-to-text | Real-time and batch transcription |
-| Text-to-speech | Neural voices, SSML support |
-| Speaker diarization | Identify who spoke when |
-| Custom models | Domain-specific vocabulary |
-| Client SDK diagnostics | [Speech SDK client diagnostics](references/speech/diagnostics.md) for log collection, offline analysis, features, and session/result IDs (no MCP or login required) |
+For keyless authentication patterns across Azure AI SDKs, read [Azure Authentication Best Practices](references/auth-best-practices.md).
 
 ## SDK Quick References
-
-For programmatic access to these services, see the condensed SDK guides:
 
 - **AI Search**: [Python](references/sdk/azure-search-documents-py.md) | [TypeScript](references/sdk/azure-search-documents-ts.md) | [.NET](references/sdk/azure-search-documents-dotnet.md)
 - **OpenAI**: [.NET](references/sdk/azure-ai-openai-dotnet.md)
@@ -64,10 +48,11 @@ For programmatic access to these services, see the condensed SDK guides:
 - **Document Intelligence**: [.NET](references/sdk/azure-ai-document-intelligence-dotnet.md) | [TypeScript](references/sdk/azure-ai-document-intelligence-ts.md)
 - **Content Safety**: [Python](references/sdk/azure-ai-contentsafety-py.md) | [TypeScript](references/sdk/azure-ai-contentsafety-ts.md) | [Java](references/sdk/azure-ai-contentsafety-java.md)
 
-## Service Details
+## Service Documentation
 
-For deep documentation on specific services:
-
-- AI Search indexing and queries -> [Azure AI Search documentation](https://learn.microsoft.com/azure/search/search-what-is-azure-search)
-- Speech transcription patterns -> [Azure AI Speech documentation](https://learn.microsoft.com/azure/ai-services/speech-service/overview)
-- Speech SDK client logs and troubleshooting -> [Speech SDK client diagnostics](references/speech/diagnostics.md)
+- [Azure AI Search documentation](https://learn.microsoft.com/azure/search/search-what-is-azure-search)
+- [Azure AI Speech documentation](https://learn.microsoft.com/azure/ai-services/speech-service/overview)
+- [Azure AI Document Intelligence documentation](https://learn.microsoft.com/azure/ai-services/document-intelligence/overview)
+- [Azure Content Understanding documentation](https://learn.microsoft.com/azure/ai-services/content-understanding/overview)
+- [Azure AI Translator documentation](https://learn.microsoft.com/azure/ai-services/translator/overview)
+- [Azure AI Content Safety documentation](https://learn.microsoft.com/azure/ai-services/content-safety/overview)

@@ -175,6 +175,12 @@ escalate", below), and wait for blanket or selective approval before applying.
 The grouped list lives in the review record and chat carries at most
 three next steps with a link to it (Step 3); the approval it asks for is
 still over the whole list.
+**The first decision message says what is being decided**, in one or two
+plain sentences before the list: the review turns notes logged in past
+sessions into proposed edits to the user's skills, and approving stages
+them as copies the user installs or discards. Never skip it where no
+activation instruction shows the user set this skill up — an approval from
+someone who does not know what the skill does approves nothing.
 **Classify before you ask.** Any *disposition* option offered to the user
 (fold in, decline, revive, route to skill X) must be derived from the
 entries' bodies, never from their titles and `skill:` fields — a
@@ -308,6 +314,10 @@ a hand-built decision list is not a search. Escalate only when they are
 silent, disagree, or the decision is the user's by authority, not knowledge.
 "Confirm with the owner" in an observation is a lead to a record, not an
 escalation trigger. List the records checked under each escalation.
+An escalation that cites an observation id first opens that entry and the
+later entries that decide it (a `resolution:` reading "decided by #N", or
+a body citing the id as settled): a hold whose release condition a later
+decision met is a settled question, never an open one.
 
 **An escalation is recorded on the entry, and silence never decides it.**
 An entry the user has been asked about and has not answered looks unseen
@@ -452,6 +462,10 @@ probe tool (`references/environments.md`, "A deferred probe tool moves the
 probe to batch 2") is not a finding. The failure shape: a late lookup
 looks compliant from every later batch, and the record is the one place
 the mismatch shows.
+The same pass reads `session-starts.log`: every session with a `loaded
+task-observer` line in `checkpoints.log` has a `session start:` line of the
+same day, and a load without one — the protocol loaded but not
+run — is a Log integrity finding.
 
 **Drain the observation inbox before the work queue is built.** Where this
 run can read the user-scoped store that sessions without the log park
@@ -471,8 +485,8 @@ drains is a second log nobody reviews.
 **Harvest the run-output notes next.** Runs that cannot write or get an
 approval answered end their final message with a `## Task-observer
 notes` section (`references/environments.md`, "Sessions whose output
-channel is owned by a caller") at the run-output paths the activation
-block's `[RUN OUTPUT PATHS]` line or a task definition names. For each
+channel is owned by a caller") at the run-output paths the `[RUN OUTPUT
+PATHS]` configuration line or a task definition names. For each
 path, read every file not yet marked, take the section's bullets through
 the same write path as an inbox entry — one at a time, file on disk
 before the source is marked — and mark the source: where the file is
@@ -598,8 +612,8 @@ find "$d" "$d/archive" -maxdepth 1 -name '[0-9]*.md' | sed 's|.*/||' | grep -oE 
 **Per-entry header conformance — a count, not a gate.** The scan's
 suspect count catches YAML that will not parse; it cannot see a header
 that parses and is still wrong: an `id` that disagrees with the filename
-prefix, a `status` outside the five values, a missing or blank
-`siblings_checked`, a near-miss field name (`skills:`,
+prefix, a `status` outside the five values, a `type` outside
+`open-source | internal`, a missing or blank `siblings_checked`, a near-miss field name (`skills:`,
 `proposed_skill:`, `sibling_checked:`) that every consumer silently
 ignores, or a `use_evidence:` item whose context holds `: ` — a parser
 reads that item as a one-key mapping, the scan's suspect rules read only
@@ -610,15 +624,17 @@ active directory:
 ```bash
 d="[ABSOLUTE PATH]/skill-observations/observation-log"
 nonconf=$(LC_ALL=C find "$d" -maxdepth 1 -name '*.md' -exec awk '
-  FNR==1 { sub(/^\357\273\277/, ""); fm=0; bad=""; idv=""; st=""; sc=""; ue=0; f=FILENAME; sub(/.*\//,"",f); pre=(match(f,/^[0-9]+/) ? substr(f,1,RLENGTH)+0 : -1) }
+  FNR==1 { sub(/^\357\273\277/, ""); fm=0; bad=""; idv=""; st=""; ty=""; sc=""; ue=0; f=FILENAME; sub(/.*\//,"",f); pre=(match(f,/^[0-9]+/) ? substr(f,1,RLENGTH)+0 : -1) }
   FNR==1 && /^---[[:space:]]*$/ { fm=1; next }
   fm && /^---[[:space:]]*$/ { fm=0
     if (idv !~ /^0*[1-9][0-9]*$/ || idv+0 != pre) bad=bad " id"
     if (st !~ /^(open|actioned|declined|superseded|parked)$/) bad=bad " status"
+    if (ty !~ /^(open-source|internal)$/) bad=bad " type:" ty
     if (sc == "") bad=bad " siblings_checked"
     if (bad != "") print FILENAME ":" bad; nextfile }
   fm && /^id:/ { idv=$2 }
   fm && /^status:/ { st=$2 }
+  fm && /^type:/ { ty=$2 }
   fm && /^siblings_checked:/ { sc=$0; sub(/^siblings_checked:[[:space:]]*/, "", sc) }
   fm && /^(skills|proposed_skill|proposed_skills|proposes_skills|sibling_checked|siblings_check|target_files|skill_qualifier):/ { bad=bad " near-miss:" $1 }
   fm && /^use_evidence:/ { ue=1; next }
@@ -626,7 +642,7 @@ nonconf=$(LC_ALL=C find "$d" -maxdepth 1 -name '*.md' -exec awk '
   fm && /^[a-z_]+:/ { ue=0 }
 ' {} +)
 n_nc=$(printf '%s' "$nonconf" | grep -c .)
-if [ "$n_nc" -gt 0 ]; then printf 'NOTE: %s non-conforming headers (id / status / siblings_checked / near-miss field / use_evidence item holding ": "):\n%s\n' "$n_nc" "$nonconf"; fi
+if [ "$n_nc" -gt 0 ]; then printf 'NOTE: %s non-conforming headers (id / status / type / siblings_checked / near-miss field / use_evidence item holding ": "):\n%s\n' "$n_nc" "$nonconf"; fi
 ```
 
 It reports; it does not block the review. Its false-positive rate on a
@@ -751,7 +767,10 @@ entry stays, and the copy is never (a), whatever the live diff says.
 directory belongs, a failed normalisation — is reported "not reconciled:
 <error>", the entry stays, and it is never folded into "nothing staged" or
 "all installed"; the Session Start line counts it ("N staged updates
-awaiting review, M not reconciled").
+awaiting review, M not reconciled"). Where no working Python 3 runs (a
+Windows Store alias passes `command -v` and does not run), the script
+compares `SKILL.md` by the text fallback and says so on stderr: that is a
+verdict, not an `ERROR`.
 
 **A claim's liveness is the newest mtime under its anchor, never a
 hand-kept field.** An in-progress claim — a seeded round, a "being applied
@@ -856,8 +875,10 @@ over the link", whatever the hash says. Hash changed → the
 gate reports "staged patch, live file has moved — apply the N changed
 lines, do not copy", with N counted from the patch, and
 rewrites the entry's instruction to say so. Every added line of the patch
-already present in live, and every removed line already gone → installed;
-remove the entry. An install instruction is re-derived each time it is
+already present in live, every removed line already gone, and the whole
+file equal to the recorded expected result (Delivery) → installed; remove
+the entry. Without a recorded result, the whole file is compared with the
+pre-install backup, and differences outside the hunks' lines fail it. An install instruction is re-derived each time it is
 repeated, never carried forward verbatim: nothing in a ledger expires on
 its own, so a line that was correct at staging turns destructive without
 changing a word once the live file moves on.
@@ -965,7 +986,7 @@ The categories:
 | Category | Detection | Action |
 |---|---|---|
 | (a) User-owned, no upstream | in the user's skills directory; not a git checkout; not refreshed from anywhere; written by the user, not by a tool — or a fork recorded in `forked-skills.txt` | normal staging flow |
-| (b) Writable but volatile, or foreign-maintained | path contains a plugin cache or version-pinned directory; or the skill is refreshed from an upstream by clone/copy or `git pull`; or **the file's own content declares a maintainer other than the user** — an attribution block naming another author, a canonical repository the user does not commit to, a `source:`/`upstream:` frontmatter field, or third-party `author:`/`license:`/`version:` frontmatter with no fork recorded in `forked-skills.txt` — wherever it is installed and however it got there, a hand-copied and hand-updated file included; or **the file is written by a tool that will rewrite it** (a scaffolder, a CLI's `init`/`agent`/`sync` command, a spec or template generator), which leaves no maintainer mark at all | never edit in place — the next update silently discards it, and no permission error ever fires; for a declared upstream, the route is the upstream report |
+| (b) Writable but volatile, or foreign-maintained | path contains a plugin cache or version-pinned directory; or the skill is refreshed from an upstream by clone/copy or `git pull`; or **the file's own content declares a maintainer other than the user** — an attribution block naming another author, a canonical repository the user does not commit to, a `source:`/`upstream:` frontmatter field, or third-party `author:`/`license:`/`version:` frontmatter with no fork recorded in `forked-skills.txt` — wherever it is installed and however it got there, a hand-copied and hand-updated file included; or **the file is written by a tool that will rewrite it** (a scaffolder, a CLI's `init`/`agent`/`sync` command, a spec or template generator), which leaves no maintainer mark at all; or **a skills manager or a pack installer owns it** (the three install checks below) | never edit in place — the next update silently discards it, and no permission error ever fires; for a declared upstream, the route is the upstream report |
 | (c) No on-disk file, or read-only | built-in / harness-provided skills (e.g. docx, pdf, xlsx, pptx, skill-creator); a mount that rejects writes | cannot be edited |
 
 Observations targeting (b) or (c) are NOT skipped — the destination must
@@ -985,7 +1006,24 @@ and is stated in its first lines; install location says nothing about
 who maintains the file, so read the block before the path. A generated
 file is the exception that states nothing: its writer is a tool, not an
 author, so before putting a skill in (a) ask what writes the file, not
-only what refreshes its directory. Where the user has adopted a vendored
+only what refreshes its directory.
+
+**An installer can own a skill whose content declares no maintainer.**
+Before classifying a target as (a), run three install checks: does its
+directory resolve through a symlink into a skills manager's shared
+folder (resolve the listed path with `realpath` and compare); does it
+appear in a known skills-manager lock file (such as
+`~/.agents/.skill-lock.json`); does a template of the same name ship in
+an installer package the user has installed (a pack whose update re-runs
+its init in force mode rewrites its skills and the rules file that
+triggers them)? Any hit, with no fork recorded in `forked-skills.txt`,
+makes the target (b), foreign-maintained: route the change to
+`{skill}-extras`, and draft the upstream report separately, after reading
+the latest published version (the feedback pre-flight's HEAD re-read,
+`skill-authoring.md`). Name the places checked: a miss on all three is a
+fact about them, not proof that the user wrote the skill.
+
+Where the user has adopted a vendored
 copy on purpose, record it once, one line per skill in
 `skill-observations/forked-skills.txt` (name, date, reason): later
 reviews read the decision instead of re-deriving it from the path, and a
@@ -1010,7 +1048,7 @@ each foreign-maintained skill with open observations, state its installed
 observations "currency unverified — may already be fixed upstream"; offer
 the feedback pre-flight's HEAD re-read (`skill-authoring.md`) before such
 an entry is clustered, escalated or approved. An upstream that was not
-reached is "unknown", never "current". Where the activation block carries
+reached is "unknown", never "current". Where the instruction file carries
 the opt-in line ("the review may check upstream versions"), Step 2 instead
 fetches the upstream's version for each such skill and compares it with
 the installed one — the one network use a review starts, and only on that
@@ -1316,6 +1354,14 @@ verification"), because a dated first-party claim is forbidden there
 (`references/skill-authoring.md`, Timelessness).
 The cost is one query; the alternative is a rule that is wrong in exactly
 the cases nobody sampled.
+
+**An example a published skill takes from an observation is invented,
+never quoted.** Before staging, rewrite it into an example from an
+unrelated vertical whose vertical, market shape and figures trace back to
+no session, and name each such example's source as "invented" in the
+manifest entry's per-change summary. A tripwire scan matches names, and
+recognisability comes from combinations: two real search terms with their
+volumes can point at one client with no listed term in them.
 A command the entry quotes is a claim of this kind; its `commands_verified:`
 clause (`observation-log.md`) says whether anyone has run it. A predicate
 the entry proposes — a regex, a hook condition — is one too, and a
@@ -1376,7 +1422,9 @@ one staged copy.** For any skill published to a public repository, run
 these four passes before and while staging it; each produces something
 the summary carries.
 
-1. **Merge last cycle's release branch first.** If the previous review
+1. **Merge last cycle's release branch first** — and the merge writes the
+   merged core ceiling into the `# released core ceiling:` line of
+   `references/ceilings.txt`. If the previous review
    cut a `release/vX.Y.Z` branch and it has been installed locally for
    the week, this repo's first act is the merge decision — and it
    precedes the new staging, because everything staged this week is
@@ -1603,6 +1651,8 @@ find "$live" \( -name .git -o -name .hg -o -name .svn -o -name .claude-plugin \)
 find "$live" \( -name .git -o -name .hg -o -name .svn -o -name .claude-plugin \) -prune -o -type f -print | while IFS= read -r f; do cp    "$f" "$s/${f#$live}"; done
 chmod -R u+w "$s"
 diff -rq -x .git -x .hg -x .svn -x .claude-plugin "$live" "$s"      # must be identical before any edit
+# quote an unquoted name now, so --pack has nothing to rewrite after the review diff (temp file and move: no delete needed)
+sed -E '1,/^---[[:space:]]*$/s/^name:[[:space:]]*([a-z0-9][a-z0-9-]*)[[:space:]]*$/name: "\1"/' "$s/SKILL.md" > "$s/SKILL.md.new" && mv "$s/SKILL.md.new" "$s/SKILL.md"
 mkdir -p "$s/../.seed"; (cd "$s" && find . -type f -exec sha256sum {} + | LC_ALL=C sort) > "$s/../.seed/[skill-name].sha256"   # shasum -a 256 on macOS; the gate's seed check reads it
 [ ! -L "$s" ] && [ "$(stat -c %i "$live/SKILL.md" 2>/dev/null || stat -f %i "$live/SKILL.md")" != "$(stat -c %i "$s/SKILL.md" 2>/dev/null || stat -f %i "$s/SKILL.md")" ] || { echo "staged path is live under another name — not a copy"; exit 1; }
 # then make EVERY edit against the staged path
@@ -1773,7 +1823,15 @@ because two writers watching one task from two vantages log one finding
 twice, and merging two entries about one fact is not the renumbering the
 duplicate-id check performs (Cross-slice duplicates, below). Reserve
 status marking, archival and observation writes for the parent
-session. Every brief also states the ceiling policy for the round: the
+session.
+Outside text a delegate needs — an issue, a pull request, a thread — goes
+into the brief verbatim, fetched by the parent through a channel that
+works, never as a fetch instruction: a cloud delegate's container is often
+refused the code host (GitHub among them), and the delegate then builds
+from the brief's summary. For a published skill, the brief also forbids
+issue, pull-request and observation references in skill content —
+SKILL.md, `references/` and `scripts/`, comments and docstrings included.
+Every brief also states the ceiling policy for the round: the
 ceiling is declared at the count after every pass, with both numbers
 reported where a trim preceded the additions; at slack 0 a reasoned
 raise beats rewrites touching more than a handful of paragraphs; and
@@ -1894,6 +1952,15 @@ when two independent agents flag the same ambiguity, the brief is the
 defect, not the agents: fix the brief and re-issue rather than
 adjudicating the two outputs.
 
+**A mechanism a brief asserts is a claim, and the fan-out multiplies it.**
+Label each mechanism the brief states as a claim with its provenance:
+re-probed in this run, or carried from a report and not re-probed. A worker
+re-probes a labelled claim before writing it into a skill. A return that
+contradicts the brief is read and resolved before any other return is
+merged. Failure shape: every worker inherits a wrong mechanism at once, and
+the one that probed and found otherwise reads as the outlier, so it is the
+return most likely to be batch-processed with the rest.
+
 **Step 6 — re-scan, then mark ACTIONED.** Before any status is written,
 re-enumerate `observation-log/` and compare the listing against the file
 list built at Step 1. The queue is a snapshot of a shared, append-only
@@ -1973,7 +2040,11 @@ staged from the bundles this run packed, presented from the delivered-file
 list the presentation call returns (where the environment has no such
 call, from the staged paths listed in chat) — never from memory of having
 presented them. A difference is closed by presenting the missing bundles
-in one call and counting again. The template:
+in one call and counting again. Present at most 20 bundles per call,
+highest priority first: one 21-file call listed 21 delivered and showed
+20 cards. The delivered list is what was sent, not what the user saw, so
+the install check closes the count, and a skill whose installed copy is
+still the old one is re-presented by name. The template:
 
 ```markdown
 ## Weekly Skill Review Complete — [date]
@@ -2093,8 +2164,16 @@ Session Start step 3 makes above ~15 open — and it runs as a review, not a
 glance. **Selection:** the N oldest by `date:`, then id, leaving out parked
 entries and those asked and unanswered (Approval policy, "An escalation is
 recorded on the entry"), which the record lists once under "Waiting for
-the user". **Run for the slice:** Steps 3, 5 and 6 over its entries, and
-the gate for the skills it stages. **Run for the whole log whatever the
+the user" — and re-asks, as a yes-or-no with the recommendation, each
+such entry whose last ask was in the previous review, appending the
+re-ask to its `escalated:` field; one re-asked and still unanswered is
+parked (Approval policy). **Run for the slice:** Steps 3, 5 and 6 over its
+entries, and the gate for the skills it stages. For each skill the slice
+stages, also list the open entries naming it (`bash scripts/skill-load.sh
+"[ABSOLUTE PATH]" <skill-name> --query-only`) and read the titles of
+those outside the slice: the staged text stays consistent with them, or
+the record names the conflict. They are checked for contradiction only,
+never reported as reviewed. **Run for the whole log whatever the
 slice:** Step 1's integrity checks (duplicate id, contiguity, header
 conformance, the inbox drain) and Step 6's re-scan against the Step 1 list
 — a slice that skips them leaves the log unchecked for as long as slices
@@ -2297,7 +2376,8 @@ here is a non-skill file another process owns and reads at run time — a
 routine's registry or config note, an instruction file. A review that
 changes one stages it under
 `skill-updates/<date>/_target-files/` as a patch: a unified diff against
-the live file (`diff -u "$live_file" "$changed" > "<file>.patch"`), or the
+the live file (`scripts/stage-patch.sh "$live_file" "$changed" "<file>.patch"`,
+which refuses a change adding a heading the live file already has), or the
 changed lines with enough context to place them. Its manifest entry
 records four things about the live path at staging time: byte size
 (`wc -c < "$live_file"`), sha256 (`sha256sum` on GNU, `shasum -a 256` on
@@ -2306,7 +2386,12 @@ path (`realpath`; `readlink -f` on GNU) — a content match proves nothing
 about whether the path still means what it meant,
 which the reconciliation gate re-checks before repeating any install
 instruction (Step 1, "A staged state file is reconciled by its recorded
-hash"). The failure shape: every run writes a state file, so a snapshot
+hash"). The entry also records the **expected result** — the patched
+file's size and sha256, or the whole patched file beside the patch as
+`<file>.expected` — and the install check compares the installed file
+with it byte for byte, line endings, encoding and final newline included.
+A check of the changed lines alone passes a patch tool that applied every
+hunk and rewrote the line endings of the rest. The failure shape: every run writes a state file, so a snapshot
 goes stale with the next run, and its "copy it over" instruction becomes
 an overwrite that deletes everything written since staging; a stale
 patch degrades into a conflict someone has to resolve instead. **A state

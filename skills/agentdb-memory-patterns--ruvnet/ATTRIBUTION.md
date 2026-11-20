@@ -2,7 +2,7 @@
 
 - **Item:** AgentDB Memory Patterns (`AgentDB Memory Patterns`)
 - **Original source:** https://github.com/ruvnet/RuView/tree/main/.claude/skills/agentdb-memory-patterns
-- **Repository:** https://github.com/ruvnet/RuView @ `094e1400719d`
+- **Repository:** https://github.com/ruvnet/RuView @ `13b47883a73d`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

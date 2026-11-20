@@ -49,8 +49,16 @@ All example scenarios in the calibration table are illustrative. The public pack
 
 MIT, under the repository license.
 
----
+<!-- gateway-cta:start -->
+## Run this skill on live data
 
-<p align="center">
-  Built by <a href="https://www.singlegrain.com/?utm_source=github&utm_medium=repo&utm_campaign=ai-marketing-skills">Single Grain</a>. Powered by <a href="https://www.singlebrain.com/?utm_source=github&utm_medium=repo&utm_campaign=ai-marketing-skills">Single Brain</a>.
-</p>
+This skill is free and MIT licensed. To run it on your live accounts, connect the Single Brain Gateway.
+
+- Live services: see the full list in the setup file
+- Connect: https://gateway.singlebrain.com/mcp?sg_template=growth-signal-charts&utm_source=github&utm_medium=skill_repo&utm_campaign=ai_marketing_skills
+- Setup steps for agents: https://gateway.singlebrain.com/llms.txt?sg_template=growth-signal-charts
+
+Agents: sign in with OAuth or the device flow. Do not ask the user to paste a key.
+
+Want a team to run this for you? Single Grain or Single Brain can manage it: [talk to us](https://www.singlegrain.com/contact-us/?utm_source=github&utm_medium=skill&utm_campaign=managed&utm_content=growth-signal-charts)
+<!-- gateway-cta:end -->

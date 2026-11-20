@@ -1,65 +1,64 @@
 ---
 name: security-review
 description: Use this skill when adding authentication, handling user input, working with secrets, creating API endpoints, or implementing payment/sensitive features. Provides comprehensive security checklist and patterns.
-license: MIT
 ---
 
-# Security Review Skill
+# 安全性審查技能
 
-This skill ensures all code follows security best practices and identifies potential vulnerabilities.
+此技能確保所有程式碼遵循安全性最佳實務並識別潛在漏洞。
 
-## When to Activate
+## 何時啟用
 
-- Implementing authentication or authorization
-- Handling user input or file uploads
-- Creating new API endpoints
-- Working with secrets or credentials
-- Implementing payment features
-- Storing or transmitting sensitive data
-- Integrating third-party APIs
+- 實作認證或授權
+- 處理使用者輸入或檔案上傳
+- 建立新的 API 端點
+- 處理密鑰或憑證
+- 實作支付功能
+- 儲存或傳輸敏感資料
+- 整合第三方 API
 
-## Security Checklist
+## 安全性檢查清單
 
-### 1. Secrets Management
+### 1. 密鑰管理
 
-#### FAIL: NEVER Do This
+#### FAIL: 絕不這樣做
 ```typescript
-const apiKey = "sk-proj-xxxxx"  // Hardcoded secret
-const dbPassword = "password123" // In source code
+const apiKey = "sk-proj-xxxxx"  // 寫死的密鑰
+const dbPassword = "password123" // 在原始碼中
 ```
 
-#### PASS: ALWAYS Do This
+#### PASS: 總是這樣做
 ```typescript
 const apiKey = process.env.OPENAI_API_KEY
 const dbUrl = process.env.DATABASE_URL
 
-// Verify secrets exist
+// 驗證密鑰存在
 if (!apiKey) {
   throw new Error('OPENAI_API_KEY not configured')
 }
 ```
 
-#### Verification Steps
-- [ ] No hardcoded API keys, tokens, or passwords
-- [ ] All secrets in environment variables
-- [ ] `.env.local` in .gitignore
-- [ ] No secrets in git history
-- [ ] Production secrets in hosting platform (Vercel, Railway)
+#### 驗證步驟
+- [ ] 無寫死的 API 金鑰、Token 或密碼
+- [ ] 所有密鑰在環境變數中
+- [ ] `.env.local` 在 .gitignore 中
+- [ ] git 歷史中無密鑰
+- [ ] 生產密鑰在託管平台（Vercel、Railway）中
 
-### 2. Input Validation
+### 2. 輸入驗證
 
-#### Always Validate User Input
+#### 總是驗證使用者輸入
 ```typescript
 import { z } from 'zod'
 
-// Define validation schema
+// 定義驗證 schema
 const CreateUserSchema = z.object({
   email: z.string().email(),
   name: z.string().min(1).max(100),
   age: z.number().int().min(0).max(150)
 })
 
-// Validate before processing
+// 處理前驗證
 export async function createUser(input: unknown) {
   try {
     const validated = CreateUserSchema.parse(input)
@@ -73,22 +72,22 @@ export async function createUser(input: unknown) {
 }
 ```
 
-#### File Upload Validation
+#### 檔案上傳驗證
 ```typescript
 function validateFileUpload(file: File) {
-  // Size check (5MB max)
+  // 大小檢查（最大 5MB）
   const maxSize = 5 * 1024 * 1024
   if (file.size > maxSize) {
     throw new Error('File too large (max 5MB)')
   }
 
-  // Type check
+  // 類型檢查
   const allowedTypes = ['image/jpeg', 'image/png', 'image/gif']
   if (!allowedTypes.includes(file.type)) {
     throw new Error('Invalid file type')
   }
 
-  // Extension check
+  // 副檔名檢查
   const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif']
   const extension = file.name.toLowerCase().match(/\.[^.]+$/)?.[0]
   if (!extension || !allowedExtensions.includes(extension)) {
@@ -99,59 +98,59 @@ function validateFileUpload(file: File) {
 }
 ```
 
-#### Verification Steps
-- [ ] All user inputs validated with schemas
-- [ ] File uploads restricted (size, type, extension)
-- [ ] No direct use of user input in queries
-- [ ] Whitelist validation (not blacklist)
-- [ ] Error messages don't leak sensitive info
+#### 驗證步驟
+- [ ] 所有使用者輸入以 schema 驗證
+- [ ] 檔案上傳受限（大小、類型、副檔名）
+- [ ] 查詢中不直接使用使用者輸入
+- [ ] 白名單驗證（非黑名單）
+- [ ] 錯誤訊息不洩露敏感資訊
 
-### 3. SQL Injection Prevention
+### 3. SQL 注入預防
 
-#### FAIL: NEVER Concatenate SQL
+#### FAIL: 絕不串接 SQL
 ```typescript
-// DANGEROUS - SQL Injection vulnerability
+// 危險 - SQL 注入漏洞
 const query = `SELECT * FROM users WHERE email = '${userEmail}'`
 await db.query(query)
 ```
 
-#### PASS: ALWAYS Use Parameterized Queries
+#### PASS: 總是使用參數化查詢
 ```typescript
-// Safe - parameterized query
+// 安全 - 參數化查詢
 const { data } = await supabase
   .from('users')
   .select('*')
   .eq('email', userEmail)
 
-// Or with raw SQL
+// 或使用原始 SQL
 await db.query(
   'SELECT * FROM users WHERE email = $1',
   [userEmail]
 )
 ```
 
-#### Verification Steps
-- [ ] All database queries use parameterized queries
-- [ ] No string concatenation in SQL
-- [ ] ORM/query builder used correctly
-- [ ] Supabase queries properly sanitized
+#### 驗證步驟
+- [ ] 所有資料庫查詢使用參數化查詢
+- [ ] SQL 中無字串串接
+- [ ] ORM/查詢建構器正確使用
+- [ ] Supabase 查詢正確淨化
 
-### 4. Authentication & Authorization
+### 4. 認證與授權
 
-#### JWT Token Handling
+#### JWT Token 處理
 ```typescript
-// FAIL: WRONG: localStorage (vulnerable to XSS)
+// FAIL: 錯誤：localStorage（易受 XSS 攻擊）
 localStorage.setItem('token', token)
 
-// PASS: CORRECT: httpOnly cookies
+// PASS: 正確：httpOnly cookies
 res.setHeader('Set-Cookie',
   `token=${token}; HttpOnly; Secure; SameSite=Strict; Max-Age=3600`)
 ```
 
-#### Authorization Checks
+#### 授權檢查
 ```typescript
 export async function deleteUser(userId: string, requesterId: string) {
-  // ALWAYS verify authorization first
+  // 總是先驗證授權
   const requester = await db.users.findUnique({
     where: { id: requesterId }
   })
@@ -163,41 +162,41 @@ export async function deleteUser(userId: string, requesterId: string) {
     )
   }
 
-  // Proceed with deletion
+  // 繼續刪除
   await db.users.delete({ where: { id: userId } })
 }
 ```
 
-#### Row Level Security (Supabase)
+#### Row Level Security（Supabase）
 ```sql
--- Enable RLS on all tables
+-- 在所有表格上啟用 RLS
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 
--- Users can only view their own data
+-- 使用者只能查看自己的資料
 CREATE POLICY "Users view own data"
   ON users FOR SELECT
   USING (auth.uid() = id);
 
--- Users can only update their own data
+-- 使用者只能更新自己的資料
 CREATE POLICY "Users update own data"
   ON users FOR UPDATE
   USING (auth.uid() = id);
 ```
 
-#### Verification Steps
-- [ ] Tokens stored in httpOnly cookies (not localStorage)
-- [ ] Authorization checks before sensitive operations
-- [ ] Row Level Security enabled in Supabase
-- [ ] Role-based access control implemented
-- [ ] Session management secure
+#### 驗證步驟
+- [ ] Token 儲存在 httpOnly cookies（非 localStorage）
+- [ ] 敏感操作前有授權檢查
+- [ ] Supabase 已啟用 Row Level Security
+- [ ] 已實作基於角色的存取控制
+- [ ] 工作階段管理安全
 
-### 5. XSS Prevention
+### 5. XSS 預防
 
-#### Sanitize HTML
+#### 淨化 HTML
 ```typescript
 import DOMPurify from 'isomorphic-dompurify'
 
-// ALWAYS sanitize user-provided HTML
+// 總是淨化使用者提供的 HTML
 function renderUserContent(html: string) {
   const clean = DOMPurify.sanitize(html, {
     ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'p'],
@@ -225,13 +224,13 @@ const securityHeaders = [
 ]
 ```
 
-#### Verification Steps
-- [ ] User-provided HTML sanitized
-- [ ] CSP headers configured
-- [ ] No unvalidated dynamic content rendering
-- [ ] React's built-in XSS protection used
+#### 驗證步驟
+- [ ] 使用者提供的 HTML 已淨化
+- [ ] CSP headers 已設定
+- [ ] 無未驗證的動態內容渲染
+- [ ] 使用 React 內建 XSS 保護
 
-### 6. CSRF Protection
+### 6. CSRF 保護
 
 #### CSRF Tokens
 ```typescript
@@ -247,7 +246,7 @@ export async function POST(request: Request) {
     )
   }
 
-  // Process request
+  // 處理請求
 }
 ```
 
@@ -257,61 +256,61 @@ res.setHeader('Set-Cookie',
   `session=${sessionId}; HttpOnly; Secure; SameSite=Strict`)
 ```
 
-#### Verification Steps
-- [ ] CSRF tokens on state-changing operations
-- [ ] SameSite=Strict on all cookies
-- [ ] Double-submit cookie pattern implemented
+#### 驗證步驟
+- [ ] 狀態變更操作有 CSRF tokens
+- [ ] 所有 cookies 設定 SameSite=Strict
+- [ ] 已實作 Double-submit cookie 模式
 
-### 7. Rate Limiting
+### 7. 速率限制
 
-#### API Rate Limiting
+#### API 速率限制
 ```typescript
 import rateLimit from 'express-rate-limit'
 
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // 100 requests per window
+  windowMs: 15 * 60 * 1000, // 15 分鐘
+  max: 100, // 每視窗 100 個請求
   message: 'Too many requests'
 })
 
-// Apply to routes
+// 套用到路由
 app.use('/api/', limiter)
 ```
 
-#### Expensive Operations
+#### 昂貴操作
 ```typescript
-// Aggressive rate limiting for searches
+// 搜尋的積極速率限制
 const searchLimiter = rateLimit({
-  windowMs: 60 * 1000, // 1 minute
-  max: 10, // 10 requests per minute
+  windowMs: 60 * 1000, // 1 分鐘
+  max: 10, // 每分鐘 10 個請求
   message: 'Too many search requests'
 })
 
 app.use('/api/search', searchLimiter)
 ```
 
-#### Verification Steps
-- [ ] Rate limiting on all API endpoints
-- [ ] Stricter limits on expensive operations
-- [ ] IP-based rate limiting
-- [ ] User-based rate limiting (authenticated)
+#### 驗證步驟
+- [ ] 所有 API 端點有速率限制
+- [ ] 昂貴操作有更嚴格限制
+- [ ] 基於 IP 的速率限制
+- [ ] 基於使用者的速率限制（已認證）
 
-### 8. Sensitive Data Exposure
+### 8. 敏感資料暴露
 
-#### Logging
+#### 日誌記錄
 ```typescript
-// FAIL: WRONG: Logging sensitive data
+// FAIL: 錯誤：記錄敏感資料
 console.log('User login:', { email, password })
 console.log('Payment:', { cardNumber, cvv })
 
-// PASS: CORRECT: Redact sensitive data
+// PASS: 正確：遮蔽敏感資料
 console.log('User login:', { email, userId })
 console.log('Payment:', { last4: card.last4, userId })
 ```
 
-#### Error Messages
+#### 錯誤訊息
 ```typescript
-// FAIL: WRONG: Exposing internal details
+// FAIL: 錯誤：暴露內部細節
 catch (error) {
   return NextResponse.json(
     { error: error.message, stack: error.stack },
@@ -319,7 +318,7 @@ catch (error) {
   )
 }
 
-// PASS: CORRECT: Generic error messages
+// PASS: 正確：通用錯誤訊息
 catch (error) {
   console.error('Internal error:', error)
   return NextResponse.json(
@@ -329,15 +328,15 @@ catch (error) {
 }
 ```
 
-#### Verification Steps
-- [ ] No passwords, tokens, or secrets in logs
-- [ ] Error messages generic for users
-- [ ] Detailed errors only in server logs
-- [ ] No stack traces exposed to users
+#### 驗證步驟
+- [ ] 日誌中無密碼、token 或密鑰
+- [ ] 使用者收到通用錯誤訊息
+- [ ] 詳細錯誤只在伺服器日誌
+- [ ] 不向使用者暴露堆疊追蹤
 
-### 9. Blockchain Security (Solana)
+### 9. 區塊鏈安全（Solana）
 
-#### Wallet Verification
+#### 錢包驗證
 ```typescript
 import { verify } from '@solana/web3.js'
 
@@ -359,20 +358,20 @@ async function verifyWalletOwnership(
 }
 ```
 
-#### Transaction Verification
+#### 交易驗證
 ```typescript
 async function verifyTransaction(transaction: Transaction) {
-  // Verify recipient
+  // 驗證收款人
   if (transaction.to !== expectedRecipient) {
     throw new Error('Invalid recipient')
   }
 
-  // Verify amount
+  // 驗證金額
   if (transaction.amount > maxAmount) {
     throw new Error('Amount exceeds limit')
   }
 
-  // Verify user has sufficient balance
+  // 驗證使用者有足夠餘額
   const balance = await getBalance(transaction.from)
   if (balance < transaction.amount) {
     throw new Error('Insufficient balance')
@@ -382,56 +381,56 @@ async function verifyTransaction(transaction: Transaction) {
 }
 ```
 
-#### Verification Steps
-- [ ] Wallet signatures verified
-- [ ] Transaction details validated
-- [ ] Balance checks before transactions
-- [ ] No blind transaction signing
+#### 驗證步驟
+- [ ] 錢包簽章已驗證
+- [ ] 交易詳情已驗證
+- [ ] 交易前有餘額檢查
+- [ ] 無盲目交易簽署
 
-### 10. Dependency Security
+### 10. 依賴安全
 
-#### Regular Updates
+#### 定期更新
 ```bash
-# Check for vulnerabilities
+# 檢查漏洞
 npm audit
 
-# Fix automatically fixable issues
+# 自動修復可修復的問題
 npm audit fix
 
-# Update dependencies
+# 更新依賴
 npm update
 
-# Check for outdated packages
+# 檢查過時套件
 npm outdated
 ```
 
-#### Lock Files
+#### Lock 檔案
 ```bash
-# ALWAYS commit lock files
+# 總是 commit lock 檔案
 git add package-lock.json
 
-# Use in CI/CD for reproducible builds
-npm ci  # Instead of npm install
+# 在 CI/CD 中使用以獲得可重現的建置
+npm ci  # 而非 npm install
 ```
 
-#### Verification Steps
-- [ ] Dependencies up to date
-- [ ] No known vulnerabilities (npm audit clean)
-- [ ] Lock files committed
-- [ ] Dependabot enabled on GitHub
-- [ ] Regular security updates
+#### 驗證步驟
+- [ ] 依賴保持最新
+- [ ] 無已知漏洞（npm audit 乾淨）
+- [ ] Lock 檔案已 commit
+- [ ] GitHub 上已啟用 Dependabot
+- [ ] 定期安全更新
 
-## Security Testing
+## 安全測試
 
-### Automated Security Tests
+### 自動化安全測試
 ```typescript
-// Test authentication
+// 測試認證
 test('requires authentication', async () => {
   const response = await fetch('/api/protected')
   expect(response.status).toBe(401)
 })
 
-// Test authorization
+// 測試授權
 test('requires admin role', async () => {
   const response = await fetch('/api/admin', {
     headers: { Authorization: `Bearer ${userToken}` }
@@ -439,7 +438,7 @@ test('requires admin role', async () => {
   expect(response.status).toBe(403)
 })
 
-// Test input validation
+// 測試輸入驗證
 test('rejects invalid input', async () => {
   const response = await fetch('/api/users', {
     method: 'POST',
@@ -448,7 +447,7 @@ test('rejects invalid input', async () => {
   expect(response.status).toBe(400)
 })
 
-// Test rate limiting
+// 測試速率限制
 test('enforces rate limits', async () => {
   const requests = Array(101).fill(null).map(() =>
     fetch('/api/endpoint')
@@ -461,29 +460,29 @@ test('enforces rate limits', async () => {
 })
 ```
 
-## Pre-Deployment Security Checklist
+## 部署前安全檢查清單
 
-Before ANY production deployment:
+任何生產部署前：
 
-- [ ] **Secrets**: No hardcoded secrets, all in env vars
-- [ ] **Input Validation**: All user inputs validated
-- [ ] **SQL Injection**: All queries parameterized
-- [ ] **XSS**: User content sanitized
-- [ ] **CSRF**: Protection enabled
-- [ ] **Authentication**: Proper token handling
-- [ ] **Authorization**: Role checks in place
-- [ ] **Rate Limiting**: Enabled on all endpoints
-- [ ] **HTTPS**: Enforced in production
-- [ ] **Security Headers**: CSP, X-Frame-Options configured
-- [ ] **Error Handling**: No sensitive data in errors
-- [ ] **Logging**: No sensitive data logged
-- [ ] **Dependencies**: Up to date, no vulnerabilities
-- [ ] **Row Level Security**: Enabled in Supabase
-- [ ] **CORS**: Properly configured
-- [ ] **File Uploads**: Validated (size, type)
-- [ ] **Wallet Signatures**: Verified (if blockchain)
+- [ ] **密鑰**：無寫死密鑰，全在環境變數中
+- [ ] **輸入驗證**：所有使用者輸入已驗證
+- [ ] **SQL 注入**：所有查詢已參數化
+- [ ] **XSS**：使用者內容已淨化
+- [ ] **CSRF**：保護已啟用
+- [ ] **認證**：正確的 token 處理
+- [ ] **授權**：角色檢查已就位
+- [ ] **速率限制**：所有端點已啟用
+- [ ] **HTTPS**：生產環境強制使用
+- [ ] **安全標頭**：CSP、X-Frame-Options 已設定
+- [ ] **錯誤處理**：錯誤中無敏感資料
+- [ ] **日誌記錄**：無敏感資料被記錄
+- [ ] **依賴**：最新，無漏洞
+- [ ] **Row Level Security**：Supabase 已啟用
+- [ ] **CORS**：正確設定
+- [ ] **檔案上傳**：已驗證（大小、類型）
+- [ ] **錢包簽章**：已驗證（如果是區塊鏈）
 
-## Resources
+## 資源
 
 - [OWASP Top 10](https://owasp.org/www-project-top-ten/)
 - [Next.js Security](https://nextjs.org/docs/security)
@@ -492,4 +491,4 @@ Before ANY production deployment:
 
 ---
 
-**Remember**: Security is not optional. One vulnerability can compromise the entire platform. When in doubt, err on the side of caution.
+**記住**：安全性不是可選的。一個漏洞可能危及整個平台。有疑慮時，選擇謹慎的做法。

@@ -200,6 +200,14 @@ curated events JSON and pass it via `build_entry_signals.py --events-json`.
 
 Set entry triggers mechanically:
 - Yield trigger: current yield above 5y average yield + alpha (default `+0.5pp`).
+- **Current CLI limitation (Issue #769)**: the provider's five-year average
+  includes an unverified regular/special mix. The CLI currently emits no buy
+  targets, including for issuers with no detected specials, until a matching
+  regular-only historical average is available. It emits
+  `ASSUMPTION-REQUIRED`, the withholding reason, and a non-actionable
+  `HOLD-REVIEW` cap with T1 blocked (stricter FAIL/recheck decisions remain).
+  Do not infer a replacement entry price from the provider diagnostic average
+  or register these rows as actionable theses.
 - Valuation trigger: target multiple reached (`P/E`, `P/FFO`, or `P/FCF`).
 
 Execution pattern:
@@ -303,3 +311,15 @@ used, remains a separate client.
 The Python client retains `sleep_seconds`, `timeout` and `api_calls`. Sleep now
 sets the minimum interval between requests; accounting includes retried HTTP
 responses. Quote/profile retrieval remains one symbol per request.
+
+### Sourced metrics and aggregate order readiness
+
+Use `--financials-json` to supply sourced adjusted EPS and sector metrics before
+re-running the CLI. Follow [the input contract](references/sourced-financials.md)
+for required per-metric source, date, document reference and units. Record values
+as MANUAL user assertions; verify the referenced documents separately. Invalid
+records retain explicit blockers and HOLD-REVIEW (existing FAIL stays FAIL).
+Read `order_ready` as the aggregate screening gate in JSON, CSV and Markdown:
+TRIGGERED, CLEAN/CONDITIONAL-PASS, final T1 unblocked, and zero blockers are all
+required. `event_t1_blocked` is event-only; legacy `t1_blocked` is the final T1
+restriction and can be false with open blockers. Neither alone permits an order.

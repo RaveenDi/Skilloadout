@@ -2,7 +2,7 @@
 
 - **Item:** Article Prompts To Skills (`article-prompts-to-skills`)
 - **Original source:** https://github.com/MengTo/Skills/tree/main/agent-skills/codex/article-prompts-to-skills
-- **Repository:** https://github.com/MengTo/Skills @ `07274a3b3dba`
+- **Repository:** https://github.com/MengTo/Skills @ `4bce53fd1e98`
 - **License:** MIT (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

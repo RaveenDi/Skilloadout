@@ -1,6 +1,6 @@
 # Case evidence · Early-2000s DV home video
 
-43 verified cases are filed under this template in awesome-seedance; the 8 hottest are below, full prompts included. Pick one as the anchor before drafting.
+43 source-checked cases are filed under this template in awesome-seedance; the 8 hottest are below, full prompts included. Pick one as the anchor before drafting.
 
 Generated from `data/cases.json` + `data/case-taxonomy.json`. Do not hand-edit.
 
@@ -70,7 +70,7 @@ Natural neighborhood ambience only — footsteps, shop sounds, bicycle wheels, v
 
 ## E4 · A Korean Woman’s Morning Workout at a Neighborhood Gym
 
-- Seedance 2.5 · creator: @sipteaandcoffee · heat: 95
+- Seedance 2.5 · creator: @sipteaandcoffee · heat: 94
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-seedance-2-5-on-5de3fbc4f714) · [finished media](https://media.goodcase.ai/cases/c1c742ff910f.mp4) · [poster](https://media.goodcase.ai/cases/8394fd6c092a.jpg) · [original source](https://x.com/sipteaandcoffee/status/2104887547243774358)
 - Summary: Seedance 2.5 on @Flovaai @Flovaai_Japan My invite link https://t.co/4bi7Gg4te3 Skill used: script to video https://t.co/7uC3BJRHSL Prompt Create a **45-second u…
 

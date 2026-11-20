@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Product Story replacement inputs",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["subject", "headline", "evidence", "action"],
+  "properties": {
+    "subject": { "type": "string", "minLength": 1, "maxLength": 48 },
+    "headline": { "type": "string", "minLength": 1, "maxLength": 48 },
+    "evidence": { "type": "string", "minLength": 1, "maxLength": 100 },
+    "action": { "type": "string", "minLength": 1, "maxLength": 32 }
+  }
+}

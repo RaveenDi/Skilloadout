@@ -2,7 +2,7 @@
 
 - **Item:** Grafana Dashboarding (`grafana-dashboarding`)
 - **Original source:** https://github.com/oxsecurity/megalinter/tree/main/.claude/skills/grafana-dashboarding
-- **Repository:** https://github.com/oxsecurity/megalinter @ `0cb88596118d`
+- **Repository:** https://github.com/oxsecurity/megalinter @ `9ebca3c50f3b`
 - **License:** Apache-2.0 (resolved via skill)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

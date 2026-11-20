@@ -2,7 +2,7 @@
 
 - **Item:** Ccs Align (`ccs-align`)
 - **Original source:** https://github.com/thedotmack/claude-mem/tree/main/plugin/skills/ccs-align
-- **Repository:** https://github.com/thedotmack/claude-mem @ `0c488b54e761`
+- **Repository:** https://github.com/thedotmack/claude-mem @ `c0f37d60b2e4`
 - **License:** Apache-2.0 (resolved via repo-file)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

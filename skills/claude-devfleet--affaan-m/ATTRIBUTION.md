@@ -1,9 +1,0 @@
-# Attribution
-
-- **Item:** Claude Devfleet (`claude-devfleet`)
-- **Original source:** https://github.com/affaan-m/ECC/tree/main/skills/claude-devfleet
-- **Repository:** https://github.com/affaan-m/ECC @ `d2ef2680594f`
-- **License:** MIT (resolved via repo-file)
-
-Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.
-

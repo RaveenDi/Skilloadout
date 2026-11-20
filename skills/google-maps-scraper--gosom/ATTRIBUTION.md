@@ -2,7 +2,7 @@
 
 - **Item:** Google Maps Scraper (`google-maps-scraper`)
 - **Original source:** https://github.com/gosom/google-maps-scraper/tree/main/skills/google-maps-scraper
-- **Repository:** https://github.com/gosom/google-maps-scraper @ `e0c1d501e49c`
+- **Repository:** https://github.com/gosom/google-maps-scraper @ `6a766a4ec098`
 - **License:** MIT (resolved via frontmatter)
 
 Mirrored verbatim by Skill Loadout (skillloadout.com); all credit belongs to the original authors.

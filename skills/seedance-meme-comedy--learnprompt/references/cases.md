@@ -1,6 +1,6 @@
 # Case evidence · Twist-ending comedy skit
 
-46 verified cases are filed under this template in awesome-seedance; the 8 hottest are below, full prompts included. Pick one as the anchor before drafting.
+44 source-checked cases are filed under this template in awesome-seedance; the 8 hottest are below, full prompts included. Pick one as the anchor before drafting.
 
 Generated from `data/cases.json` + `data/case-taxonomy.json`. Do not hand-edit.
 
@@ -44,137 +44,7 @@ Ultra-realistic Korean subway lighting, gritty DV-inspired look, natural motion 
 No gore, blood, serious injuries, identity drift, outfit changes, duplicated people, teleportation, regenerating glass, distorted hands, CGI look, subtitles, captions, text, logos or watermark.
 ```
 
-## E3 · Girlfriend Praises Boyfriend for Resisting Temptation
-
-- Seedance 2.0 · creator: @YourAlphaMom · heat: 91
-- Evidence: [GoodCase](https://goodcase.ai/cases/seedance-create-a-30-second-ultra-realistic-fast-paced-comedy-skit-that-looks-like-a-ge-7bbf67fa75c5) · [finished media](https://media.goodcase.ai/cases/5ffed6588a9b.mp4) · [poster](https://media.goodcase.ai/cases/35483961abc5.jpg) · [original source](https://x.com/YourAlphaMom/status/2098541423062548561)
-- Summary: OMG, what a loyal boyfriend 😭 This is AI. Modern AI tools already make it possible to create almost any realistic video with almost any story — if you know how…
-
-```text
-⬇️
-
-Create a 30-second, ultra-realistic fast-paced comedy skit that looks like a genuine viral home video casually filmed on a smartphone.
-
-The footage should feel spontaneous and imperfect rather than professionally staged: natural handheld shake, slightly crooked framing, quick reactive pans, occasional autofocus hunting, realistic motion blur, minor exposure changes, ordinary daylight inside a real home, realistic skin texture, natural hair movement, and believable room acoustics.
-
-CHARACTERS
-
-WOMAN 1 — THE TOWEL WOMAN:
-
-An exceptionally beautiful 24-year-old platinum-blonde woman with long hair, a striking feminine face, expressive eyes, full lips, a slim waist, a very curvy figure, large full bust and rounded hips.
-
-She begins wrapped securely in a large white bath towel.
-
-WOMAN 2 — HIS GIRLFRIEND:
-
-A clearly different-looking beautiful 23-year-old brunette woman with long dark-brown hair, a different face and hairstyle, fitted casual black top and olive shorts, slim waist and curvy figure.
-
-MAN:
-
-A handsome young man with short dark hair, fitted black T-shirt, gray pants and a simple chain necklace.
-
-Keep all three identities completely consistent. Woman 1 and Woman 2 must never look like the same person.
-
-LOCATION
-
-A bright modern suburban home during daytime:
-
-- open kitchen / living area
-
-- front door close to the kitchen
-
-- driveway immediately outside
-
-- parked car very close to the entrance
-
-ACTION / TIMING
-
-00:00–00:04 — THE SURPRISE
-
-Start immediately inside the kitchen.
-
-Woman 1 stands wrapped in the white towel, holding it closed naturally against her chest.
-
-The front door opens and the man walks inside.
-
-She notices him, gives him a mischievous smile and a small friendly wave.
-
-He stops, surprised and immediately distracted by her.
-
-No shopping bag or unnecessary props.
-
-00:04–00:07 — THE REVEAL
-
-Woman 1 gives him a playful look and briefly opens the FRONT of the towel toward HIM.
-
-IMPORTANT CAMERA RULE:
-
-During the entire towel-opening moment, the camera moves BEHIND Woman 1 and stays behind her.
-
-The viewer sees only:
-
-- her bare upper back
-
-- shoulders
-
-- long hair
-
-- the towel opening away from the camera
-
-The camera NEVER sees her breasts, nipples, genitals or frontal nudity.
-
-The MAN is visible beyond her, facing her.
-
-His eyes go wide in stunned disbelief.
-
-He suddenly turns and bolts out of the house.
-
-00:07–00:12 — THE CAR
-
-Fast handheld cut to the driveway.
-
-The man runs directly to his parked car.
-
-He opens the car, leans across to the dashboard and opens the GLOVE COMPARTMENT.
-
-He searches quickly and finds ONE small unopened condom packet.
-
-Close-up: the packet is clearly visible in his hand.
-
-His expression changes to excited relief.
-
-He immediately runs back toward the house holding the same packet.
-
-00:12–00:17 — TOO LATE
-
-Cut back inside the kitchen.
-
-While he was outside, HIS GIRLFRIEND has arrived.
-
-Woman 1 is now fully wrapped in the SAME white towel again.
-
-The girlfriend and Woman 1 are already standing together talking.
-
-The man rushes back through the front door holding the unopened condom packet.
-
-He sees his girlfriend standing beside Woman 1.
-
-He instantly freezes.
-
-The girlfriend turns toward him.
-
-00:17–00:21 — HIDE THE EVIDENCE
-
-The man looks down and realizes the condom packet is still clearly visible in his hand.
-
-In immediate panic, he quickly stuffs the unopened packet completely into his mouth and visibly swallows it to make the evidence disappear.
-
-His eyes remain wide while he tries
-
-[… truncated, full prompt on the goodcase.ai page]
-```
-
-## E4 · Tiny Skateboarder Crosses a Giant at Sunset
+## E3 · Tiny Skateboarder Crosses a Giant at Sunset
 
 - Seedance 2.5 · creator: @Just_sharon7 · heat: 90
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-pov-your-crush-is-the-landscape-and-you-re-late-for-work-9cab76396089) · [finished media](https://media.goodcase.ai/cases/04133376ac7d.mp4) · [poster](https://media.goodcase.ai/cases/7b93f99dd303.jpg) · [original source](https://x.com/Just_sharon7/status/2103420922376163808)
@@ -194,7 +64,7 @@ A tiny man (normal human scale relative to her) skateboards along her body. He h
 Camera is extremely low and close, starting at her legs and tracking forward and slightly upward with the skateboarder. Strong motion blur on the nearest skin and fabric in the foreground. Shallow depth of field, warm rim light on her face and hair, slight wind in her hair and the robe. Photorealistic, high-end commercial look, 9:16 vertical, smooth continuous camera move, no cuts.
 ```
 
-## E5 · Woman Splashes Attacker with Coffee and Bins Him in Seoul Subway
+## E4 · Woman Splashes Attacker with Coffee and Bins Him in Seoul Subway
 
 - Seedance 2.5 · creator: @AIwithkhan · heat: 89
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-2-5-create-a-ultra-realistic-live-action-revenge-comedy-scene-inside-a-seoul-subway-9029fc876a3a) · [finished media](https://media.goodcase.ai/cases/8c85e8b4f989.mp4) · [poster](https://media.goodcase.ai/cases/86aa94cd154a.jpg) · [original source](https://x.com/AIwithkhan/status/2113841913065615450)
@@ -222,9 +92,9 @@ SOUND DESIGN: Authentic Seoul subway announcements in the background, footsteps,
 VISUAL REQUIREMENTS: Maintain consistent faces, hairstyles, outfits, and location throughout. Show the phone falling clearly before the revenge begins. The coffee must visibly hit his face before she throws him into the bin. Make the entire throw readable in one continuous shot, with believable momentum and a comedic landing. The lid must close completely over him. Non-gory action, realistic skin texture, natural movement, restrained cinematic color grading, and authentic live-action footage. No supernatural powers, no excessive slow motion, no cartoon physics, and no scene transitions that skip the key actions.
 ```
 
-## E6 · Monday Morning’s Upside-Down Water Ritual
+## E5 · Monday Morning’s Upside-Down Water Ritual
 
-- Seedance 2.5 · creator: @Just_sharon7 · heat: 88
+- Seedance 2.5 · creator: @Just_sharon7 · heat: 87
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-this-is-how-it-feels-like-to-wake-up-on-monday-to-go-to-work-b0d56af4f909) · [finished media](https://media.goodcase.ai/cases/71885692ca73.mp4) · [poster](https://media.goodcase.ai/cases/d86c8eb13364.jpg) · [original source](https://x.com/Just_sharon7/status/2104544058471502330)
 - Summary: This is how it feels like to wake up on Monday to go to work. Seedance 2.5 on @FishCreativeHQ Prompt A cinematic indoor performance-art / fashion editorial vide…
 
@@ -244,7 +114,7 @@ An off-camera operator slowly pumps the opposite end of the lever, tilting the b
 Natural window light, muted filmic color palette, shallow depth of field, slight handheld camera movement that stays locked on the woman and the barrel. Slow, rhythmic, slightly surreal and elegant rather than slapstick. No text, no logos.
 ```
 
-## E7 · A Wizard's Ten-Second Escape Plan: Become a Duck
+## E6 · A Wizard's Ten-Second Escape Plan: Become a Duck
 
 - Seedance 2.5 · creator: @AIwithNatalia · heat: 86 · stability: 73
 - Evidence: [GoodCase](https://goodcase.ai/cases/aiwithnatalia-seedance-ai-7597faa7285f) · [finished media](https://media.goodcase.ai/cases/4cabc64762f9.mp4) · [poster](https://media.goodcase.ai/cases/15792e0fa5ef.jpg) · [original source](https://x.com/AIwithNatalia/status/2089170554725265625)
@@ -281,7 +151,7 @@ End text:
 ✨ Never rush a spell. 🦆
 ```
 
-## E8 · A Tiny Woman’s Bathroom Survival Escape
+## E7 · A Tiny Woman’s Bathroom Survival Escape
 
 - Seedance 2.5 · creator: @AIwithkhan · heat: 86
 - Evidence: [GoodCase](https://goodcase.ai/cases/seedance-2-5-create-a-30-second-photorealistic-live-action-miniature-person-vfx-comedy-vide-eb069c17b460) · [finished media](https://media.goodcase.ai/cases/31e9afdb26ea.mp4) · [poster](https://media.goodcase.ai/cases/4ee76d605dc5.jpg) · [original source](https://x.com/AIwithkhan/status/2110699529041310046)
@@ -329,4 +199,30 @@ SOUND DESIGN
 Use synchronized,
 
 [… truncated, full prompt on the goodcase.ai page]
+```
+
+## E8 · Baby Dragon Magically Gives a Young Woman a Golden Afro by the Fire
+
+- Seedance 2.5 · creator: @mehwishkiran07 · heat: 86
+- Evidence: [GoodCase](https://goodcase.ai/cases/seedance-2-5-video-prompt-95f4064ef712) · [finished media](https://media.goodcase.ai/cases/512f2038c1a2.mp4) · [poster](https://media.goodcase.ai/cases/2825fa597430.jpg) · [original source](https://x.com/mehwishkiran07/status/2113088659658612746)
+- Summary: A magical baby dragon gives a young woman the most unexpected hairstyle transformation! 🐉✨ Made with Seedance 2.5 Prompt below ⤵️ 💬
+
+```text
+Video Prompt 👇 
+
+A magical, heartwarming fantasy scene inside a cozy medieval cottage with rustic wooden walls, a stone fireplace, flickering candles, and warm golden sunlight streaming through a small window. A beautiful young woman with long, wavy blonde hair, fair skin, and expressive blue eyes wears a simple cream-colored medieval dress. Beside her is an adorable small fantasy dragon with pale pink-white scales, soft pink spines, tiny wings, a long tail, and large glowing amber eyes.
+
+The scene begins with the young woman sitting beside the baby dragon near the fireplace, smiling affectionately as they gaze at each other. The camera slowly moves closer to the dragon's adorable face, highlighting its detailed scales, glossy amber eyes, and tiny nose. Suddenly, the little dragon playfully breathes a small burst of magical golden fire toward the woman's head, transforming her hair into an enormous, perfectly rounded, fluffy golden afro. Her appearance changes comically while her cream medieval dress remains unchanged. She looks completely stunned, adjusts her round glasses, and picks up a small hand mirror to examine her extraordinary new hairstyle. The baby dragon rolls onto its back, laughing and playfully flapping its tiny wings.
+
+Next, the woman returns to her original appearance with long, flowing blonde hair and gently blows a kiss toward the baby dragon. The dragon responds by releasing a soft stream of sparkling golden magical light, creating a warm, glowing aura around her face. She smiles with wonder and delight, and the two share a tender, magical moment. Finally, she lovingly cuddles the baby dragon in her lap as it closes its eyes peacefully, resting its head against her while she gently strokes its pink spines.
+
+Visual style: ultra-realistic cinematic fantasy, high-end CGI, photorealistic skin and hair, incredibly detailed dragon scales, expressive facial animations, realistic firelight, volumetric sunlight, floating magical particles, warm amber color grading, shallow depth of field, smooth camera movements, natural body language, emotional storytelling, whimsical humor, and a charming fairy-tale atmosphere.
+
+Camera direction: begin with a medium two-shot, cut to an extreme close-up of the dragon's eyes, transition to a wide shot during the magical hair transformation, use reaction close-ups for comedic effect, and finish with a slow cinematic pullback showing the woman cuddling the sleeping dragon beside the glowing fireplace.
+
+Lighting: warm fireplace illumination mixed with soft golden sunlight, realistic shadows, subtle highlights, and cinematic volumetric rays.
+
+Quality: 4K, 24fps, highly detailed textures, smooth motion, consistent character designs, realistic physics, expressive emotions, seamless transitions, and professional cinematic composition.
+
+Audio: gentle fireplace crackling, soft dragon chirps, a magical sparkling sound during the transformation, playful laughter, and peaceful fantasy background music. No subtitles, no text, no watermark.
 ```
